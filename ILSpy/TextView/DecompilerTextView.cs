@@ -25,8 +25,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Xml;
@@ -36,6 +34,7 @@ using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using ICSharpCode.Decompiler;
 using ICSharpCode.ILSpy.TreeNodes;
+using ILSpy.Debugger.AvalonEdit;
 using Microsoft.Win32;
 using Mono.Cecil;
 
@@ -74,6 +73,9 @@ namespace ICSharpCode.ILSpy.TextView
 			this.uiElementGenerator = new UIElementGenerator();
 			textEditor.TextArea.TextView.ElementGenerators.Add(uiElementGenerator);
 			textEditor.Options.RequireControlModifierForHyperlinkClick = false;
+			
+			// add margin
+			textEditor.TextArea.LeftMargins.Add(new IconBarMargin(IconBarManager.Instance));
 		}
 		#endregion
 		
