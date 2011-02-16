@@ -101,6 +101,11 @@ namespace ICSharpCode.Decompiler.Disassembler
 		
 		void DisassembleMethodInternal(MethodDefinition method)
 		{
+			// create mappings for types that were not disassebled
+			if (!CodeMappings.ILSourceCodeMappings.ContainsKey(method.DeclaringType.FullName)) {
+				CodeMappings.ILSourceCodeMappings.Add(method.DeclaringType.FullName, new List<MethodMapping>());
+			}
+			
 			//    .method public hidebysig  specialname
 			//               instance default class [mscorlib]System.IO.TextWriter get_BaseWriter ()  cil managed
 			//
