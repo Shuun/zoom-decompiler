@@ -65,6 +65,7 @@
     <Compile Include="Ast\Transforms\TransformationPipeline.cs" />
     <Compile Include="CecilExtensions.cs" />
     <Compile Include="DecompilerException.cs" />
+    <Compile Include="Disassembler\CodeMappings.cs" />
     <Compile Include="Disassembler\DisassemblerHelpers.cs" />
     <Compile Include="Disassembler\ILStructure.cs" />
     <Compile Include="Disassembler\MethodBodyDisassembler.cs" />
