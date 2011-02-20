@@ -173,6 +173,8 @@ namespace ICSharpCode.NRefactory.CSharp
 		ShiftRight,
 		
 		/// <summary>left ?? right</summary>
-		NullCoalescing
+		NullCoalescing,
+		
+		None
 	}
 }
