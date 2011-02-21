@@ -103,6 +103,7 @@
     <Compile Include="CSharp\Ast\PatternMatching\Repeat.cs" />
     <Compile Include="CSharp\Ast\PatternMatching\Pattern.cs" />
     <Compile Include="CSharp\Ast\PatternMatching\Placeholder.cs" />
+    <Compile Include="CSharp\Ast\NotImplementedAstVisitor.cs" />
     <Compile Include="CSharp\Ast\PrimitiveType.cs" />
     <Compile Include="CSharp\Ast\GeneralScope\Attribute.cs" />
     <Compile Include="CSharp\Ast\GeneralScope\AttributeSection.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Documentation\BinaryDocumentationProvider.cs" />
     <Compile Include="Documentation\XmlDocumentationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SupportedLanguage.cs" />
     <Compile Include="TypeSystem\Accessibility.cs" />
     <Compile Include="TypeSystem\ArrayType.cs" />
     <Compile Include="TypeSystem\ByReferenceType.cs" />
