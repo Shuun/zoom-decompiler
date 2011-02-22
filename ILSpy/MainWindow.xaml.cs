@@ -27,8 +27,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
+using ICSharpCode.Decompiler;
 using ICSharpCode.ILSpy.TreeNodes;
 using ICSharpCode.TreeView;
+using ILSpy.Debugger.AvalonEdit;
+using ILSpy.Debugger.Services;
+using ILSpy.Debugger.UI;
 using Microsoft.Win32;
 
 namespace ICSharpCode.ILSpy
@@ -278,14 +282,6 @@ namespace ICSharpCode.ILSpy
 				treeView.FocusNode(lastNode);
 		}
 		
-		void RefreshCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-		{
-			e.Handled = true;
-			var path = GetPathForNode(treeView.SelectedItem as SharpTreeNode);
-			ShowAssemblyList(assemblyListManager.LoadList(ILSpySettings.Load(), assemblyList.ListName));
-			SelectNode(FindNodeByPath(path, true));
-		}
-		
 		void OpenFromGac_Click(object sender, RoutedEventArgs e)
 		{
 			OpenFromGacDialog dlg = new OpenFromGacDialog();
@@ -294,6 +290,101 @@ namespace ICSharpCode.ILSpy
 				OpenFiles(dlg.SelectedFileNames);
 			}
 		}
+		
+		#endregion
+		
+		#region Debugger commands
+		
+		void RefreshCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (!DebuggerService.CurrentDebugger.IsDebugging) {
+				e.Handled = true;
+				var path = GetPathForNode(treeView.SelectedItem as SharpTreeNode);
+				ShowAssemblyList(assemblyListManager.LoadList(ILSpySettings.Load(), assemblyList.ListName));
+				SelectNode(FindNodeByPath(path, true));
+			}
+		}
+		
+		void AttachToProcessExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (!DebuggerService.CurrentDebugger.IsDebugging) {
+				var window = new AttachToProcessWindow();
+				window.Owner = this;
+				if (window.ShowDialog() == true)
+				{
+					if (DebuggerService.CurrentDebugger.IsDebugging) {
+						AttachMenuItem.IsEnabled = AttachButton.IsEnabled = false;
+						ContinueDebuggingMenuItem.IsEnabled =
+							StepIntoMenuItem.IsEnabled =
+							StepOverMenuItem.IsEnabled =
+							StepOutMenuItem.IsEnabled =
+							DetachMenuItem.IsEnabled = true;
+					}
+				}
+			}
+		}
+		
+		void DetachFromProcessExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (DebuggerService.CurrentDebugger.IsDebugging){
+				DebuggerService.CurrentDebugger.Detach();
+				
+				AttachMenuItem.IsEnabled = AttachButton.IsEnabled = true;
+				ContinueDebuggingMenuItem.IsEnabled =
+					StepIntoMenuItem.IsEnabled =
+					StepOverMenuItem.IsEnabled =
+					StepOutMenuItem.IsEnabled =
+					DetachMenuItem.IsEnabled = false;
+			}
+		}
+		
+		void ContinueDebuggingExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (DebuggerService.CurrentDebugger.IsDebugging)
+				DebuggerService.CurrentDebugger.Continue();
+		}
+		
+		void StepIntoExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (DebuggerService.CurrentDebugger.IsDebugging)
+				DebuggerService.CurrentDebugger.StepInto();
+		}
+		
+		void StepOverExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (DebuggerService.CurrentDebugger.IsDebugging)
+				DebuggerService.CurrentDebugger.StepOver();
+		}
+		
+		void StepOutExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (DebuggerService.CurrentDebugger.IsDebugging)
+				DebuggerService.CurrentDebugger.StepOut();
+		}
+		
+		protected override void OnKeyUp(KeyEventArgs e)
+		{
+			switch (e.Key) {
+				case Key.F5:
+					ContinueDebuggingExecuted(null, null);
+					e.Handled = true;
+					break;
+				case Key.System:
+					StepOverExecuted(null, null);
+					e.Handled = true;
+					break;
+				case Key.F11:
+					StepIntoExecuted(null, null);
+					e.Handled = true;
+					break;
+				default:
+					// do nothing
+					break;
+			}
+			
+			base.OnKeyUp(e);
+		}
+		
 		#endregion
 		
 		#region Exit/About
@@ -380,6 +471,12 @@ namespace ICSharpCode.ILSpy
 			sessionSettings.WindowBounds = this.RestoreBounds;
 			sessionSettings.SplitterPosition = leftColumn.Width.Value / (leftColumn.Width.Value + rightColumn.Width.Value);
 			sessionSettings.Save();
+		}
+		
+		void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			DebuggerService.CurrentDebugger.Language =
+				sessionSettings.FilterSettings.Language.Name.StartsWith("IL") ? DecompiledLanguages.IL : DecompiledLanguages.CSharp;
 		}
 	}
 }
