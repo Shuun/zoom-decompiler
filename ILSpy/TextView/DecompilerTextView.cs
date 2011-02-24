@@ -25,17 +25,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Xml;
 
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using ICSharpCode.Decompiler;
 using ICSharpCode.ILSpy.TreeNodes;
+using ILSpy.Debugger.AvalonEdit;
+using ILSpy.Debugger.Bookmarks;
+using ILSpy.Debugger.ToolTips;
 using Microsoft.Win32;
 using Mono.Cecil;
 
@@ -54,6 +56,8 @@ namespace ICSharpCode.ILSpy.TextView
 		
 		DefinitionLookup definitionLookup;
 		CancellationTokenSource currentCancellationTokenSource;
+		
+		IconBarMargin iconMargin;
 		
 		#region Constructor
 		public DecompilerTextView()
@@ -74,7 +78,18 @@ namespace ICSharpCode.ILSpy.TextView
 			this.uiElementGenerator = new UIElementGenerator();
 			textEditor.TextArea.TextView.ElementGenerators.Add(uiElementGenerator);
 			textEditor.Options.RequireControlModifierForHyperlinkClick = false;
+			
+			// add margin
+			iconMargin = new IconBarMargin();
+			textEditor.TextArea.LeftMargins.Add(iconMargin);
+			
+			// wire the mouse events
+			TextEditorWeakEventManager.MouseHover.AddListener(textEditor, TextEditorListener.Instance);
+			TextEditorWeakEventManager.MouseHoverStopped.AddListener(textEditor, TextEditorListener.Instance);
+			TextEditorWeakEventManager.MouseDown.AddListener(textEditor, TextEditorListener.Instance);
+			textEditor.TextArea.TextView.VisualLinesChanged += (s, e) => iconMargin.InvalidateVisual();
 		}
+		
 		#endregion
 		
 		#region RunWithCancellation
@@ -190,6 +205,7 @@ namespace ICSharpCode.ILSpy.TextView
 		/// </summary>
 		public void Decompile(ILSpy.Language language, IEnumerable<ILSpyTreeNode> treeNodes, DecompilationOptions options)
 		{
+			IconBarMargin.CurrentType = null;
 			// Some actions like loading an assembly list cause several selection changes in the tree view,
 			// and each of those will start a decompilation action.
 			bool isDecompilationScheduled = this.nextDecompilationRun != null;
@@ -246,6 +262,10 @@ namespace ICSharpCode.ILSpy.TextView
 							output.WriteLine(ex.ToString());
 						}
 						ShowOutput(output);
+					}
+					finally {
+						// repaint bookmarks
+						iconMargin.InvalidateVisual();
 					}
 				});
 		}
