@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{1E85EFF9-E370-4683-83E4-8A3D063FF791}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ICSharpCode.ILSpy</RootNamespace>
+    <AssemblyName>ILSpy</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <ApplicationIcon>Images\ILSpy.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutPage.cs" />
+    <Compile Include="App.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AssemblyList.cs" />
+    <Compile Include="AssemblyListManager.cs" />
+    <Compile Include="BamlDecompiler.cs" />
+    <Compile Include="Controls\SearchBox.cs" />
+    <Compile Include="Controls\SortableGridViewColumn.cs" />
+    <Compile Include="CSharpLanguage.cs" />
+    <Compile Include="DecompilationOptions.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="FilterSettings.cs" />
+    <Compile Include="Fusion.cs" />
+    <Compile Include="GacInterop.cs" />
+    <Compile Include="GuessFileType.cs" />
+    <Compile Include="ILAstLanguage.cs" />
+    <Compile Include="ILLanguage.cs" />
+    <Compile Include="ILSpySettings.cs" />
+    <Compile Include="ISmartTextOutput.cs" />
+    <Compile Include="Language.cs" />
+    <Compile Include="Images\Images.cs" />
+    <Compile Include="LoadedAssembly.cs" />
+    <Compile Include="NavigationHistory.cs" />
+    <Compile Include="OpenFromGacDialog.xaml.cs">
+      <DependentUpon>OpenFromGacDialog.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="..\README.txt">
+      <Link>README.txt</Link>
+    </EmbeddedResource>
+    <Resource Include="Images\AssemblyList.png" />
+    <Resource Include="Images\AssemblyWarning.png" />
+    <Resource Include="Images\ViewCode.png" />
+    <Resource Include="Images\SaveFile.png" />
+    <Resource Include="Images\OK.png" />
+    <Resource Include="Images\ClearSearch.png" />
+    <Resource Include="Images\Search.png" />
+    <Resource Include="Images\Delete.png" />
+    <Resource Include="Images\ILSpy.ico" />
+    <Resource Include="Images\FindAssembly.png" />
+    <None Include="Properties\AssemblyInfo.template.cs" />
+    <Compile Include="Properties\WPFAssemblyInfo.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SessionSettings.cs" />
+    <Compile Include="TextView\CaretHighlightAdorner.cs" />
+    <Compile Include="TextView\DecompilerTextView.cs" />
+    <Compile Include="TextView\OutputLengthExceededException.cs" />
+    <Compile Include="TextView\ReferenceElementGenerator.cs" />
+    <Compile Include="TextView\AvalonEditTextOutput.cs" />
+    <Compile Include="TextView\UIElementGenerator.cs" />
+    <Compile Include="TreeNodes\AssemblyListTreeNode.cs" />
+    <Compile Include="TreeNodes\AssemblyReferenceTreeNode.cs" />
+    <Compile Include="TreeNodes\AssemblyTreeNode.cs" />
+    <Compile Include="TreeNodes\BaseTypesTreeNode.cs" />
+    <Compile Include="TreeNodes\DerivedTypesTreeNode.cs" />
+    <Compile Include="TreeNodes\EventTreeNode.cs" />
+    <Compile Include="TreeNodes\FieldTreeNode.cs" />
+    <Compile Include="TreeNodes\ILSpyTreeNode.cs" />
+    <Compile Include="TreeNodes\MethodTreeNode.cs" />
+    <Compile Include="TreeNodes\ModuleReferenceTreeNode.cs" />
+    <Compile Include="TreeNodes\NamespaceTreeNode.cs" />
+    <Compile Include="TreeNodes\PropertyTreeNode.cs" />
+    <Compile Include="TreeNodes\ReferenceFolderTreeNode.cs" />
+    <Compile Include="TreeNodes\ResourceEntryNode.cs" />
+    <Compile Include="TreeNodes\ResourceListTreeNode.cs" />
+    <Compile Include="TreeNodes\ThreadedTreeNode.cs" />
+    <Compile Include="TreeNodes\TypeTreeNode.cs" />
+    <EmbeddedResource Include="TextView\ILAsm-Mode.xshd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\SearchBoxStyle.xaml">
+      <DependentUpon>SearchBox.cs</DependentUpon>
+    </Page>
+    <Page Include="MainWindow.xaml" />
+    <Page Include="OpenFromGacDialog.xaml" />
+    <Page Include="TextView\DecompilerTextView.xaml">
+      <DependentUpon>DecompilerTextView.cs</DependentUpon>
+    </Page>
+    <Page Include="themes\generic.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Class.png" />
+    <Resource Include="Images\Delegate.png" />
+    <Resource Include="Images\Enum.png" />
+    <Resource Include="Images\Field.png" />
+    <Resource Include="Images\Interface.png" />
+    <Resource Include="Images\InternalClass.png" />
+    <Resource Include="Images\InternalDelegate.png" />
+    <Resource Include="Images\InternalEnum.png" />
+    <Resource Include="Images\InternalInterface.png" />
+    <Resource Include="Images\InternalStruct.png" />
+    <Resource Include="Images\Literal.png" />
+    <Resource Include="Images\Method.png" />
+    <Resource Include="Images\NameSpace.png" />
+    <Resource Include="Images\Open.png" />
+    <Resource Include="Images\PrivateClass.png" />
+    <Resource Include="Images\PrivateDelegate.png" />
+    <Resource Include="Images\PrivateEnum.png" />
+    <Resource Include="Images\PrivateInterface.png" />
+    <Resource Include="Images\PrivateStruct.png" />
+    <Resource Include="Images\ProtectedClass.png" />
+    <Resource Include="Images\ProtectedDelegate.png" />
+    <Resource Include="Images\ProtectedEnum.png" />
+    <Resource Include="Images\ProtectedInterface.png" />
+    <Resource Include="Images\ProtectedStruct.png" />
+    <Resource Include="Images\Assembly.png" />
+    <Resource Include="Images\Struct.png" />
+    <Resource Include="Images\ReferenceFolder.Closed.png" />
+    <Resource Include="Images\ReferenceFolder.Open.png" />
+    <Resource Include="Images\Event.png" />
+    <Resource Include="Images\ExtensionMethod.png" />
+    <Resource Include="Images\Indexer.png" />
+    <Resource Include="Images\Operator.png" />
+    <Resource Include="Images\Property.png" />
+    <Resource Include="Images\Find.png" />
+    <Resource Include="Images\Library.png" />
+    <Resource Include="Images\SubTypes.png" />
+    <Resource Include="Images\SuperTypes.png" />
+    <Resource Include="Images\Resource.png" />
+    <Resource Include="Images\Back.png" />
+    <Resource Include="Images\Forward.png" />
+    <Resource Include="Images\PrivateInternal.png" />
+    <Resource Include="Images\Refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ICSharpCode.Decompiler\ICSharpCode.Decompiler.csproj">
+      <Project>{984CC812-9470-4A13-AFF9-CC44068D666C}</Project>
+      <Name>ICSharpCode.Decompiler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mono.Cecil\Mono.Cecil.csproj">
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AvalonEdit\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj">
+      <Project>{6C55B776-26D4-4DB3-A6AB-87E783B2F3D1}</Project>
+      <Name>ICSharpCode.AvalonEdit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NRefactory\ICSharpCode.NRefactory\ICSharpCode.NRefactory.csproj">
+      <Project>{3B2A5653-EC97-4001-BB9B-D90F1AF2C371}</Project>
+      <Name>ICSharpCode.NRefactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpTreeView\ICSharpCode.TreeView.csproj">
+      <Project>{DDE2A481-8271-4EAC-A330-8FA6A38D13D1}</Project>
+      <Name>ICSharpCode.TreeView</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls" />
+    <Folder Include="TreeNodes" />
+    <Folder Include="TextView" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>
