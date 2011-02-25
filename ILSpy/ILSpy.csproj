@@ -9,7 +9,8 @@
     <AssemblyName>ILSpy</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
@@ -85,6 +86,7 @@
     <Compile Include="AssemblyList.cs" />
     <Compile Include="AssemblyListManager.cs" />
     <Compile Include="BamlDecompiler.cs" />
+    <Compile Include="Commands\RoutedUICommands.cs" />
     <Compile Include="Controls\SearchBox.cs" />
     <Compile Include="Controls\SortableGridViewColumn.cs" />
     <Compile Include="CSharpLanguage.cs" />
@@ -120,6 +122,7 @@
     <Resource Include="Images\Delete.png" />
     <Resource Include="Images\ILSpy.ico" />
     <Resource Include="Images\FindAssembly.png" />
+    <None Include="app.config" />
     <None Include="Properties\AssemblyInfo.template.cs" />
     <Compile Include="Properties\WPFAssemblyInfo.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -211,6 +214,10 @@
     <Resource Include="Images\Refresh.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Debugger\ILSpy.Debugger\ILSpy.Debugger.csproj">
+      <Project>{6D3D0F0D-348D-456A-A6ED-E9BD5EFABB6A}</Project>
+      <Name>ILSpy.Debugger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ICSharpCode.Decompiler\ICSharpCode.Decompiler.csproj">
       <Project>{984CC812-9470-4A13-AFF9-CC44068D666C}</Project>
       <Name>ICSharpCode.Decompiler</Name>
