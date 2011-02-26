@@ -32,6 +32,10 @@ using ICSharpCode.Decompiler.FlowAnalysis;
 using ICSharpCode.ILSpy.TreeNodes;
 using ICSharpCode.ILSpy.TreeNodes.Analyzer;
 using ICSharpCode.TreeView;
+using ILSpy.Debugger.AvalonEdit;
+using ILSpy.Debugger.Bookmarks;
+using ILSpy.Debugger.Services;
+using ILSpy.Debugger.UI;
 using Microsoft.Win32;
 using Mono.Cecil;
 
@@ -311,14 +315,6 @@ namespace ICSharpCode.ILSpy
 				treeView.FocusNode(lastNode);
 		}
 		
-		void RefreshCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-		{
-			e.Handled = true;
-			var path = GetPathForNode(treeView.SelectedItem as SharpTreeNode);
-			ShowAssemblyList(assemblyListManager.LoadList(ILSpySettings.Load(), assemblyList.ListName));
-			SelectNode(FindNodeByPath(path, true));
-		}
-		
 		void OpenFromGac_Click(object sender, RoutedEventArgs e)
 		{
 			OpenFromGacDialog dlg = new OpenFromGacDialog();
@@ -327,6 +323,125 @@ namespace ICSharpCode.ILSpy
 				OpenFiles(dlg.SelectedFileNames);
 			}
 		}
+		
+		void RefreshCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (!DebuggerService.CurrentDebugger.IsDebugging) {
+				e.Handled = true;
+				var path = GetPathForNode(treeView.SelectedItem as SharpTreeNode);
+				ShowAssemblyList(assemblyListManager.LoadList(ILSpySettings.Load(), assemblyList.ListName));
+				SelectNode(FindNodeByPath(path, true));
+			}
+		}
+		
+		#endregion
+		
+		#region Debugger commands
+		
+		IDebugger CurrentDebugger { 
+			get {
+				return DebuggerService.CurrentDebugger;
+			}
+		}
+
+		void AttachToProcessExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (!CurrentDebugger.IsDebugging) {
+				var window = new AttachToProcessWindow();
+				window.Owner = this;
+				if (window.ShowDialog() == true)
+				{
+					if (CurrentDebugger.IsDebugging) {
+						EnableDebuggerUI(false);
+						CurrentDebugger.DebugStopped += OnDebugStopped;
+					}
+				}
+			}
+		}
+
+		void OnDebugStopped(object sender, EventArgs e)
+		{
+			EnableDebuggerUI(true);
+			DebuggerService.CurrentDebugger.DebugStopped -= OnDebugStopped;
+		}
+		
+		void DetachFromProcessExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (CurrentDebugger.IsDebugging){
+				CurrentDebugger.Detach();
+				
+				EnableDebuggerUI(true);
+				CurrentDebugger.DebugStopped -= OnDebugStopped;
+			}
+		}
+		
+		void ContinueDebuggingExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (CurrentDebugger.IsDebugging && !CurrentDebugger.IsProcessRunning)
+				CurrentDebugger.Continue();
+		}
+		
+		void StepIntoExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (CurrentDebugger.IsDebugging && !CurrentDebugger.IsProcessRunning)
+				CurrentDebugger.StepInto();
+		}
+		
+		void StepOverExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (CurrentDebugger.IsDebugging && !CurrentDebugger.IsProcessRunning)
+				CurrentDebugger.StepOver();
+		}
+		
+		void StepOutExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (CurrentDebugger.IsDebugging && !CurrentDebugger.IsProcessRunning)
+				CurrentDebugger.StepOut();
+		}
+		
+		void RemoveAllBreakpointExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			for (int i = BookmarkManager.Bookmarks.Count - 1; i >= 0; --i) {
+				var bookmark = BookmarkManager.Bookmarks[i];
+				if (bookmark is BreakpointBookmark) {
+					BookmarkManager.RemoveMark(bookmark);
+				}
+			}
+		}
+		
+		protected override void OnKeyUp(KeyEventArgs e)
+		{
+			switch (e.Key) {
+				case Key.F5:
+					ContinueDebuggingExecuted(null, null);
+					e.Handled = true;
+					break;
+				case Key.System:
+					StepOverExecuted(null, null);
+					e.Handled = true;
+					break;
+				case Key.F11:
+					StepIntoExecuted(null, null);
+					e.Handled = true;
+					break;
+				default:
+					// do nothing
+					break;
+			}
+			
+			base.OnKeyUp(e);
+		}
+		
+		void EnableDebuggerUI(bool enable)
+		{
+			AttachMenuItem.IsEnabled = AttachButton.IsEnabled = enable;
+			ContinueDebuggingMenuItem.IsEnabled =
+				StepIntoMenuItem.IsEnabled =
+				StepOverMenuItem.IsEnabled =
+				StepOutMenuItem.IsEnabled =
+				DetachMenuItem.IsEnabled = !enable;
+		}
+		
 		#endregion
 		
 		#region Exit/About
@@ -447,6 +562,12 @@ namespace ICSharpCode.ILSpy
 			sessionSettings.AnalyzerSplitterPosition = analyzerRow.Height.Value / (analyzerRow.Height.Value + textViewRow.Height.Value);
 			analyzerRow.MinHeight = 0;
 			analyzerRow.Height = new GridLength(0);
+		}
+		
+		void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			DebuggerService.CurrentDebugger.Language =
+				sessionSettings.FilterSettings.Language.Name.StartsWith("IL") ? DecompiledLanguages.IL : DecompiledLanguages.CSharp;
 		}
 	}
 }
