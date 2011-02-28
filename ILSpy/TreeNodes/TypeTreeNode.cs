@@ -22,6 +22,7 @@ using System.Linq;
 using System.Windows.Media;
 
 using ICSharpCode.Decompiler;
+using ILSpy.Debugger.AvalonEdit;
 using Mono.Cecil;
 
 namespace ICSharpCode.ILSpy.TreeNodes
@@ -127,6 +128,7 @@ namespace ICSharpCode.ILSpy.TreeNodes
 		
 		public override void Decompile(Language language, ITextOutput output, DecompilationOptions options)
 		{
+			IconBarMargin.CurrentType = type;
 			language.DecompileType(type, output, options);
 		}
 		
