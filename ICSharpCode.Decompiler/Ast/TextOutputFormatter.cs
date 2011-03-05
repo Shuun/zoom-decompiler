@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using ICSharpCode.Decompiler;
+using ICSharpCode.Decompiler.ILAst;
 using ICSharpCode.NRefactory.CSharp;
 using Mono.Cecil;
 
@@ -121,6 +123,25 @@ namespace ICSharpCode.Decompiler.Ast
 		
 		public void StartNode(AstNode node)
 		{
+			var ranges = node.Annotation<List<ILRange>>();
+			if (ranges != null)
+			{
+				// find the ancestor that has method mapping as annotation
+				if (node.Ancestors != null && node.Ancestors.Count() > 0)
+				{
+					var n = node.Ancestors.FirstOrDefault(a => a.Annotation<MethodMapping>() != null);
+					if (n != default(AstType)) {
+						MethodMapping mapping = n.Annotation<MethodMapping>();
+						foreach (var range in ranges) {
+							mapping.MethodCodeMappings.Add(new SourceCodeMapping {
+							                               	ILInstructionOffset = range,
+							                               	SourceCodeLine = output.CurrentLine
+							                               });
+						}
+					}
+				}
+			}
+			
 			nodeStack.Push(node);
 		}
 		

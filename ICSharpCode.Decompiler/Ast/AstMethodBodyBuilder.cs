@@ -72,6 +72,11 @@ namespace ICSharpCode.Decompiler.Ast
 				DeclareVariableInSmallestScope.DeclareVariable(astBlock, AstBuilder.ConvertType(v.Type), v.Name);
 			}
 			
+			// store the variables - used for debugger
+			int token = methodDef.MetadataToken.ToInt32();
+			ILAstBuilder.MemberLocalVariables.AddOrUpdate(
+								token, astBuilder.Variables, (key, oldValue) => astBuilder.Variables);
+			
 			return astBlock;
 		}
 		
@@ -168,21 +173,24 @@ namespace ICSharpCode.Decompiler.Ast
 		
 		Ast.Expression MakeBranchCondition(ILExpression expr)
 		{
+			// get IL Ranges for expression
+			var ilRanges = expr.GetILRanges();
+			
 			switch(expr.Code) {
 				case ILCode.LogicNot:
-					return new Ast.UnaryOperatorExpression(UnaryOperatorType.Not, MakeBranchCondition(expr.Arguments[0]));
+					return (new Ast.UnaryOperatorExpression(UnaryOperatorType.Not, MakeBranchCondition(expr.Arguments[0]))).WithAnnotation(ilRanges);
 				case ILCode.BrLogicAnd:
-					return new Ast.BinaryOperatorExpression(
+					return (new Ast.BinaryOperatorExpression(
 						MakeBranchCondition(expr.Arguments[0]),
 						BinaryOperatorType.ConditionalAnd,
-						MakeBranchCondition(expr.Arguments[1])
-					);
+						MakeBranchCondition(expr.Arguments[1]))
+					).WithAnnotation(ilRanges);
 				case ILCode.BrLogicOr:
-					return new Ast.BinaryOperatorExpression(
+					return (new Ast.BinaryOperatorExpression(
 						MakeBranchCondition(expr.Arguments[0]),
 						BinaryOperatorType.ConditionalOr,
 						MakeBranchCondition(expr.Arguments[1])
-					);
+					)).WithAnnotation(ilRanges);
 			}
 			
 			List<Ast.Expression> args = TransformExpressionArguments(expr);
@@ -190,29 +198,29 @@ namespace ICSharpCode.Decompiler.Ast
 			Ast.Expression arg2 = args.Count >= 2 ? args[1] : null;
 			switch((Code)expr.Code) {
 				case Code.Brfalse:
-					return new Ast.UnaryOperatorExpression(UnaryOperatorType.Not, arg1);
+					return (new Ast.UnaryOperatorExpression(UnaryOperatorType.Not, arg1)).WithAnnotation(ilRanges);
 				case Code.Brtrue:
-					return arg1;
+					return arg1.WithAnnotation(ilRanges);
 				case Code.Beq:
-					return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Equality, arg2);
+					return (new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Equality, arg2)).WithAnnotation(ilRanges);
 				case Code.Bge:
-					return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.GreaterThanOrEqual, arg2);
+					return (new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.GreaterThanOrEqual, arg2)).WithAnnotation(ilRanges);
 				case Code.Bge_Un:
-					return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.GreaterThanOrEqual, arg2);
+					return (new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.GreaterThanOrEqual, arg2)).WithAnnotation(ilRanges);
 				case Code.Bgt:
-					return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.GreaterThan, arg2);
+					return (new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.GreaterThan, arg2)).WithAnnotation(ilRanges);
 				case Code.Bgt_Un:
-					return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.GreaterThan, arg2);
+					return (new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.GreaterThan, arg2)).WithAnnotation(ilRanges);
 				case Code.Ble:
-					return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.LessThanOrEqual, arg2);
+					return (new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.LessThanOrEqual, arg2)).WithAnnotation(ilRanges);
 				case Code.Ble_Un:
-					return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.LessThanOrEqual, arg2);
+					return (new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.LessThanOrEqual, arg2)).WithAnnotation(ilRanges);
 				case Code.Blt:
-					return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.LessThan, arg2);
+					return (new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.LessThan, arg2)).WithAnnotation(ilRanges);
 				case Code.Blt_Un:
-					return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.LessThan, arg2);
+					return (new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.LessThan, arg2)).WithAnnotation(ilRanges);
 				case Code.Bne_Un:
-					return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.InEquality, arg2);
+					return (new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.InEquality, arg2)).WithAnnotation(ilRanges);
 				default:
 					throw new Exception("Bad opcode");
 			}

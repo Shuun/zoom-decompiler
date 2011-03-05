@@ -142,6 +142,14 @@ namespace ICSharpCode.Decompiler.Ast
 		
 		public TypeDeclaration CreateType(TypeDefinition typeDef)
 		{
+			// create CSharp code mappings - used for debugger
+			if (!CSharpCodeMapping.SourceCodeMappings.ContainsKey(typeDef.FullName)) {
+				CSharpCodeMapping.SourceCodeMappings.TryAdd(typeDef.FullName, new List<MethodMapping>());
+			} else {
+				CSharpCodeMapping.SourceCodeMappings[typeDef.FullName].Clear();
+			}
+			
+			// create type
 			TypeDeclaration astType = new TypeDeclaration();
 			astType.AddAnnotation(typeDef);
 			astType.Modifiers = ConvertModifiers(typeDef);
@@ -515,8 +523,13 @@ namespace ICSharpCode.Decompiler.Ast
 
 		MethodDeclaration CreateMethod(MethodDefinition methodDef)
 		{
+			// Create mapping - used in debugger
+			MethodMapping methodMapping = methodDef.CreateCodeMapping(CSharpCodeMapping.SourceCodeMappings);
+			
 			MethodDeclaration astMethod = new MethodDeclaration();
 			astMethod.AddAnnotation(methodDef);
+			if (methodMapping != null)
+				astMethod.AddAnnotation(methodMapping);
 			astMethod.ReturnType = ConvertType(methodDef.ReturnType, methodDef.MethodReturnType);
 			astMethod.Name = CleanName(methodDef.Name);
 			astMethod.TypeParameters.AddRange(MakeTypeParameters(methodDef.GenericParameters));
@@ -570,8 +583,13 @@ namespace ICSharpCode.Decompiler.Ast
 		
 		ConstructorDeclaration CreateConstructor(MethodDefinition methodDef)
 		{
+			// Create mapping - used in debugger
+			MethodMapping methodMapping = methodDef.CreateCodeMapping(CSharpCodeMapping.SourceCodeMappings);
+			
 			ConstructorDeclaration astMethod = new ConstructorDeclaration();
 			astMethod.AddAnnotation(methodDef);
+			if (methodMapping != null)
+				astMethod.AddAnnotation(methodMapping);
 			astMethod.Modifiers = ConvertModifiers(methodDef);
 			if (methodDef.IsStatic) {
 				// don't show visibility for static ctors
@@ -592,17 +610,29 @@ namespace ICSharpCode.Decompiler.Ast
 			astProp.Name = CleanName(propDef.Name);
 			astProp.ReturnType = ConvertType(propDef.PropertyType, propDef);
 			if (propDef.GetMethod != null) {
+				// Create mapping - used in debugger
+				MethodMapping methodMapping = propDef.GetMethod.CreateCodeMapping(CSharpCodeMapping.SourceCodeMappings);
+				
 				astProp.Getter = new Accessor {
 					Body = AstMethodBodyBuilder.CreateMethodBody(propDef.GetMethod, context)
 				}.WithAnnotation(propDef.GetMethod);
 				ConvertAttributes(astProp.Getter, propDef.GetMethod);
+				
+				if (methodMapping != null)
+					astProp.Getter.AddAnnotation(methodMapping);
 			}
 			if (propDef.SetMethod != null) {
+				// Create mapping - used in debugger
+				MethodMapping methodMapping = propDef.SetMethod.CreateCodeMapping(CSharpCodeMapping.SourceCodeMappings);
+				
 				astProp.Setter = new Accessor {
 					Body = AstMethodBodyBuilder.CreateMethodBody(propDef.SetMethod, context)
 				}.WithAnnotation(propDef.SetMethod);
 				ConvertAttributes(astProp.Setter, propDef.SetMethod);
 				ConvertCustomAttributes(astProp.Setter, propDef.SetMethod.Parameters.Last(), AttributeTarget.Param);
+				
+				if (methodMapping != null)
+					astProp.Setter.AddAnnotation(methodMapping);
 			}
 			ConvertCustomAttributes(astProp, propDef);
 			return astProp;
@@ -616,16 +646,28 @@ namespace ICSharpCode.Decompiler.Ast
 			astEvent.ReturnType = ConvertType(eventDef.EventType, eventDef);
 			astEvent.Modifiers = ConvertModifiers(eventDef.AddMethod);
 			if (eventDef.AddMethod != null) {
+				// Create mapping - used in debugger
+				MethodMapping methodMapping = eventDef.AddMethod.CreateCodeMapping(CSharpCodeMapping.SourceCodeMappings);
+				
 				astEvent.AddAccessor = new Accessor {
 					Body = AstMethodBodyBuilder.CreateMethodBody(eventDef.AddMethod, context)
 				}.WithAnnotation(eventDef.AddMethod);
 				ConvertAttributes(astEvent.AddAccessor, eventDef.AddMethod);
+				
+				if (methodMapping != null)
+					astEvent.AddAccessor.AddAnnotation(methodMapping);
 			}
 			if (eventDef.RemoveMethod != null) {
+				// Create mapping - used in debugger
+				MethodMapping methodMapping = eventDef.RemoveMethod.CreateCodeMapping(CSharpCodeMapping.SourceCodeMappings);
+				
 				astEvent.RemoveAccessor = new Accessor {
 					Body = AstMethodBodyBuilder.CreateMethodBody(eventDef.RemoveMethod, context)
 				}.WithAnnotation(eventDef.RemoveMethod);
 				ConvertAttributes(astEvent.RemoveAccessor, eventDef.RemoveMethod);
+
+				if (methodMapping != null)
+					astEvent.RemoveAccessor.AddAnnotation(methodMapping);
 			}
 			return astEvent;
 		}

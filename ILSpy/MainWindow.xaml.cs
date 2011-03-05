@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
 using ICSharpCode.Decompiler;
@@ -36,6 +37,11 @@ using ICSharpCode.ILSpy.TextView;
 using ICSharpCode.ILSpy.TreeNodes;
 using ICSharpCode.ILSpy.TreeNodes.Analyzer;
 using ICSharpCode.TreeView;
+using ILSpy.Debugger;
+using ILSpy.Debugger.AvalonEdit;
+using ILSpy.Debugger.Bookmarks;
+using ILSpy.Debugger.Services;
+using ILSpy.Debugger.UI;
 using Microsoft.Win32;
 using Mono.Cecil;
 
@@ -404,18 +410,21 @@ namespace ICSharpCode.ILSpy
 						lastNode = node;
 					}
 				}
+				if (lastNode != null)
+					treeView.FocusNode(lastNode);
 			}
-			if (lastNode != null)
-				treeView.FocusNode(lastNode);
 		}
 		
 		void RefreshCommandExecuted(object sender, ExecutedRoutedEventArgs e)
 		{
-			e.Handled = true;
-			var path = GetPathForNode(treeView.SelectedItem as SharpTreeNode);
-			ShowAssemblyList(assemblyListManager.LoadList(ILSpySettings.Load(), assemblyList.ListName));
-			SelectNode(FindNodeByPath(path, true));
+			if (!System.Diagnostics.Debugger.IsAttached) {
+				e.Handled = true;
+				var path = GetPathForNode(treeView.SelectedItem as SharpTreeNode);
+				ShowAssemblyList(assemblyListManager.LoadList(ILSpySettings.Load(), assemblyList.ListName));
+				SelectNode(FindNodeByPath(path, true));
+			}
 		}
+		
 		#endregion
 		
 		#region Decompile (TreeView_SelectionChanged)
@@ -526,6 +535,11 @@ namespace ICSharpCode.ILSpy
 			sessionSettings.AnalyzerSplitterPosition = analyzerRow.Height.Value / (analyzerRow.Height.Value + textViewRow.Height.Value);
 			analyzerRow.MinHeight = 0;
 			analyzerRow.Height = new GridLength(0);
+		}
+		
+		void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			DebuggedData.Language = sessionSettings.FilterSettings.Language.Name.StartsWith("IL") ? DecompiledLanguages.IL : DecompiledLanguages.CSharp;
 		}
 	}
 }
