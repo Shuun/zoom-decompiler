@@ -73,6 +73,11 @@ namespace ICSharpCode.Decompiler.Ast
 				DeclareVariableInSmallestScope.DeclareVariable(astBlock, AstBuilder.ConvertType(v.Type), v.Name);
 			}
 			
+			// store the variables - used for debugger
+			int token = methodDef.MetadataToken.ToInt32();
+			ILAstBuilder.MemberLocalVariables.AddOrUpdate(
+								token, allVariables, (key, oldValue) => allVariables);
+			
 			return astBlock;
 		}
 		

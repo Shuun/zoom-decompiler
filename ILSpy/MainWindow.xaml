@@ -70,7 +70,9 @@
 			<Separator />
 			<ComboBox Name="languageComboBox" DisplayMemberPath="Name" Width="100"
 			          ItemsSource="{x:Static local:Languages.AllLanguages}"
-			          SelectedItem="{Binding FilterSettings.Language}" />
+			          SelectedItem="{Binding FilterSettings.Language}"
+			          SelectionChanged="LanguageComboBox_SelectionChanged"
+			/>
 		</ToolBar>
 		<!-- Main grid separating left pane (treeView) from main pane (textEditor) -->
 		<Grid>

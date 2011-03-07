@@ -1,0 +1,87 @@
+﻿// Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+// This code is distributed under the GNU LGPL (for details please see \doc\license.txt)
+
+using System;
+using System.Windows.Media;
+using ICSharpCode.NRefactory.CSharp;
+using ILSpy.Debugger.AvalonEdit;
+using ILSpy.Debugger.Services;
+using Mono.Cecil;
+using Mono.CSharp;
+
+namespace ILSpy.Debugger.Bookmarks
+{
+	public class CurrentLineBookmark : MarkerBookmark
+	{
+		static CurrentLineBookmark instance;
+		
+		public static CurrentLineBookmark Instance {
+			get { return instance; }
+		}
+		
+		static int startLine;
+		static int startColumn;
+		static int endLine;
+		static int endColumn;
+		
+		public static void SetPosition(TypeDefinition type, int makerStartLine, int makerStartColumn, int makerEndLine, int makerEndColumn)
+		{
+			Remove();
+			
+			startLine   = makerStartLine;
+			startColumn = makerStartColumn;
+			endLine     = makerEndLine;
+			endColumn   = makerEndColumn;
+			
+			instance = new CurrentLineBookmark(type, new AstLocation(startLine, startColumn));
+			BookmarkManager.AddMark(instance);
+		}
+		
+		public static void Remove()
+		{
+			if (instance != null) {
+				BookmarkManager.RemoveMark(instance);
+				instance = null;
+			}
+		}
+		
+		public override bool CanToggle {
+			get { return false; }
+		}
+		
+		public override int ZOrder {
+			get { return 100; }
+		}
+		
+		public CurrentLineBookmark(TypeDefinition type, AstLocation location) : base(type, location)
+		{
+			
+		}
+		
+		public override ImageSource Image {
+			get { return ImageService.CurrentLine; }
+		}
+		
+		public override bool CanDragDrop {
+			get { return false; }
+		}
+		
+		public override void Drop(int lineNumber)
+		{
+			// call async because the Debugger seems to use Application.DoEvents(), but we don't want to process events
+			// because Drag'N'Drop operation has finished
+//			WorkbenchSingleton.SafeThreadAsyncCall(
+//				delegate {
+//					DebuggerService.CurrentDebugger.SetInstructionPointer(this.FileName, lineNumber, 1);
+//				});
+		}
+		
+		public override ITextMarker CreateMarker(ITextMarkerService markerService, int offset, int length)
+		{
+			ITextMarker marker = markerService.Create(offset + startColumn - 1, length);
+			marker.BackgroundColor = Colors.Yellow;
+			marker.ForegroundColor = Colors.Blue;
+			return marker;
+		}
+	}
+}
