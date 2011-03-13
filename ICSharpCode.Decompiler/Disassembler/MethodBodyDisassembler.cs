@@ -20,8 +20,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.FlowAnalysis;
+using ICSharpCode.Decompiler.ILAst;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -47,6 +49,10 @@ namespace ICSharpCode.Decompiler.Disassembler
 		
 		public void Disassemble(MethodBody body)
 		{
+			// create IL code mappings - used in debugger
+			MemberMapping methodMapping = body.Method.CreateCodeMapping(ILCodeMapping.SourceCodeMappings);
+			
+			// start writing IL code
 			MethodDefinition method = body.Method;
 			output.WriteLine("// Method begins at RVA 0x{0:x4}", method.RVA);
 			output.WriteLine("// Code size {0} (0x{0:x})", body.CodeSize);
@@ -74,9 +80,17 @@ namespace ICSharpCode.Decompiler.Disassembler
 			
 			if (detectControlStructure && body.Instructions.Count > 0) {
 				Instruction inst = body.Instructions[0];
-				WriteStructureBody(new ILStructure(body), ref inst);
+				WriteStructureBody(new ILStructure(body), ref inst, methodMapping, method.Body.CodeSize);
 			} else {
 				foreach (var inst in method.Body.Instructions) {
+					// add IL code mappings
+					methodMapping.MemberCodeMappings.Add(
+						new SourceCodeMapping() {
+							SourceCodeLine = output.CurrentLine,
+							ILInstructionOffset = new ILRange { From = inst.Offset, To = inst.Next == null ? method.Body.CodeSize : inst.Next.Offset },
+							MemberMapping = methodMapping
+						});
+					
 					inst.WriteTo(output);
 					output.WriteLine();
 				}
@@ -133,15 +147,25 @@ namespace ICSharpCode.Decompiler.Disassembler
 			output.Indent();
 		}
 		
-		void WriteStructureBody(ILStructure s, ref Instruction inst)
+		void WriteStructureBody(ILStructure s, ref Instruction inst, MemberMapping currentMethodMapping, int codeSize)
 		{
 			int childIndex = 0;
 			while (inst != null && inst.Offset < s.EndOffset) {
+				// add IL code mappings - used in debugger
+				if (currentMethodMapping != null) {
+					currentMethodMapping.MemberCodeMappings.Add(
+						new SourceCodeMapping() {
+							SourceCodeLine = output.CurrentLine,
+							ILInstructionOffset = new ILRange { From = inst.Offset, To = inst.Next == null ? codeSize : inst.Next.Offset },
+							MemberMapping = currentMethodMapping
+						});
+				}
+				
 				int offset = inst.Offset;
 				if (childIndex < s.Children.Count && s.Children[childIndex].StartOffset <= offset && offset < s.Children[childIndex].EndOffset) {
 					ILStructure child = s.Children[childIndex++];
 					WriteStructureHeader(child);
-					WriteStructureBody(child, ref inst);
+					WriteStructureBody(child, ref inst, currentMethodMapping, codeSize);
 					WriteStructureFooter(child);
 				} else {
 					inst.WriteTo(output);
