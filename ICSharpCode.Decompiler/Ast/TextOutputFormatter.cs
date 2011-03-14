@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using ICSharpCode.Decompiler;
+using ICSharpCode.Decompiler.ILAst;
 using ICSharpCode.NRefactory.CSharp;
 using Mono.Cecil;
 
@@ -121,6 +123,42 @@ namespace ICSharpCode.Decompiler.Ast
 		
 		public void StartNode(AstNode node)
 		{
+			var ranges = node.Annotation<List<ILRange>>();
+			if (ranges != null && ranges.Count > 0)
+			{
+				// find the ancestor that has method mapping as annotation
+				if (node.Ancestors != null && node.Ancestors.Count() > 0)
+				{
+					var n = node.Ancestors.FirstOrDefault(a => a.Annotation<MemberMapping>() != null);
+					if (n != default(AstType)) {
+						MemberMapping mapping = n.Annotation<MemberMapping>();
+//						var map = mapping.MemberCodeMappings.Find(s => s.SourceCodeLine == output.CurrentLine);
+						
+						foreach (var range in ranges) {
+//							// check if the range is in previous mapping
+//							var prevmap = mapping.MemberCodeMappings.Find(m => m.ILInstructionOffset.From <= range.From &&
+//							                                              m.ILInstructionOffset.To >= range.To);
+//							
+//							if (prevmap != null)
+//								continue;
+//							
+//							if (map == null) {
+								mapping.MemberCodeMappings.Add(/*map = */new SourceCodeMapping {
+								                               	ILInstructionOffset = range,
+								                               	SourceCodeLine = output.CurrentLine,
+								                               	MemberMapping = mapping
+								                               });
+//							} else {
+//								if (map.ILInstructionOffset.From > range.From)
+//									map.ILInstructionOffset.From = range.From;
+//								if (map.ILInstructionOffset.To < range.To)
+//									map.ILInstructionOffset.To = range.To;
+//							}
+						}
+					}
+				}
+			}
+			
 			nodeStack.Push(node);
 		}
 		
