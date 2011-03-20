@@ -95,6 +95,11 @@ namespace ICSharpCode.Decompiler.Ast
 				astBlock.Statements.InsertBefore(insertionPoint, newVarDecl);
 			}
 			
+			// store the variables - used for debugger
+			int token = methodDef.MetadataToken.ToInt32();
+			ILAstBuilder.MemberLocalVariables.AddOrUpdate(
+								token, allVariables, (key, oldValue) => allVariables);
+			
 			return astBlock;
 		}
 		
@@ -202,10 +207,20 @@ namespace ICSharpCode.Decompiler.Ast
 		{
 			AstNode node = TransformByteCode(expr);
 			Expression astExpr = node as Expression;
+			
+			// get IL ranges - used in debugger
+			List<ILRange> ilRanges = ILRange.OrderAndJoint(expr.GetSelfAndChildrenRecursive<ILExpression>().SelectMany(e => e.ILRanges));
+			AstNode result;
+			
 			if (astExpr != null)
-				return Convert(astExpr, expr.InferredType, expr.ExpectedType);
+				result = Convert(astExpr, expr.InferredType, expr.ExpectedType);
 			else
-				return node;
+				result = node;
+			
+			if (result != null)
+				return result.WithAnnotation(ilRanges);
+			
+			return result;
 		}
 		
 		AstNode TransformByteCode(ILExpression byteCode)
