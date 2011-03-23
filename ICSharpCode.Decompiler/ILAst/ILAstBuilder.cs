@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Cecil = Mono.Cecil;
@@ -10,6 +12,11 @@ namespace ICSharpCode.Decompiler.ILAst
 {
 	public class ILAstBuilder
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		public static ConcurrentDictionary<int, IEnumerable<ILVariable>> MemberLocalVariables = new ConcurrentDictionary<int, IEnumerable<ILVariable>>();
+		
 		static ByteCode[] EmptyByteCodeArray = new ByteCode[] {};
 		
 		/// <summary> Immutable </summary>
