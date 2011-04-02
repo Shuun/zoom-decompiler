@@ -1,2 +1,6 @@
-/lib/*.dll
-/ICSharpCode.NRefactory.Tests/PartCover/*
+bin/
+obj/
+
+/ICSharpCode.Decompiler/Properties/AssemblyInfo.cs
+/ILSpy/Properties/AssemblyInfo.cs
+*.suo
