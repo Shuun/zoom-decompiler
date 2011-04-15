@@ -312,6 +312,14 @@ namespace ICSharpCode.Decompiler.Disassembler
 		
 		public void DisassembleType(TypeDefinition type)
 		{
+			// create IL code mappings - used for debugger
+			if (!ILCodeMapping.SourceCodeMappings.ContainsKey(type.FullName)) {
+				ILCodeMapping.SourceCodeMappings.TryAdd(type.FullName, new List<MemberMapping>());
+			} else {
+				ILCodeMapping.SourceCodeMappings[type.FullName].Clear();
+			}
+			
+			// start writing IL
 			output.WriteDefinition(".class ", type);
 			
 			if ((type.Attributes & TypeAttributes.ClassSemanticMask) == TypeAttributes.Interface)

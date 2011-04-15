@@ -59,12 +59,13 @@ namespace ICSharpCode.ILSpy
 			var catalog = new AggregateCatalog();
 			catalog.Catalogs.Add(new AssemblyCatalog(typeof(App).Assembly));
 			catalog.Catalogs.Add(new DirectoryCatalog(".", "*.Plugin.dll"));
+			catalog.Catalogs.Add(new DirectoryCatalog(".", "*.Debugger.dll"));
 			
 			compositionContainer = new CompositionContainer(catalog);
 			
 			Languages.Initialize(compositionContainer);
 			
-			if (!Debugger.IsAttached) {
+			if (!System.Diagnostics.Debugger.IsAttached) {
 				AppDomain.CurrentDomain.UnhandledException += ShowErrorBox;
 				Dispatcher.CurrentDispatcher.UnhandledException += Dispatcher_UnhandledException;
 			}
