@@ -9,7 +9,8 @@
     <AssemblyName>ILSpy</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
@@ -93,15 +94,12 @@
     <Compile Include="BamlDecompiler.cs" />
     <Compile Include="CommandLineArguments.cs" />
     <Compile Include="Commands.cs" />
-    <Compile Include="DecompilerSettingsPanel.xaml.cs">
-      <DependentUpon>DecompilerSettingsPanel.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ExportCommandAttribute.cs" />
+    <Compile Include="Commands\DebuggerCommands.cs" />
     <Compile Include="Controls\SearchBox.cs" />
     <Compile Include="Controls\SortableGridViewColumn.cs" />
     <Compile Include="CSharpLanguage.cs" />
     <Compile Include="DecompilationOptions.cs" />
+    <Compile Include="ExportCommandAttribute.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="FilterSettings.cs" />
     <Compile Include="Fusion.cs" />
@@ -124,7 +122,15 @@
       <DependentUpon>OpenFromGacDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="OptionsDialog.xaml.cs">
+    <Compile Include="Options\DebuggerSettingsPanel.xaml.cs">
+      <DependentUpon>DebuggerSettingsPanel.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Options\DecompilerSettingsPanel.xaml.cs">
+      <DependentUpon>DecompilerSettingsPanel.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Options\OptionsDialog.xaml.cs">
       <DependentUpon>OptionsDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -152,6 +158,7 @@
     <Resource Include="Images\Delete.png" />
     <Resource Include="Images\ILSpy.ico" />
     <Resource Include="Images\FindAssembly.png" />
+    <None Include="app.config" />
     <None Include="Properties\AssemblyInfo.template.cs" />
     <Compile Include="Properties\WPFAssemblyInfo.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -196,10 +203,11 @@
     <Page Include="Controls\SearchBoxStyle.xaml">
       <DependentUpon>SearchBox.cs</DependentUpon>
     </Page>
-    <Page Include="DecompilerSettingsPanel.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="OpenFromGacDialog.xaml" />
-    <Page Include="OptionsDialog.xaml" />
+    <Page Include="Options\DebuggerSettingsPanel.xaml" />
+    <Page Include="Options\DecompilerSettingsPanel.xaml" />
+    <Page Include="Options\OptionsDialog.xaml" />
     <Page Include="TextView\DecompilerTextView.xaml">
       <DependentUpon>DecompilerTextView.cs</DependentUpon>
     </Page>
@@ -248,6 +256,10 @@
     <Resource Include="Images\VirtualMethod.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Debugger\ILSpy.Debugger\ILSpy.Debugger.csproj">
+      <Project>{6D3D0F0D-348D-456A-A6ED-E9BD5EFABB6A}</Project>
+      <Name>ILSpy.Debugger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ICSharpCode.Decompiler\ICSharpCode.Decompiler.csproj">
       <Project>{984CC812-9470-4A13-AFF9-CC44068D666C}</Project>
       <Name>ICSharpCode.Decompiler</Name>
@@ -270,5 +282,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Options" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
