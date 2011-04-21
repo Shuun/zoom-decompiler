@@ -19,7 +19,9 @@
 using System;
 using System.Text;
 using System.Windows.Media;
+
 using ICSharpCode.Decompiler;
+using ICSharpCode.ILSpy.Debugger;
 using Mono.Cecil;
 
 namespace ICSharpCode.ILSpy.TreeNodes
