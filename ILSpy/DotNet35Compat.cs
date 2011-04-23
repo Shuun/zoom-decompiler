@@ -78,6 +78,50 @@ namespace ICSharpCode.ILSpy
                 TextOptions.TextFormattingModeProperty.AddOwner(typeof(DotNet35Compat));
 #endif
         }
+
+
+#if DOTNET35
+        public static void AddRange<TBase, TDerived>(this List<TBase> items, IEnumerable<TDerived> addItems)
+            where TDerived : TBase
+        {
+            if (addItems is IEnumerable<TBase>)
+                items.AddRange((IEnumerable<TBase>)addItems);
+            else
+                items.AddRange(addItems.OfType<TDerived>());
+        }
+#endif
+
+#if DOTNET35
+        public static void CopyTo(this System.IO.Stream source, System.IO.Stream target)
+        {
+            while (true)
+            {
+                int b = source.ReadByte();
+                if (b < 0)
+                    return;
+                target.WriteByte((byte)b);
+            }
+        }
+#endif
+
+#if DOTNET35
+        public static void Restart(this System.Diagnostics.Stopwatch sw)
+        {
+            if(sw.IsRunning)
+                sw.Stop();
+
+            sw.Start();
+        }
+#endif
+
+        public static string PathCombine(params string[] parts)
+        {
+#if DOTNET35
+            return parts.Aggregate(System.IO.Path.Combine);
+#else
+            return System.IO.Path.Combine(parts);
+#endif
+        }
     }
 }
 
