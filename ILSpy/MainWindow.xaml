@@ -8,8 +8,8 @@
 	Title="ILSpy"
 	MinWidth="250"
 	MinHeight="200"
-	UseLayoutRounding="True"
-	TextOptions.TextFormattingMode="Display"
+	local:DotNet35Compat.UseLayoutRounding="True"
+	local:DotNet35Compat.TextFormattingMode="Display"
 	FocusManager.FocusedElement="{Binding ElementName=treeView}"
 >
 	<Window.Resources>

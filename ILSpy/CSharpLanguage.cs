@@ -26,7 +26,9 @@ using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+#if !DOTNET35
 using System.Xaml;
+#endif
 using System.Xml;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.Ast;
