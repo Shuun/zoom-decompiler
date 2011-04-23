@@ -32,7 +32,7 @@ namespace ICSharpCode.TreeView
 #if DOTNET35
                     SnapsToDevicePixelsProperty;
 #else
-                    UseLayoutRoundingProperty;
+                    UseLayoutRoundingProperty.AddOwner(typeof(DotNet35Compat));
 #endif
 
             TextFormattingModeProperty =
@@ -42,7 +42,7 @@ namespace ICSharpCode.TreeView
                     typeof(TextFormattingMode),
                     typeof(DotNet35Compat));
 #else
-                TextOptions.TextFormattingModeProperty;
+                TextOptions.TextFormattingModeProperty.AddOwner(typeof(DotNet35Compat));
 #endif
         }
     }
