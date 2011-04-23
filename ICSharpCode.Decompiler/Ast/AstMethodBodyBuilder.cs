@@ -991,7 +991,7 @@ namespace ICSharpCode.Decompiler.Ast
 		{
 			#if DEBUG
 			foreach (var pair in unhandledOpcodes) {
-				Debug.WriteLine("AddMethodBodyBuilder unhandled opcode: {1}x {0}", pair.Key, pair.Value);
+				Debug.WriteLine(string.Format("AddMethodBodyBuilder unhandled opcode: {1}x {0}", pair.Key, pair.Value));
 			}
 			#endif
 		}
