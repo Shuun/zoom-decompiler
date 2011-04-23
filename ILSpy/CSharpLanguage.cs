@@ -341,6 +341,7 @@ namespace ICSharpCode.ILSpy
 								}
 								Stream entryStream = (Stream)pair.Value;
 								entryStream.Position = 0;
+#if !DOTNET35
 								if (fileName.EndsWith(".baml", StringComparison.OrdinalIgnoreCase)) {
 									MemoryStream ms = new MemoryStream();
 									entryStream.CopyTo(ms);
@@ -355,7 +356,9 @@ namespace ICSharpCode.ILSpy
 										continue;
 									}
 								}
-								using (FileStream fs = new FileStream(Path.Combine(options.SaveAsProjectDirectory, fileName), FileMode.Create, FileAccess.Write)) {
+#endif
+                                using (FileStream fs = new FileStream(Path.Combine(options.SaveAsProjectDirectory, fileName), FileMode.Create, FileAccess.Write))
+                                {
 									entryStream.CopyTo(fs);
 								}
 								yield return Tuple.Create("Resource", fileName);
