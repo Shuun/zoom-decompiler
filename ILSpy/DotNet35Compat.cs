@@ -7,8 +7,41 @@ using System.Windows.Media;
 
 namespace ICSharpCode.ILSpy
 {
-        internal static class DotNet35Compat
+    internal static class DotNet35Compat
     {
+        public static string StringJoin<T>(string separator, IEnumerable<T> elements)
+        {
+#if DOTNET35
+            return string.Join(separator, elements.Select(e => e != null ? e.ToString() : null).ToArray());
+#else
+		    return string.Join(separator, elements);
+#endif
+        }
+
+        public static IEnumerable<U> SafeCast<T, U>(this IEnumerable<T> elements)
+            where T : class, U
+            where U : class
+        {
+#if DOTNET35
+            foreach (T item in elements)
+                yield return item;
+#else
+		    return elements;
+#endif
+        }
+
+        public static Predicate<U> SafeCast<T, U>(this Predicate<T> predicate)
+            where U : class, T
+            where T : class
+        {
+#if DOTNET35
+            return e => predicate(e);
+#else
+		    return predicate;
+#endif
+        }
+
+
 #if DOTNET35
         public enum TextFormattingMode
         {
@@ -83,6 +116,14 @@ namespace System
         {
             return new Tuple<T1, T2>(item1, item2);
         }
+    }
+}
+
+namespace System.Runtime.CompilerServices
+{
+    internal class ConditionalWeakTable<K,V> : Dictionary<K,V>
+    {
+
     }
 }
 #endif

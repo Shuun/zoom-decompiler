@@ -162,6 +162,17 @@ namespace ICSharpCode.ILSpy.XmlDoc
 			}
 			return null;
 		}
+
+#if DOTNET35
+        static MemberReference FindMember<TMemberReference>(ModuleDefinition module, string key, Func<TypeDefinition, IEnumerable<TMemberReference>> memberSelector)
+            where TMemberReference : MemberReference
+        {
+            return FindMember(
+                module, key,
+                new Func<TypeDefinition, IEnumerable<MemberReference>>(
+                    typeDef => DotNet35Compat.SafeCast<TMemberReference, MemberReference>(memberSelector(typeDef))));
+        }
+#endif
 		
 		static TypeDefinition FindType(ModuleDefinition module, string name)
 		{
