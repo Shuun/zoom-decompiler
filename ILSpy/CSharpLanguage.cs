@@ -334,7 +334,7 @@ namespace ICSharpCode.ILSpy
 						}
 						if (rs != null && rs.All(e => e.Value is Stream)) {
 							foreach (var pair in rs) {
-								fileName = Path.Combine(((string)pair.Key).Split('/').Select(p => TextView.DecompilerTextView.CleanUpName(p)).ToArray());
+								fileName = DotNet35Compat.PathCombine(((string)pair.Key).Split('/').Select(p => TextView.DecompilerTextView.CleanUpName(p)).ToArray());
 								string dirName = Path.GetDirectoryName(fileName);
 								if (!string.IsNullOrEmpty(dirName) && directories.Add(dirName)) {
 									Directory.CreateDirectory(Path.Combine(options.SaveAsProjectDirectory, dirName));
