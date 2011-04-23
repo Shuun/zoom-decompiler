@@ -54,7 +54,13 @@ namespace ICSharpCode.ILSpy.XmlDoc
 			}
 		}
 		
-		static readonly string referenceAssembliesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Reference Assemblies\Microsoft\\Framework");
+		static readonly string referenceAssembliesPath = Path.Combine(
+#if DOTNET35
+            Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles).Replace(" (x86)", ""),
+#else
+            Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
+#endif
+            @"Reference Assemblies\Microsoft\\Framework");
 		static readonly string frameworkPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"Microsoft.NET\Framework");
 		
 		static string FindXmlDocumentation(string assemblyFileName, TargetRuntime runtime)

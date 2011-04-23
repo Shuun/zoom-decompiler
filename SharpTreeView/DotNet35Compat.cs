@@ -45,6 +45,5 @@ namespace ICSharpCode.TreeView
                 TextOptions.TextFormattingModeProperty;
 #endif
         }
-
     }
 }
