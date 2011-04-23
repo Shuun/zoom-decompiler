@@ -147,7 +147,12 @@ namespace ICSharpCode.ILSpy
 					tcs.SetException(e.Error);
 				} else {
 					try {
-						XDocument doc = XDocument.Load(new MemoryStream(e.Result));
+						XDocument doc = XDocument.Load(
+#if DOTNET35
+                            XmlReader.Create(new MemoryStream(e.Result)));
+#else
+                            new MemoryStream(e.Result));
+#endif
 						var bands = doc.Root.Elements("band");
 						var currentBand = bands.FirstOrDefault(b => (string)b.Attribute("id") == "stable") ?? bands.First();
 						Version version = new Version((string)currentBand.Element("latestVersion"));

@@ -7,7 +7,7 @@
 		<Style x:Key="DialogWindow" TargetType="{x:Type Window}">
 			<Setter Property="ShowInTaskbar" Value="False"/>
 			<Setter Property="local:DotNet35Compat.UseLayoutRounding" Value="True"/>
-			<Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+            <Setter Property="local:DotNet35Compat.TextFormattingMode" Value="Display"/>
 		</Style>
 		
 		<Style TargetType="{x:Type Button}">

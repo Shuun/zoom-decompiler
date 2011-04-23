@@ -54,8 +54,14 @@ namespace ICSharpCode.ILSpy.TreeNodes
 
 		public static ImageSource GetIcon(FieldDefinition field)
 		{
-			if (field.DeclaringType.IsEnum && !field.Attributes.HasFlag(FieldAttributes.SpecialName))
-				return Images.GetIcon(MemberIcon.EnumValue, GetOverlayIcon(field.Attributes), false);
+			if (field.DeclaringType.IsEnum &&
+#if DOTNET35
+                (field.Attributes & FieldAttributes.SpecialName)==0)
+#else
+                !field.Attributes.HasFlag(FieldAttributes.SpecialName))
+#endif
+
+                return Images.GetIcon(MemberIcon.EnumValue, GetOverlayIcon(field.Attributes), false);
 
 			if (field.IsLiteral)
 				return Images.GetIcon(MemberIcon.Literal, GetOverlayIcon(field.Attributes), false);
