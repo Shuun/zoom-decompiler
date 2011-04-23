@@ -22,6 +22,15 @@
     <BaseAddress>4194304</BaseAddress>
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug .NET3.5' ">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
     <DebugSymbols>true</DebugSymbols>
@@ -39,6 +48,12 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System.CoreEx" Condition=" '$(Configuration)' == 'Debug .NET3.5' ">
+        <HintPath>..\..\packages\Rx v1.0.2856.0\System.CoreEx.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading" Condition=" '$(Configuration)' == 'Debug .NET3.5' ">
+        <HintPath>..\..\packages\Rx v1.0.2856.0\System.Threading.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
