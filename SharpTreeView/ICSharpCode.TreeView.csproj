@@ -62,7 +62,10 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Xaml" Condition=" '$(Configuration)' == 'Debug .NET3.5' ">
+    <Reference Include="System.Xaml" Condition=" '$(Configuration)' == 'Debug' ">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xaml" Condition=" '$(Configuration)' == 'Release' ">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="WindowsBase" />
