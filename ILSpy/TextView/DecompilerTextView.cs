@@ -30,21 +30,27 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Xml;
+
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using ICSharpCode.Decompiler;
+using ICSharpCode.ILSpy.Debugger;
+using ICSharpCode.ILSpy.Debugger.AvalonEdit;
+using ICSharpCode.ILSpy.Debugger.Bookmarks;
+using ICSharpCode.ILSpy.Debugger.Tooltips;
 using ICSharpCode.ILSpy.TreeNodes;
 using ICSharpCode.ILSpy.XmlDoc;
 using ICSharpCode.NRefactory.Documentation;
 using ICSharpCode.NRefactory.TypeSystem;
 using Microsoft.Win32;
 using Mono.Cecil;
+using TextEditorWeakEventManager = ICSharpCode.ILSpy.Debugger.AvalonEdit.TextEditorWeakEventManager;
 
 namespace ICSharpCode.ILSpy.TextView
 {
@@ -62,6 +68,12 @@ namespace ICSharpCode.ILSpy.TextView
 		DefinitionLookup definitionLookup;
 		CancellationTokenSource currentCancellationTokenSource;
 		
+		[Import("IconMargin")]
+		IconBarMargin iconMargin = null;
+		
+		[Import("TextMarkerService")]
+		TextMarkerService textMarkerService = null;
+		
 		#region Constructor
 		public DecompilerTextView()
 		{
@@ -76,6 +88,7 @@ namespace ICSharpCode.ILSpy.TextView
 				});
 			
 			InitializeComponent();
+			
 			this.referenceElementGenerator = new ReferenceElementGenerator(this.JumpToReference, this.IsLink);
 			textEditor.TextArea.TextView.ElementGenerators.Add(referenceElementGenerator);
 			this.uiElementGenerator = new UIElementGenerator();
@@ -83,7 +96,26 @@ namespace ICSharpCode.ILSpy.TextView
 			textEditor.Options.RequireControlModifierForHyperlinkClick = false;
 			textEditor.TextArea.TextView.MouseHover += TextViewMouseHover;
 			textEditor.TextArea.TextView.MouseHoverStopped += TextViewMouseHoverStopped;
+			
+			// wire the events
+			TextEditorWeakEventManager.MouseHover.AddListener(textEditor, TextEditorListener.Instance);
+			TextEditorWeakEventManager.MouseHoverStopped.AddListener(textEditor, TextEditorListener.Instance);
+			TextEditorWeakEventManager.MouseDown.AddListener(textEditor, TextEditorListener.Instance);
+			textEditor.TextArea.TextView.VisualLinesChanged += (s, e) => iconMargin.InvalidateVisual();
+			
+			this.Loaded += new RoutedEventHandler(DecompilerTextView_Loaded);
 		}
+
+		void DecompilerTextView_Loaded(object sender, RoutedEventArgs e)
+		{
+			// add marker service & margin
+			textMarkerService.CodeEditor = textEditor;
+			textEditor.TextArea.TextView.BackgroundRenderers.Add(textMarkerService);
+			textEditor.TextArea.TextView.LineTransformers.Add(textMarkerService);
+			
+			textEditor.TextArea.LeftMargins.Add(iconMargin);
+		}
+		
 		#endregion
 		
 		#region Tooltip support
@@ -302,6 +334,11 @@ namespace ICSharpCode.ILSpy.TextView
 		
 		void DoDecompile(DecompilationContext context, int outputLengthLimit)
 		{
+			// reset type
+			DebugData.CurrentMemberReference = null;
+			DebugData.OldCodeMappings = DebugData.CodeMappings;
+			TextEditorListener.Instance.ClosePopup();
+			
 			RunWithCancellation(
 				delegate (CancellationToken ct) { // creation of the background task
 					context.Options.CancellationToken = ct;
@@ -326,6 +363,40 @@ namespace ICSharpCode.ILSpy.TextView
 							output.WriteLine(ex.ToString());
 						}
 						ShowOutput(output);
+						
+						// reset type
+						DebugData.CurrentMemberReference = null;
+					}
+					finally {
+						
+						// set the language
+						DebugData.Language = MainWindow.Instance.sessionSettings.FilterSettings.Language.Name.StartsWith("IL") ? DecompiledLanguages.IL : DecompiledLanguages.CSharp;
+						
+						if (DebugData.CurrentMemberReference != null) {
+							// TODO: show margin for single methods and properties
+							if (context.TreeNodes.Count() == 1 && DebugData.IsCurrentMemberReferenceType) {
+								iconMargin.Visibility = Visibility.Visible;
+								// repaint bookmarks
+								iconMargin.InvalidateVisual();
+								
+								// show the currentline marker
+								var bm = CurrentLineBookmark.Instance;
+								if (bm != null && DebugData.CurrentMemberReference != null) {
+									if (DebugData.CurrentMemberReference == bm.Member) {
+										DocumentLine line = textEditor.Document.GetLineByNumber(bm.LineNumber);
+										bm.Marker = bm.CreateMarker(textMarkerService, line.Offset, line.Length);
+									}
+									UnfoldAndScroll(bm.LineNumber);
+								}
+							} else {
+								// hide the margin
+								iconMargin.Visibility = Visibility.Collapsed;
+							}
+						} else {
+							// remove currentline marker
+							CurrentLineBookmark.Remove();
+							iconMargin.Visibility = Visibility.Collapsed;
+						}
 					}
 				});
 		}
@@ -345,7 +416,7 @@ namespace ICSharpCode.ILSpy.TextView
 			Thread thread = new Thread(new ThreadStart(
 				delegate {
 					#if DEBUG
-					if (Debugger.IsAttached) {
+					if (System.Diagnostics.Debugger.IsAttached) {
 						try {
 							AvalonEditTextOutput textOutput = new AvalonEditTextOutput();
 							textOutput.LengthLimit = outputLengthLimit;
@@ -378,12 +449,25 @@ namespace ICSharpCode.ILSpy.TextView
 		static void DecompileNodes(DecompilationContext context, ITextOutput textOutput)
 		{
 			var nodes = context.TreeNodes;
+			context.Language.DecompileFinished += Language_DecompileFinished;
 			for (int i = 0; i < nodes.Length; i++) {
 				if (i > 0)
 					textOutput.WriteLine();
 				
+				if (nodes[i] is IMemberTreeNode) {
+					DebugData.CurrentMemberReference = (nodes[i] as IMemberTreeNode).Member;
+				}
 				context.Options.CancellationToken.ThrowIfCancellationRequested();
 				nodes[i].Decompile(context.Language, textOutput, context.Options);
+			}
+			context.Language.DecompileFinished -= Language_DecompileFinished;
+		}
+
+		static void Language_DecompileFinished(object sender, DecompileEventArgs e)
+		{
+			if (e != null) {
+				DebugData.CodeMappings = e.CodeMappings; 
+				DebugData.LocalVariables = e.LocalVariables;
 			}
 		}
 		#endregion
@@ -569,6 +653,28 @@ namespace ICSharpCode.ILSpy.TextView
 			state.HorizontalOffset = textEditor.HorizontalOffset;
 			return state;
 		}
+		
+		#region Unfold
+		public void UnfoldAndScroll(int lineNumber)
+		{
+			if (lineNumber <= 0 || lineNumber > textEditor.Document.LineCount)
+				return;
+			
+			var line = textEditor.Document.GetLineByNumber(lineNumber);
+			
+			// unfold
+			var foldings = foldingManager.GetFoldingsContaining(line.Offset);
+			if (foldings != null) {
+				foreach (var folding in foldings) {
+					if (folding.IsFolded) {
+						folding.IsFolded = false;
+					}
+				}
+			}
+			// scroll to
+			textEditor.ScrollTo(lineNumber, 0);
+		}
+		#endregion
 	}
 
 	public class DecompilerTextViewState
