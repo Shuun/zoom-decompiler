@@ -329,7 +329,7 @@ namespace ICSharpCode.Decompiler.ILAst
 		
 		public override IEnumerable<ILNode> GetChildren()
 		{
-			return Arguments;
+			return DotNet35Compat.SafeCast<ILExpression, ILNode>(Arguments);
 		}
 		
 		public bool IsBranch()

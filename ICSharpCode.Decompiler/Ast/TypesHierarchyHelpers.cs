@@ -265,7 +265,7 @@ namespace ICSharpCode.Decompiler.Ast
 		private static GenericContext<TypeDefinition> CreateGenericContext(TypeDefinition type)
 		{
 			return type.HasGenericParameters
-				? new GenericContext<TypeDefinition>(type, type.GenericParameters)
+				? new GenericContext<TypeDefinition>(type, DotNet35Compat.SafeCast<GenericParameter, TypeReference>(type.GenericParameters))
 				: new GenericContext<TypeDefinition>(type);
 		}
 
