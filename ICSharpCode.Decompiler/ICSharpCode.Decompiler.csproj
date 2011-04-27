@@ -476,6 +476,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="NRefactory\Utils\CacheManager.cs" />
+    <Compile Include="NRefactory\Utils\EmptyList.cs" />
     <Compile Include="NRefactory\Utils\ExtensionMethods.cs" />
     <Compile Include="NRefactory\Utils\GraphVizGraph.cs" />
     <Compile Include="NRefactory\Utils\TreeTraversal.cs" />
