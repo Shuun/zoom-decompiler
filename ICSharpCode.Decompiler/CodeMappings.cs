@@ -74,8 +74,8 @@ namespace ICSharpCode.Decompiler
 			
 			// add list for the current source code line
 			currentList.AddRange(ILRange.OrderAndJoint(MemberMapping.MemberCodeMappings
-			                                           .FindAll(m => m.SourceCodeLine == this.SourceCodeLine)
-			                                           .ConvertAll<ILRange>(m => m.ILInstructionOffset)));
+			                                           .Where(m => m.SourceCodeLine == this.SourceCodeLine)
+			                                           .Select(m => m.ILInstructionOffset)));
 			
 			if (!isMatch) {
 				// add inverted
