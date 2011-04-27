@@ -768,7 +768,7 @@ namespace ICSharpCode.Decompiler.Ast
 		{
 			public InitializedObjectExpression() : base("__initialized_object__") {}
 			
-			protected override bool DoMatch(AstNode other, Match match)
+			protected internal override bool DoMatch(AstNode other, Match match)
 			{
 				return other is InitializedObjectExpression;
 			}
