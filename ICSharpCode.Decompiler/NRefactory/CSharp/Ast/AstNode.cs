@@ -435,7 +435,7 @@ namespace ICSharpCode.NRefactory.CSharp
 			}
 			
 			// Finally, clone the annotation, if necessary
-			ICloneable copiedAnnotations = copy.annotations as ICloneable; // read from copy (for thread-safety)
+			var copiedAnnotations = copy.annotations as AnnotationList; // read from copy (for thread-safety)
 			if (copiedAnnotations != null)
 				copy.annotations = copiedAnnotations.Clone();
 			
@@ -448,7 +448,7 @@ namespace ICSharpCode.NRefactory.CSharp
 		// Once it is pointed at an AnnotationList, it will never change (this allows thread-safety support by locking the list)
 		object annotations;
 		
-		sealed class AnnotationList : List<object>, ICloneable
+		sealed class AnnotationList : List<object>
 		{
 			// There are two uses for this custom list type:
 			// 1) it's private, and thus (unlike List<object>) cannot be confused with real annotations
@@ -463,7 +463,7 @@ namespace ICSharpCode.NRefactory.CSharp
 					AnnotationList copy = new AnnotationList(this.Count);
 					for (int i = 0; i < this.Count; i++) {
 						object obj = this[i];
-						ICloneable c = obj as ICloneable;
+						var c = obj as AnnotationList;
 						copy.Add(c != null ? c.Clone() : obj);
 					}
 					return copy;
