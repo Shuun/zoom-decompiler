@@ -21,7 +21,10 @@ internal static class DotNet35Compat
 		#if DOTNET35
 		foreach (T item in elements)
 			yield return item;
-		#else
+        #elif SILVERLIGHT
+        foreach (T item in elements)
+            yield return item;
+        #else
 		return elements;
 		#endif
 	}
@@ -30,7 +33,9 @@ internal static class DotNet35Compat
 	{
 		#if DOTNET35
 		return e => predicate(e);
-		#else
+        #elif SILVERLIGHT
+        return e => predicate(e);
+        #else
 		return predicate;
 		#endif
 	}
