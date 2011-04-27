@@ -30,7 +30,6 @@ using System;
 
 namespace ICSharpCode.NRefactory.CSharp
 {
-	[Serializable]
 	public struct AstLocation : IComparable<AstLocation>, IEquatable<AstLocation>
 	{
 		public static readonly AstLocation Empty = new AstLocation(0, 0);

@@ -29,17 +29,5 @@ namespace ICSharpCode.NRefactory.TypeSystem
 		{
 			this.position = position;
 		}
-		
-		// This constructor is needed for serialization.
-		protected ReflectionNameParseException(SerializationInfo info, StreamingContext context) : base(info, context)
-		{
-			position = info.GetInt32("position");
-		}
-		
-		public override void GetObjectData(SerializationInfo info, StreamingContext context)
-		{
-			base.GetObjectData(info, context);
-			info.AddValue("position", position);
-		}
 	}
 }
