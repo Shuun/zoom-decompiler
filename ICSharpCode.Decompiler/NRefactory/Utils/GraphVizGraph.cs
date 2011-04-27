@@ -44,15 +44,20 @@ namespace ICSharpCode.NRefactory.Utils
 		
 		public void Show(string name)
 		{
-			if (name == null)
-				name = Title;
-			if (name != null)
-				foreach (char c in Path.GetInvalidFileNameChars())
-					name = name.Replace(c, '-');
-			string fileName = name != null ? Path.Combine(Path.GetTempPath(), name) : Path.GetTempFileName();
-			Save(fileName + ".gv");
-			Process.Start("dot", "\"" + fileName + ".gv\" -Tpng -o \"" + fileName + ".png\"").WaitForExit();
-			Process.Start(fileName + ".png");
+            if(!Debugger.IsAttached)
+                Debugger.Launch();
+
+            Debugger.Break();
+
+            //if (name == null)
+            //    name = Title;
+            //if (name != null)
+            //    foreach (char c in Path.GetInvalidFileNameChars())
+            //        name = name.Replace(c, '-');
+            //string fileName = name != null ? Path.Combine(Path.GetTempPath(), name) : Path.GetTempFileName();
+            //Save(fileName + ".gv");
+            //Process.Start("dot", "\"" + fileName + ".gv\" -Tpng -o \"" + fileName + ".png\"").WaitForExit();
+            //Process.Start(fileName + ".png");
 		}
 		
 		static string Escape(string text)
