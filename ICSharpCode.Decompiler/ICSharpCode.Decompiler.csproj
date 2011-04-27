@@ -465,6 +465,7 @@
     <Compile Include="NRefactory\TypeSystem\SharedTypes.cs" />
     <Compile Include="NRefactory\TypeSystem\TypeVisitor.cs" />
     <Compile Include="NRefactory\Utils\CacheManager.cs" />
+    <Compile Include="NRefactory\Utils\ExtensionMethods.cs" />
     <Compile Include="NRefactory\Utils\GraphVizGraph.cs" />
     <Compile Include="NRefactory\Utils\TreeTraversal.cs" />
     <Compile Include="PlainTextOutput.cs" />
