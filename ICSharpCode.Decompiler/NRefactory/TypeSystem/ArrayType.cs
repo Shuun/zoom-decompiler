@@ -123,7 +123,7 @@ namespace ICSharpCode.NRefactory.TypeSystem
 			if (elementType == null)
 				throw new ArgumentNullException("elementType");
 			if (dimensions <= 0)
-				throw new ArgumentOutOfRangeException("dimensions", dimensions, "dimensions must be positive");
+				throw new ArgumentOutOfRangeException("dimensions");
 			this.elementType = elementType;
 			this.dimensions = dimensions;
 		}
