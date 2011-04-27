@@ -78,6 +78,12 @@
     <Compile Include="Ast\TypesHierarchyHelpers.cs" />
     <Compile Include="CecilExtensions.cs" />
     <Compile Include="CodeMappings.cs" />
+    <Compile Include="Compatibility\CancellationToken.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Compatibility\ReaderWriterLockSlim.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DecompilerException.cs" />
     <Compile Include="DecompilerSettings.cs" />
     <Compile Include="Disassembler\DisassemblerHelpers.cs" />
