@@ -35,39 +35,39 @@ namespace ICSharpCode.NRefactory.CSharp
 		// due to the casts used in OperatorDeclaration.
 		
 		// Unary operators
-		LogicalNot = Mono.CSharp.Operator.OpType.LogicalNot,
-		OnesComplement = Mono.CSharp.Operator.OpType.OnesComplement,
-		Increment = Mono.CSharp.Operator.OpType.Increment,
-		Decrement = Mono.CSharp.Operator.OpType.Decrement,
-		True = Mono.CSharp.Operator.OpType.True,
-		False = Mono.CSharp.Operator.OpType.False,
+		LogicalNot, // = Mono.CSharp.Operator.OpType.LogicalNot,
+		OnesComplement, // = Mono.CSharp.Operator.OpType.OnesComplement,
+		Increment, // = Mono.CSharp.Operator.OpType.Increment,
+		Decrement, // = Mono.CSharp.Operator.OpType.Decrement,
+		True, // = Mono.CSharp.Operator.OpType.True,
+		False, // = Mono.CSharp.Operator.OpType.False,
 
 		// Unary and Binary operators
-		Addition = Mono.CSharp.Operator.OpType.Addition,
-		Subtraction = Mono.CSharp.Operator.OpType.Subtraction,
+		Addition, // = Mono.CSharp.Operator.OpType.Addition,
+		Subtraction, // = Mono.CSharp.Operator.OpType.Subtraction,
 
-		UnaryPlus = Mono.CSharp.Operator.OpType.UnaryPlus,
-		UnaryNegation = Mono.CSharp.Operator.OpType.UnaryNegation,
+		UnaryPlus, // = Mono.CSharp.Operator.OpType.UnaryPlus,
+		UnaryNegation, // = Mono.CSharp.Operator.OpType.UnaryNegation,
 		
 		// Binary operators
-		Multiply = Mono.CSharp.Operator.OpType.Multiply,
-		Division = Mono.CSharp.Operator.OpType.Division,
-		Modulus = Mono.CSharp.Operator.OpType.Modulus,
-		BitwiseAnd = Mono.CSharp.Operator.OpType.BitwiseAnd,
-		BitwiseOr = Mono.CSharp.Operator.OpType.BitwiseOr,
-		ExclusiveOr = Mono.CSharp.Operator.OpType.ExclusiveOr,
-		LeftShift = Mono.CSharp.Operator.OpType.LeftShift,
-		RightShift = Mono.CSharp.Operator.OpType.RightShift,
-		Equality = Mono.CSharp.Operator.OpType.Equality,
-		Inequality = Mono.CSharp.Operator.OpType.Inequality,
-		GreaterThan = Mono.CSharp.Operator.OpType.GreaterThan,
-		LessThan = Mono.CSharp.Operator.OpType.LessThan,
-		GreaterThanOrEqual = Mono.CSharp.Operator.OpType.GreaterThanOrEqual,
-		LessThanOrEqual = Mono.CSharp.Operator.OpType.LessThanOrEqual,
+		Multiply, // = Mono.CSharp.Operator.OpType.Multiply,
+		Division, // = Mono.CSharp.Operator.OpType.Division,
+		Modulus, // = Mono.CSharp.Operator.OpType.Modulus,
+		BitwiseAnd, // = Mono.CSharp.Operator.OpType.BitwiseAnd,
+		BitwiseOr, // = Mono.CSharp.Operator.OpType.BitwiseOr,
+		ExclusiveOr, // = Mono.CSharp.Operator.OpType.ExclusiveOr,
+		LeftShift, // = Mono.CSharp.Operator.OpType.LeftShift,
+		RightShift, // = Mono.CSharp.Operator.OpType.RightShift,
+		Equality, // = Mono.CSharp.Operator.OpType.Equality,
+		Inequality, // = Mono.CSharp.Operator.OpType.Inequality,
+		GreaterThan, // = Mono.CSharp.Operator.OpType.GreaterThan,
+		LessThan, // = Mono.CSharp.Operator.OpType.LessThan,
+		GreaterThanOrEqual, // = Mono.CSharp.Operator.OpType.GreaterThanOrEqual,
+		LessThanOrEqual, // = Mono.CSharp.Operator.OpType.LessThanOrEqual,
 
 		// Implicit and Explicit
-		Implicit = Mono.CSharp.Operator.OpType.Implicit,
-		Explicit = Mono.CSharp.Operator.OpType.Explicit
+		Implicit, // = Mono.CSharp.Operator.OpType.Implicit,
+		Explicit, // = Mono.CSharp.Operator.OpType.Explicit
 	}
 	
 	public class OperatorDeclaration : AttributedNode
