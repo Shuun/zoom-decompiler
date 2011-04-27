@@ -36,10 +36,10 @@ namespace ICSharpCode.Decompiler.Ast
 		public static BlockStatement CreateMethodBody(MethodDefinition methodDef,
 		                                              DecompilerContext context,
 		                                              IEnumerable<ParameterDeclaration> parameters = null,
-		                                              ConcurrentDictionary<int, IEnumerable<ILVariable>> localVariables = null)
+		                                              /*Concurrent*/Dictionary<int, IEnumerable<ILVariable>> localVariables = null)
 		{
 			if (localVariables == null)
-				localVariables = new ConcurrentDictionary<int, IEnumerable<ILVariable>>();
+				localVariables = new /*Concurrent*/Dictionary<int, IEnumerable<ILVariable>>();
 			
 			MethodDefinition oldCurrentMethod = context.CurrentMethod;
 			Debug.Assert(oldCurrentMethod == null || oldCurrentMethod == methodDef);
@@ -66,7 +66,7 @@ namespace ICSharpCode.Decompiler.Ast
 		}
 		
 		public BlockStatement CreateMethodBody(IEnumerable<ParameterDeclaration> parameters,
-		                                       ConcurrentDictionary<int, IEnumerable<ILVariable>> localVariables)
+		                                       /*Concurrent*/Dictionary<int, IEnumerable<ILVariable>> localVariables)
 		{
 			if (methodDef.Body == null) return null;
 			
@@ -974,7 +974,7 @@ namespace ICSharpCode.Decompiler.Ast
 		}
 		
 		#if DEBUG
-		static readonly ConcurrentDictionary<ILCode, int> unhandledOpcodes = new ConcurrentDictionary<ILCode, int>();
+		static readonly /*Concurrent*/Dictionary<ILCode, int> unhandledOpcodes = new /*Concurrent*/Dictionary<ILCode, int>();
 		#endif
 		
 		[Conditional("DEBUG")]
