@@ -3,8 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace ICSharpCode.NRefactory.Utils
+namespace ICSharpCode
 {
 	/// <summary>
 	/// Contains extension methods for use within NRefactory.
@@ -16,5 +17,20 @@ namespace ICSharpCode.NRefactory.Utils
 			foreach (T item in input)
 				target.Add(item);
 		}
+
+        public static int RemoveAll<T>(this ICollection<T> items, Predicate<T> filter)
+        {
+            int count = 0;
+            foreach (var item in items.ToArray())
+            {
+                if (filter(item))
+                {
+                    items.Remove(item);
+                    count++;
+                }
+            }
+
+            return count;
+        }
 	}
 }
