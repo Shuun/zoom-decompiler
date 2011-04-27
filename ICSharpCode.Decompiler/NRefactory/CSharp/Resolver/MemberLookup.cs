@@ -248,7 +248,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 			if (members.Count == 1 && firstNonMethod != null)
 				return new MemberResolveResult(firstNonMethod, context);
 			if (firstNonMethod == null)
-				return new MethodGroupResolveResult(type, name, members.ConvertAll(m => (IMethod)m), typeArguments);
+				return new MethodGroupResolveResult(type, name, members.Select(m => (IMethod)m).ToList(), typeArguments);
 			return new AmbiguousMemberResultResult(firstNonMethod, firstNonMethod.ReturnType.Resolve(context));
 		}
 
