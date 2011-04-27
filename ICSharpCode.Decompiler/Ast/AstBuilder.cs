@@ -1376,6 +1376,6 @@ namespace ICSharpCode.Decompiler.Ast
 		/// Gets the local variables for the current decompiled type, method, etc.
 		/// <remarks>The key is the metadata token.</remarks>
 		/// </summary>
-		public ConcurrentDictionary<int, IEnumerable<ILVariable>> LocalVariables { get; private set; }
+		public /*Concurrent*/Dictionary<int, IEnumerable<ILVariable>> LocalVariables { get; private set; }
 	}
 }
