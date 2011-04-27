@@ -115,6 +115,7 @@
     <Compile Include="BamlDecompiler.cs" />
     <Compile Include="CommandLineArguments.cs" />
     <Compile Include="Commands.cs" />
+    <Compile Include="ConnectMethodDecompiler.cs" />
     <Compile Include="DecompilerSettingsPanel.xaml.cs">
       <DependentUpon>DecompilerSettingsPanel.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -169,6 +170,12 @@
     <Compile Include="XmlDoc\XmlDocRenderer.cs" />
     <EmbeddedResource Include="..\README.txt">
       <Link>README.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\doc\LGPL.txt">
+      <Link>LGPL.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\doc\license.txt">
+      <Link>license.txt</Link>
     </EmbeddedResource>
     <Resource Include="Images\AssemblyList.png" />
     <Resource Include="Images\AssemblyWarning.png" />

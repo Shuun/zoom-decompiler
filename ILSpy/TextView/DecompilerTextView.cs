@@ -225,7 +225,7 @@ namespace ICSharpCode.ILSpy.TextView
 		/// </summary>
 		void ShowOutput(AvalonEditTextOutput textOutput, IHighlightingDefinition highlighting = null, DecompilerTextViewState state = null)
 		{
-			Debug.WriteLine(string.Format("Showing {0} characters of output", textOutput.TextLength));
+			Debug.WriteLine("Showing {0} characters of output", textOutput.TextLength);
 			Stopwatch w = Stopwatch.StartNew();
 			
 			textEditor.ScrollToHome();
@@ -239,9 +239,20 @@ namespace ICSharpCode.ILSpy.TextView
 			definitionLookup = textOutput.DefinitionLookup;
 			textEditor.SyntaxHighlighting = highlighting;
 			
+			// Change the set of active element generators:
+			foreach (var elementGenerator in activeCustomElementGenerators) {
+				textEditor.TextArea.TextView.ElementGenerators.Remove(elementGenerator);
+			}
+			activeCustomElementGenerators.Clear();
+			
+			foreach (var elementGenerator in textOutput.elementGenerators) {
+				textEditor.TextArea.TextView.ElementGenerators.Add(elementGenerator);
+				activeCustomElementGenerators.Add(elementGenerator);
+			}
+			
 			Debug.WriteLine(string.Format("  Set-up: {0}", w.Elapsed)); w.Restart();
 			textEditor.Document = textOutput.GetDocument();
-			Debug.WriteLine(string.Format("  Assigning document: {0}", w.Elapsed)); w.Restart();
+			Debug.WriteLine("  Assigning document: {0}", w.Elapsed); w.Restart();
 			if (textOutput.Foldings.Count > 0) {
 				if (state != null) {
 					state.RestoreFoldings(textOutput.Foldings);
@@ -250,7 +261,7 @@ namespace ICSharpCode.ILSpy.TextView
 				}
 				foldingManager = FoldingManager.Install(textEditor.TextArea);
 				foldingManager.UpdateFoldings(textOutput.Foldings.OrderBy(f => f.StartOffset), -1);
-				Debug.WriteLine(string.Format("  Updating folding: {0}", w.Elapsed)); w.Restart();
+				Debug.WriteLine("  Updating folding: {0}", w.Elapsed); w.Restart();
 			}
 		}
 		#endregion
@@ -332,7 +343,7 @@ namespace ICSharpCode.ILSpy.TextView
 		
 		static Task<AvalonEditTextOutput> DecompileAsync(DecompilationContext context, int outputLengthLimit)
 		{
-			Debug.WriteLine(string.Format("Start decompilation of {0} tree nodes", context.TreeNodes.Length));
+			Debug.WriteLine("Start decompilation of {0} tree nodes", context.TreeNodes.Length);
 			
 			TaskCompletionSource<AvalonEditTextOutput> tcs = new TaskCompletionSource<AvalonEditTextOutput>();
 			if (context.TreeNodes.Length == 0) {

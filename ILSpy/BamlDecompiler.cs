@@ -1,5 +1,20 @@
-﻿// Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+﻿// Copyright (c) 2011 AlphaSierraPapa for the SharpDevelop Team
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+// software and associated documentation files (the "Software"), to deal in the Software
+// without restriction, including without limitation the rights to use, copy, modify, merge,
+// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+// to whom the Software is furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+// PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
 
 #if !DOTNET35
 
@@ -11,6 +26,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Baml2006;
 using System.Xaml;
+using System.Xaml.Schema;
 using System.Xml;
 using System.Xml.Linq;
 using ICSharpCode.AvalonEdit.Highlighting;
@@ -39,7 +55,7 @@ namespace ICSharpCode.ILSpy.Baml
 		[Conditional("DEBUG")]
 		static void Log(string format, params object[] args)
 		{
-			//Debug.WriteLine(format, args);
+			Debug.WriteLine(format, args);
 		}
 		
 		sealed class XamlObjectNode : XamlNode
@@ -243,8 +259,23 @@ namespace ICSharpCode.ILSpy.Baml
 			}
 		}
 		
-		public string DecompileBaml(MemoryStream bamlCode, string containingAssemblyFile)
+		AssemblyResolver asmResolver;
+		
+		Assembly AssemblyResolve(object sender, ResolveEventArgs args)
 		{
+			string path = asmResolver.FindAssembly(args.Name);
+			
+			if (path == null)
+				return null;
+			
+			return Assembly.LoadFile(path);
+		}
+		
+		public string DecompileBaml(MemoryStream bamlCode, string containingAssemblyFile, ConnectMethodDecompiler connectMethodDecompiler, AssemblyResolver asmResolver)
+		{
+			this.asmResolver = asmResolver;
+			AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
+			
 			bamlCode.Position = 0;
 			TextWriter w = new StringWriter();
 			
@@ -252,8 +283,13 @@ namespace ICSharpCode.ILSpy.Baml
 			
 			Baml2006Reader reader = new Baml2006Reader(bamlCode, new XamlReaderSettings() { ValuesMustBeString = true, LocalAssembly = assembly });
 			var xamlDocument = Parse(reader);
+			
+			string bamlTypeName = xamlDocument.OfType<XamlObjectNode>().First().Type.UnderlyingType.FullName;
+			
+			var eventMappings = connectMethodDecompiler.DecompileEventMappings(bamlTypeName);
 
 			foreach (var xamlNode in xamlDocument) {
+				RemoveConnectionIds(xamlNode, eventMappings, reader.SchemaContext);
 				AvoidContentProperties(xamlNode);
 				MoveXKeyToFront(xamlNode);
 			}
@@ -277,6 +313,43 @@ namespace ICSharpCode.ILSpy.Baml
 			}
 
 			return doc.ToString();
+		}
+		
+		void RemoveConnectionIds(XamlNode node, Dictionary<int, EventRegistration[]> eventMappings, XamlSchemaContext context)
+		{
+			foreach (XamlNode child in node.Children)
+				RemoveConnectionIds(child, eventMappings, context);
+			
+			XamlObjectNode obj = node as XamlObjectNode;
+			if (obj != null && obj.Children.Count > 0) {
+				var removableNodes = new List<XamlMemberNode>();
+				var addableNodes = new List<XamlMemberNode>();
+				foreach (XamlMemberNode memberNode in obj.Children.OfType<XamlMemberNode>()) {
+					if (memberNode.Member == XamlLanguage.ConnectionId && memberNode.Children.Single() is XamlValueNode) {
+						var value = memberNode.Children.Single() as XamlValueNode;
+						int id;
+						if (value.Value is string && int.TryParse(value.Value as string, out id) && eventMappings.ContainsKey(id)) {
+							var map = eventMappings[id];
+							foreach (var entry in map) {
+								if (entry.IsAttached) {
+									var type = context.GetXamlType(Type.GetType(entry.AttachSourceType));
+									var member = new XamlMemberNode(new XamlMember(entry.EventName, type, true));
+									member.Children.Add(new XamlValueNode(entry.MethodName));
+									addableNodes.Add(member);
+								} else {
+									var member = new XamlMemberNode(obj.Type.GetMember(entry.EventName));
+									member.Children.Add(new XamlValueNode(entry.MethodName));
+									addableNodes.Add(member);
+								}
+							}
+							removableNodes.Add(memberNode);
+						}
+					}
+				}
+				foreach (var rnode in removableNodes)
+					node.Children.Remove(rnode);
+				node.Children.InsertRange(node.Children.Count > 1 ? node.Children.Count - 1 : 0, addableNodes);
+			}
 		}
 		
 		/// <summary>
@@ -347,7 +420,7 @@ namespace ICSharpCode.ILSpy.Baml
 				data.Position = 0;
 				data.CopyTo(bamlStream);
 				
-				output.Write(decompiler.DecompileBaml(bamlStream, asm.FileName));
+				output.Write(decompiler.DecompileBaml(bamlStream, asm.FileName, new ConnectMethodDecompiler(asm), new AssemblyResolver(asm)));
 				return true;
 			} finally {
 				if (bamlDecompilerAppDomain != null)
@@ -360,7 +433,7 @@ namespace ICSharpCode.ILSpy.Baml
 			if (appDomain == null) {
 				// Construct and initialize settings for a second AppDomain.
 				AppDomainSetup bamlDecompilerAppDomainSetup = new AppDomainSetup();
-				bamlDecompilerAppDomainSetup.ApplicationBase = "file:///" + Path.GetDirectoryName(assemblyFileName);
+//				bamlDecompilerAppDomainSetup.ApplicationBase = "file:///" + Path.GetDirectoryName(assemblyFileName);
 				bamlDecompilerAppDomainSetup.DisallowBindingRedirects = false;
 				bamlDecompilerAppDomainSetup.DisallowCodeDownload = true;
 				bamlDecompilerAppDomainSetup.ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
@@ -368,7 +441,7 @@ namespace ICSharpCode.ILSpy.Baml
 				// Create the second AppDomain.
 				appDomain = AppDomain.CreateDomain("BamlDecompiler AD", null, bamlDecompilerAppDomainSetup);
 			}
-			return (BamlDecompiler)appDomain.CreateInstanceFromAndUnwrap(typeof(BamlDecompiler).Assembly.Location, typeof(BamlDecompiler).FullName);
+			return (BamlDecompiler)appDomain.CreateInstanceAndUnwrap(typeof(BamlDecompiler).Assembly.FullName, typeof(BamlDecompiler).FullName);
 		}
 	}
 }
