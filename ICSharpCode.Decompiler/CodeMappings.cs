@@ -134,7 +134,7 @@ namespace ICSharpCode.Decompiler
 		{
 			get {
 				if (invertedList == null) {
-					var list = MemberCodeMappings.ConvertAll<ILRange>(
+					var list = MemberCodeMappings.Select(
 						s => new ILRange { From = s.ILInstructionOffset.From, To = s.ILInstructionOffset.To });
 					invertedList = ILRange.OrderAndJoint(ILRange.Invert(list, CodeSize));
 				}
