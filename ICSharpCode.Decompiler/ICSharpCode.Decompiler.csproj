@@ -475,7 +475,9 @@
     <Compile Include="NRefactory\Utils\BitVector16.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="NRefactory\Utils\BusyManager.cs" />
     <Compile Include="NRefactory\Utils\CacheManager.cs" />
+    <Compile Include="NRefactory\Utils\CSharpPrimitiveCast.cs" />
     <Compile Include="NRefactory\Utils\DotNet35Compat.cs" />
     <Compile Include="NRefactory\Utils\EmptyList.cs" />
     <Compile Include="NRefactory\Utils\ExtensionMethods.cs" />
