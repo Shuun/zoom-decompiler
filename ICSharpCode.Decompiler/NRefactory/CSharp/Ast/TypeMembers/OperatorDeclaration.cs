@@ -152,7 +152,7 @@ namespace ICSharpCode.NRefactory.CSharp
 		/// </summary>
 		public static string GetToken(OperatorType type)
 		{
-			return Mono.CSharp.Operator.GetName((Mono.CSharp.Operator.OpType)type);
+			return type.ToString();
 		}
 		
 		public override NodeType NodeType {
