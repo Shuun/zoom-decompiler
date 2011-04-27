@@ -44,7 +44,7 @@ namespace ICSharpCode.Decompiler.Ast
 			this.context = context;
 			this.DecompileMethodBodies = true;
 			
-			this.LocalVariables = new ConcurrentDictionary<int, IEnumerable<ILVariable>>();
+			this.LocalVariables = new /*Concurrent*/Dictionary<int, IEnumerable<ILVariable>>();
 		}
 		
 		public static bool MemberIsHidden(MemberReference member, DecompilerSettings settings)
