@@ -36,7 +36,7 @@ namespace ICSharpCode.Decompiler.Ast
 			}
 		}
 		
-		protected override bool DoMatch(AstNode other, Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			CommentStatement o = other as CommentStatement;
 			return o != null && MatchString(comment, o.comment);
