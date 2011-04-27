@@ -42,7 +42,7 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
 			if (!(ownerType == EntityType.TypeDefinition || ownerType == EntityType.Method))
 				throw new ArgumentException("owner must be a type or a method", "ownerType");
 			if (index < 0)
-				throw new ArgumentOutOfRangeException("index", index, "Value must not be negative");
+				throw new ArgumentOutOfRangeException("index");
 			if (name == null)
 				throw new ArgumentNullException("name");
 			this.ownerType = ownerType;
