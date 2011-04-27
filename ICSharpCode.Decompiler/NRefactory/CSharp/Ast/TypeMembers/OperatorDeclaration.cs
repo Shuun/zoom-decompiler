@@ -107,15 +107,44 @@ namespace ICSharpCode.NRefactory.CSharp
 		/// </summary>
 		public static OperatorType? GetOperatorType(string methodName)
 		{
-			return (OperatorType?)Mono.CSharp.Operator.GetType(methodName);
-		}
+            switch (methodName)
+            {
+                case "op_LogicalNot": return OperatorType.LogicalNot;
+                case "op_OnesComplement": return OperatorType.OnesComplement;
+                case "op_Increment": return OperatorType.Increment;
+                case "op_Decrement": return OperatorType.Decrement;
+                case "op_True": return OperatorType.True;
+                case "op_False": return OperatorType.False;
+                case "op_Addition": return OperatorType.Addition;
+                case "op_Subtraction": return OperatorType.Subtraction;
+                case "op_UnaryPlus": return OperatorType.UnaryPlus;
+                case "op_UnaryNegation": return OperatorType.UnaryNegation;
+                case "op_Multiply": return OperatorType.Multiply;
+                case "op_Division": return OperatorType.Division;
+                case "op_Modulus": return OperatorType.Modulus;
+                case "op_BitwiseAnd": return OperatorType.BitwiseAnd;
+                case "op_BitwiseOr": return OperatorType.BitwiseOr;
+                case "op_ExclusiveOr": return OperatorType.ExclusiveOr;
+                case "op_LeftShift": return OperatorType.LeftShift;
+                case "op_RightShift": return OperatorType.RightShift;
+                case "op_Equality": return OperatorType.Equality;
+                case "op_Inequality": return OperatorType.Inequality;
+                case "op_GreaterThan": return OperatorType.GreaterThan;
+                case "op_LessThan": return OperatorType.LessThan;
+                case "op_GreaterThanOrEqual": return OperatorType.GreaterThanOrEqual;
+                case "op_LessThanOrEqual": return OperatorType.LessThanOrEqual;
+                case "op_Implicit": return OperatorType.Implicit;
+                case "op_Explicit": return OperatorType.Explicit;
+                default: return null;
+            }
+        }
 		
 		/// <summary>
 		/// Gets the method name for the operator type. ("op_Addition", "op_Implicit", etc.)
 		/// </summary>
 		public static string GetName(OperatorType type)
 		{
-			return Mono.CSharp.Operator.GetMetadataName((Mono.CSharp.Operator.OpType)type);
+			return type.ToString();
 		}
 		
 		/// <summary>
