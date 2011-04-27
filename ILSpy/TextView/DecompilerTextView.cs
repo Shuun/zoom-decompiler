@@ -38,7 +38,6 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using ICSharpCode.AvalonEdit.Rendering;
 using ICSharpCode.Decompiler;
 using ICSharpCode.ILSpy.TreeNodes;
 using ICSharpCode.ILSpy.XmlDoc;
@@ -58,7 +57,6 @@ namespace ICSharpCode.ILSpy.TextView
 	{
 		readonly ReferenceElementGenerator referenceElementGenerator;
 		readonly UIElementGenerator uiElementGenerator;
-		List<VisualLineElementGenerator> activeCustomElementGenerators = new List<VisualLineElementGenerator>();
 		FoldingManager foldingManager;
 		
 		DefinitionLookup definitionLookup;
@@ -252,7 +250,7 @@ namespace ICSharpCode.ILSpy.TextView
 				activeCustomElementGenerators.Add(elementGenerator);
 			}
 			
-			Debug.WriteLine("  Set-up: {0}", w.Elapsed); w.Restart();
+			Debug.WriteLine(string.Format("  Set-up: {0}", w.Elapsed)); w.Restart();
 			textEditor.Document = textOutput.GetDocument();
 			Debug.WriteLine("  Assigning document: {0}", w.Elapsed); w.Restart();
 			if (textOutput.Foldings.Count > 0) {
