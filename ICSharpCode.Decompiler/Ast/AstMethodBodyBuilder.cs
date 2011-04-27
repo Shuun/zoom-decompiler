@@ -114,7 +114,7 @@ namespace ICSharpCode.Decompiler.Ast
 			
 			// store the variables - used for debugger
 			int token = methodDef.MetadataToken.ToInt32();
-			localVariables.AddOrUpdate(token, allVariables, (key, oldValue) => allVariables);
+			localVariables[token] = allVariables;
 			
 			return astBlock;
 		}
