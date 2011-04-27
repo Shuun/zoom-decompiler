@@ -17,7 +17,7 @@ namespace ICSharpCode.NRefactory.TypeSystem
 		public ArrayType(IType elementType, int dimensions = 1) : base(elementType)
 		{
 			if (dimensions <= 0)
-				throw new ArgumentOutOfRangeException("dimensions", dimensions, "dimensions must be positive");
+				throw new ArgumentOutOfRangeException("dimensions");
 			this.dimensions = dimensions;
 		}
 		
