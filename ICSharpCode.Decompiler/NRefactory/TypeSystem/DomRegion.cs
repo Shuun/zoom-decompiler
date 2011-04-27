@@ -7,7 +7,6 @@ using ICSharpCode.NRefactory.CSharp;
 
 namespace ICSharpCode.NRefactory.TypeSystem
 {
-	[Serializable]
 	public struct DomRegion : IEquatable<DomRegion>
 	{
 		readonly string fileName;
