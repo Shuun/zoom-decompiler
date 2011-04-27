@@ -202,8 +202,27 @@ namespace ICSharpCode.NRefactory.CSharp
 		{
 			WriteCommaSeparatedListInParenthesis(list.SafeCast<ParameterDeclaration, AstNode>(), spaceWithin);
 		}
+        #elif SILVERLIGHT
+        void WriteCommaSeparatedList(IEnumerable<VariableInitializer> list)
+        {
+            WriteCommaSeparatedList(list.SafeCast<VariableInitializer, AstNode>());
+        }
 
-		#endif
+        void WriteCommaSeparatedList(IEnumerable<AstType> list)
+        {
+            WriteCommaSeparatedList(list.SafeCast<AstType, AstNode>());
+        }
+
+        void WriteCommaSeparatedListInParenthesis(IEnumerable<Expression> list, bool spaceWithin)
+        {
+            WriteCommaSeparatedListInParenthesis(list.SafeCast<Expression, AstNode>(), spaceWithin);
+        }
+
+        void WriteCommaSeparatedListInParenthesis(IEnumerable<ParameterDeclaration> list, bool spaceWithin)
+        {
+            WriteCommaSeparatedListInParenthesis(list.SafeCast<ParameterDeclaration, AstNode>(), spaceWithin);
+        }
+        #endif
 
 		void WriteCommaSeparatedListInBrackets(IEnumerable<ParameterDeclaration> list, bool spaceWithin)
 		{
