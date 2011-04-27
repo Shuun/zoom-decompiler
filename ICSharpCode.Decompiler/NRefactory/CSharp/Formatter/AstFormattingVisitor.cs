@@ -1539,7 +1539,7 @@ namespace ICSharpCode.NRefactory.CSharp
 			int offset = data.LocationToOffset (location.Line, location.Column);
 			if (offset <= 0) {
 				Console.WriteLine ("possible wrong offset");
-				Console.WriteLine (Environment.StackTrace);
+				Console.WriteLine (new System.Diagnostics.StackTrace().ToString());
 				return;
 			}
 			bool isEmpty = IsLineIsEmptyUpToEol (offset);
