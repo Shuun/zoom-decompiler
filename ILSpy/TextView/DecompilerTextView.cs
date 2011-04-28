@@ -38,6 +38,7 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using ICSharpCode.AvalonEdit.Rendering;
 using ICSharpCode.Decompiler;
 using ICSharpCode.ILSpy.TreeNodes;
 using ICSharpCode.ILSpy.XmlDoc;
@@ -57,6 +58,7 @@ namespace ICSharpCode.ILSpy.TextView
 	{
 		readonly ReferenceElementGenerator referenceElementGenerator;
 		readonly UIElementGenerator uiElementGenerator;
+        List<VisualLineElementGenerator> activeCustomElementGenerators = new List<VisualLineElementGenerator>();
 		FoldingManager foldingManager;
 		
 		DefinitionLookup definitionLookup;
@@ -225,7 +227,7 @@ namespace ICSharpCode.ILSpy.TextView
 		/// </summary>
 		void ShowOutput(AvalonEditTextOutput textOutput, IHighlightingDefinition highlighting = null, DecompilerTextViewState state = null)
 		{
-			Debug.WriteLine("Showing {0} characters of output", textOutput.TextLength);
+			Debug.WriteLine(string.Format("Showing {0} characters of output", textOutput.TextLength));
 			Stopwatch w = Stopwatch.StartNew();
 			
 			textEditor.ScrollToHome();
@@ -252,7 +254,7 @@ namespace ICSharpCode.ILSpy.TextView
 			
 			Debug.WriteLine(string.Format("  Set-up: {0}", w.Elapsed)); w.Restart();
 			textEditor.Document = textOutput.GetDocument();
-			Debug.WriteLine("  Assigning document: {0}", w.Elapsed); w.Restart();
+			Debug.WriteLine(string.Format("  Assigning document: {0}", w.Elapsed)); w.Restart();
 			if (textOutput.Foldings.Count > 0) {
 				if (state != null) {
 					state.RestoreFoldings(textOutput.Foldings);
@@ -261,7 +263,7 @@ namespace ICSharpCode.ILSpy.TextView
 				}
 				foldingManager = FoldingManager.Install(textEditor.TextArea);
 				foldingManager.UpdateFoldings(textOutput.Foldings.OrderBy(f => f.StartOffset), -1);
-				Debug.WriteLine("  Updating folding: {0}", w.Elapsed); w.Restart();
+				Debug.WriteLine(string.Format("  Updating folding: {0}", w.Elapsed)); w.Restart();
 			}
 		}
 		#endregion
