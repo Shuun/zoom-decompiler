@@ -345,7 +345,7 @@ namespace ICSharpCode.ILSpy.TextView
 		
 		static Task<AvalonEditTextOutput> DecompileAsync(DecompilationContext context, int outputLengthLimit)
 		{
-			Debug.WriteLine("Start decompilation of {0} tree nodes", context.TreeNodes.Length);
+			Debug.WriteLine(string.Format("Start decompilation of {0} tree nodes", context.TreeNodes.Length));
 			
 			TaskCompletionSource<AvalonEditTextOutput> tcs = new TaskCompletionSource<AvalonEditTextOutput>();
 			if (context.TreeNodes.Length == 0) {
