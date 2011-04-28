@@ -842,7 +842,17 @@ namespace ICSharpCode.Decompiler.ILAst
 						newBody.Add(MakeGoTo(returnFalseLabel));
 					} else if (finallyMethodToStateInterval.TryGetValue(method, out interval)) {
 						// Call to Finally-method
-						int index = stateChanges.FindIndex(ss => ss.NewState >= interval.Start && ss.NewState <= interval.End);
+                        int index = 0;
+                        if(!stateChanges.Any(
+                            ss =>
+                            {
+                                bool found = ss.NewState >= interval.Start && ss.NewState <= interval.End;
+                                if (!found)
+                                    index++;
+                                return found;
+                            }))
+                            index = -1;
+
 						if (index < 0)
 							throw new YieldAnalysisFailedException();
 						

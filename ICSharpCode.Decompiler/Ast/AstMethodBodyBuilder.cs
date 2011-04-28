@@ -998,7 +998,9 @@ namespace ICSharpCode.Decompiler.Ast
 		static Expression InlineAssembly(ILExpression byteCode, List<Ast.Expression> args)
 		{
 			#if DEBUG
-			unhandledOpcodes.AddOrUpdate(byteCode.Code, c => 1, (c, n) => n+1);
+            int n;
+			unhandledOpcodes.TryGetValue(byteCode.Code, out n);
+            unhandledOpcodes[byteCode.Code] = n+1;
 			#endif
 			// Output the operand of the unknown IL code as well
 			if (byteCode.Operand != null) {
