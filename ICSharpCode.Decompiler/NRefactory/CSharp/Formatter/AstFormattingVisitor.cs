@@ -1558,7 +1558,7 @@ namespace ICSharpCode.NRefactory.CSharp
 		{
 			if (location.Line < 0 || location.Line >= data.LineCount) {
 				Console.WriteLine ("Invalid location " + location);
-				Console.WriteLine (Environment.StackTrace);
+				Console.WriteLine (new System.Diagnostics.StackTrace().ToString());
 				return;
 			}
 		
