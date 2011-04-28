@@ -81,10 +81,12 @@
     <Compile Include="Compatibility\CancellationToken.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Compatibility\NonSerializedAttribute.cs" />
     <Compile Include="Compatibility\OperationCanceledException.cs" />
     <Compile Include="Compatibility\ReaderWriterLockSlim.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Compatibility\SerializableAttribute.cs" />
     <Compile Include="DecompilerException.cs" />
     <Compile Include="DecompilerSettings.cs" />
     <Compile Include="Disassembler\DisassemblerHelpers.cs" />
