@@ -195,7 +195,9 @@
     </Compile>
     <Compile Include="SessionSettings.cs" />
     <Compile Include="TextView\CaretHighlightAdorner.cs" />
-    <Compile Include="TextView\DecompilerTextView.cs" />
+    <Compile Include="TextView\DecompilerTextView.cs">
+      <DependentUpon>TextView\DecompilerTextView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TextView\OutputLengthExceededException.cs" />
     <Compile Include="TextView\ReferenceElementGenerator.cs" />
     <Compile Include="TextView\AvalonEditTextOutput.cs" />
@@ -229,14 +231,16 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\SearchBoxStyle.xaml">
-      <DependentUpon>SearchBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DecompilerSettingsPanel.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="OpenFromGacDialog.xaml" />
     <Page Include="OptionsDialog.xaml" />
     <Page Include="TextView\DecompilerTextView.xaml">
-      <DependentUpon>DecompilerTextView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="themes\generic.xaml" />
   </ItemGroup>
