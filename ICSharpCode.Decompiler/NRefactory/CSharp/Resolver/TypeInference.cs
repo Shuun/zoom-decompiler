@@ -470,11 +470,11 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 			    && object.Equals(pU.GetDefinition(), pV.GetDefinition())
 			    && pU.TypeParameterCount == pV.TypeParameterCount)
 			{
-				Debug.Indent();
+				//Debug.Indent();
 				for (int i = 0; i < pU.TypeParameterCount; i++) {
 					MakeExactInference(pU.TypeArguments[i], pV.TypeArguments[i]);
 				}
-				Debug.Unindent();
+				//Debug.Unindent();
 			}
 		}
 		
@@ -529,7 +529,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 							return; // cannot make an inference because it's not unique
 					}
 				}
-				Debug.Indent();
+				//Debug.Indent();
 				if (uniqueBaseType != null) {
 					for (int i = 0; i < uniqueBaseType.TypeParameterCount; i++) {
 						IType Ui = uniqueBaseType.TypeArguments[i];
@@ -554,7 +554,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 						}
 					}
 				}
-				Debug.Unindent();
+				//Debug.Unindent();
 			}
 		}
 		
@@ -612,7 +612,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 							return; // cannot make an inference because it's not unique
 					}
 				}
-				Debug.Indent();
+				//Debug.Indent();
 				if (uniqueBaseType != null) {
 					for (int i = 0; i < uniqueBaseType.TypeParameterCount; i++) {
 						IType Ui = pU.TypeArguments[i];
@@ -637,7 +637,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 						}
 					}
 				}
-				Debug.Unindent();
+				//Debug.Unindent();
 			}
 		}
 		#endregion
@@ -647,9 +647,9 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 		{
 			Log(" Trying to fix " + tp);
 			Debug.Assert(!tp.IsFixed);
-			Debug.Indent();
+			//Debug.Indent();
 			var types = CreateNestedInstance().FindTypesInBounds(tp.LowerBounds.ToArray(), tp.UpperBounds.ToArray());
-			Debug.Unindent();
+			//Debug.Unindent();
 			if (algorithm == TypeInferenceAlgorithm.ImprovedReturnAllResults) {
 				tp.FixedTo = IntersectionType.Create(types);
 				Log("  T was fixed " + (types.Count >= 1 ? "successfully" : "(with errors)") + " to " + tp.FixedTo);
@@ -799,7 +799,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 			// Finds a type X so that "LB <: X <: UB"
 			Log("FindTypesInBound, LowerBounds=", lowerBounds);
 			Log("FindTypesInBound, UpperBounds=", upperBounds);
-			Debug.Indent();
+			//Debug.Indent();
 			
 			// First try the Fixing algorithm from the C# spec (§7.5.2.11)
 			List<IType> candidateTypes = lowerBounds.Union(upperBounds)
@@ -886,7 +886,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 					}
 				}
 			}
-			Debug.Unindent();
+			//Debug.Unindent();
 			return candidateTypes;
 		}
 		#endregion
