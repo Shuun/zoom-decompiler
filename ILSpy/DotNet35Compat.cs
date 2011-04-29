@@ -61,11 +61,14 @@ namespace ICSharpCode.ILSpy
         static DotNet35Compat()
         {
             UseLayoutRoundingProperty =
-                FrameworkElement.
 #if DOTNET35
-                    SnapsToDevicePixelsProperty;
+                DependencyProperty.RegisterAttached(
+                    "UseLayoutRounding",
+                    typeof(bool),
+                    typeof(DotNet35Compat),
+                    new PropertyMetadata(false, (sender, e) => ((FrameworkElement)sender).SnapsToDevicePixels = (bool)e.NewValue));
 #else
-                    UseLayoutRoundingProperty.AddOwner(typeof(DotNet35Compat));
+                FrameworkElement.UseLayoutRoundingProperty.AddOwner(typeof(DotNet35Compat));
 #endif
 
             TextFormattingModeProperty =
