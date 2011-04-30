@@ -57,33 +57,41 @@ namespace ILSpySL
 
         private void openButton_Click(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog();
+            var openFileDialog = new OpenFileDialog { Multiselect = true };
             if (openFileDialog.ShowDialog() != true)
                 return;
 
-            var buf = new MemoryStream();
-            using (var stream = openFileDialog.File.OpenRead())
-            {
-                while(true)
-                {
-                    int b = stream.ReadByte();
-                    if(b<0)
-                        break;
-                    else
-                        buf.WriteByte((byte)b);
-                }
-            }
-
-            buf.Position = 0;
-
             openButton.IsEnabled = false;
+
+            var bufs = new List<MemoryStream>();
+            foreach (var f in openFileDialog.Files)
+            {
+                var buf = new MemoryStream();
+                using (var stream = f.OpenRead())
+                {
+                    while (true)
+                    {
+                        int b = stream.ReadByte();
+                        if (b < 0)
+                            break;
+                        else
+                            buf.WriteByte((byte)b);
+                    }
+                }
+                
+                buf.Position = 0;
+
+                bufs.Add(buf);
+            }
 
             System.Threading.ThreadPool.QueueUserWorkItem(delegate
             {
-                try
+                foreach (var buf in bufs)
                 {
-                    var para = new Mono.Cecil.ReaderParameters(Mono.Cecil.ReadingMode.Immediate);
-                    Mono.Cecil.AssemblyDefinition asm;
+                    try
+                    {
+                        var para = new Mono.Cecil.ReaderParameters(Mono.Cecil.ReadingMode.Immediate);
+                        Mono.Cecil.AssemblyDefinition asm;
                         para.AssemblyResolver = new Resolver(
                             (asmName, _p) =>
                                 assembies.FirstOrDefault(
@@ -93,59 +101,60 @@ namespace ILSpySL
                                         asmName.FullName,
                                         StringComparison.OrdinalIgnoreCase)));
 
-                    asm = Mono.Cecil.AssemblyDefinition.ReadAssembly(buf, para);
+                        asm = Mono.Cecil.AssemblyDefinition.ReadAssembly(buf, para);
 
-                    this.assembies.Add(asm);
+                        this.assembies.Add(asm);
 
-                    this.Dispatcher.BeginInvoke(delegate
-                    {
-                        var asmNode = new TreeViewItem
+                        this.Dispatcher.BeginInvoke(delegate
                         {
-                            Header = asm.Name.Name + " v" + asm.Name.Version
-                        };
-                        this.treeView1.Items.Add(asmNode);
-
-                        var grouped =
-                            from t in asm.MainModule.Types
-                            orderby t.Namespace, t.Name
-                            group t by t.Namespace;
-
-                        foreach (var g in grouped)
-                        {
-                            var nsNode = new TreeViewItem
+                            var asmNode = new TreeViewItem
                             {
-                                Header = string.IsNullOrEmpty(g.Key) ? "<>" : g.Key
+                                Header = asm.Name.Name + " v" + asm.Name.Version
                             };
+                            this.treeView1.Items.Add(asmNode);
 
-                            asmNode.Items.Add(nsNode);
+                            var grouped =
+                                from t in asm.MainModule.Types
+                                orderby t.Namespace, t.Name
+                                group t by t.Namespace;
 
-                            foreach (var t in g)
+                            foreach (var g in grouped)
                             {
-                                var tNode = new TreeViewItem
+                                var nsNode = new TreeViewItem
                                 {
-                                    Header = t.Name,
-                                    Tag = t
+                                    Header = string.IsNullOrEmpty(g.Key) ? "<>" : g.Key
                                 };
 
-                                nsNode.Items.Add(tNode);
+                                asmNode.Items.Add(nsNode);
+
+                                foreach (var t in g)
+                                {
+                                    var tNode = new TreeViewItem
+                                    {
+                                        Header = t.Name,
+                                        Tag = t
+                                    };
+
+                                    nsNode.Items.Add(tNode);
+                                }
                             }
-                        }
 
-                        openButton.IsEnabled = true;
-                    });
-                }
-                catch(Exception error)
-                {
-                    this.Dispatcher.BeginInvoke(delegate
+                            openButton.IsEnabled = true;
+                        });
+                    }
+                    catch (Exception error)
                     {
-                        openButton.IsEnabled = true;
-                        var rn = new Run { Text = error.ToString() };
-                        var pa = new Paragraph();
-                        pa.Inlines.Add(rn);
+                        this.Dispatcher.BeginInvoke(delegate
+                        {
+                            openButton.IsEnabled = true;
+                            var rn = new Run { Text = error.ToString() };
+                            var pa = new Paragraph();
+                            pa.Inlines.Add(rn);
 
-                        codeTextBox.Blocks.Clear();
-                        codeTextBox.Blocks.Add(pa);
-                    });
+                            codeTextBox.Blocks.Clear();
+                            codeTextBox.Blocks.Add(pa);
+                        });
+                    }
                 }
             });
         }
