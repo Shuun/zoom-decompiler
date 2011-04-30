@@ -70,7 +70,7 @@ namespace Mono.Cecil.PE {
 
 		public sbyte ReadSByte ()
 		{
-			return (sbyte) ReadByte ();
+			return unchecked((sbyte) ReadByte ());
 		}
 
 		public byte [] ReadBytes (int length)
@@ -83,30 +83,30 @@ namespace Mono.Cecil.PE {
 
 		public ushort ReadUInt16 ()
 		{
-			ushort value = (ushort) (buffer [position]
-				| (buffer [position + 1] << 8));
+			ushort value = unchecked((ushort) (buffer [position]
+				| (buffer [position + 1] << 8)));
 			position += 2;
 			return value;
 		}
 
 		public short ReadInt16 ()
 		{
-			return (short) ReadUInt16 ();
+			return unchecked((short) ReadUInt16 ());
 		}
 
 		public uint ReadUInt32 ()
 		{
-			uint value = (uint) (buffer [position]
+			uint value = unchecked((uint) (buffer [position]
 				| (buffer [position + 1] << 8)
 				| (buffer [position + 2] << 16)
-				| (buffer [position + 3] << 24));
+				| (buffer [position + 3] << 24)));
 			position += 4;
 			return value;
 		}
 
 		public int ReadInt32 ()
 		{
-			return (int) ReadUInt32 ();
+			return unchecked((int) ReadUInt32 ());
 		}
 
 		public ulong ReadUInt64 ()
@@ -114,12 +114,12 @@ namespace Mono.Cecil.PE {
 			uint low = ReadUInt32 ();
 			uint high = ReadUInt32 ();
 
-			return (((ulong) high) << 32) | low;
+			return unchecked((((ulong) high) << 32) | low);
 		}
 
 		public long ReadInt64 ()
 		{
-			return (long) ReadUInt64 ();
+			return unchecked((long) ReadUInt64 ());
 		}
 
 		public uint ReadCompressedUInt32 ()
@@ -129,18 +129,18 @@ namespace Mono.Cecil.PE {
 				return first;
 
 			if ((first & 0x40) == 0)
-				return ((uint) (first & ~0x80) << 8)
-					| ReadByte ();
+				return unchecked(((uint) (first & ~0x80) << 8)
+					| ReadByte ());
 
-			return ((uint) (first & ~0xc0) << 24)
+			return unchecked(((uint) (first & ~0xc0) << 24)
 				| (uint) ReadByte () << 16
 				| (uint) ReadByte () << 8
-				| ReadByte ();
+				| ReadByte ());
 		}
 
 		public int ReadCompressedInt32 ()
 		{
-			var value = (int) ReadCompressedUInt32 ();
+			var value = unchecked((int) ReadCompressedUInt32 ());
 
 			return (value & 1) != 0
 				? -(value >> 1)
