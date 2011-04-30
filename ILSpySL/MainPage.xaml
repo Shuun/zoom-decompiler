@@ -23,7 +23,7 @@
             </Button>
         </StackPanel>
 
-        <sdk:TreeView Name="treeView1" Grid.Row="1" />
+        <sdk:TreeView Name="treeView1" Grid.Row="1" SelectedItemChanged="treeView1_SelectedItemChanged" />
         
         <RichTextBox Name="codeTextBox" Grid.Column="2" Grid.Row="1" />
 
