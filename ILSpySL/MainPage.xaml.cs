@@ -130,6 +130,8 @@ namespace ILSpySL
                                 nsNode.Items.Add(tNode);
                             }
                         }
+
+                        openButton.IsEnabled = true;
                     });
                 }
                 catch(Exception error)
@@ -171,7 +173,6 @@ namespace ILSpySL
             var outp = new PlainTextOutput();
             astBui.GenerateCode(outp);
 
-            openButton.IsEnabled = true;
             var rn = new Run { Text = outp.ToString() };
             var pa = new Paragraph();
             pa.Inlines.Add(rn);
