@@ -25,7 +25,7 @@
 
         <sdk:TreeView Name="treeView1" Grid.Row="1" />
         
-        <RichTextBox Grid.Column="2" Name="richTextBox1" Grid.Row="1" />
+        <RichTextBox Name="codeTextBox" Grid.Column="2" Grid.Row="1" />
 
         <sdk:GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="1" />
     </Grid>
