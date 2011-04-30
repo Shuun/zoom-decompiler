@@ -2,7 +2,7 @@
 
 namespace ICSharpCode
 {
-    public class CancellationToken
+    public struct CancellationToken
     {
         public void ThrowIfCancellationRequested()
         {
