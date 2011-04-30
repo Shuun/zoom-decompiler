@@ -99,28 +99,37 @@ namespace ILSpySL
 
                     this.Dispatcher.BeginInvoke(delegate
                     {
-                        this.treeView1.Items.Add(new TreeViewItem
+                        var asmNode = new TreeViewItem
                         {
                             Header = asm.Name.Name + " v" + asm.Name.Version
-                        });
-                    });
+                        };
+                        this.treeView1.Items.Add(asmNode);
 
-                    var ctx = new DecompilerContext(asm.MainModule);
-                    var astBui = new AstBuilder(ctx);
-                    astBui.AddAssembly(asm);
-                    astBui.RunTransformations();
-                    var outp = new PlainTextOutput();
-                    astBui.GenerateCode(outp);
+                        var grouped =
+                            from t in asm.MainModule.Types
+                            orderby t.Namespace, t.Name
+                            group t by t.Namespace;
 
-                    this.Dispatcher.BeginInvoke(delegate
-                    {
-                        openButton.IsEnabled = true;
-                        var rn = new Run { Text = outp.ToString() };
-                        var pa = new Paragraph();
-                        pa.Inlines.Add(rn);
+                        foreach (var g in grouped)
+                        {
+                            var nsNode = new TreeViewItem
+                            {
+                                Header = string.IsNullOrEmpty(g.Key) ? "<>" : g.Key
+                            };
 
-                        codeTextBox.Blocks.Clear();
-                        codeTextBox.Blocks.Add(pa);
+                            asmNode.Items.Add(nsNode);
+
+                            foreach (var t in g)
+                            {
+                                var tNode = new TreeViewItem
+                                {
+                                    Header = t.Name,
+                                    Tag = t
+                                };
+
+                                nsNode.Items.Add(tNode);
+                            }
+                        }
                     });
                 }
                 catch(Exception error)
@@ -137,6 +146,38 @@ namespace ILSpySL
                     });
                 }
             });
+        }
+
+        private void treeView1_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            DecompileSelectedNode();
+        }
+
+        private void DecompileSelectedNode()
+        {
+            if (treeView1.SelectedItem == null
+                || !(((TreeViewItem)treeView1.SelectedItem).Tag is TypeDefinition))
+            {
+                codeTextBox.Blocks.Clear();
+                return;
+            }
+
+            var ty = (TypeDefinition)(((TreeViewItem)treeView1.SelectedItem).Tag);
+
+            var ctx = new DecompilerContext(ty.Module);
+            var astBui = new AstBuilder(ctx);
+            astBui.AddType(ty);
+            astBui.RunTransformations();
+            var outp = new PlainTextOutput();
+            astBui.GenerateCode(outp);
+
+            openButton.IsEnabled = true;
+            var rn = new Run { Text = outp.ToString() };
+            var pa = new Paragraph();
+            pa.Inlines.Add(rn);
+
+            codeTextBox.Blocks.Clear();
+            codeTextBox.Blocks.Add(pa);
         }
     }
 }
