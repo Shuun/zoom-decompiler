@@ -53,6 +53,9 @@ namespace ILSpySL
         public MainPage()
         {
             InitializeComponent();
+
+            this.AllowDrop = true;
+            this.Drop += new DragEventHandler(MainPage_Drop);
         }
 
         private void openButton_Click(object sender, RoutedEventArgs e)
@@ -63,8 +66,15 @@ namespace ILSpySL
 
             openButton.IsEnabled = false;
 
+            var files = openFileDialog.Files;
+
+            AddAssemblies(files);
+        }
+
+        private void AddAssemblies(IEnumerable<FileInfo> files)
+        {
             var bufs = new List<MemoryStream>();
-            foreach (var f in openFileDialog.Files)
+            foreach (var f in files)
             {
                 var buf = new MemoryStream();
                 using (var stream = f.OpenRead())
@@ -78,7 +88,7 @@ namespace ILSpySL
                             buf.WriteByte((byte)b);
                     }
                 }
-                
+
                 buf.Position = 0;
 
                 bufs.Add(buf);
@@ -188,6 +198,16 @@ namespace ILSpySL
 
             codeTextBox.Blocks.Clear();
             codeTextBox.Blocks.Add(pa);
+        }
+
+        void MainPage_Drop(object sender, DragEventArgs e)
+        {
+            var droppedFiles = e.Data.GetData(DataFormats.FileDrop) as FileInfo[];
+
+            if (droppedFiles == null)
+                return;
+
+            AddAssemblies(droppedFiles);
         }
     }
 }
