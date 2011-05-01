@@ -198,6 +198,8 @@ namespace ILSpySL
 
             codeTextBox.Blocks.Clear();
             codeTextBox.Blocks.Add(pa);
+
+            codeTextBox.Selection.Select(codeTextBox.ContentStart, codeTextBox.ContentStart);
         }
 
         void MainPage_Drop(object sender, DragEventArgs e)
