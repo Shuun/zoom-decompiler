@@ -16,7 +16,7 @@ using ICSharpCode.ILSpy;
 
 namespace TestPlugin
 {
-	[ExportOptionPage("TestPlugin")]
+	[ExportOptionPage(Title = "TestPlugin", Order = 0)]
 	partial class CustomOptionPage : UserControl, IOptionPage
 	{
 		static readonly XNamespace ns = "http://www.ilspy.net/testplugin";
