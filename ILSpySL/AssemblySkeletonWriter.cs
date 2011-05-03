@@ -23,11 +23,6 @@ namespace ILSpySL
                 throw new NotImplementedException();
             }
 
-            internal void WriteChunk(ChunkWriter typeWriter)
-            {
-                throw new NotImplementedException();
-            }
-
             internal void WriteTypeName(TypeDefinition t)
             {
                 throw new NotImplementedException();
@@ -49,6 +44,11 @@ namespace ILSpySL
             }
 
             internal void WriteMethodReference(MethodReference methodDefinition)
+            {
+                throw new NotImplementedException();
+            }
+
+            internal void WriteBytes(byte[] bytes)
             {
                 throw new NotImplementedException();
             }
@@ -86,17 +86,13 @@ namespace ILSpySL
 
             foreach (var t in asm.MainModule.Types)
             {
-                var typeWriter = new ChunkWriter();
-
-                AddType(t, typeWriter);
-
-                assemblyChunk.WriteChunk(typeWriter);
+                WriteType(t, assemblyChunk);
             }
 
             assemblyChunkList.Add(assemblyChunk);
         }
 
-        private void AddType(TypeDefinition t, ChunkWriter typeWriter)
+        private void WriteType(TypeDefinition t, ChunkWriter typeWriter)
         {
             typeWriter.WriteTypeName(t);
             typeWriter.WriteInt32((int)t.Attributes);
@@ -104,6 +100,12 @@ namespace ILSpySL
 
             typeWriter.WriteTypeReference(t.BaseType);
             typeWriter.WriteTypeReference(t.DeclaringType);
+
+            typeWriter.WriteInt32(t.Fields.Count);
+            foreach (var f in t.Fields)
+            {
+                WriteField(f, typeWriter);
+            }
 
             typeWriter.WriteInt32(t.Methods.Count);
             foreach (var m in t.Methods)
@@ -122,6 +124,14 @@ namespace ILSpySL
             {
                 WriteEvent(e, typeWriter);
             }
+        }
+
+        private void WriteField(FieldDefinition f, ChunkWriter typeWriter)
+        {
+            typeWriter.WriteString(f.Name);
+            typeWriter.WriteInt32((int)f.Attributes);
+            typeWriter.WriteAttributes(f.CustomAttributes);
+            typeWriter.WriteBytes(f.InitialValue);
         }
 
         private void WriteEvent(EventDefinition e, ChunkWriter typeWriter)
