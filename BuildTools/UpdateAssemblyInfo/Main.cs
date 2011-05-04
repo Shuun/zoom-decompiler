@@ -33,7 +33,7 @@ namespace UpdateAssemblyInfo
 				Output = "ICSharpCode.Decompiler/Properties/AssemblyInfo.cs"
 			}
 		};
-		
+
 		class TemplateFile
 		{
 			public string Input, Output;
@@ -190,7 +190,7 @@ namespace UpdateAssemblyInfo
 		static void RetrieveRevisionNumber()
 		{
 			if (revisionNumber == null) {
-				if (Directory.Exists(".git")) {
+				if (Directory.Exists(".git") && IsGitInPath()) {
 					ReadRevisionNumberFromGit();
 					ReadBranchNameFromGit();
 				} else {
@@ -248,6 +248,19 @@ namespace UpdateAssemblyInfo
 				p.WaitForExit();
 				if (p.ExitCode != 0)
 					throw new Exception("git-branch exit code was " + p.ExitCode);
+			}
+		}
+
+		static bool IsGitInPath()
+		{
+			ProcessStartInfo info = new ProcessStartInfo("cmd", "/c where git");
+			string path = Environment.GetEnvironmentVariable("PATH");
+			path += ";" + Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "git\\bin");
+			info.EnvironmentVariables["PATH"] =  path;
+			info.UseShellExecute = false;
+			using (Process p = Process.Start(info)) {
+				p.WaitForExit();
+				return p.ExitCode == 0;
 			}
 		}
 		

@@ -137,7 +137,7 @@ namespace ICSharpCode.ILSpy
 			public void Dispose()
 			{
 				mutex.ReleaseMutex();
-				mutex.Dispose();
+				mutex.Close();
 			}
 		}
 	}
