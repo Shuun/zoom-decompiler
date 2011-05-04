@@ -125,6 +125,19 @@ namespace ICSharpCode.ILSpy
             return System.IO.Path.Combine(parts);
 #endif
         }
+
+        public static bool StringIsNullOrWhiteSpace(string str)
+        {
+#if DOTNET35
+            return
+                string.IsNullOrEmpty(str) ||
+                str.All(char.IsWhiteSpace);
+#else
+            return
+                string.IsNullOrWhiteSpace(str);
+#endif
+            throw new NotImplementedException();
+        }
     }
 }
 
