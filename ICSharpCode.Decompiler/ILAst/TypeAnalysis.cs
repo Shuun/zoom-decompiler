@@ -170,7 +170,7 @@ namespace ICSharpCode.Decompiler.ILAst
 			while (numberOfExpressionsAlreadyInferred < allExpressions.Count) {
 				int oldCount = numberOfExpressionsAlreadyInferred;
 				foreach (ExpressionToInfer expr in allExpressions) {
-					if (!expr.Done && expr.Dependencies.TrueForAll(v => v.Type != null || singleLoadVariables.Contains(v))
+					if (!expr.Done && expr.Dependencies.All(v => v.Type != null || singleLoadVariables.Contains(v))
 					    && (expr.DependsOnSingleLoad == null || expr.DependsOnSingleLoad.Type != null || ignoreSingleLoadDependencies))
 					{
 						RunInference(expr.Expression);

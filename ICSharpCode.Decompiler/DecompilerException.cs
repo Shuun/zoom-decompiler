@@ -25,17 +25,12 @@ namespace ICSharpCode.Decompiler
 	/// <summary>
 	/// Desctiption of DecompilerException.
 	/// </summary>
-	public class DecompilerException : Exception, ISerializable
+	public class DecompilerException : Exception
 	{
 		public MethodDefinition DecompiledMethod { get; set; }
 		
 		public DecompilerException(MethodDefinition decompiledMethod, Exception innerException) 
 			: base("Error decompiling " + decompiledMethod.FullName + Environment.NewLine, innerException)
-		{
-		}
-
-		// This constructor is needed for serialization.
-		protected DecompilerException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 		}
 	}

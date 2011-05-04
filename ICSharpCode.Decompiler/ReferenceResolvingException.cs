@@ -8,7 +8,6 @@ namespace ICSharpCode.Decompiler
 	/// <summary>
 	/// Represents an error while resolving a reference to a type or a member.
 	/// </summary>
-	[Serializable]
 	public class ReferenceResolvingException : Exception
 	{
 		/// <summary>
@@ -34,16 +33,6 @@ namespace ICSharpCode.Decompiler
 		/// <param name="inner">The exception that is the cause of the current exception. If the innerException parameter is not a null reference, the current exception is raised in a catch block that handles the inner exception.</param>
 		public ReferenceResolvingException(string message, Exception inner)
 			: base(message, inner)
-		{
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:ResolveException"/> class
-		/// </summary>
-		/// <param name="info">The object that holds the serialized object data.</param>
-		/// <param name="context">The contextual information about the source or destination.</param>
-		protected ReferenceResolvingException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-			: base(info, context)
 		{
 		}
 	}

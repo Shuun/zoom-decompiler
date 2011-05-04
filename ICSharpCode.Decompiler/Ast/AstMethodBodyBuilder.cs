@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -37,10 +36,10 @@ namespace ICSharpCode.Decompiler.Ast
 		public static BlockStatement CreateMethodBody(MethodDefinition methodDef,
 		                                              DecompilerContext context,
 		                                              IEnumerable<ParameterDeclaration> parameters = null,
-		                                              ConcurrentDictionary<int, IEnumerable<ILVariable>> localVariables = null)
+		                                              /*Concurrent*/Dictionary<int, IEnumerable<ILVariable>> localVariables = null)
 		{
 			if (localVariables == null)
-				localVariables = new ConcurrentDictionary<int, IEnumerable<ILVariable>>();
+				localVariables = new /*Concurrent*/Dictionary<int, IEnumerable<ILVariable>>();
 			
 			MethodDefinition oldCurrentMethod = context.CurrentMethod;
 			Debug.Assert(oldCurrentMethod == null || oldCurrentMethod == methodDef);
@@ -67,7 +66,7 @@ namespace ICSharpCode.Decompiler.Ast
 		}
 		
 		public BlockStatement CreateMethodBody(IEnumerable<ParameterDeclaration> parameters,
-		                                       ConcurrentDictionary<int, IEnumerable<ILVariable>> localVariables)
+		                                       /*Concurrent*/Dictionary<int, IEnumerable<ILVariable>> localVariables)
 		{
 			if (methodDef.Body == null) return null;
 			
@@ -115,7 +114,7 @@ namespace ICSharpCode.Decompiler.Ast
 			
 			// store the variables - used for debugger
 			int token = methodDef.MetadataToken.ToInt32();
-			localVariables.AddOrUpdate(token, allVariables, (key, oldValue) => allVariables);
+			localVariables[token] = allVariables;
 			
 			return astBlock;
 		}
@@ -769,7 +768,7 @@ namespace ICSharpCode.Decompiler.Ast
 		{
 			public InitializedObjectExpression() : base("__initialized_object__") {}
 			
-			protected override bool DoMatch(AstNode other, Match match)
+			protected internal override bool DoMatch(AstNode other, Match match)
 			{
 				return other is InitializedObjectExpression;
 			}
@@ -975,7 +974,7 @@ namespace ICSharpCode.Decompiler.Ast
 		}
 		
 		#if DEBUG
-		static readonly ConcurrentDictionary<ILCode, int> unhandledOpcodes = new ConcurrentDictionary<ILCode, int>();
+		static readonly /*Concurrent*/Dictionary<ILCode, int> unhandledOpcodes = new /*Concurrent*/Dictionary<ILCode, int>();
 		#endif
 		
 		[Conditional("DEBUG")]
@@ -999,7 +998,9 @@ namespace ICSharpCode.Decompiler.Ast
 		static Expression InlineAssembly(ILExpression byteCode, List<Ast.Expression> args)
 		{
 			#if DEBUG
-			unhandledOpcodes.AddOrUpdate(byteCode.Code, c => 1, (c, n) => n+1);
+            int n;
+			unhandledOpcodes.TryGetValue(byteCode.Code, out n);
+            unhandledOpcodes[byteCode.Code] = n+1;
 			#endif
 			// Output the operand of the unknown IL code as well
 			if (byteCode.Operand != null) {

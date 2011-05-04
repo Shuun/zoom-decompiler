@@ -17,7 +17,6 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -75,8 +74,8 @@ namespace ICSharpCode.Decompiler
 			
 			// add list for the current source code line
 			currentList.AddRange(ILRange.OrderAndJoint(MemberMapping.MemberCodeMappings
-			                                           .FindAll(m => m.SourceCodeLine == this.SourceCodeLine)
-			                                           .ConvertAll<ILRange>(m => m.ILInstructionOffset)));
+			                                           .Where(m => m.SourceCodeLine == this.SourceCodeLine)
+			                                           .Select(m => m.ILInstructionOffset)));
 			
 			if (!isMatch) {
 				// add inverted
@@ -135,7 +134,7 @@ namespace ICSharpCode.Decompiler
 		{
 			get {
 				if (invertedList == null) {
-					var list = MemberCodeMappings.ConvertAll<ILRange>(
+					var list = MemberCodeMappings.Select(
 						s => new ILRange { From = s.ILInstructionOffset.From, To = s.ILInstructionOffset.To });
 					invertedList = ILRange.OrderAndJoint(ILRange.Invert(list, CodeSize));
 				}
@@ -168,7 +167,7 @@ namespace ICSharpCode.Decompiler
 			MemberMapping currentMemberMapping = null;
 			if (codeMappings.Item1 == member.DeclaringType.FullName) {
 				var mapping = codeMappings.Item2;
-				if (mapping.Find(map => (int)map.MetadataToken == member.MetadataToken.ToInt32()) == null) {
+				if (mapping.FirstOrDefault(map => (int)map.MetadataToken == member.MetadataToken.ToInt32()) == null) {
 					currentMemberMapping = new MemberMapping() {
 						MetadataToken = (uint)member.MetadataToken.ToInt32(),
 						MemberReference = member.DeclaringType.Resolve(),
@@ -211,7 +210,7 @@ namespace ICSharpCode.Decompiler
 			
 			var methodMappings = codeMappings.Item2;
 			foreach (var maping in methodMappings) {
-				var map = maping.MemberCodeMappings.Find(m => m.SourceCodeLine == lineNumber);
+				var map = maping.MemberCodeMappings.FirstOrDefault(m => m.SourceCodeLine == lineNumber);
 				if (map != null) {
 					metadataToken = maping.MetadataToken;
 					return map;
@@ -248,18 +247,18 @@ namespace ICSharpCode.Decompiler
 			}
 			
 			var methodMappings = codeMappings.Item2;
-			var maping = methodMappings.Find(m => m.MetadataToken == token);
+			var maping = methodMappings.FirstOrDefault(m => m.MetadataToken == token);
 			
 			if (maping == null) {
 				return null;
 			}
 			
 			// try find an exact match
-			var map = maping.MemberCodeMappings.Find(m => m.ILInstructionOffset.From <= ilOffset && ilOffset < m.ILInstructionOffset.To);
+			var map = maping.MemberCodeMappings.FirstOrDefault(m => m.ILInstructionOffset.From <= ilOffset && ilOffset < m.ILInstructionOffset.To);
 			
 			if (map == null) {
 				// get the immediate next one
-				map = maping.MemberCodeMappings.Find(m => m.ILInstructionOffset.From >= ilOffset);
+				map = maping.MemberCodeMappings.FirstOrDefault(m => m.ILInstructionOffset.From >= ilOffset);
 				isMatch = false;
 				if (map == null)
 					map = maping.MemberCodeMappings.LastOrDefault(); // get the last
@@ -299,14 +298,14 @@ namespace ICSharpCode.Decompiler
 			if (codeMappings.Item1 != memberReferenceName)
 				return false;
 			
-			var mapping = codeMappings.Item2.Find(m => m.MetadataToken == token);
+			var mapping = codeMappings.Item2.FirstOrDefault(m => m.MetadataToken == token);
 			if (mapping == null)
 				return false;
 			
-			var codeMapping = mapping.MemberCodeMappings.Find(
+			var codeMapping = mapping.MemberCodeMappings.FirstOrDefault(
 				cm => cm.ILInstructionOffset.From <= ilOffset && ilOffset <= cm.ILInstructionOffset.To - 1);
 			if (codeMapping == null) {
-				codeMapping = mapping.MemberCodeMappings.Find(cm => (cm.ILInstructionOffset.From >= ilOffset));
+				codeMapping = mapping.MemberCodeMappings.FirstOrDefault(cm => (cm.ILInstructionOffset.From >= ilOffset));
 				if (codeMapping == null) {
 					codeMapping = mapping.MemberCodeMappings.LastOrDefault();
 					if (codeMapping == null)
