@@ -13,12 +13,108 @@ namespace ILSpySL
     {
         private sealed class ChunkWriter
         {
-            internal void WriteAssemblyName(AssemblyNameDefinition assemblyNameDefinition)
+            private sealed class Usage<T> : IEnumerable<T>
             {
-                throw new NotImplementedException();
+                private sealed class EqualityComparer : IEqualityComparer<T>
+                {
+                    readonly Func<T, object> key;
+
+                    public EqualityComparer(Func<T,object> key)
+                    {
+                        this.key = key;
+                    }
+
+                    public bool Equals(T x, T y)
+                    {
+                        return Equals(key(x), key(y));
+                    }
+
+                    public int GetHashCode(T obj)
+                    {
+                        var k = key(obj);
+                        if (k == null)
+                            return 0;
+                        else
+                            return k.GetHashCode();
+                    }
+                }
+
+                readonly Dictionary<T, int> counts;
+                Dictionary<T, int> index;
+                List<T> indexOrder;
+
+                public Usage(Func<T, object> key)
+                {
+                    counts = new Dictionary<T, int>(new EqualityComparer(key));
+                }
+
+                public void Add(T item)
+                {
+                    if (index != null)
+                        throw new InvalidOperationException("Index is already built, adding is not allowed any more.");
+
+                    int count;
+                    counts.TryGetValue(item, out count);
+                    counts[item] = count + 1;
+                }
+
+                public int this[T item]
+                {
+                    get { return index[item]; }
+                }
+
+                public IEnumerator<T> GetEnumerator()
+                {
+                    return indexOrder.GetEnumerator();
+                }
+
+                public void BuildIndex()
+                {
+
+                }
             }
 
-            internal void WriteAttributes(IEnumerable<CustomAttribute> collection)
+            readonly List<Action> atoms = new List<Action>();
+
+            readonly Usage<AssemblyNameDefinition> asmNames = new Usage<AssemblyNameDefinition>(a => a.FullName);
+            readonly Usage<TypeReference> typeRefs = new Usage<TypeReference>(t => t.Module.Assembly.FullName+"\n"+t.FullName);
+            readonly Usage<MethodReference> methodRefs = new Usage<MethodReference>(m => m.Module.Assembly.FullName + "\n" + m.DeclaringType.FullName+"\n"+m.FullName);
+
+            internal void WriteAssemblyName(AssemblyNameDefinition assemblyNameDefinition)
+            {
+                asmNames.Add(assemblyNameDefinition);
+
+                atoms.Add(() => StreamWritePackedNumber(asmNames[assemblyNameDefinition]));
+            }
+
+            internal void WriteAttributes(IEnumerable<CustomAttribute> attributes)
+            {
+                WriteNumber(attributes == null ? 0 : attributes.Count());
+                if (attributes != null)
+                {
+                    foreach (var attr in attributes)
+                    {
+                        WriteMethodReference(attr.Constructor);
+                        WriteNumber(attr.ConstructorArguments.Count);
+                        
+                        foreach (var ctorArg in attr.ConstructorArguments)
+                        {
+                            WriteTypeReference(ctorArg.Type);
+                            WriteConstant(ctorArg.Value);
+                        }
+
+                        WriteNumber(attr.Fields.Count);
+                        foreach (var namedArg in attr.Fields)
+                        {
+                            WriteString(namedArg.Name);
+                            WriteTypeReference(namedArg.Argument.Type);
+                            WriteConstant(namedArg.Argument.Value);
+                        }
+                    }
+                }
+            }
+
+            private void WriteConstant(object p)
             {
                 throw new NotImplementedException();
             }
@@ -28,9 +124,9 @@ namespace ILSpySL
                 throw new NotImplementedException();
             }
 
-            internal void WriteInt32(int p)
+            internal void WriteNumber(int number)
             {
-                throw new NotImplementedException();
+                this.atoms.Add(() => StreamWritePackedNumber(number));
             }
 
             internal void WriteTypeReference(TypeReference typeReference)
@@ -49,6 +145,16 @@ namespace ILSpySL
             }
 
             internal void WriteBytes(byte[] bytes)
+            {
+                this.atoms.Add(() => this.StreamWriteBytes(bytes));
+            }
+
+            private void StreamWriteBytes(byte[] bytes)
+            {
+                throw new NotImplementedException();
+            }
+
+            private void StreamWritePackedNumber(int number)
             {
                 throw new NotImplementedException();
             }
@@ -82,7 +188,7 @@ namespace ILSpySL
             assemblyChunk.WriteAssemblyName(asm.Name);
             assemblyChunk.WriteAttributes(asm.CustomAttributes);
 
-            assemblyChunk.WriteInt32(asm.MainModule.Types.Count);
+            assemblyChunk.WriteNumber(asm.MainModule.Types.Count);
 
             foreach (var t in asm.MainModule.Types)
             {
@@ -95,31 +201,31 @@ namespace ILSpySL
         private void WriteType(TypeDefinition t, ChunkWriter typeWriter)
         {
             typeWriter.WriteTypeName(t);
-            typeWriter.WriteInt32((int)t.Attributes);
+            typeWriter.WriteNumber((int)t.Attributes);
             typeWriter.WriteAttributes(t.CustomAttributes);
 
             typeWriter.WriteTypeReference(t.BaseType);
             typeWriter.WriteTypeReference(t.DeclaringType);
 
-            typeWriter.WriteInt32(t.Fields.Count);
+            typeWriter.WriteNumber(t.Fields.Count);
             foreach (var f in t.Fields)
             {
                 WriteField(f, typeWriter);
             }
 
-            typeWriter.WriteInt32(t.Methods.Count);
+            typeWriter.WriteNumber(t.Methods.Count);
             foreach (var m in t.Methods)
             {
                 WriteMethod(m, typeWriter);
             }
 
-            typeWriter.WriteInt32(t.Properties.Count);
+            typeWriter.WriteNumber(t.Properties.Count);
             foreach (var p in t.Properties)
             {
                 WriteProperty(p, typeWriter);
             }
 
-            typeWriter.WriteInt32(t.Events.Count);
+            typeWriter.WriteNumber(t.Events.Count);
             foreach (var e in t.Events)
             {
                 WriteEvent(e, typeWriter);
@@ -129,7 +235,7 @@ namespace ILSpySL
         private void WriteField(FieldDefinition f, ChunkWriter typeWriter)
         {
             typeWriter.WriteString(f.Name);
-            typeWriter.WriteInt32((int)f.Attributes);
+            typeWriter.WriteNumber((int)f.Attributes);
             typeWriter.WriteAttributes(f.CustomAttributes);
             typeWriter.WriteBytes(f.InitialValue);
         }
@@ -137,7 +243,7 @@ namespace ILSpySL
         private void WriteEvent(EventDefinition e, ChunkWriter typeWriter)
         {
             typeWriter.WriteString(e.Name);
-            typeWriter.WriteInt32((int)e.Attributes);
+            typeWriter.WriteNumber((int)e.Attributes);
             typeWriter.WriteAttributes(e.CustomAttributes);
             typeWriter.WriteMethodReference(e.AddMethod);
             typeWriter.WriteMethodReference(e.RemoveMethod);
@@ -146,7 +252,7 @@ namespace ILSpySL
         private void WriteProperty(PropertyDefinition p, ChunkWriter typeWriter)
         {
             typeWriter.WriteString(p.Name);
-            typeWriter.WriteInt32((int)p.Attributes);
+            typeWriter.WriteNumber((int)p.Attributes);
             typeWriter.WriteAttributes(p.CustomAttributes);
             typeWriter.WriteMethodReference(p.GetMethod);
             typeWriter.WriteMethodReference(p.SetMethod);
@@ -155,14 +261,14 @@ namespace ILSpySL
         private void WriteMethod(MethodDefinition m, ChunkWriter typeWriter)
         {
             typeWriter.WriteString(m.Name);
-            typeWriter.WriteInt32((int)m.Attributes);
+            typeWriter.WriteNumber((int)m.Attributes);
             typeWriter.WriteAttributes(m.CustomAttributes);
             typeWriter.WriteTypeReference(m.ReturnType);
-            typeWriter.WriteInt32(m.Parameters.Count);
+            typeWriter.WriteNumber(m.Parameters.Count);
             foreach (var p in m.Parameters)
             {
                 typeWriter.WriteString(p.Name);
-                typeWriter.WriteInt32((int)p.Attributes);
+                typeWriter.WriteNumber((int)p.Attributes);
                 typeWriter.WriteAttributes(p.CustomAttributes);
                 typeWriter.WriteTypeReference(p.ParameterType);
             }
