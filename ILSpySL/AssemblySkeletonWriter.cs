@@ -13,7 +13,7 @@ namespace ILSpySL
     {
         private sealed class ChunkWriter
         {
-            private sealed class Usage<T> : IEnumerable<T>
+            private sealed class Usage<T>
             {
                 private sealed class EqualityComparer : IEqualityComparer<T>
                 {
@@ -79,6 +79,7 @@ namespace ILSpySL
             readonly Usage<AssemblyNameDefinition> asmNames = new Usage<AssemblyNameDefinition>(a => a.FullName);
             readonly Usage<TypeReference> typeRefs = new Usage<TypeReference>(t => t.Module.Assembly.FullName+"\n"+t.FullName);
             readonly Usage<MethodReference> methodRefs = new Usage<MethodReference>(m => m.Module.Assembly.FullName + "\n" + m.DeclaringType.FullName+"\n"+m.FullName);
+            readonly Usage<string> stringRefs = new Usage<string>(s => s);
 
             internal void WriteAssemblyName(AssemblyNameDefinition assemblyNameDefinition)
             {
@@ -119,9 +120,10 @@ namespace ILSpySL
                 throw new NotImplementedException();
             }
 
-            internal void WriteTypeName(TypeDefinition t)
+            internal void WriteTypeName(TypeReference t)
             {
-                throw new NotImplementedException();
+                WriteString(t.Namespace);
+                WriteString(t.Name);
             }
 
             internal void WriteNumber(int number)
@@ -131,17 +133,23 @@ namespace ILSpySL
 
             internal void WriteTypeReference(TypeReference typeReference)
             {
-                throw new NotImplementedException();
+                typeRefs.Add(typeReference);
+
+                this.atoms.Add(() => StreamWritePackedNumber(typeRefs[typeReference]));
             }
 
-            internal void WriteString(string p)
+            internal void WriteString(string str)
             {
-                throw new NotImplementedException();
+                stringRefs.Add(str);
+
+                this.atoms.Add(() => StreamWritePackedNumber(stringRefs[str]));
             }
 
-            internal void WriteMethodReference(MethodReference methodDefinition)
+            internal void WriteMethodReference(MethodReference methodReference)
             {
-                throw new NotImplementedException();
+                methodRefs.Add(methodReference);
+
+                this.atoms.Add(() => StreamWritePackedNumber(methodRefs[methodReference]));
             }
 
             internal void WriteBytes(byte[] bytes)
