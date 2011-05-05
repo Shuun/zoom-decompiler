@@ -174,6 +174,86 @@ namespace ILSpySL
             DecompileSelectedNode();
         }
 
+        private sealed class RichTextOutput : ITextOutput
+        {
+            readonly List<Paragraph> blocks = new List<Paragraph>();
+            int indentCount = 0;
+            bool newLine = true;
+
+            public int CurrentLine { get { return blocks.Count; } }
+
+            public void Indent() { indentCount++; }
+            public void Unindent() { indentCount--; }
+
+            public void Write(char ch)
+            {
+                Write(ch.ToString());
+            }
+
+            public void Write(string text)
+            {
+                CheckCompleteLine();
+
+                this.blocks.Last().Inlines.Add(
+                    new Run { Text = text });
+            }
+
+            public void WriteLine()
+            {
+                if (newLine)
+                    CheckCompleteLine();
+
+                newLine = true;
+            }
+
+            public void WriteDefinition(string text, object definition)
+            {
+                CheckCompleteLine();
+
+                this.blocks.Last().Inlines.Add(
+                    new Run { Text = text, Foreground = new SolidColorBrush(Colors.Blue) });
+            }
+
+            public void WriteReference(string text, object reference)
+            {
+                CheckCompleteLine();
+
+                var bold = new Bold();
+                bold.Inlines.Add(new Run { Text = text });
+                this.blocks.Last().Inlines.Add(bold);
+            }
+
+            public void MarkFoldStart(string collapsedText = "...", bool defaultCollapsed = false)
+            {
+            }
+
+            public void MarkFoldEnd()
+            {
+            }
+
+            void CheckCompleteLine()
+            {
+                if (newLine)
+                {
+                    var newPara = new Paragraph { };
+                    if (this.indentCount > 0)
+                    {
+                        newPara.Inlines.Add(new Run { Text = new string('\t', this.indentCount) });
+                    }
+                    blocks.Add(newPara);
+                    newLine = false;
+                }
+            }
+
+            public IEnumerable<Block> GetBlocks()
+            {
+                foreach (var b in this.blocks)
+                {
+                    yield return b;
+                }
+            }
+        }
+
         private void DecompileSelectedNode()
         {
             if (treeView1.SelectedItem == null
@@ -189,15 +269,20 @@ namespace ILSpySL
             var astBui = new AstBuilder(ctx);
             astBui.AddType(ty);
             astBui.RunTransformations();
-            var outp = new PlainTextOutput();
+            var outp = new RichTextOutput();
             astBui.GenerateCode(outp);
 
-            var rn = new Run { Text = outp.ToString() };
-            var pa = new Paragraph();
-            pa.Inlines.Add(rn);
+            //var rn = new Run { Text = outp.ToString() };
+            //var pa = new Paragraph();
+            //pa.Inlines.Add(rn);
 
             codeTextBox.Blocks.Clear();
-            codeTextBox.Blocks.Add(pa);
+            //codeTextBox.Blocks.Add(pa);
+
+            foreach (var b in outp.GetBlocks())
+            {
+                codeTextBox.Blocks.Add(b);
+            }
 
             codeTextBox.Selection.Select(codeTextBox.ContentStart, codeTextBox.ContentStart);
         }
