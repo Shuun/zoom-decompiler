@@ -56,6 +56,38 @@ namespace ILSpySL
 
             this.AllowDrop = true;
             this.Drop += new DragEventHandler(MainPage_Drop);
+
+            newVersionAlert.Visibility = System.Windows.Visibility.Visible;
+            newVersionAlert.Text = "v" + new System.Reflection.AssemblyName(typeof(MainPage).Assembly.FullName).Version+"...";
+            if (Application.Current.IsRunningOutOfBrowser)
+            {
+                Application.Current.CheckAndDownloadUpdateCompleted+=(sender, e) =>
+                {
+                    this.Dispatcher.BeginInvoke(() =>
+                        {
+                            if (e.UpdateAvailable)
+                            {
+                                newVersionAlert.Text = "Newer version available (restart)";
+                                newVersionAlert.Foreground = new SolidColorBrush(Colors.Blue);
+                            }
+                            else if (e.Error != null)
+                            {
+                                newVersionAlert.Text = "Version check: " + e.Error.Message;
+                                newVersionAlert.Visibility = System.Windows.Visibility.Visible;
+                            }
+                            else
+                            {
+                                newVersionAlert.Text = "v" + new System.Reflection.AssemblyName(typeof(MainPage).Assembly.FullName).Version;
+                            }
+                        });
+                };
+
+                Application.Current.CheckAndDownloadUpdateAsync();
+            }
+            else
+            {
+                newVersionAlert.Text = "v" + new System.Reflection.AssemblyName(typeof(MainPage).Assembly.FullName).Version+ " (online)";
+            }
         }
 
         private void openButton_Click(object sender, RoutedEventArgs e)
