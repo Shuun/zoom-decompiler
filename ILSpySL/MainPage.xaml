@@ -17,11 +17,18 @@
             <ColumnDefinition Width="232*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,0,0,4">
-            <Button Name="openButton" Click="openButton_Click">
-                Open
-            </Button>
-        </StackPanel>
+        <Grid Grid.ColumnSpan="3" Margin="0,0,0,4">
+            <StackPanel HorizontalAlignment="Left">
+                <Button Name="openButton" Click="openButton_Click">
+                    Open
+                </Button>
+            </StackPanel>
+
+            <TextBlock Name="newVersionAlert"
+                HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="Collapsed">
+                Newer version available (restart).
+            </TextBlock>
+        </Grid>
 
         <sdk:TreeView Name="treeView1" Grid.Row="1" SelectedItemChanged="treeView1_SelectedItemChanged" />
         
