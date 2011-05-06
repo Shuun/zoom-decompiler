@@ -4,6 +4,8 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows;
 
+using ICSharpCode.Decompiler;
+
 namespace ILSpySL.Model
 {
     using ICSharpCode.Decompiler;
