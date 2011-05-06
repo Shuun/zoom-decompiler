@@ -48,11 +48,4 @@ internal static class DotNet35Compat
 
 #if DOTNET35
 namespace System.Diagnostics.Contracts { }
-namespace System.Threading
-{
-	internal struct CancellationToken
-	{
-		public void ThrowIfCancellationRequested() {}
-	}
-}
 #endif

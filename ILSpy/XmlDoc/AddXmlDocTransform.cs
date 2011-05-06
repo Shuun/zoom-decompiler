@@ -56,13 +56,13 @@ namespace ICSharpCode.ILSpy.XmlDoc
 				firstLine = r.ReadLine();
 				if (firstLine == null)
 					return;
-			} while (string.IsNullOrWhiteSpace(firstLine));
+			} while (DotNet35Compat.StringIsNullOrWhiteSpace(firstLine));
 			string indentation = firstLine.Substring(0, firstLine.Length - firstLine.TrimStart().Length);
 			string line = firstLine;
 			int skippedWhitespaceLines = 0;
 			// Copy all lines from input to output, except for empty lines at the end.
 			while (line != null) {
-				if (string.IsNullOrWhiteSpace(line)) {
+				if (DotNet35Compat.StringIsNullOrWhiteSpace(line)) {
 					skippedWhitespaceLines++;
 				} else {
 					while (skippedWhitespaceLines > 0) {

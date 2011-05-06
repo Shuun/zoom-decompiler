@@ -50,7 +50,7 @@ namespace ICSharpCode.ILSpy
 			App.CommandLineArguments = new CommandLineArguments(cmdArgs);
 			if (App.CommandLineArguments.SingleInstance ?? true) {
 				cmdArgs = cmdArgs.Select(FullyQualifyPath);
-				string message = string.Join(Environment.NewLine, cmdArgs);
+				string message = DotNet35Compat.StringJoin(Environment.NewLine, cmdArgs);
 				if (SendToPreviousInstance("ILSpy:\r\n" + message, !App.CommandLineArguments.NoActivate)) {
 					Environment.Exit(0);
 				}
@@ -114,9 +114,9 @@ namespace ICSharpCode.ILSpy
 				(hWnd, lParam) => {
 					string windowTitle = NativeMethods.GetWindowText(hWnd, 100);
 					if (windowTitle.StartsWith("ILSpy", StringComparison.Ordinal)) {
-						Debug.WriteLine("Found {0:x4}: {1}", hWnd, windowTitle);
+						Debug.WriteLine(string.Format("Found {0:x4}: {1}", hWnd, windowTitle));
 						IntPtr result = Send(hWnd, message);
-						Debug.WriteLine("WM_COPYDATA result: {0:x8}", result);
+						Debug.WriteLine(string.Format("WM_COPYDATA result: {0:x8}", result));
 						if (result == (IntPtr)1) {
 							if (activate)
 								NativeMethods.SetForegroundWindow(hWnd);
