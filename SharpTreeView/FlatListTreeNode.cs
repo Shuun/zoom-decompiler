@@ -73,7 +73,7 @@ namespace ICSharpCode.TreeView
 			if (left != null)
 				left.DumpTree();
 			Debug.Unindent();
-			Debug.WriteLine("{0}, totalListLength={1}, height={2}, Balance={3}, isVisible={4}", ToString(), totalListLength, height, Balance, isVisible);
+			Debug.WriteLine(string.Format("{0}, totalListLength={1}, height={2}, Balance={3}, isVisible={4}", ToString(), totalListLength, height, Balance, isVisible));
 			Debug.Indent();
 			if (right != null)
 				right.DumpTree();

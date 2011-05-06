@@ -16,6 +16,8 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+#if !DOTNET35
+
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -443,3 +445,4 @@ namespace ICSharpCode.ILSpy.Baml
 		}
 	}
 }
+#endif

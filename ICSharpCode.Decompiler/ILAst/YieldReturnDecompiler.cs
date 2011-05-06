@@ -436,7 +436,7 @@ namespace ICSharpCode.Decompiler.ILAst
 			
 			public override string ToString()
 			{
-				return string.Join(",", data);
+				return DotNet35Compat.StringJoin(",", data);
 			}
 			
 			public Interval ToEnclosingInterval()

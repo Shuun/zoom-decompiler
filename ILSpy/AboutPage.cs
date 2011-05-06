@@ -177,13 +177,18 @@ namespace ICSharpCode.ILSpy
 		{
 			var tcs = new TaskCompletionSource<AvailableVersionInfo>();
 			WebClient wc = new WebClient();
-			wc.Proxy = new WebProxy() { UseDefaultCredentials = true };
+			wc.UseDefaultCredentials = true;
 			wc.DownloadDataCompleted += delegate(object sender, DownloadDataCompletedEventArgs e) {
 				if (e.Error != null) {
 					tcs.SetException(e.Error);
 				} else {
 					try {
-						XDocument doc = XDocument.Load(new MemoryStream(e.Result));
+						XDocument doc = XDocument.Load(
+#if DOTNET35
+                            XmlReader.Create(new MemoryStream(e.Result)));
+#else
+                            new MemoryStream(e.Result));
+#endif
 						var bands = doc.Root.Elements("band");
 						var currentBand = bands.FirstOrDefault(b => (string)b.Attribute("id") == "stable") ?? bands.First();
 						Version version = new Version((string)currentBand.Element("latestVersion"));
