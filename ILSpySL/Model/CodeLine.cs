@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 
-using ICSharpCode.Decompiler;
+using Mi.Decompiler;
 
 namespace ILSpySL.Model
 {
