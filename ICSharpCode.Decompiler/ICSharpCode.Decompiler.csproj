@@ -51,10 +51,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.CoreEx" Condition=" '$(Configuration)' == 'Debug .NET3.5' ">
-        <HintPath>..\..\packages\Rx v1.0.2856.0\System.CoreEx.dll</HintPath>
+      <HintPath>..\..\packages\Rx v1.0.2856.0\System.CoreEx.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading" Condition=" '$(Configuration)' == 'Debug .NET3.5' ">
-        <HintPath>..\..\packages\Rx v1.0.2856.0\System.Threading.dll</HintPath>
+      <HintPath>..\..\packages\Rx v1.0.2856.0\System.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -110,7 +110,6 @@
     <Compile Include="Disassembler\ILStructure.cs" />
     <Compile Include="Disassembler\MethodBodyDisassembler.cs" />
     <Compile Include="Disassembler\ReflectionDisassembler.cs" />
-    <Compile Include="DotNet35Compat.cs" />
     <Compile Include="FlowAnalysis\ControlFlowEdge.cs" />
     <Compile Include="FlowAnalysis\ControlFlowGraph.cs" />
     <Compile Include="FlowAnalysis\ControlFlowGraphBuilder.cs" />
