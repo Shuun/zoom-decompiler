@@ -183,7 +183,7 @@ namespace ICSharpCode.NRefactory.CSharp
 		}
 		
 		#if DOTNET35
-        void WriteCommaSeparatedList<TAstNode>(IEnumerable<TAstNode> list)
+		void WriteCommaSeparatedList<TAstNode>(IEnumerable<TAstNode> list)
             where TAstNode : AstNode
         {
             WriteCommaSeparatedList(list.SafeCast<TAstNode, AstNode>());

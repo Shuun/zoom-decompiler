@@ -33,6 +33,16 @@
     <BaseAddress>4194304</BaseAddress>
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug .NET3.5' ">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE;DOTNET35</DefineConstants>
+    <StartAction>Project</StartAction>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
     <DebugSymbols>true</DebugSymbols>
@@ -51,6 +61,12 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System.CoreEx" Condition=" '$(Configuration)' == 'Debug .NET3.5' ">
+        <HintPath>..\..\packages\Rx v1.0.2856.0\System.CoreEx.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading" Condition=" '$(Configuration)' == 'Debug .NET3.5' ">
+        <HintPath>..\..\packages\Rx v1.0.2856.0\System.Threading.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -58,7 +74,10 @@
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition">
+    <Reference Include="System.ComponentModel.Composition" Condition=" '$(Configuration)' == 'Debug' ">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" Condition=" '$(Configuration)' == 'Release' ">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Core">
@@ -68,7 +87,10 @@
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Xaml">
+    <Reference Include="System.Xaml" Condition=" '$(Configuration)' == 'Debug' ">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xaml" Condition=" '$(Configuration)' == 'Release' ">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml" />
@@ -102,6 +124,7 @@
       <DependentUpon>DecompilerSettingsPanel.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DotNet35Compat.cs" />
     <Compile Include="ExportCommandAttribute.cs" />
     <Compile Include="Controls\SearchBox.cs" />
     <Compile Include="Controls\SortableGridViewColumn.cs" />
@@ -187,7 +210,9 @@
     </Compile>
     <Compile Include="SessionSettings.cs" />
     <Compile Include="TextView\CaretHighlightAdorner.cs" />
-    <Compile Include="TextView\DecompilerTextView.cs" />
+    <Compile Include="TextView\DecompilerTextView.cs">
+      <DependentUpon>TextView\DecompilerTextView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TextView\OutputLengthExceededException.cs" />
     <Compile Include="TextView\ReferenceElementGenerator.cs" />
     <Compile Include="TextView\AvalonEditTextOutput.cs" />
@@ -221,7 +246,8 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\SearchBoxStyle.xaml">
-      <DependentUpon>SearchBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DecompilerSettingsPanel.xaml" />
     <Page Include="MainWindow.xaml" />
@@ -231,7 +257,8 @@
       <DependentUpon>SearchPane.cs</DependentUpon>
     </Page>
     <Page Include="TextView\DecompilerTextView.xaml">
-      <DependentUpon>DecompilerTextView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="themes\generic.xaml" />
   </ItemGroup>
@@ -279,6 +306,10 @@
     <Resource Include="Images\PInvokeMethod.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\packages\MEF\ComponentModel.csproj" Condition=" '$(Configuration)' == 'Debug .NET3.5' ">
+      <Project>{1BBA5101-D4F0-48B8-A5D6-7B23A099DCE3}</Project>
+      <Name>ComponentModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ICSharpCode.Decompiler\ICSharpCode.Decompiler.csproj">
       <Project>{984CC812-9470-4A13-AFF9-CC44068D666C}</Project>
       <Name>ICSharpCode.Decompiler</Name>

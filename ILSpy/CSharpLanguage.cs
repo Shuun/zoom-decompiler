@@ -26,7 +26,9 @@ using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+#if !DOTNET35
 using System.Xaml;
+#endif
 using System.Xml;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.Ast;
@@ -337,13 +339,14 @@ namespace ICSharpCode.ILSpy
 						}
 						if (rs != null && rs.All(e => e.Value is Stream)) {
 							foreach (var pair in rs) {
-								fileName = Path.Combine(((string)pair.Key).Split('/').Select(p => TextView.DecompilerTextView.CleanUpName(p)).ToArray());
+								fileName = DotNet35Compat.PathCombine(((string)pair.Key).Split('/').Select(p => TextView.DecompilerTextView.CleanUpName(p)).ToArray());
 								string dirName = Path.GetDirectoryName(fileName);
 								if (!string.IsNullOrEmpty(dirName) && directories.Add(dirName)) {
 									Directory.CreateDirectory(Path.Combine(options.SaveAsProjectDirectory, dirName));
 								}
 								Stream entryStream = (Stream)pair.Value;
 								entryStream.Position = 0;
+#if !DOTNET35
 								if (fileName.EndsWith(".baml", StringComparison.OrdinalIgnoreCase)) {
 									MemoryStream ms = new MemoryStream();
 									entryStream.CopyTo(ms);
@@ -358,7 +361,9 @@ namespace ICSharpCode.ILSpy
 										continue;
 									}
 								}
-								using (FileStream fs = new FileStream(Path.Combine(options.SaveAsProjectDirectory, fileName), FileMode.Create, FileAccess.Write)) {
+#endif
+                                using (FileStream fs = new FileStream(Path.Combine(options.SaveAsProjectDirectory, fileName), FileMode.Create, FileAccess.Write))
+                                {
 									entryStream.CopyTo(fs);
 								}
 								yield return Tuple.Create("Resource", fileName);

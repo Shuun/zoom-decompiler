@@ -97,6 +97,18 @@ namespace ICSharpCode.ILSpy.TreeNodes
 			// from showing up for very short waits.
 			thisTask.Wait(TimeSpan.FromMilliseconds(200));
 		}
+
+#if DOTNET35
+        public void LoadChildren<TBaseNode, TSharpTreeNode>(TBaseNode node, Func<CancellationToken, IEnumerable<TSharpTreeNode>> fetchChildren)
+            where TBaseNode : SharpTreeNode
+            where TSharpTreeNode : SharpTreeNode
+        {
+            LoadChildren(
+                (SharpTreeNode)node,
+                new Func<CancellationToken, IEnumerable<SharpTreeNode>>(
+                    tk => fetchChildren(tk).SafeCast<TSharpTreeNode, SharpTreeNode>()));
+        }
+#endif
 		
 		public void Decompile(Language language, ITextOutput output, DecompilationOptions options, Action ensureLazyChildren)
 		{

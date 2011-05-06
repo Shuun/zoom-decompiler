@@ -123,7 +123,7 @@ namespace ICSharpCode.Decompiler.Disassembler
 				ArrayType at = (ArrayType)type;
 				at.ElementType.WriteTo(writer, onlyName, shortName);
 				writer.Write('[');
-				writer.Write(string.Join(", ", at.Dimensions));
+				writer.Write(DotNet35Compat.StringJoin(", ", at.Dimensions));
 				writer.Write(']');
 			} else if (type is GenericParameter) {
 				writer.Write('!');
