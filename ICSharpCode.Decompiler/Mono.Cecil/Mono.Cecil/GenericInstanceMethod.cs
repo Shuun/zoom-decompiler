@@ -31,6 +31,8 @@ using System.Text;
 
 using Mono.Collections.Generic;
 
+using Mi.Decompiler;
+
 namespace Mono.Cecil {
 
 	public sealed class GenericInstanceMethod : MethodSpecification, IGenericInstance, IGenericContext {

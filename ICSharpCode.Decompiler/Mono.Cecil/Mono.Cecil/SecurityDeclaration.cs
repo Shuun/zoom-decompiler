@@ -30,6 +30,8 @@ using System;
 using System.Threading;
 using Mono.Collections.Generic;
 
+using Mi.Decompiler;
+
 namespace Mono.Cecil {
 
 	public enum SecurityAction : ushort {

@@ -29,6 +29,7 @@
 using System;
 
 using Mono.Cecil.PE;
+using Mi.Decompiler;
 
 namespace Mono.Cecil.Metadata {
 
@@ -42,7 +43,7 @@ namespace Mono.Cecil.Metadata {
 		public byte [] Read (uint index)
 		{
 			if (index == 0 || index > Size - 1)
-				return Empty<byte>.Array;
+				return Empty.Array<byte>();
 
 			var data = Section.Data;
 

@@ -7,6 +7,16 @@ namespace Mi.Decompiler
 {
     public static class CollectionExtensions
     {
+        public static bool IsNullOrEmpty<T>(this T[] items)
+        {
+            return items == null || items.Length == 0;
+        }
+
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T> items)
+        {
+            return items == null || !items.Any();
+        }
+
         public static ReadOnlyCollection<T> ToReadOnlyCollectionOrNull<T>(this IEnumerable<T> items)
         {
             if (items == null)

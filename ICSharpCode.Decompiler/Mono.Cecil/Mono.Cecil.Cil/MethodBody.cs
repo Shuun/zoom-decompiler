@@ -30,6 +30,8 @@ using System;
 
 using Mono.Collections.Generic;
 
+using Mi.Decompiler;
+
 namespace Mono.Cecil.Cil {
 
 	public sealed class MethodBody : IVariableDefinitionProvider {

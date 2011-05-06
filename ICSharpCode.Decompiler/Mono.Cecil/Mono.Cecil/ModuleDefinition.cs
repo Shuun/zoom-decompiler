@@ -35,6 +35,7 @@ using Mono.Cecil.Cil;
 using Mono.Cecil.Metadata;
 using Mono.Cecil.PE;
 using Mono.Collections.Generic;
+using Mi.Decompiler;
 
 namespace Mono.Cecil {
 
@@ -475,7 +476,7 @@ namespace Mono.Cecil {
 		public IEnumerable<TypeReference> GetTypeReferences ()
 		{
 			if (!HasImage)
-				return Empty<TypeReference>.Array;
+                return Empty.Array<TypeReference>();
 
 			return Read (this, (_, reader) => reader.GetTypeReferences ());
 		}
@@ -483,7 +484,7 @@ namespace Mono.Cecil {
 		public IEnumerable<MemberReference> GetMemberReferences ()
 		{
 			if (!HasImage)
-				return Empty<MemberReference>.Array;
+                return Empty.Array<MemberReference>();
 
 			return Read (this, (_, reader) => reader.GetMemberReferences ());
 		}

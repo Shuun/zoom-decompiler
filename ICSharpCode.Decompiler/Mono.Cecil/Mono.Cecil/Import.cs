@@ -32,6 +32,8 @@ using SR = System.Reflection;
 
 using Mono.Cecil.Metadata;
 
+using Mi.Decompiler;
+
 namespace Mono.Cecil {
 
 	enum ImportGenericKind {
@@ -389,7 +391,7 @@ namespace Mono.Cecil {
 
 			var pk_token = !name.PublicKeyToken.IsNullOrEmpty ()
 				? new byte [name.PublicKeyToken.Length]
-				: Empty<byte>.Array;
+				: Empty.Array<byte>();
 
 			if (pk_token.Length > 0)
 				Buffer.BlockCopy (name.PublicKeyToken, 0, pk_token, 0, pk_token.Length);

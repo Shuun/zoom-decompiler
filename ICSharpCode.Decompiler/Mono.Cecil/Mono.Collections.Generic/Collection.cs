@@ -29,6 +29,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mi.Decompiler;
 
 namespace Mono.Collections.Generic {
 
@@ -102,7 +103,7 @@ namespace Mono.Collections.Generic {
 
 		public Collection ()
 		{
-			items = Empty<T>.Array;
+			items = Empty.Array<T>();
 		}
 
 		public Collection (int capacity)

@@ -247,7 +247,6 @@
     <Compile Include="Mono.Cecil\Mono.Collections.Generic\ReadOnlyCollection.cs" />
     <Compile Include="Mono.Cecil\Mono.Security.Cryptography\CryptoConvert.cs" />
     <Compile Include="Mono.Cecil\Mono.Security.Cryptography\CryptoService.cs" />
-    <Compile Include="Mono.Cecil\Mono\Empty.cs" />
     <Compile Include="Mono.Cecil\System.Runtime.CompilerServices\ExtensionAttribute.cs" />
     <Compile Include="NRefactory\CSharp\Analysis\ControlFlow.cs" />
     <Compile Include="NRefactory\CSharp\Analysis\DefiniteAssignmentAnalysis.cs" />

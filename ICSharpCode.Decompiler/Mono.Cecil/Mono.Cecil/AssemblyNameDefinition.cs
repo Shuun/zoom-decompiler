@@ -27,13 +27,14 @@
 //
 
 using System;
+using Mi.Decompiler;
 
 namespace Mono.Cecil {
 
 	public sealed class AssemblyNameDefinition : AssemblyNameReference {
 
 		public override byte [] Hash {
-			get { return Empty<byte>.Array; }
+			get { return Empty.Array<byte>(); }
 		}
 
 		internal AssemblyNameDefinition ()

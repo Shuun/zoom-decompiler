@@ -33,6 +33,8 @@ using Mono.Collections.Generic;
 
 using MD = Mono.Cecil.Metadata;
 
+using Mi.Decompiler;
+
 namespace Mono.Cecil {
 
 	public sealed class GenericInstanceType : TypeSpecification, IGenericInstance, IGenericContext {

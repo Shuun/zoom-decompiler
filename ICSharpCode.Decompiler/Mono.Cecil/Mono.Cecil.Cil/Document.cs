@@ -28,6 +28,8 @@
 
 using System;
 
+using Mi.Decompiler;
+
 namespace Mono.Cecil.Cil {
 
 	public enum DocumentType {
@@ -105,7 +107,7 @@ namespace Mono.Cecil.Cil {
 		public Document (string url)
 		{
 			this.url = url;
-			this.hash = Empty<byte>.Array;
+			this.hash = Empty.Array<byte>();
 		}
 	}
 }

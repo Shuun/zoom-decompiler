@@ -27,6 +27,7 @@
 //
 
 using System;
+using Mi.Decompiler;
 
 namespace Mono.Cecil.PE {
 
@@ -38,7 +39,7 @@ namespace Mono.Cecil.PE {
 
 		public ByteBuffer ()
 		{
-			this.buffer = Empty<byte>.Array;
+			this.buffer = Empty.Array<byte>();
 		}
 
 		public ByteBuffer (int length)
@@ -48,13 +49,13 @@ namespace Mono.Cecil.PE {
 
 		public ByteBuffer (byte [] buffer)
 		{
-			this.buffer = buffer ?? Empty<byte>.Array;
+			this.buffer = buffer ?? Empty.Array<byte>();
 			this.length = this.buffer.Length;
 		}
 
 		public void Reset (byte [] buffer)
 		{
-			this.buffer = buffer ?? Empty<byte>.Array;
+			this.buffer = buffer ?? Empty.Array<byte>();
 			this.length = this.buffer.Length;
 		}
 
