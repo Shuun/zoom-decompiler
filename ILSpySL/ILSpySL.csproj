@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="Model\AssemblyIsland.cs" />
     <Compile Include="Model\AssemblyNamespaceIsland.cs" />
+    <Compile Include="Model\CodeLine.cs" />
     <Compile Include="Model\TypeIsland.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
