@@ -29,6 +29,7 @@
 using System;
 using System.Text;
 
+using Mi.Decompiler;
 using Mono.Collections.Generic;
 
 namespace Mono.Cecil {

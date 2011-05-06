@@ -30,6 +30,8 @@ using System.Text;
 
 using Mono.Collections.Generic;
 
+using Mi.Decompiler;
+
 namespace Mono.Cecil {
 
 	public sealed class PropertyDefinition : PropertyReference, IMemberDefinition, IConstantProvider {

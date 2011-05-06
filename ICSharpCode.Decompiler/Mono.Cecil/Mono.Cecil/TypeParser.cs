@@ -31,6 +31,8 @@ using System.Text;
 
 using Mono.Cecil.Metadata;
 
+using Mi.Decompiler;
+
 namespace Mono.Cecil {
 
 	class TypeParser {

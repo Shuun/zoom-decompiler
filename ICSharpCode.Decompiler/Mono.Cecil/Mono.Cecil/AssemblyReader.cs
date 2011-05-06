@@ -37,6 +37,7 @@ using Mono.Cecil.Metadata;
 using Mono.Cecil.PE;
 
 using RVA = System.UInt32;
+using Mi.Decompiler;
 
 namespace Mono.Cecil {
 
@@ -395,7 +396,7 @@ namespace Mono.Cecil {
 			var blob_heap = image.BlobHeap;
 			if (blob_heap == null) {
 				position += 2;
-				return Empty<byte>.Array;
+				return Empty.Array<byte>();
 			}
 
 			return blob_heap.Read (ReadBlobIndex ());
@@ -405,7 +406,7 @@ namespace Mono.Cecil {
 		{
 			var blob_heap = image.BlobHeap;
 			if (blob_heap == null)
-				return Empty<byte>.Array;
+				return Empty.Array<byte>();
 
 			return blob_heap.Read (signature);
 		}
@@ -1201,7 +1202,7 @@ namespace Mono.Cecil {
 		{
 			var section = image.GetSectionAtVirtualAddress (rva);
 			if (section == null)
-				return Empty<byte>.Array;
+				return Empty.Array<byte>();
 
 			var value = new byte [size];
 			Buffer.BlockCopy (section.Data, (int) (rva - section.VirtualAddress), value, 0, size);
@@ -2898,7 +2899,7 @@ namespace Mono.Cecil {
 				return new CustomAttributeArgument (type, null);
 
 			if (length == 0)
-				return new CustomAttributeArgument (type, Empty<CustomAttributeArgument>.Array);
+                return new CustomAttributeArgument(type, Empty.Array<CustomAttributeArgument>());
 
 			var arguments = new CustomAttributeArgument [length];
 			var element_type = type.ElementType;

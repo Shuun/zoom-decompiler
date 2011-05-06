@@ -123,7 +123,7 @@ namespace Mono.Cecil {
 		public static byte [] ComputeHash (string file)
 		{
 			if (!File.Exists (file))
-				return Empty<byte>.Array;
+				return Empty.Array<byte>();
 
 			const int buffer_size = 8192;
 

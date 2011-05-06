@@ -33,6 +33,8 @@ using SR = System.Reflection;
 
 using Mono.Collections.Generic;
 
+using Mi.Decompiler;
+
 namespace Mono.Cecil.Cil {
 
 	[StructLayout (LayoutKind.Sequential)]

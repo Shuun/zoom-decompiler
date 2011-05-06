@@ -27,6 +27,7 @@
 //
 
 using Mono.Collections.Generic;
+using Mi.Decompiler;
 
 namespace Mono.Cecil {
 
@@ -110,7 +111,7 @@ namespace Mono.Cecil {
 				ResolveRVA ();
 
 				if (initial_value == null)
-					initial_value = Empty<byte>.Array;
+					initial_value = Empty.Array<byte>();
 
 				return initial_value;
 			}

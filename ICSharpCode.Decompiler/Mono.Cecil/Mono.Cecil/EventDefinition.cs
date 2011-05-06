@@ -28,6 +28,8 @@
 
 using Mono.Collections.Generic;
 
+using Mi.Decompiler;
+
 namespace Mono.Cecil {
 
 	public sealed class EventDefinition : EventReference, IMemberDefinition {

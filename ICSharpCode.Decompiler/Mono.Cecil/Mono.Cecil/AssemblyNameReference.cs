@@ -31,6 +31,8 @@ using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 
+using Mi.Decompiler;
+
 namespace Mono.Cecil {
 
 	public class AssemblyNameReference : IMetadataScope {
@@ -97,7 +99,7 @@ namespace Mono.Cecil {
 			set {
 				public_key = value;
 				HasPublicKey = !public_key.IsNullOrEmpty ();
-				public_key_token = Empty<byte>.Array;
+				public_key_token = Empty.Array<byte>();
 				full_name = null;
 			}
 		}

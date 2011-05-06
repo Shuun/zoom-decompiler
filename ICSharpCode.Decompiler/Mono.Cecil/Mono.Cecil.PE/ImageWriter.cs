@@ -86,7 +86,7 @@ namespace Mono.Cecil.PE {
 				return;
 
 			if (!symbol_writer.GetDebugHeader (out debug_directory, out debug_data))
-				debug_data = Empty<byte>.Array;
+				debug_data = Empty.Array<byte>();
 		}
 
 		void GetWin32Resources ()
