@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 
-namespace ICSharpCode.Decompiler
+namespace Mi.Decompiler
 {
     public static class Empty
     {
