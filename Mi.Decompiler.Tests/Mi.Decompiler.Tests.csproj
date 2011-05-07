@@ -182,6 +182,7 @@
   <ItemGroup>
     <None Include="Resources\mscorlibdll" />
     <None Include="Resources\System.Coredll" />
+    <None Include="SampleInputAssembly\bin\Debug\SampleInputAssembly.pdb" />
     <Content Include="StackTests\StackTests.exe" />
     <None Include="SampleInputAssembly\bin\Debug\mscorlib.dll" />
     <None Include="SampleInputAssembly\bin\Debug\SampleInputAssembly.dll" />

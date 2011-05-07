@@ -547,6 +547,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] SampleInputAssembly_pdb {
+            get {
+                object obj = ResourceManager.GetObject("SampleInputAssembly_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
         ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
