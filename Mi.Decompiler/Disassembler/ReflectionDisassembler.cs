@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-using Mi.Cecil;
+using Mi.Assemblies;
 using Mi.Collections.Generic;
 
 namespace ICSharpCode.Decompiler.Disassembler

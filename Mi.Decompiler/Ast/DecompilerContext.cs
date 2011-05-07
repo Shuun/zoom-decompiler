@@ -7,7 +7,7 @@ using System.Threading;
 using ICSharpCode.Decompiler.Ast;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
-using Mi.Cecil;
+using Mi.Assemblies;
 
 namespace ICSharpCode.Decompiler
 {

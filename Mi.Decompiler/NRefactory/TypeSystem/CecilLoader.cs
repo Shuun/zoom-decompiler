@@ -9,7 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
-using Mi.Cecil;
+using Mi.Assemblies;
 
 namespace ICSharpCode.NRefactory.TypeSystem
 {
@@ -227,25 +227,25 @@ namespace ICSharpCode.NRefactory.TypeSystem
 				return SharedTypes.UnknownType;
 			}
 			
-			if (type is Mi.Cecil.ByReferenceType) {
+			if (type is Mi.Assemblies.ByReferenceType) {
 				typeIndex++;
 				return ByReferenceTypeReference.Create(
 					CreateType(
-						(type as Mi.Cecil.ByReferenceType).ElementType,
+						(type as Mi.Assemblies.ByReferenceType).ElementType,
 						entity, typeAttributes, ref typeIndex));
-			} else if (type is Mi.Cecil.PointerType) {
+			} else if (type is Mi.Assemblies.PointerType) {
 				typeIndex++;
 				return PointerTypeReference.Create(
 					CreateType(
-						(type as Mi.Cecil.PointerType).ElementType,
+						(type as Mi.Assemblies.PointerType).ElementType,
 						entity, typeAttributes, ref typeIndex));
-			} else if (type is Mi.Cecil.ArrayType) {
+			} else if (type is Mi.Assemblies.ArrayType) {
 				typeIndex++;
 				return ArrayTypeReference.Create(
 					CreateType(
-						(type as Mi.Cecil.ArrayType).ElementType,
+						(type as Mi.Assemblies.ArrayType).ElementType,
 						entity, typeAttributes, ref typeIndex),
-					(type as Mi.Cecil.ArrayType).Rank);
+					(type as Mi.Assemblies.ArrayType).Rank);
 			} else if (type is GenericInstanceType) {
 				GenericInstanceType gType = (GenericInstanceType)type;
 				ITypeReference baseType = CreateType(gType.ElementType, entity, typeAttributes, ref typeIndex);
@@ -985,7 +985,7 @@ namespace ICSharpCode.NRefactory.TypeSystem
 			var type = ReadTypeReference(parameter.ParameterType, typeAttributes: parameter, entity: parentMember);
 			DefaultParameter p = new DefaultParameter(type, parameter.Name);
 			
-			if (parameter.ParameterType is Mi.Cecil.ByReferenceType) {
+			if (parameter.ParameterType is Mi.Assemblies.ByReferenceType) {
 				if (!parameter.IsIn && parameter.IsOut)
 					p.IsOut = true;
 				else
@@ -997,7 +997,7 @@ namespace ICSharpCode.NRefactory.TypeSystem
 				p.DefaultValue = ReadConstantValue(new CustomAttributeArgument(parameter.ParameterType, parameter.Constant));
 			}
 			
-			if (parameter.ParameterType is Mi.Cecil.ArrayType) {
+			if (parameter.ParameterType is Mi.Assemblies.ArrayType) {
 				foreach (CustomAttribute att in parameter.CustomAttributes) {
 					if (att.AttributeType.FullName == typeof(ParamArrayAttribute).FullName) {
 						p.IsParams = true;

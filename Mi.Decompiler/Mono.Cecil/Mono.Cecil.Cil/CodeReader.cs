@@ -28,12 +28,12 @@
 
 using System;
 
-using Mi.Cecil.PE;
+using Mi.Assemblies.PE;
 using Mi.Collections.Generic;
 
 using RVA = System.UInt32;
 
-namespace Mi.Cecil.Cil {
+namespace Mi.Assemblies.Cil {
 
 	sealed class CodeReader : ByteBuffer {
 

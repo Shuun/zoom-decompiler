@@ -23,8 +23,8 @@ using System.Diagnostics;
 using System.Linq;
 
 using ICSharpCode.NRefactory.Utils;
-using Mi.Cecil;
-using Mi.Cecil.Cil;
+using Mi.Assemblies;
+using Mi.Assemblies.Cil;
 
 namespace ICSharpCode.Decompiler.FlowAnalysis
 {

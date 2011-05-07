@@ -23,7 +23,7 @@ using System.Linq;
 using ICSharpCode.Decompiler.Ast;
 using ICSharpCode.Decompiler.Disassembler;
 using ICSharpCode.Decompiler.ILAst;
-using Mi.Cecil;
+using Mi.Assemblies;
 
 namespace ICSharpCode.Decompiler
 {

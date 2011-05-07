@@ -19,7 +19,7 @@
 using System;
 using System.Diagnostics;
 using ICSharpCode.NRefactory.CSharp;
-using Mi.Cecil;
+using Mi.Assemblies;
 
 namespace ICSharpCode.Decompiler.Ast.Transforms
 {

@@ -28,10 +28,10 @@
 
 using System;
 
-using Mi.Cecil.PE;
+using Mi.Assemblies.PE;
 using Mi;
 
-namespace Mi.Cecil.Metadata {
+namespace Mi.Assemblies.Metadata {
 
 	sealed class BlobHeap : Heap {
 

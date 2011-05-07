@@ -29,7 +29,7 @@
 using System;
 using System.IO;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public sealed class EmbeddedResource : Resource {
 

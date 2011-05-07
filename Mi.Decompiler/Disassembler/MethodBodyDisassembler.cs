@@ -24,8 +24,8 @@ using System.Threading;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.FlowAnalysis;
 using ICSharpCode.Decompiler.ILAst;
-using Mi.Cecil;
-using Mi.Cecil.Cil;
+using Mi.Assemblies;
+using Mi.Assemblies.Cil;
 
 namespace ICSharpCode.Decompiler.Disassembler
 {
@@ -120,8 +120,8 @@ namespace ICSharpCode.Decompiler.Disassembler
 					break;
 				case ILStructureType.Handler:
 					switch (s.ExceptionHandler.HandlerType) {
-						case Mi.Cecil.Cil.ExceptionHandlerType.Catch:
-						case Mi.Cecil.Cil.ExceptionHandlerType.Filter:
+						case Mi.Assemblies.Cil.ExceptionHandlerType.Catch:
+						case Mi.Assemblies.Cil.ExceptionHandlerType.Filter:
 							output.Write("catch");
 							if (s.ExceptionHandler.CatchType != null) {
 								output.Write(' ');
@@ -129,10 +129,10 @@ namespace ICSharpCode.Decompiler.Disassembler
 							}
 							output.WriteLine(" {");
 							break;
-						case Mi.Cecil.Cil.ExceptionHandlerType.Finally:
+						case Mi.Assemblies.Cil.ExceptionHandlerType.Finally:
 							output.WriteLine("finally {");
 							break;
-						case Mi.Cecil.Cil.ExceptionHandlerType.Fault:
+						case Mi.Assemblies.Cil.ExceptionHandlerType.Fault:
 							output.WriteLine("fault {");
 							break;
 						default:

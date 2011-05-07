@@ -29,12 +29,12 @@
 using System;
 
 using Mi;
-using Mi.Cecil.Cil;
-using Mi.Cecil.Metadata;
+using Mi.Assemblies.Cil;
+using Mi.Assemblies.Metadata;
 
 using RVA = System.UInt32;
 
-namespace Mi.Cecil.PE {
+namespace Mi.Assemblies.PE {
 
 	sealed class Image {
 

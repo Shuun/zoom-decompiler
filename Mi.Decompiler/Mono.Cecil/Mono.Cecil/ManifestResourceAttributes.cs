@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	[Flags]
 	public enum ManifestResourceAttributes : uint {

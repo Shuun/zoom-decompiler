@@ -31,13 +31,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using SR = System.Reflection;
-using Mi.Cecil.Cil;
-using Mi.Cecil.Metadata;
-using Mi.Cecil.PE;
+using Mi.Assemblies.Cil;
+using Mi.Assemblies.Metadata;
+using Mi.Assemblies.PE;
 using Mi.Collections.Generic;
 using Mi;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public enum ReadingMode {
 		Immediate = 1,

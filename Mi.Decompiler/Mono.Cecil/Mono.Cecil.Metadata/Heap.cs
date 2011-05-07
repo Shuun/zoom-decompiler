@@ -26,9 +26,9 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using Mi.Cecil.PE;
+using Mi.Assemblies.PE;
 
-namespace Mi.Cecil.Metadata {
+namespace Mi.Assemblies.Metadata {
 
 	abstract class Heap {
 

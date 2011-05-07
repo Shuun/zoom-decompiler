@@ -9,13 +9,13 @@ using ICSharpCode.Decompiler.ILAst;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.PatternMatching;
 using ICSharpCode.NRefactory.Utils;
-using Mi.Cecil;
-using Mi.Cecil.Cil;
+using Mi.Assemblies;
+using Mi.Assemblies.Cil;
 
 namespace ICSharpCode.Decompiler.Ast
 {
 	using Ast = ICSharpCode.NRefactory.CSharp;
-	using Cecil = Mi.Cecil;
+	using Cecil = Mi.Assemblies;
 	
 	public class AstMethodBodyBuilder
 	{

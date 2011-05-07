@@ -28,9 +28,9 @@
 
 using System;
 
-using Mi.Cecil.PE;
+using Mi.Assemblies.PE;
 
-namespace Mi.Cecil.Metadata {
+namespace Mi.Assemblies.Metadata {
 
 	sealed class GuidHeap : Heap {
 

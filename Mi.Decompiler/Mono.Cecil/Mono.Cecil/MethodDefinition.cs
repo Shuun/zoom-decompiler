@@ -26,12 +26,12 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using Mi.Cecil.Cil;
+using Mi.Assemblies.Cil;
 using Mi.Collections.Generic;
 
 using RVA = System.UInt32;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public sealed class MethodDefinition : MethodReference, IMemberDefinition, ISecurityDeclarationProvider {
 

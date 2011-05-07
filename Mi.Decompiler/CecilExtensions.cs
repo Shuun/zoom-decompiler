@@ -19,8 +19,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mi.Cecil;
-using Mi.Cecil.Cil;
+using Mi.Assemblies;
+using Mi.Assemblies.Cil;
 
 namespace ICSharpCode.Decompiler
 {

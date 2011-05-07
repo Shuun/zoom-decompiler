@@ -29,7 +29,7 @@
 using System;
 using Mi.Collections.Generic;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public interface ICustomAttributeProvider : IMetadataTokenProvider {
 

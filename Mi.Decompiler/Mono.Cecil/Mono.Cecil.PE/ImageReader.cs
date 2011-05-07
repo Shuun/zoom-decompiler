@@ -29,11 +29,11 @@
 using System;
 using System.IO;
 
-using Mi.Cecil.Metadata;
+using Mi.Assemblies.Metadata;
 
 using RVA = System.UInt32;
 
-namespace Mi.Cecil.PE {
+namespace Mi.Assemblies.PE {
 
 	sealed class ImageReader : BinaryStreamReader {
 

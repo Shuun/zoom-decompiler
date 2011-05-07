@@ -33,7 +33,7 @@ using Mi.Collections.Generic;
 
 using Mi;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public sealed class GenericInstanceMethod : MethodSpecification, IGenericInstance, IGenericContext {
 

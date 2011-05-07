@@ -31,7 +31,7 @@ using System.Text;
 
 using Mi.Collections.Generic;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public sealed class CallSite : IMethodSignature {
 

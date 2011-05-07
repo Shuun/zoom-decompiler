@@ -32,7 +32,7 @@ using Mi.Collections.Generic;
 
 using Mi;
 
-namespace Mi.Cecil.Cil {
+namespace Mi.Assemblies.Cil {
 
 	public sealed class MethodBody : IVariableDefinitionProvider {
 

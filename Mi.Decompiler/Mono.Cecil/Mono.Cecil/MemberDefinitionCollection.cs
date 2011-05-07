@@ -30,7 +30,7 @@ using System;
 
 using Mi.Collections.Generic;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	class MemberDefinitionCollection<T> : Collection<T> where T : IMemberDefinition {
 

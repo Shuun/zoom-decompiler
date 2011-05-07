@@ -31,7 +31,7 @@ using System.Collections.Generic;
 
 using Mi.Collections.Generic;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public interface IAssemblyResolver {
 		AssemblyDefinition Resolve (AssemblyNameReference name);

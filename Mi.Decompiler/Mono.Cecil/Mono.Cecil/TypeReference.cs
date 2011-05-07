@@ -28,12 +28,12 @@
 
 using System;
 
-using Mi.Cecil.Metadata;
+using Mi.Assemblies.Metadata;
 using Mi.Collections.Generic;
 
 using Mi;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public enum MetadataType : byte {
 		Void = ElementType.Void,

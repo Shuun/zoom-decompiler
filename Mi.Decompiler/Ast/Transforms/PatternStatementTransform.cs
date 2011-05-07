@@ -25,7 +25,7 @@ using ICSharpCode.Decompiler.ILAst;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Analysis;
 using ICSharpCode.NRefactory.PatternMatching;
-using Mi.Cecil;
+using Mi.Assemblies;
 
 namespace ICSharpCode.Decompiler.Ast.Transforms
 {

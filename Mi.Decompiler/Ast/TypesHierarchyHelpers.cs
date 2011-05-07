@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using Mi.Cecil;
+using Mi.Assemblies;
 
 namespace ICSharpCode.Decompiler.Ast
 {
@@ -438,13 +438,13 @@ namespace ICSharpCode.Decompiler.Ast
 
 			private class DummyGenericParameterProvider : IGenericParameterProvider
 			{
-				readonly Mi.Cecil.GenericParameterType type;
+				readonly Mi.Assemblies.GenericParameterType type;
 				readonly Mi.Collections.Generic.Collection<GenericParameter> parameters;
 
 				public DummyGenericParameterProvider(bool methodTypeParameter)
 				{
-					type = methodTypeParameter ? Mi.Cecil.GenericParameterType.Method :
-						Mi.Cecil.GenericParameterType.Type;
+					type = methodTypeParameter ? Mi.Assemblies.GenericParameterType.Method :
+						Mi.Assemblies.GenericParameterType.Type;
 					parameters = new Mi.Collections.Generic.Collection<GenericParameter>(1);
 					parameters.Add(new GenericParameter(this));
 		}

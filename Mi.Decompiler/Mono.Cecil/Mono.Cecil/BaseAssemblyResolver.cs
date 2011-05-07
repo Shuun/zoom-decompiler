@@ -33,7 +33,7 @@ using System.Text;
 
 using Mi.Collections.Generic;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public delegate AssemblyDefinition AssemblyResolveEventHandler (object sender, AssemblyNameReference reference);
 

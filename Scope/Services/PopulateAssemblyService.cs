@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows;
 
-using Mi.Cecil;
+using Mi.Assemblies;
 
 using ICSharpCode.Decompiler;
 

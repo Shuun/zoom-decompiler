@@ -32,9 +32,9 @@ using System.IO;
 using System.Text;
 
 using Mi.Collections.Generic;
-using Mi.Cecil.Cil;
-using Mi.Cecil.Metadata;
-using Mi.Cecil.PE;
+using Mi.Assemblies.Cil;
+using Mi.Assemblies.Metadata;
+using Mi.Assemblies.PE;
 
 using RVA = System.UInt32;
 using RID = System.UInt32;
@@ -42,7 +42,7 @@ using CodedRID = System.UInt32;
 using StringIndex = System.UInt32;
 using BlobIndex = System.UInt32;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 #if !READ_ONLY
 

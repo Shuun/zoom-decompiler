@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public class MarshalInfo {
 

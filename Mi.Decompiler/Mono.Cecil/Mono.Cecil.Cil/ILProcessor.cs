@@ -30,7 +30,7 @@ using System;
 
 using Mi.Collections.Generic;
 
-namespace Mi.Cecil.Cil {
+namespace Mi.Assemblies.Cil {
 
 	public sealed class ILProcessor {
 

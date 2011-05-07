@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Mi.Cecil.Cil;
+using Mi.Assemblies.Cil;
 
 namespace ICSharpCode.Decompiler.FlowAnalysis
 {

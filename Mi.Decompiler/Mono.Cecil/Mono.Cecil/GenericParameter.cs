@@ -30,9 +30,9 @@ using System;
 
 using Mi.Collections.Generic;
 
-using Mi.Cecil.Metadata;
+using Mi.Assemblies.Metadata;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public sealed class GenericParameter : TypeReference, ICustomAttributeProvider {
 

@@ -29,7 +29,7 @@
 using System;
 using Mi;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public sealed class AssemblyNameDefinition : AssemblyNameReference {
 

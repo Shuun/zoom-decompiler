@@ -30,11 +30,11 @@ using System;
 using System.Collections.Generic;
 using SR = System.Reflection;
 
-using Mi.Cecil.Metadata;
+using Mi.Assemblies.Metadata;
 
 using Mi;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	enum ImportGenericKind {
 		Definition,

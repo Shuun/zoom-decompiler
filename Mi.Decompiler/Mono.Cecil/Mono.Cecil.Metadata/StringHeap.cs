@@ -30,9 +30,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Mi.Cecil.PE;
+using Mi.Assemblies.PE;
 
-namespace Mi.Cecil.Metadata {
+namespace Mi.Assemblies.Metadata {
 
 	class StringHeap : Heap {
 
