@@ -91,37 +91,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Decompiler\CallOverloadedMethod.cs" />
-    <Compile Include="Decompiler\CheckedUnchecked.cs" />
-    <Compile Include="Decompiler\CodeSampleFileParser.cs" />
-    <Compile Include="Decompiler\CustomAttributes.code.cs" />
-    <Compile Include="Decompiler\CustomAttributes\CustomAttributeTests.cs" />
-    <Compile Include="Decompiler\CustomAttributes\S_AssemblyCustomAttribute.cs" />
-    <Compile Include="Decompiler\CustomAttributes\S_CustomAttributes.cs" />
-    <Compile Include="Decompiler\CustomAttributes\S_CustomAttributeSamples.cs" />
-    <Compile Include="Decompiler\DecompilerTestBase.cs" />
-    <Compile Include="Decompiler\DelegateConstruction.cs" />
-    <Compile Include="Decompiler\ExceptionHandling.cs" />
-    <Compile Include="Decompiler\Generics.cs" />
-    <Compile Include="Decompiler\Helpers\CodeAssert.cs" />
-    <Compile Include="Decompiler\Helpers\RemoveCompilerAttribute.cs" />
-    <Compile Include="Decompiler\IncrementDecrement.cs" />
-    <Compile Include="Decompiler\InitializerTests.cs" />
-    <Compile Include="Decompiler\Loops.cs" />
-    <Compile Include="Decompiler\MultidimensionalArray.cs" />
-    <Compile Include="Decompiler\PropertiesAndEvents.cs" />
-    <Compile Include="Decompiler\QueryExpressions.cs" />
-    <Compile Include="Decompiler\Switch.cs" />
-    <Compile Include="Decompiler\TestRunner.cs" />
-    <Compile Include="Decompiler\Types\EnumTests.cs" />
-    <Compile Include="Decompiler\Types\S_EnumSamples.cs" />
-    <Compile Include="Decompiler\Types\S_TypeDeclarations.cs" />
-    <Compile Include="Decompiler\Types\S_TypeMemberDeclarations.cs" />
-    <Compile Include="Decompiler\Types\TypeTests.cs" />
-    <Compile Include="Decompiler\UndocumentedExpressions.cs" />
-    <None Include="Decompiler\UnsafeCode.cs" />
-    <Compile Include="Decompiler\ValueTypes.cs" />
-    <Compile Include="Decompiler\YieldReturn.cs" />
     <Compile Include="DiffLib\AlignedDiff.cs" />
     <Compile Include="DiffLib\AlignedDiffChange.cs" />
     <Compile Include="DiffLib\ChangeType.cs" />
@@ -145,8 +114,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Decompiler\BooleanConsumedAsInteger.il" />
-    <None Include="Decompiler\StackTests\StackTests.il" />
     <None Include="DiffLib\LICENSE.markdown" />
     <None Include="DiffLib\README.markdown" />
     <None Include="DiffLib\SIGNING.markdown" />
@@ -157,9 +124,6 @@
       <Project>{984CC812-9470-4A13-AFF9-CC44068D666C}</Project>
       <Name>Mi.Decompiler</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Decompiler\StackTests\StackTests.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <Import Condition="$(SilverlightVersion)=='v3.0'" Project="$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SilverlightToolkit\Tools\v3.0)Microsoft.Silverlight.Toolkit.Build.targets" />
