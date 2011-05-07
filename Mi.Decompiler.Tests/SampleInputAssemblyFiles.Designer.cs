@@ -147,6 +147,33 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///using System.Linq;
+        ///using System.Text;
+        ///using Microsoft.VisualStudio.TestTools.UnitTesting;
+        ///
+        ///namespace Mi.Decompiler.Tests.Types
+        ///{
+        ///	[TestClass]
+        ///	public class EnumTests : DecompilerTestBase
+        ///	{
+        ///		[TestMethod]
+        ///		public void EnumSamples()
+        ///		{
+        ///			ValidateFileRoundtrip(@&quot;S_EnumSamples.cs&quot;);
+        ///		}
+        ///	}
+        ///}
+        ///.
+        /// </summary>
+        internal static string EnumTests {
+            get {
+                return ResourceManager.GetString("EnumTests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
         ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
         ///
@@ -548,6 +575,33 @@ namespace Mi.Decompiler.Tests {
         internal static string Switch {
             get {
                 return ResourceManager.GetString("Switch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///using System.Linq;
+        ///using System.Text;
+        ///using Microsoft.VisualStudio.TestTools.UnitTesting;
+        ///
+        ///namespace Mi.Decompiler.Tests.Types
+        ///{
+        ///	[TestClass]
+        ///	public class TypeTests : DecompilerTestBase
+        ///	{
+        ///		[TestMethod]
+        ///		public void TypeMemberDeclarations()
+        ///		{
+        ///			ValidateFileRoundtrip(@&quot;S_TypeMemberDeclarations.cs&quot;);
+        ///		}
+        ///	}
+        ///}
+        ///.
+        /// </summary>
+        internal static string TypeTests {
+            get {
+                return ResourceManager.GetString("TypeTests", resourceCulture);
             }
         }
         

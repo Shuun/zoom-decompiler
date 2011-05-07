@@ -56,6 +56,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryExpressions.cs" />
     <Compile Include="Switch.cs" />
+    <Compile Include="Types\S_EnumSamples.cs" />
+    <Compile Include="Types\S_TypeDeclarations.cs" />
+    <Compile Include="Types\S_TypeMemberDeclarations.cs" />
     <Compile Include="UndocumentedExpressions.cs" />
     <Compile Include="ValueTypes.cs" />
     <Compile Include="YieldReturn.cs" />
