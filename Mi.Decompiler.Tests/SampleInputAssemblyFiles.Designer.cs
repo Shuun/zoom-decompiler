@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mi.Decompiler.Tests.Decompiler {
+namespace Mi.Decompiler.Tests {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Mi.Decompiler.Tests.Decompiler {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Mi.Decompiler.Tests.Decompiler.SampleInputAssemblyFiles", typeof(SampleInputAssemblyFiles).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Mi.Decompiler.Tests.SampleInputAssemblyFiles", typeof(SampleInputAssemblyFiles).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -332,6 +332,13 @@ namespace Mi.Decompiler.Tests.Decompiler {
         internal static string Loops {
             get {
                 return ResourceManager.GetString("Loops", resourceCulture);
+            }
+        }
+        
+        internal static byte[] mscorlib {
+            get {
+                object obj = ResourceManager.GetObject("mscorlib", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

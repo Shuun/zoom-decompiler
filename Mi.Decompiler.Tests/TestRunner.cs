@@ -13,8 +13,6 @@ using Mi.Decompiler.Tests.Helpers;
 using Mi.Assemblies;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using SampleInputAssemblyFiles = Mi.Decompiler.Tests.Decompiler.SampleInputAssemblyFiles;
-
 namespace Mi.Decompiler.Tests
 {
 	[TestClass]
@@ -128,7 +126,7 @@ namespace Mi.Decompiler.Tests
 		static void TestFile(string fileName)
 		{
             string code = SampleInputAssemblyFiles.ResourceManager.GetString(fileName);
-            AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(new MemoryStream(SampleInputAssemblyFiles.SampleInputAssembly));
+            AssemblyDefinition assembly = CompiledAssembly.Assembly;
 			AstBuilder decompiler = new AstBuilder(new DecompilerContext(assembly.MainModule));
 			decompiler.AddAssembly(assembly);
 			new Helpers.RemoveCompilerAttribute().Run(decompiler.CompilationUnit);
