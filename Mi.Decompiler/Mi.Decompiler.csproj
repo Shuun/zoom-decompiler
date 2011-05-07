@@ -421,12 +421,15 @@
     <Compile Include="NRefactory\CSharp\Resolver\AmbiguousResolveResult.cs" />
     <Compile Include="NRefactory\CSharp\Resolver\ByReferenceResolveResult.cs" />
     <Compile Include="NRefactory\CSharp\Resolver\ConstantResolveResult.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\ConstantValues.cs" />
     <Compile Include="NRefactory\CSharp\Resolver\Conversions.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\CSharpAttribute.cs" />
     <Compile Include="NRefactory\CSharp\Resolver\CSharpResolver.cs" />
     <Compile Include="NRefactory\CSharp\Resolver\ErrorResolveResult.cs" />
     <Compile Include="NRefactory\CSharp\Resolver\IResolveVisitorNavigator.cs" />
     <Compile Include="NRefactory\CSharp\Resolver\ITypeOrNamespaceReference.cs" />
     <Compile Include="NRefactory\CSharp\Resolver\LocalResolveResult.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\MapTypeIntoNewContext.cs" />
     <Compile Include="NRefactory\CSharp\Resolver\MemberLookup.cs" />
     <Compile Include="NRefactory\CSharp\Resolver\MemberResolveResult.cs" />
     <Compile Include="NRefactory\CSharp\Resolver\MemberTypeOrNamespaceReference.cs" />
