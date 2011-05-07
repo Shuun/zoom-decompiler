@@ -125,7 +125,7 @@ namespace Mi.Decompiler.Tests
 		
 		static void TestFile(string fileName)
 		{
-            string code = SampleInputFiles.ResourceManager.GetString(fileName);
+            string code = SampleInputFiles.ResourceManager.GetString(fileName+"_cs");
             AssemblyDefinition assembly = SampleInputLoader.LoadAssembly(fileName);
 			AstBuilder decompiler = new AstBuilder(new DecompilerContext(assembly.MainModule));
 			decompiler.AddAssembly(assembly);

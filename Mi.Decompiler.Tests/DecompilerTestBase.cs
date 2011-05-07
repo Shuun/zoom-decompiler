@@ -24,7 +24,7 @@ namespace Mi.Decompiler.Tests
 
         static IEnumerable<string> GetFile(string samplesFileName)
         {
-            string text = SampleInputFiles.ResourceManager.GetString(samplesFileName);
+            string text = SampleInputFiles.ResourceManager.GetString(samplesFileName+"_cs");
             var reader = new StringReader(text);
             while (true)
             {
