@@ -140,9 +140,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SampleInputAssemblyFiles.resx</DependentUpon>
     </Compile>
-    <None Include="SampleInputAssembly\Types\S_EnumSamples.cs" />
-    <None Include="SampleInputAssembly\Types\S_TypeDeclarations.cs" />
-    <None Include="SampleInputAssembly\Types\S_TypeMemberDeclarations.cs" />
     <Compile Include="TestRunner.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -167,25 +164,6 @@
     <Compile Include="DiffLib\StringSimilarityFilterPredicate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Empty.cs" />
-    <None Include="SampleInputAssembly\CustomAttributes\S_CustomAttributeSamples.cs" />
-    <None Include="SampleInputAssembly\CustomAttributes\S_CustomAttributes.cs" />
-    <None Include="SampleInputAssembly\CustomAttributes\S_AssemblyCustomAttribute.cs" />
-    <None Include="SampleInputAssembly\YieldReturn.cs" />
-    <None Include="SampleInputAssembly\ValueTypes.cs" />
-    <None Include="SampleInputAssembly\UnsafeCode.cs" />
-    <None Include="SampleInputAssembly\UndocumentedExpressions.cs" />
-    <None Include="SampleInputAssembly\Switch.cs" />
-    <None Include="SampleInputAssembly\QueryExpressions.cs" />
-    <None Include="SampleInputAssembly\PropertiesAndEvents.cs" />
-    <None Include="SampleInputAssembly\MultidimensionalArray.cs" />
-    <None Include="SampleInputAssembly\Loops.cs" />
-    <None Include="SampleInputAssembly\InitializerTests.cs" />
-    <None Include="SampleInputAssembly\IncrementDecrement.cs" />
-    <None Include="SampleInputAssembly\Generics.cs" />
-    <None Include="SampleInputAssembly\ExceptionHandling.cs" />
-    <None Include="SampleInputAssembly\DelegateConstruction.cs" />
-    <None Include="SampleInputAssembly\CheckedUnchecked.cs" />
-    <None Include="SampleInputAssembly\CallOverloadedMethod.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -210,10 +188,7 @@
   <ItemGroup>
     <None Include="Resources\mscorlibdll" />
     <None Include="Resources\System.Coredll" />
-    <None Include="SampleInputAssembly\bin\Debug\SampleInputAssembly.pdb" />
     <Content Include="StackTests\StackTests.exe" />
-    <None Include="SampleInputAssembly\bin\Debug\mscorlib.dll" />
-    <None Include="SampleInputAssembly\bin\Debug\SampleInputAssembly.dll" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SampleInputAssemblyFiles.resx">
