@@ -9,6 +9,7 @@ using Mi.NRefactory.CSharp.Resolver;
 using Mi.NRefactory.TypeSystem;
 using Mi.NRefactory.TypeSystem.Implementation;
 using Mi.NRefactory.Utils;
+using Mi.NRefactory.CSharp.Resolver.ConstantValues;
 
 namespace Mi.NRefactory.CSharp
 {
