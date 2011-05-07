@@ -44,15 +44,18 @@ namespace Mi.Decompiler.Tests
         }
 
         public static readonly AssemblyDefinition Mscorlib;
+        public static readonly AssemblyDefinition SystemCore;
         public static readonly AssemblyDefinition Assembly;
 
         static CompiledAssembly()
         {
             Mscorlib = AssemblyDefinition.ReadAssembly(
                 new MemoryStream(SampleInputAssemblyFiles.mscorlib));
+            SystemCore = AssemblyDefinition.ReadAssembly(
+                new MemoryStream(SampleInputAssemblyFiles.System_Core));
 
             var rp = new ReaderParameters(ReadingMode.Immediate);
-            rp.AssemblyResolver = new Resolver((asmRef, _rp) =>Mscorlib);
+            rp.AssemblyResolver = new Resolver((asmRef, _rp) => asmRef.Name == Mscorlib.Name.Name ? Mscorlib : SystemCore);
 
             Assembly = AssemblyDefinition.ReadAssembly(
                 new MemoryStream(SampleInputAssemblyFiles.SampleInputAssembly),
