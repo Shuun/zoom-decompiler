@@ -1105,7 +1105,9 @@ namespace Mi.NRefactory.CSharp
 			queryFromClause.Type.AcceptVisitor(this, data);
 			Space();
 			WriteIdentifier(queryFromClause.Identifier);
+			Space();
 			WriteKeyword("in", QueryFromClause.InKeywordRole);
+			Space();
 			queryFromClause.Expression.AcceptVisitor(this, data);
 			return EndNode(queryFromClause);
 		}
