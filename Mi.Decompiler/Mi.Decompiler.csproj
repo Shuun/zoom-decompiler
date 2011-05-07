@@ -100,9 +100,9 @@
     <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbSource.cs" />
     <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbWriter.cs" />
     <Compile Include="Assemblies\Microsoft.Cci.Pdb\SourceLocationProvider.cs" />
-    <Compile Include="Assemblies\Mono.Cecil.Pdb\ModuleMetadata.cs" />
-    <Compile Include="Assemblies\Mono.Cecil.Pdb\PdbHelper.cs" />
-    <Compile Include="Assemblies\Mono.Cecil.Pdb\PdbReader.cs" />
+    <Compile Include="Assemblies\Pdb\ModuleMetadata.cs" />
+    <Compile Include="Assemblies\Pdb\PdbHelper.cs" />
+    <Compile Include="Assemblies\Pdb\PdbReader.cs" />
     <Compile Include="Ast\AstBuilder.cs" />
     <Compile Include="Ast\AstMethodBodyBuilder.cs" />
     <Compile Include="Ast\CecilTypeResolveContext.cs" />
