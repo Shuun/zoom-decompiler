@@ -91,35 +91,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Assemblies\Addin.cs" />
-    <Compile Include="Assemblies\AssemblyTests.cs" />
-    <Compile Include="Assemblies\BaseTestFixture.cs" />
-    <Compile Include="Assemblies\CompilationService.cs" />
-    <Compile Include="Assemblies\CustomAttributesTests.cs" />
-    <Compile Include="Assemblies\EventTests.cs" />
-    <Compile Include="Assemblies\Extensions.cs" />
-    <Compile Include="Assemblies\FieldTests.cs" />
-    <Compile Include="Assemblies\Formatter.cs" />
-    <Compile Include="Assemblies\ILProcessorTests.cs" />
-    <Compile Include="Assemblies\ImageReadTests.cs" />
-    <Compile Include="Assemblies\ImportCecilTests.cs" />
-    <Compile Include="Assemblies\ImportReflectionTests.cs" />
-    <Compile Include="Assemblies\Linq.cs" />
-    <Compile Include="Assemblies\MethodBodyTests.cs" />
-    <Compile Include="Assemblies\MethodTests.cs" />
-    <Compile Include="Assemblies\ModuleTests.cs" />
-    <Compile Include="Assemblies\NestedTypesTests.cs" />
-    <Compile Include="Assemblies\ParameterTests.cs" />
-    <Compile Include="Assemblies\PropertyTests.cs" />
-    <Compile Include="Assemblies\ResolveTests.cs" />
-    <Compile Include="Assemblies\SecurityDeclarationTests.cs" />
-    <Compile Include="Assemblies\TypeParserTests.cs" />
-    <Compile Include="Assemblies\TypeTests.cs" />
-    <Compile Include="Assemblies\VariableTests.cs" />
     <Compile Include="CodeSampleFileParser.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CompiledAssembly.cs" />
+    <Compile Include="SampleInputLoader.cs" />
     <Compile Include="CustomAttributes.code.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -135,10 +110,10 @@
     <Compile Include="Helpers\RemoveCompilerAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SampleInputAssemblyFiles.Designer.cs">
+    <Compile Include="SampleInputFiles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SampleInputAssemblyFiles.resx</DependentUpon>
+      <DependentUpon>SampleInputFiles.resx</DependentUpon>
     </Compile>
     <Compile Include="TestRunner.cs">
       <SubType>Code</SubType>
@@ -188,13 +163,46 @@
   <ItemGroup>
     <None Include="Resources\mscorlibdll" />
     <None Include="Resources\System.Coredll" />
+    <None Include="Resources\systemdll" />
+    <None Include="SampleInput\bin\Debug\CallOverloadedMethod.dll" />
+    <None Include="SampleInput\bin\Debug\CallOverloadedMethod.pdb" />
+    <None Include="SampleInput\bin\Debug\CheckedUnchecked.dll" />
+    <None Include="SampleInput\bin\Debug\CheckedUnchecked.pdb" />
+    <None Include="SampleInput\bin\Debug\CustomAttributes.dll" />
+    <None Include="SampleInput\bin\Debug\CustomAttributes.pdb" />
+    <None Include="SampleInput\bin\Debug\DelegateConstruction.dll" />
+    <None Include="SampleInput\bin\Debug\DelegateConstruction.pdb" />
+    <None Include="SampleInput\bin\Debug\ExceptionHandling.dll" />
+    <None Include="SampleInput\bin\Debug\ExceptionHandling.pdb" />
+    <None Include="SampleInput\bin\Debug\IncrementDecrement.dll" />
+    <None Include="SampleInput\bin\Debug\IncrementDecrement.pdb" />
+    <None Include="SampleInput\bin\Debug\InitializerTests.dll" />
+    <None Include="SampleInput\bin\Debug\InitializerTests.pdb" />
+    <None Include="SampleInput\bin\Debug\Loops.dll" />
+    <None Include="SampleInput\bin\Debug\Loops.pdb" />
+    <None Include="SampleInput\bin\Debug\MultidimensionalArray.dll" />
+    <None Include="SampleInput\bin\Debug\MultidimensionalArray.pdb" />
+    <None Include="SampleInput\bin\Debug\PropertiesAndEvents.dll" />
+    <None Include="SampleInput\bin\Debug\PropertiesAndEvents.pdb" />
+    <None Include="SampleInput\bin\Debug\QueryExpressions.dll" />
+    <None Include="SampleInput\bin\Debug\QueryExpressions.pdb" />
+    <None Include="SampleInput\bin\Debug\Switch.dll" />
+    <None Include="SampleInput\bin\Debug\Switch.pdb" />
+    <None Include="SampleInput\bin\Debug\UndocumentedExpressions.dll" />
+    <None Include="SampleInput\bin\Debug\UndocumentedExpressions.pdb" />
+    <None Include="SampleInput\bin\Debug\UnsafeCode.dll" />
+    <None Include="SampleInput\bin\Debug\UnsafeCode.pdb" />
+    <None Include="SampleInput\bin\Debug\ValueTypes.dll" />
+    <None Include="SampleInput\bin\Debug\ValueTypes.pdb" />
+    <None Include="SampleInput\bin\Debug\YieldReturn.dll" />
+    <None Include="SampleInput\bin\Debug\YieldReturn.pdb" />
     <Content Include="StackTests\StackTests.exe" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SampleInputAssemblyFiles.resx">
+    <EmbeddedResource Include="SampleInputFiles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>SampleInputAssemblyFiles.Designer.cs</LastGenOutput>
+      <LastGenOutput>SampleInputFiles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />

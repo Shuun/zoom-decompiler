@@ -24,7 +24,7 @@ namespace Mi.Decompiler.Tests
 
         static IEnumerable<string> GetFile(string samplesFileName)
         {
-            string text = SampleInputAssemblyFiles.ResourceManager.GetString(samplesFileName);
+            string text = SampleInputFiles.ResourceManager.GetString(samplesFileName);
             var reader = new StringReader(text);
             while (true)
             {
@@ -51,11 +51,10 @@ namespace Mi.Decompiler.Tests
 		{
 			DecompilerSettings settings = new DecompilerSettings();
 			settings.FullyQualifyAmbiguousTypeNames = false;
-			AssemblyDefinition assembly = CompiledAssembly.Assembly;
-            var testClass = assembly.MainModule.Types.First(c => c.Name == testClassName);
+			AssemblyDefinition assembly = SampleInputLoader.LoadAssembly(testClassName);
             var ctx = new DecompilerContext(assembly.MainModule) { Settings = settings };
 			AstBuilder decompiler = new AstBuilder(ctx);
-			decompiler.AddType(testClass);
+			decompiler.AddAssembly(assembly);
 			new Helpers.RemoveCompilerAttribute().Run(decompiler.CompilationUnit);
 			StringWriter output = new StringWriter();
 			decompiler.GenerateCode(new PlainTextOutput(output));

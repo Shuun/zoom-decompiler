@@ -125,11 +125,10 @@ namespace Mi.Decompiler.Tests
 		
 		static void TestFile(string fileName)
 		{
-            string code = SampleInputAssemblyFiles.ResourceManager.GetString(fileName);
-            AssemblyDefinition assembly = CompiledAssembly.Assembly;
+            string code = SampleInputFiles.ResourceManager.GetString(fileName);
+            AssemblyDefinition assembly = SampleInputLoader.LoadAssembly(fileName);
 			AstBuilder decompiler = new AstBuilder(new DecompilerContext(assembly.MainModule));
-            var type = assembly.MainModule.Types.First(t => t.Name == fileName);
-			decompiler.AddType(type);
+			decompiler.AddAssembly(assembly);
 			new Helpers.RemoveCompilerAttribute().Run(decompiler.CompilationUnit);
 			StringWriter output = new StringWriter();
 			decompiler.GenerateCode(new PlainTextOutput(output));
