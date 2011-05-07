@@ -91,6 +91,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Assemblies\EventTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CodeSampleFileParser.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -240,6 +243,24 @@
     <None Include="SampleInput\CustomAttributes\bin\Debug\S_CustomAttributeSamples.pdb" />
     <None Include="SampleInput\bin\Debug\Generics.pdb" />
     <None Include="SampleInput\bin\Debug\Generics.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\CustomAttributes.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\CustomAttributes.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Events.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Events.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Fields.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Fields.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Generics.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Generics.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Interfaces.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Interfaces.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Layouts.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Layouts.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Methods.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Methods.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\NestedTypes.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\NestedTypes.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Properties.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Properties.pdb" />
     <Content Include="StackTests\StackTests.exe" />
   </ItemGroup>
   <ItemGroup>

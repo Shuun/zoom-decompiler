@@ -229,23 +229,47 @@
   <data name="CheckedUnchecked_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\CheckedUnchecked.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
   </data>
+  <data name="CustomAttributesAsm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\CustomAttributes.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="CustomAttributesAsm_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\CustomAttributes.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
   <data name="CustomAttributes_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Assemblies\CustomAttributes.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
   </data>
   <data name="DelegateConstruction_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\DelegateConstruction.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
   </data>
+  <data name="Events" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\Events.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
   <data name="Events_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Assemblies\Events.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
+  </data>
+  <data name="Events_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\Events.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
   <data name="ExceptionHandling_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\ExceptionHandling.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
   </data>
+  <data name="Fields" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\Fields.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
   <data name="Fields_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Assemblies\Fields.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
   </data>
+  <data name="Fields_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\Fields.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
   <data name="Generics" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\bin\Debug\Generics.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="GenericsAsm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\Generics.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="GenericsAsm_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\Generics.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
   <data name="Generics_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Assemblies\Generics.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
@@ -259,29 +283,59 @@
   <data name="InitializerTests_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\InitializerTests.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
   </data>
+  <data name="Interfaces" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\Interfaces.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
   <data name="Interfaces_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Assemblies\Interfaces.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
+  </data>
+  <data name="Interfaces_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\Interfaces.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="Layouts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\Layouts.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
   <data name="Layouts_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Assemblies\Layouts.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
   </data>
+  <data name="Layouts_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\Layouts.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
   <data name="Loops_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Loops.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="Methods" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\Methods.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
   <data name="Methods_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Assemblies\Methods.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
   </data>
+  <data name="Methods_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\Methods.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
   <data name="MultidimensionalArray_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\MultidimensionalArray.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
   </data>
+  <data name="NestedTypes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\NestedTypes.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
   <data name="NestedTypes_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Assemblies\NestedTypes.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
+  </data>
+  <data name="NestedTypes_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\NestedTypes.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="Properties" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\Properties.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
   <data name="PropertiesAndEvents_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\PropertiesAndEvents.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
   </data>
   <data name="Properties_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Assemblies\Properties.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
+  </data>
+  <data name="Properties_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\Properties.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
   <data name="QueryExpressions_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\QueryExpressions.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>

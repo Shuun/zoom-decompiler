@@ -4,15 +4,18 @@ using Mi.Assemblies;
 using Mi.Assemblies.Metadata;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Mi.Decompiler.Tests;
 
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class EventTests : BaseTestFixture {
+	public class EventTests {
 
-		[TestCSharp ("Events.cs")]
-		public void AbstractMethod (ModuleDefinition module)
+		[TestMethod]
+		public void TestCSharp ()
 		{
+            var module = SampleInputLoader.LoadAssembly("Events").MainModule;
+
 			var type = module.GetType ("Foo");
 
 			Assert.IsTrue (type.HasEvents);
@@ -34,9 +37,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (MethodSemanticsAttributes.RemoveOn, @event.RemoveMethod.SemanticsAttributes);
 		}
 
-		[TestIL ("others.il")]
-		public void OtherMethod (ModuleDefinition module)
+		[TestMethod]
+		public void OtherMethod ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("Others").MainModule;
 			var type = module.GetType ("Others");
 
 			Assert.IsTrue (type.HasEvents);
