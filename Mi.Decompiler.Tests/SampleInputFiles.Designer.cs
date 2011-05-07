@@ -356,6 +356,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] Generics {
+            get {
+                object obj = ResourceManager.GetObject("Generics", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to using System;
         ///using System.Collections.Generic;
@@ -398,6 +405,13 @@ namespace Mi.Decompiler.Tests {
         internal static string Generics_cs {
             get {
                 return ResourceManager.GetString("Generics_cs", resourceCulture);
+            }
+        }
+        
+        internal static byte[] Generics_pdb {
+            get {
+                object obj = ResourceManager.GetObject("Generics_pdb", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
