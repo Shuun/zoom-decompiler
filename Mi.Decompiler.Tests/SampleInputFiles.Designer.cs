@@ -190,6 +190,20 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] CustomAttributesAsm {
+            get {
+                object obj = ResourceManager.GetObject("CustomAttributesAsm", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] CustomAttributesAsm_pdb {
+            get {
+                object obj = ResourceManager.GetObject("CustomAttributesAsm_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] DelegateConstruction {
             get {
                 object obj = ResourceManager.GetObject("DelegateConstruction", resourceCulture);
@@ -234,6 +248,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] Events {
+            get {
+                object obj = ResourceManager.GetObject("Events", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to using System;
         ///
@@ -248,6 +269,13 @@ namespace Mi.Decompiler.Tests {
         internal static string Events_cs {
             get {
                 return ResourceManager.GetString("Events_cs", resourceCulture);
+            }
+        }
+        
+        internal static byte[] Events_pdb {
+            get {
+                object obj = ResourceManager.GetObject("Events_pdb", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -309,6 +337,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] Fields {
+            get {
+                object obj = ResourceManager.GetObject("Fields", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to using System;
         ///using System.Runtime.InteropServices;
@@ -353,6 +388,13 @@ namespace Mi.Decompiler.Tests {
         internal static string Fields_cs {
             get {
                 return ResourceManager.GetString("Fields_cs", resourceCulture);
+            }
+        }
+        
+        internal static byte[] Fields_pdb {
+            get {
+                object obj = ResourceManager.GetObject("Fields_pdb", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -411,6 +453,20 @@ namespace Mi.Decompiler.Tests {
         internal static byte[] Generics_pdb {
             get {
                 object obj = ResourceManager.GetObject("Generics_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] GenericsAsm {
+            get {
+                object obj = ResourceManager.GetObject("GenericsAsm", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] GenericsAsm_pdb {
+            get {
+                object obj = ResourceManager.GetObject("GenericsAsm_pdb", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -527,6 +583,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] Interfaces {
+            get {
+                object obj = ResourceManager.GetObject("Interfaces", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to using System;
         ///
@@ -558,6 +621,20 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] Interfaces_pdb {
+            get {
+                object obj = ResourceManager.GetObject("Interfaces_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] Layouts {
+            get {
+                object obj = ResourceManager.GetObject("Layouts", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to using System;
         ///using System.Runtime.InteropServices;
@@ -580,6 +657,13 @@ namespace Mi.Decompiler.Tests {
         internal static string Layouts_cs {
             get {
                 return ResourceManager.GetString("Layouts_cs", resourceCulture);
+            }
+        }
+        
+        internal static byte[] Layouts_pdb {
+            get {
+                object obj = ResourceManager.GetObject("Layouts_pdb", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -625,6 +709,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] Methods {
+            get {
+                object obj = ResourceManager.GetObject("Methods", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to using System;
         ///using System.Runtime.InteropServices;
@@ -652,6 +743,13 @@ namespace Mi.Decompiler.Tests {
         internal static string Methods_cs {
             get {
                 return ResourceManager.GetString("Methods_cs", resourceCulture);
+            }
+        }
+        
+        internal static byte[] Methods_pdb {
+            get {
+                object obj = ResourceManager.GetObject("Methods_pdb", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -709,6 +807,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] NestedTypes {
+            get {
+                object obj = ResourceManager.GetObject("NestedTypes", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to class Foo {
         ///	class Bar {
@@ -731,6 +836,20 @@ namespace Mi.Decompiler.Tests {
         internal static string NestedTypes_cs {
             get {
                 return ResourceManager.GetString("NestedTypes_cs", resourceCulture);
+            }
+        }
+        
+        internal static byte[] NestedTypes_pdb {
+            get {
+                object obj = ResourceManager.GetObject("NestedTypes_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] Properties {
+            get {
+                object obj = ResourceManager.GetObject("Properties", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -758,6 +877,13 @@ namespace Mi.Decompiler.Tests {
         internal static string Properties_cs {
             get {
                 return ResourceManager.GetString("Properties_cs", resourceCulture);
+            }
+        }
+        
+        internal static byte[] Properties_pdb {
+            get {
+                object obj = ResourceManager.GetObject("Properties_pdb", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
