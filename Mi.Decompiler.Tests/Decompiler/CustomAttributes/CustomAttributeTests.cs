@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ICSharpCode.Decompiler.Tests.CustomAttributes
 {
-	[TestFixture]
+	[TestClass]
 	public class CustomAttributeTests : DecompilerTestBase
 	{
-		[Test]
+		[TestMethod]
 		public void CustomAttributeSamples()
 		{
 			ValidateFileRoundtrip(@"CustomAttributes\S_CustomAttributeSamples.cs");
 		}
 
-		[Test]
+		[TestMethod]
 		public void CustomAttributesMultiTest()
 		{
 			ValidateFileRoundtrip(@"CustomAttributes\S_CustomAttributes.cs");
 		}
 
-		[Test]
+		[TestMethod]
 		public void AssemblyCustomAttributesMultiTest()
 		{
 			ValidateFileRoundtrip(@"CustomAttributes\S_AssemblyCustomAttribute.cs");

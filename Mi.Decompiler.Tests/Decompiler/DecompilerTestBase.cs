@@ -9,7 +9,7 @@ using ICSharpCode.Decompiler.Ast;
 using ICSharpCode.Decompiler.Tests.Helpers;
 using Microsoft.CSharp;
 using Mono.Cecil;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ICSharpCode.Decompiler.Tests
 {
