@@ -12,11 +12,11 @@ using ICSharpCode.Decompiler.Ast;
 using ICSharpCode.Decompiler.Tests.Helpers;
 using Microsoft.CSharp;
 using Mono.Cecil;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ICSharpCode.Decompiler.Tests
 {
-	[TestFixture]
+	[TestClass]
 	public class TestRunner
 	{
 		[Test, Ignore("disambiguating overloads is not yet implemented")]
@@ -43,13 +43,13 @@ namespace ICSharpCode.Decompiler.Tests
 			TestFile(@"..\..\Tests\ExceptionHandling.cs");
 		}
 		
-		[Test]
+		[TestMethod]
 		public void Generics()
 		{
 			TestFile(@"..\..\Tests\Generics.cs");
 		}
 		
-		[Test]
+		[TestMethod]
 		public void IncrementDecrement()
 		{
 			TestFile(@"..\..\Tests\IncrementDecrement.cs");
@@ -61,19 +61,19 @@ namespace ICSharpCode.Decompiler.Tests
 			TestFile(@"..\..\Tests\InitializerTests.cs");
 		}
 		
-		[Test]
+		[TestMethod]
 		public void Loops()
 		{
 			TestFile(@"..\..\Tests\Loops.cs");
 		}
 		
-		[Test]
+		[TestMethod]
 		public void MultidimensionalArray()
 		{
 			TestFile(@"..\..\Tests\MultidimensionalArray.cs");
 		}
 		
-		[Test]
+		[TestMethod]
 		public void PropertiesAndEvents()
 		{
 			TestFile(@"..\..\Tests\PropertiesAndEvents.cs");
@@ -91,7 +91,7 @@ namespace ICSharpCode.Decompiler.Tests
 			TestFile(@"..\..\Tests\Switch.cs");
 		}
 		
-		[Test]
+		[TestMethod]
 		public void UndocumentedExpressions()
 		{
 			TestFile(@"..\..\Tests\UndocumentedExpressions.cs");
@@ -103,7 +103,7 @@ namespace ICSharpCode.Decompiler.Tests
 			TestFile(@"..\..\Tests\UnsafeCode.cs");
 		}
 		
-		[Test]
+		[TestMethod]
 		public void ValueTypes()
 		{
 			TestFile(@"..\..\Tests\ValueTypes.cs");

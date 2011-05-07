@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ICSharpCode.Decompiler.Tests.Types
 {
-	[TestFixture]
+	[TestClass]
 	public class EnumTests : DecompilerTestBase
 	{
-		[Test]
+		[TestMethod]
 		public void EnumSamples()
 		{
 			ValidateFileRoundtrip(@"Types\S_EnumSamples.cs");
