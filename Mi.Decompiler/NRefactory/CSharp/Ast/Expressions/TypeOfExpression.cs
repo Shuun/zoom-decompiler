@@ -25,7 +25,7 @@
 // THE SOFTWARE.
 
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	/// <summary>
 	/// typeof(Type)

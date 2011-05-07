@@ -5,23 +5,38 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using ICSharpCode.Decompiler.Ast;
-using ICSharpCode.Decompiler.Tests.Helpers;
-using Microsoft.CSharp;
-using Mono.Cecil;
+using Mi.Decompiler.Ast;
+using Mi.Decompiler.Tests.Helpers;
+using Mi.Assemblies;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ICSharpCode.Decompiler.Tests
+using SampleInputAssemblyFiles = Mi.Decompiler.Tests.Decompiler.SampleInputAssemblyFiles;
+
+namespace Mi.Decompiler.Tests
 {
 	public abstract class DecompilerTestBase
 	{
 		protected static void ValidateFileRoundtrip(string samplesFileName)
 		{
-			var lines = File.ReadAllLines(Path.Combine(@"..\..\Tests", samplesFileName));
+			var lines = GetFile(samplesFileName);
 			var testCode = RemoveIgnorableLines(lines);
-			var decompiledTestCode = RoundtripCode(testCode);
+			var decompiledTestCode = RoundtripCode(samplesFileName, testCode);
 			CodeAssert.AreEqual(testCode, decompiledTestCode);
 		}
+
+        static IEnumerable<string> GetFile(string samplesFileName)
+        {
+            string text = SampleInputAssemblyFiles.ResourceManager.GetString(samplesFileName);
+            var reader = new StringReader(text);
+            while (true)
+            {
+                string line = reader.ReadLine();
+                if (line == null)
+                    yield break;
+                else
+                    yield return line;
+            }
+        }
 
 		static string RemoveIgnorableLines(IEnumerable<string> lines)
 		{
@@ -33,43 +48,18 @@ namespace ICSharpCode.Decompiler.Tests
 		/// </summary>
 		/// <param name="code">The source code to copile.</param>
 		/// <returns>The decompilation result of compiled source code.</returns>
-		static string RoundtripCode(string code)
+		static string RoundtripCode(string testClassName, string code)
 		{
 			DecompilerSettings settings = new DecompilerSettings();
 			settings.FullyQualifyAmbiguousTypeNames = false;
-			AssemblyDefinition assembly = Compile(code);
+			AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(new MemoryStream(SampleInputAssemblyFiles.SampleInputAssembly));
+            var testClass = assembly.MainModule.Types.First(c => c.Name == testClassName); 
 			AstBuilder decompiler = new AstBuilder(new DecompilerContext(assembly.MainModule) { Settings = settings });
-			decompiler.AddAssembly(assembly);
+			decompiler.AddType(testClass);
 			new Helpers.RemoveCompilerAttribute().Run(decompiler.CompilationUnit);
 			StringWriter output = new StringWriter();
 			decompiler.GenerateCode(new PlainTextOutput(output));
 			return output.ToString();
-		}
-
-		static AssemblyDefinition Compile(string code)
-		{
-			CSharpCodeProvider provider = new CSharpCodeProvider(new Dictionary<string, string> { { "CompilerVersion", "v4.0" } });
-			CompilerParameters options = new CompilerParameters();
-			options.ReferencedAssemblies.Add("System.Core.dll");
-			CompilerResults results = provider.CompileAssemblyFromSource(options, code);
-			try
-			{
-				if (results.Errors.Count > 0)
-				{
-					StringBuilder b = new StringBuilder("Compiler error:");
-					foreach (var error in results.Errors)
-					{
-						b.AppendLine(error.ToString());
-					}
-					throw new Exception(b.ToString());
-				}
-				return AssemblyDefinition.ReadAssembly(results.PathToAssembly);
-			}
-			finally
-			{
-				File.Delete(results.PathToAssembly);
-				results.TempFiles.Delete();
-			}
 		}
 	}
 }

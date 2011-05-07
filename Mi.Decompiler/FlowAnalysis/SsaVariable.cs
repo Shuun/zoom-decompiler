@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.FlowAnalysis
+namespace Mi.Decompiler.FlowAnalysis
 {
 	/// <summary>
 	/// Represents a variable used with the SsaInstruction register-based instructions.

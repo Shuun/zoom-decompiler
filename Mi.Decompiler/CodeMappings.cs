@@ -20,12 +20,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using ICSharpCode.Decompiler.Ast;
-using ICSharpCode.Decompiler.Disassembler;
-using ICSharpCode.Decompiler.ILAst;
+using Mi.Decompiler.Ast;
+using Mi.Decompiler.Disassembler;
+using Mi.Decompiler.ILAst;
 using Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler
+namespace Mi.Decompiler
 {
 	public enum DecompiledLanguages
 	{

@@ -20,7 +20,7 @@ using System;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.Disassembler
+namespace Mi.Decompiler.Disassembler
 {
 	public static class DisassemblerHelpers
 	{

@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 
-namespace ICSharpCode.NRefactory.PatternMatching
+namespace Mi.NRefactory.PatternMatching
 {
 	/// <summary>
 	/// Matches the last entry in the specified named group.

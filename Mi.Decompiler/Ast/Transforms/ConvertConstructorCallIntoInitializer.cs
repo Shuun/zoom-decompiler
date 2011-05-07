@@ -18,11 +18,11 @@
 
 using System;
 using System.Linq;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.PatternMatching;
+using Mi.NRefactory.CSharp;
+using Mi.NRefactory.PatternMatching;
 using Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.Ast.Transforms
 {
 	/// <summary>
 	/// If the first element of a constructor is a chained constructor call, convert it into a constructor initializer.

@@ -23,7 +23,7 @@ using System.Linq;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.ILAst
+namespace Mi.Decompiler.ILAst
 {
 	/// <summary>
 	/// Assigns C# types to IL expressions.

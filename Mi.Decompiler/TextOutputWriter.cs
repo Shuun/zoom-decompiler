@@ -20,7 +20,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace ICSharpCode.Decompiler
+namespace Mi.Decompiler
 {
 	public class TextOutputWriter : TextWriter
 	{

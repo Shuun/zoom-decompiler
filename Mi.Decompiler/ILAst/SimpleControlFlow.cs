@@ -23,7 +23,7 @@ using System.Linq;
 
 using Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler.ILAst
+namespace Mi.Decompiler.ILAst
 {
 	public class SimpleControlFlow
 	{

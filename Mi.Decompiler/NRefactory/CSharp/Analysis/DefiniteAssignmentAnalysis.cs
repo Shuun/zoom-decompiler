@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using ICSharpCode.NRefactory.CSharp.Resolver;
-using ICSharpCode.NRefactory.TypeSystem;
-using ICSharpCode.NRefactory.Utils;
+using Mi.NRefactory.CSharp.Resolver;
+using Mi.NRefactory.TypeSystem;
+using Mi.NRefactory.Utils;
 
-namespace ICSharpCode.NRefactory.CSharp.Analysis
+namespace Mi.NRefactory.CSharp.Analysis
 {
 	/// <summary>
 	/// Represents the definite assignment status of a variable at a specific location.

@@ -23,7 +23,7 @@ using System.Linq;
 using System.Threading;
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.FlowAnalysis
+namespace Mi.Decompiler.FlowAnalysis
 {
 	/// <summary>
 	/// Detects the structure of the control flow (exception blocks and loops).

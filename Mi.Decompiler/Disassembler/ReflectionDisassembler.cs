@@ -23,7 +23,7 @@ using System.Threading;
 using Mi.Assemblies;
 using Mi.Collections.Generic;
 
-namespace ICSharpCode.Decompiler.Disassembler
+namespace Mi.Decompiler.Disassembler
 {
 	/// <summary>
 	/// Disassembles type and member definitions.

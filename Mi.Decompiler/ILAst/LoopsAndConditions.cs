@@ -20,9 +20,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using ICSharpCode.Decompiler.FlowAnalysis;
+using Mi.Decompiler.FlowAnalysis;
 
-namespace ICSharpCode.Decompiler.ILAst
+namespace Mi.Decompiler.ILAst
 {
 	/// <summary>
 	/// Description of LoopsAndConditions.

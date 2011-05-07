@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 
-namespace ICSharpCode.NRefactory.TypeSystem
+namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
 	/// Provides XML documentation for members.

@@ -18,10 +18,10 @@
 
 using System;
 using System.Linq;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.PatternMatching;
+using Mi.NRefactory.CSharp;
+using Mi.NRefactory.PatternMatching;
 
-namespace ICSharpCode.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.Ast.Transforms
 {
 	/// <summary>
 	/// Combines query expressions and removes transparent identifiers.

@@ -20,11 +20,11 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
-using ICSharpCode.Decompiler.Disassembler;
+using Mi.Decompiler.Disassembler;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.FlowAnalysis
+namespace Mi.Decompiler.FlowAnalysis
 {
 	public enum SpecialOpCode
 	{

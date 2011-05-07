@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-using ICSharpCode.NRefactory.TypeSystem;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using Mi.NRefactory.TypeSystem;
+using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace ICSharpCode.NRefactory.CSharp.Analysis
+namespace Mi.NRefactory.CSharp.Analysis
 {
 	/// <summary>
 	/// Resolve context represents the minimal mscorlib required for evaluating constants.
@@ -95,7 +95,7 @@ namespace ICSharpCode.NRefactory.CSharp.Analysis
 			get { return assemblyAttributes; }
 		}
 		
-		ICSharpCode.NRefactory.Utils.CacheManager ITypeResolveContext.CacheManager {
+		Mi.NRefactory.Utils.CacheManager ITypeResolveContext.CacheManager {
 			get {
 				// We don't support caching
 				return null;

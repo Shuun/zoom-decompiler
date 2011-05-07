@@ -18,10 +18,10 @@
 
 using System;
 using System.Linq;
-using ICSharpCode.NRefactory.CSharp;
+using Mi.NRefactory.CSharp;
 using Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.Ast.Transforms
 {
 	/// <summary>
 	/// Converts extension method calls into infix syntax.

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace ICSharpCode.NRefactory.PatternMatching
+namespace Mi.NRefactory.PatternMatching
 {
 	/// <summary>
 	/// AST visitor that works for patterns.

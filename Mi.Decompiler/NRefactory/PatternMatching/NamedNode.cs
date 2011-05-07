@@ -3,7 +3,7 @@
 
 using System;
 
-namespace ICSharpCode.NRefactory.PatternMatching
+namespace Mi.NRefactory.PatternMatching
 {
 	/// <summary>
 	/// Represents a named node within a pattern.

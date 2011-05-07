@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using ICSharpCode.Decompiler;
-using ICSharpCode.Decompiler.ILAst;
-using ICSharpCode.NRefactory.CSharp;
+using Mi.Decompiler;
+using Mi.Decompiler.ILAst;
+using Mi.NRefactory.CSharp;
 using Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler.Ast
+namespace Mi.Decompiler.Ast
 {
 	public class TextOutputFormatter : IOutputFormatter
 	{

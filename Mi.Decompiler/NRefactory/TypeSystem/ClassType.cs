@@ -3,7 +3,7 @@
 
 using System;
 
-namespace ICSharpCode.NRefactory.TypeSystem
+namespace Mi.NRefactory.TypeSystem
 {
 	public enum ClassType : byte
 	{

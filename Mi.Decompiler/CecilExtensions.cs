@@ -22,7 +22,7 @@ using System.Linq;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler
+namespace Mi.Decompiler
 {
 	/// <summary>
 	/// Cecil helper methods.

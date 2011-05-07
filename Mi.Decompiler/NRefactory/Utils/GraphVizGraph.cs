@@ -8,7 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace ICSharpCode.NRefactory.Utils
+namespace Mi.NRefactory.Utils
 {
 	/// <summary>
 	/// GraphViz graph.

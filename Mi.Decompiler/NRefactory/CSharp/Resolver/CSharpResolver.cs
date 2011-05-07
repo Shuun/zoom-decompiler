@@ -8,10 +8,10 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using ICSharpCode.NRefactory.TypeSystem;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using Mi.NRefactory.TypeSystem;
+using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace ICSharpCode.NRefactory.CSharp.Resolver
+namespace Mi.NRefactory.CSharp.Resolver
 {
 	/// <summary>
 	/// Contains the main resolver logic.

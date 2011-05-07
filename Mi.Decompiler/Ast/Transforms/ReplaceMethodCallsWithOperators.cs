@@ -19,12 +19,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ICSharpCode.NRefactory.PatternMatching;
+using Mi.NRefactory.PatternMatching;
 using Mi.Assemblies;
-using Ast = ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.CSharp;
+using Ast = Mi.NRefactory.CSharp;
+using Mi.NRefactory.CSharp;
 
-namespace ICSharpCode.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.Ast.Transforms
 {
 	/// <summary>
 	/// Replaces method calls with the appropriate operator expressions.

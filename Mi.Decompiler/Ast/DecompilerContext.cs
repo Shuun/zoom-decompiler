@@ -4,12 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using ICSharpCode.Decompiler.Ast;
-using ICSharpCode.NRefactory.TypeSystem;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using Mi.Decompiler.Ast;
+using Mi.NRefactory.TypeSystem;
+using Mi.NRefactory.TypeSystem.Implementation;
 using Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler
+namespace Mi.Decompiler
 {
 	public class DecompilerContext
 	{

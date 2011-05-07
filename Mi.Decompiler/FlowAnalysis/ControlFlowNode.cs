@@ -22,10 +22,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-using ICSharpCode.Decompiler.Disassembler;
+using Mi.Decompiler.Disassembler;
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.FlowAnalysis
+namespace Mi.Decompiler.FlowAnalysis
 {
 	/// <summary>
 	/// Type of the control flow node

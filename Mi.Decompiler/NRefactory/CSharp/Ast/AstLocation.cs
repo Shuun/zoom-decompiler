@@ -28,7 +28,7 @@
 
 using System;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	public struct AstLocation : IComparable<AstLocation>, IEquatable<AstLocation>
 	{

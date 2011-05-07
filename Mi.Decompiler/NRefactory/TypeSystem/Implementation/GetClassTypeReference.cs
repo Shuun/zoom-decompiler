@@ -2,10 +2,10 @@
 // This code is distributed under MIT X11 license (for details please see \doc\license.txt)
 
 using System;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.Utils;
+using Mi.NRefactory.CSharp;
+using Mi.NRefactory.Utils;
 
-namespace ICSharpCode.NRefactory.TypeSystem.Implementation
+namespace Mi.NRefactory.TypeSystem.Implementation
 {
 	/// <summary>
 	/// Type Reference used when the fully qualified type name is known.

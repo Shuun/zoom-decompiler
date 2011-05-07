@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using ICSharpCode.NRefactory.TypeSystem;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using Mi.NRefactory.TypeSystem;
+using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace ICSharpCode.NRefactory.CSharp.Resolver
+namespace Mi.NRefactory.CSharp.Resolver
 {
 	/// <summary>
 	/// C# overload resolution (C# 4.0 spec: §7.5).

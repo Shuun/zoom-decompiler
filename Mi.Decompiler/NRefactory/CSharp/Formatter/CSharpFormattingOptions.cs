@@ -28,7 +28,7 @@ using System;
 using System.Reflection;
 using System.Linq;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	public enum BraceStyle
 	{

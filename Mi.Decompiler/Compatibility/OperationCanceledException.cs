@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ICSharpCode
+namespace Mi
 {
     public class OperationCanceledException : Exception
     {

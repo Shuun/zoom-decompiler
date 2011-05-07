@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ICSharpCode.NRefactory.Utils
+namespace Mi.NRefactory.Utils
 {
 	/// <summary>
 	/// This class is used to prevent stack overflows by representing a 'busy' flag

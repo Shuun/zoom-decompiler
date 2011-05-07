@@ -19,7 +19,7 @@
 using System;
 using System.ComponentModel;
 
-namespace ICSharpCode.Decompiler
+namespace Mi.Decompiler
 {
 	/// <summary>
 	/// Settings for the decompiler.

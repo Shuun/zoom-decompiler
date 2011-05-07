@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ICSharpCode.Decompiler.Tests.Types
+namespace Mi.Decompiler.Tests.Types
 {
 	[TestClass]
 	public class EnumTests : DecompilerTestBase

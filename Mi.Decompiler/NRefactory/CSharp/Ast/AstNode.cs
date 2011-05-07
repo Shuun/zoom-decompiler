@@ -31,7 +31,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	public abstract class AstNode : PatternMatching.INode
 	{

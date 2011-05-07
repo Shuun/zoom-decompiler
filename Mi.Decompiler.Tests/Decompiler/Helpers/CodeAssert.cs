@@ -6,7 +6,7 @@ using System.Text;
 using DiffLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ICSharpCode.Decompiler.Tests.Helpers
+namespace Mi.Decompiler.Tests.Helpers
 {
 	public class CodeAssert
 	{

@@ -6,9 +6,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using ICSharpCode.NRefactory.PatternMatching;
+using Mi.NRefactory.PatternMatching;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	/// <summary>
 	/// Represents the children of an AstNode that have a specific role.

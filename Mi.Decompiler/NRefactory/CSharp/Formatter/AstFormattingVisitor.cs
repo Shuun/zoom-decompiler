@@ -27,9 +27,9 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using ICSharpCode.NRefactory.TypeSystem;
+using Mi.NRefactory.TypeSystem;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	public class AstFormattingVisitor : DepthFirstAstVisitor<object, object>
 	{

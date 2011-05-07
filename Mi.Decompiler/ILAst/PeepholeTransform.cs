@@ -21,10 +21,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-using ICSharpCode.NRefactory.Utils;
+using Mi.NRefactory.Utils;
 using Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler.ILAst
+namespace Mi.Decompiler.ILAst
 {
 	public partial class ILAstOptimizer
 	{

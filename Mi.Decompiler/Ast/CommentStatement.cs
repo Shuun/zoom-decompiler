@@ -3,10 +3,10 @@
 
 using System;
 using System.Linq;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.PatternMatching;
+using Mi.NRefactory.CSharp;
+using Mi.NRefactory.PatternMatching;
 
-namespace ICSharpCode.Decompiler.Ast
+namespace Mi.Decompiler.Ast
 {
 	/// <summary>
 	/// Allows storing comments inside IEnumerable{Statement}. Used in the AstMethodBuilder.

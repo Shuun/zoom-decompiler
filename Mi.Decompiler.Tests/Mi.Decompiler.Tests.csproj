@@ -91,6 +91,47 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Decompiler\CodeSampleFileParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Decompiler\CustomAttributes.code.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Decompiler\CustomAttributes\CustomAttributeTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Decompiler\DecompilerTestBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Decompiler\Helpers\CodeAssert.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Decompiler\Helpers\RemoveCompilerAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Decompiler\SampleInputAssemblyFiles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SampleInputAssemblyFiles.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Decompiler\TestRunner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Decompiler\Types\EnumTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Decompiler\Types\S_EnumSamples.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Decompiler\Types\S_TypeDeclarations.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Decompiler\Types\S_TypeMemberDeclarations.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Decompiler\Types\TypeTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DiffLib\AlignedDiff.cs" />
     <Compile Include="DiffLib\AlignedDiffChange.cs" />
     <Compile Include="DiffLib\ChangeType.cs" />
@@ -106,6 +147,25 @@
     <Compile Include="DiffLib\StringSimilarityFilterPredicate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Empty.cs" />
+    <None Include="SampleInputAssembly\CustomAttributes\S_CustomAttributeSamples.cs" />
+    <None Include="SampleInputAssembly\CustomAttributes\S_CustomAttributes.cs" />
+    <None Include="SampleInputAssembly\CustomAttributes\S_AssemblyCustomAttribute.cs" />
+    <None Include="SampleInputAssembly\YieldReturn.cs" />
+    <None Include="SampleInputAssembly\ValueTypes.cs" />
+    <None Include="SampleInputAssembly\UnsafeCode.cs" />
+    <None Include="SampleInputAssembly\UndocumentedExpressions.cs" />
+    <None Include="SampleInputAssembly\Switch.cs" />
+    <None Include="SampleInputAssembly\QueryExpressions.cs" />
+    <None Include="SampleInputAssembly\PropertiesAndEvents.cs" />
+    <None Include="SampleInputAssembly\MultidimensionalArray.cs" />
+    <None Include="SampleInputAssembly\Loops.cs" />
+    <None Include="SampleInputAssembly\InitializerTests.cs" />
+    <None Include="SampleInputAssembly\IncrementDecrement.cs" />
+    <None Include="SampleInputAssembly\Generics.cs" />
+    <None Include="SampleInputAssembly\ExceptionHandling.cs" />
+    <None Include="SampleInputAssembly\DelegateConstruction.cs" />
+    <None Include="SampleInputAssembly\CheckedUnchecked.cs" />
+    <None Include="SampleInputAssembly\CallOverloadedMethod.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -114,6 +174,8 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Decompiler\BooleanConsumedAsInteger.il" />
+    <None Include="Decompiler\StackTests\StackTests.il" />
     <None Include="DiffLib\LICENSE.markdown" />
     <None Include="DiffLib\README.markdown" />
     <None Include="DiffLib\SIGNING.markdown" />
@@ -124,6 +186,16 @@
       <Project>{984CC812-9470-4A13-AFF9-CC44068D666C}</Project>
       <Name>Mi.Decompiler</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Decompiler\StackTests\StackTests.exe" />
+    <None Include="SampleInputAssembly\bin\Debug\SampleInputAssembly.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Decompiler\SampleInputAssemblyFiles.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SampleInputAssemblyFiles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <Import Condition="$(SilverlightVersion)=='v3.0'" Project="$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SilverlightToolkit\Tools\v3.0)Microsoft.Silverlight.Toolkit.Build.targets" />

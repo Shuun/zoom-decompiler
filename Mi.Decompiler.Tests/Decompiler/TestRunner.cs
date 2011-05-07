@@ -8,145 +8,133 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using DiffLib;
-using ICSharpCode.Decompiler.Ast;
-using ICSharpCode.Decompiler.Tests.Helpers;
-using Microsoft.CSharp;
-using Mono.Cecil;
+using Mi.Decompiler.Ast;
+using Mi.Decompiler.Tests.Helpers;
+using Mi.Assemblies;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ICSharpCode.Decompiler.Tests
+using SampleInputAssemblyFiles = Mi.Decompiler.Tests.Decompiler.SampleInputAssemblyFiles;
+
+namespace Mi.Decompiler.Tests
 {
 	[TestClass]
 	public class TestRunner
 	{
-		[Test, Ignore("disambiguating overloads is not yet implemented")]
+        // disambiguating overloads is not yet implemented
+		[TestMethod]
 		public void CallOverloadedMethod()
 		{
-			TestFile(@"..\..\Tests\CallOverloadedMethod.cs");
+			TestFile(@"CallOverloadedMethod");
 		}
 		
-		[Test, Ignore("unncessary primitive casts")]
+        // unncessary primitive casts
+		[TestMethod]
 		public void CheckedUnchecked()
 		{
-			TestFile(@"..\..\Tests\CheckedUnchecked.cs");
+			TestFile(@"CheckedUnchecked");
 		}
 		
-		[Test, Ignore("Missing cast on null")]
+        // Missing cast on null
+		[TestMethod]
 		public void DelegateConstruction()
 		{
-			TestFile(@"..\..\Tests\DelegateConstruction.cs");
+			TestFile(@"DelegateConstruction");
 		}
 		
-		[Test, Ignore("arg-Variables in catch clauses")]
+        // arg-Variables in catch clauses
+		[TestMethod]
 		public void ExceptionHandling()
 		{
-			TestFile(@"..\..\Tests\ExceptionHandling.cs");
+			TestFile(@"ExceptionHandling");
 		}
 		
 		[TestMethod]
 		public void Generics()
 		{
-			TestFile(@"..\..\Tests\Generics.cs");
+			TestFile(@"Generics");
 		}
 		
 		[TestMethod]
 		public void IncrementDecrement()
 		{
-			TestFile(@"..\..\Tests\IncrementDecrement.cs");
+			TestFile(@"IncrementDecrement");
 		}
 		
-		[Test, Ignore("Formatting issues (array initializers not on single line)")]
+        // Formatting issues (array initializers not on single line)
+		[TestMethod]
 		public void InitializerTests()
 		{
-			TestFile(@"..\..\Tests\InitializerTests.cs");
+			TestFile(@"InitializerTests");
 		}
 		
 		[TestMethod]
 		public void Loops()
 		{
-			TestFile(@"..\..\Tests\Loops.cs");
+			TestFile(@"Loops");
 		}
 		
 		[TestMethod]
 		public void MultidimensionalArray()
 		{
-			TestFile(@"..\..\Tests\MultidimensionalArray.cs");
+			TestFile(@"MultidimensionalArray");
 		}
 		
 		[TestMethod]
 		public void PropertiesAndEvents()
 		{
-			TestFile(@"..\..\Tests\PropertiesAndEvents.cs");
+			TestFile(@"PropertiesAndEvents");
 		}
 		
-		[Test, Ignore("Formatting differences in anonymous method create expressions")]
+        // Formatting differences in anonymous method create expressions
+		[TestMethod]
 		public void QueryExpressions()
 		{
-			TestFile(@"..\..\Tests\QueryExpressions.cs");
+			TestFile(@"QueryExpressions");
 		}
 		
-		[Test, Ignore("switch transform doesn't recreate the exact original switch")]
+        // switch transform doesn't recreate the exact original switch
+		[TestMethod]
 		public void Switch()
 		{
-			TestFile(@"..\..\Tests\Switch.cs");
+			TestFile(@"Switch");
 		}
 		
 		[TestMethod]
 		public void UndocumentedExpressions()
 		{
-			TestFile(@"..\..\Tests\UndocumentedExpressions.cs");
+			TestFile(@"UndocumentedExpressions");
 		}
 		
-		[Test, Ignore("has incorrect casts to IntPtr")]
+        // has incorrect casts to IntPtr
+		[TestMethod]
 		public void UnsafeCode()
 		{
-			TestFile(@"..\..\Tests\UnsafeCode.cs");
+			TestFile(@"UnsafeCode");
 		}
 		
 		[TestMethod]
 		public void ValueTypes()
 		{
-			TestFile(@"..\..\Tests\ValueTypes.cs");
+			TestFile(@"ValueTypes");
 		}
 		
-		[Test, Ignore("Redundant yield break; not removed")]
+        // Redundant yield break; not removed
+		[TestMethod]
 		public void YieldReturn()
 		{
-			TestFile(@"..\..\Tests\YieldReturn.cs");
+			TestFile(@"YieldReturn");
 		}
 		
 		static void TestFile(string fileName)
 		{
-			string code = File.ReadAllText(fileName);
-			AssemblyDefinition assembly = Compile(code);
+            string code = SampleInputAssemblyFiles.ResourceManager.GetString(fileName);
+            AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(new MemoryStream(SampleInputAssemblyFiles.SampleInputAssembly));
 			AstBuilder decompiler = new AstBuilder(new DecompilerContext(assembly.MainModule));
 			decompiler.AddAssembly(assembly);
 			new Helpers.RemoveCompilerAttribute().Run(decompiler.CompilationUnit);
 			StringWriter output = new StringWriter();
 			decompiler.GenerateCode(new PlainTextOutput(output));
 			CodeAssert.AreEqual(code, output.ToString());
-		}
-
-		static AssemblyDefinition Compile(string code)
-		{
-			CSharpCodeProvider provider = new CSharpCodeProvider(new Dictionary<string, string> { { "CompilerVersion", "v4.0" } });
-			CompilerParameters options = new CompilerParameters();
-			options.CompilerOptions = "/unsafe";
-			options.ReferencedAssemblies.Add("System.Core.dll");
-			CompilerResults results = provider.CompileAssemblyFromSource(options, code);
-			try {
-				if (results.Errors.Count > 0) {
-					StringBuilder b = new StringBuilder("Compiler error:");
-					foreach (var error in results.Errors) {
-						b.AppendLine(error.ToString());
-					}
-					throw new Exception(b.ToString());
-				}
-				return AssemblyDefinition.ReadAssembly(results.PathToAssembly);
-			} finally {
-				File.Delete(results.PathToAssembly);
-				results.TempFiles.Delete();
-			}
 		}
 	}
 }

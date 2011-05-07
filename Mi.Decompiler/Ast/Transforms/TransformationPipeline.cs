@@ -18,9 +18,9 @@
 
 using System;
 using System.Threading;
-using ICSharpCode.NRefactory.CSharp;
+using Mi.NRefactory.CSharp;
 
-namespace ICSharpCode.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.Ast.Transforms
 {
 	public interface IAstTransform
 	{

@@ -22,7 +22,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ICSharpCode.Decompiler.ILAst
+namespace Mi.Decompiler.ILAst
 {
 	public class GotoRemoval
 	{

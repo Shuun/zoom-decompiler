@@ -6,6 +6,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mi.Decompiler", "..\Mi.Decompiler\Mi.Decompiler.csproj", "{984CC812-9470-4A13-AFF9-CC44068D666C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mi.Decompiler.Tests", "..\Mi.Decompiler.Tests\Mi.Decompiler.Tests.csproj", "{74F28499-A66A-49DB-A48D-82C3AD85D6C8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{42FFCFCF-5765-4A16-84A3-84F0CA5E8061} = {42FFCFCF-5765-4A16-84A3-84F0CA5E8061}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleInputAssembly", "..\Mi.Decompiler.Tests\SampleInputAssembly\SampleInputAssembly.csproj", "{42FFCFCF-5765-4A16-84A3-84F0CA5E8061}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +30,10 @@ Global
 		{74F28499-A66A-49DB-A48D-82C3AD85D6C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74F28499-A66A-49DB-A48D-82C3AD85D6C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74F28499-A66A-49DB-A48D-82C3AD85D6C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42FFCFCF-5765-4A16-84A3-84F0CA5E8061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42FFCFCF-5765-4A16-84A3-84F0CA5E8061}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42FFCFCF-5765-4A16-84A3-84F0CA5E8061}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42FFCFCF-5765-4A16-84A3-84F0CA5E8061}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

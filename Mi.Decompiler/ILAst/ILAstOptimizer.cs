@@ -20,12 +20,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using ICSharpCode.Decompiler.FlowAnalysis;
-using ICSharpCode.NRefactory.Utils;
+using Mi.Decompiler.FlowAnalysis;
+using Mi.NRefactory.Utils;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.ILAst
+namespace Mi.Decompiler.ILAst
 {
 	public enum ILAstOptimizationStep
 	{

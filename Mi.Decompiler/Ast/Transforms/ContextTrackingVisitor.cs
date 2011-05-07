@@ -18,10 +18,10 @@
 
 using System;
 using System.Diagnostics;
-using ICSharpCode.NRefactory.CSharp;
+using Mi.NRefactory.CSharp;
 using Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.Ast.Transforms
 {
 	/// <summary>
 	/// Base class for AST visitors that need the current type/method context info.
