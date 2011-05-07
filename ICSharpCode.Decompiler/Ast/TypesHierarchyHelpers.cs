@@ -420,10 +420,8 @@ namespace ICSharpCode.Decompiler.Ast
 				if (arrayType != null) {
 					if (newElementType == arrayType.ElementType)
 						return arrayType;
-					var newArrayType = new ArrayType(newElementType, arrayType.Rank);
-					for (int dimension = 0; dimension < arrayType.Rank; dimension++)
-						newArrayType.Dimensions[dimension] = arrayType.Dimensions[dimension];
-					return newArrayType;
+                    else 
+                        return new ArrayType(newElementType,arrayType.Dimensions);
 				}
 				var byReferenceType = ts as ByReferenceType;
 				if (byReferenceType != null) {

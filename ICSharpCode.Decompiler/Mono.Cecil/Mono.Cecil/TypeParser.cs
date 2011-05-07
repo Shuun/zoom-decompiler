@@ -310,12 +310,7 @@ namespace Mono.Cecil {
 					type = new ArrayType (type);
 					break;
 				default:
-					var array = new ArrayType (type);
-					array.Dimensions.Clear ();
-
-					for (int j = 0; j < specs [i]; j++)
-						array.Dimensions.Add (new ArrayDimension ());
-
+					var array = new ArrayType (type, specs[i]);
 					type = array;
 					break;
 				}
