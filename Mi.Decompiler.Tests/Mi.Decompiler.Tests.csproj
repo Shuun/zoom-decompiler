@@ -92,7 +92,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Assemblies\Addin.cs" />
-    <Compile Include="Assemblies\AssemblyInfo.cs" />
     <Compile Include="Assemblies\AssemblyTests.cs" />
     <Compile Include="Assemblies\BaseTestFixture.cs" />
     <Compile Include="Assemblies\CompilationService.cs" />

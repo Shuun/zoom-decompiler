@@ -1,3 +1,4 @@
+/*
 using System;
 using System.IO;
 using System.Reflection;
@@ -301,3 +302,4 @@ namespace Mi.Assemblies.Tests {
 		}
 	}
 }
+*/
