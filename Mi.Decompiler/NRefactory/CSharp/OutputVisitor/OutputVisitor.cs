@@ -9,10 +9,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using ICSharpCode.NRefactory.PatternMatching;
-using ICSharpCode.NRefactory.TypeSystem;
+using Mi.NRefactory.PatternMatching;
+using Mi.NRefactory.TypeSystem;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	/// <summary>
 	/// Outputs the AST.

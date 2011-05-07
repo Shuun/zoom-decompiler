@@ -8,7 +8,7 @@ using Mi;
 
 namespace Mi.Scope.Model
 {
-    using ICSharpCode.Decompiler;
+    using Mi.Decompiler;
 
     public sealed class AssemblyNamespaceIsland
     {

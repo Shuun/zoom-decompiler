@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-using ICSharpCode.NRefactory.Utils;
+using Mi.NRefactory.Utils;
 
-namespace ICSharpCode.NRefactory.TypeSystem.Implementation
+namespace Mi.NRefactory.TypeSystem.Implementation
 {
 	/// <summary>
 	/// Represents multiple type resolve contexts.

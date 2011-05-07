@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ICSharpCode.NRefactory.TypeSystem;
+using Mi.NRefactory.TypeSystem;
 using Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler.Ast
+namespace Mi.Decompiler.Ast
 {
 	/// <summary>
 	/// ITypeResolveContext implementation that lazily loads types from Cecil.
@@ -127,7 +127,7 @@ namespace ICSharpCode.Decompiler.Ast
 			return null;
 		}
 		
-		ICSharpCode.NRefactory.Utils.CacheManager ITypeResolveContext.CacheManager {
+		Mi.NRefactory.Utils.CacheManager ITypeResolveContext.CacheManager {
 			get {
 				// We don't support caching
 				return null;

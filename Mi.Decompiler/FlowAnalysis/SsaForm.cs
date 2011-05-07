@@ -22,11 +22,11 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 
-using ICSharpCode.NRefactory.Utils;
+using Mi.NRefactory.Utils;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.FlowAnalysis
+namespace Mi.Decompiler.FlowAnalysis
 {
 	/// <summary>
 	/// Represents a graph of SsaBlocks.

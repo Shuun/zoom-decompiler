@@ -27,7 +27,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	/// <summary>
 	/// try TryBlock CatchClauses finally FinallyBlock

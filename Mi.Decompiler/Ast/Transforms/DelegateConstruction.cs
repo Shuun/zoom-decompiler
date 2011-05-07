@@ -21,13 +21,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using ICSharpCode.Decompiler;
-using ICSharpCode.Decompiler.ILAst;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.PatternMatching;
+using Mi.Decompiler;
+using Mi.Decompiler.ILAst;
+using Mi.NRefactory.CSharp;
+using Mi.NRefactory.PatternMatching;
 using Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.Ast.Transforms
 {
 	/// <summary>
 	/// Converts "new Action(obj, ldftn(func))" into "new Action(obj.func)".

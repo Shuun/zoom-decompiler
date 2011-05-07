@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	/// <summary>
 	/// Writes C# code into a TextWriter.

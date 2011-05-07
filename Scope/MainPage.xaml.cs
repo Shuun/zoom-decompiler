@@ -9,8 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using ICSharpCode.Decompiler;
-using ICSharpCode.Decompiler.Ast;
+using Mi.Decompiler;
+using Mi.Decompiler.Ast;
 using Mi.Assemblies;
 using System.IO;
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ICSharpCode.Decompiler.Tests.CustomAttributes
+namespace Mi.Decompiler.Tests.CustomAttributes
 {
 	[TestClass]
 	public class CustomAttributeTests : DecompilerTestBase
@@ -12,19 +12,19 @@ namespace ICSharpCode.Decompiler.Tests.CustomAttributes
 		[TestMethod]
 		public void CustomAttributeSamples()
 		{
-			ValidateFileRoundtrip(@"CustomAttributes\S_CustomAttributeSamples.cs");
+			ValidateFileRoundtrip(@"S_CustomAttributeSamples");
 		}
 
 		[TestMethod]
 		public void CustomAttributesMultiTest()
 		{
-			ValidateFileRoundtrip(@"CustomAttributes\S_CustomAttributes.cs");
+			ValidateFileRoundtrip(@"S_CustomAttributes");
 		}
 
 		[TestMethod]
 		public void AssemblyCustomAttributesMultiTest()
 		{
-			ValidateFileRoundtrip(@"CustomAttributes\S_AssemblyCustomAttribute.cs");
+			ValidateFileRoundtrip(@"S_AssemblyCustomAttribute");
 		}
 	}
 }

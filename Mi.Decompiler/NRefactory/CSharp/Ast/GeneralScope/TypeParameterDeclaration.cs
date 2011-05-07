@@ -2,9 +2,9 @@
 // This code is distributed under MIT X11 license (for details please see \doc\license.txt)
 
 using System;
-using ICSharpCode.NRefactory.TypeSystem;
+using Mi.NRefactory.TypeSystem;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	/// <summary>
 	/// [in|out] Name

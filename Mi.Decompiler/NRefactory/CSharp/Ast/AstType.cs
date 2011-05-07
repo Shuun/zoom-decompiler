@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	/// <summary>
 	/// A type reference in the C# AST.

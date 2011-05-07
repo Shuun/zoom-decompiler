@@ -22,14 +22,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using ICSharpCode.Decompiler;
-using ICSharpCode.Decompiler.Disassembler;
-using ICSharpCode.NRefactory.Utils;
+using Mi.Decompiler;
+using Mi.Decompiler.Disassembler;
+using Mi.NRefactory.Utils;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 using Cecil = Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler.ILAst
+namespace Mi.Decompiler.ILAst
 {
 	public abstract class ILNode
 	{

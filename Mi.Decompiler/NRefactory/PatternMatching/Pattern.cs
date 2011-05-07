@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
-namespace ICSharpCode.NRefactory.PatternMatching
+namespace Mi.NRefactory.PatternMatching
 {
 	/// <summary>
 	/// Base class for all patterns.

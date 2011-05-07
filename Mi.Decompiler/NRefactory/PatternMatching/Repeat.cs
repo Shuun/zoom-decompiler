@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace ICSharpCode.NRefactory.PatternMatching
+namespace Mi.NRefactory.PatternMatching
 {
 	/// <summary>
 	/// Represents an optional node.

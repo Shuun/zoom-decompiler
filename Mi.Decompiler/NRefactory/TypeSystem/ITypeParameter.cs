@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using ICSharpCode.NRefactory.TypeSystem;
+using Mi.NRefactory.TypeSystem;
 
-namespace ICSharpCode.NRefactory.TypeSystem
+namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
 	/// Type parameter of a generic class/method.

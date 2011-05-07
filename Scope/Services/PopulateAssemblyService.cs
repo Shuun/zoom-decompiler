@@ -6,7 +6,7 @@ using System.Windows;
 
 using Mi.Assemblies;
 
-using ICSharpCode.Decompiler;
+using Mi.Decompiler;
 
 namespace Mi.Scope.Services
 {

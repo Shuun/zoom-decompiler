@@ -26,9 +26,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using ICSharpCode.NRefactory.TypeSystem;
+using Mi.NRefactory.TypeSystem;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	/// <summary>
 	/// class Name&lt;TypeParameters&gt; : BaseTypes where Constraints;

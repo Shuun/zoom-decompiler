@@ -3,7 +3,7 @@
 
 using System;
 
-namespace ICSharpCode.NRefactory.CSharp.Resolver
+namespace Mi.NRefactory.CSharp.Resolver
 {
 	/// <summary>
 	/// Allows controlling which nodes are resolved by the resolve visitor.

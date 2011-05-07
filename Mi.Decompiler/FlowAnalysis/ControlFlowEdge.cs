@@ -18,7 +18,7 @@
 
 using System;
 
-namespace ICSharpCode.Decompiler.FlowAnalysis
+namespace Mi.Decompiler.FlowAnalysis
 {
 	/// <summary>
 	/// Describes the type of a control flow egde.

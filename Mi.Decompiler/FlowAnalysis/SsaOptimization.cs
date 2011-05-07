@@ -22,7 +22,7 @@ using System.Diagnostics;
 
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.FlowAnalysis
+namespace Mi.Decompiler.FlowAnalysis
 {
 	/// <summary>
 	/// Contains some very simple optimizations that work on the SSA form.

@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace ICSharpCode.Decompiler.FlowAnalysis
+namespace Mi.Decompiler.FlowAnalysis
 {
 	/// <summary>
 	/// A block in a control flow graph; with instructions represented by "SsaInstructions" (instructions use variables, no evaluation stack).

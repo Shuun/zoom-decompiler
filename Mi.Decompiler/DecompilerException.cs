@@ -20,7 +20,7 @@ using System;
 using System.Runtime.Serialization;
 using Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler
+namespace Mi.Decompiler
 {
 	/// <summary>
 	/// Desctiption of DecompilerException.

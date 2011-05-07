@@ -8,19 +8,19 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-using ICSharpCode.Decompiler;
-using ICSharpCode.Decompiler.Ast.Transforms;
-using ICSharpCode.Decompiler.ILAst;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.Utils;
+using Mi.Decompiler;
+using Mi.Decompiler.Ast.Transforms;
+using Mi.Decompiler.ILAst;
+using Mi.NRefactory.CSharp;
+using Mi.NRefactory.Utils;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.Ast
+namespace Mi.Decompiler.Ast
 {
-	using Ast = ICSharpCode.NRefactory.CSharp;
-	using ClassType = ICSharpCode.NRefactory.TypeSystem.ClassType;
-	using VarianceModifier = ICSharpCode.NRefactory.TypeSystem.VarianceModifier;
+	using Ast = Mi.NRefactory.CSharp;
+	using ClassType = Mi.NRefactory.TypeSystem.ClassType;
+	using VarianceModifier = Mi.NRefactory.TypeSystem.VarianceModifier;
 	
 	[Flags]
 	public enum ConvertTypeOptions
@@ -370,7 +370,7 @@ namespace ICSharpCode.Decompiler.Ast
 				return new SimpleType(type.Name);
 			} else if (type.IsNested) {
 				AstType typeRef = ConvertType(type.DeclaringType, typeAttributes, ref typeIndex, options & ~ConvertTypeOptions.IncludeTypeParameterDefinitions);
-				string namepart = ICSharpCode.NRefactory.TypeSystem.ReflectionHelper.SplitTypeParameterCountFromReflectionName(type.Name);
+				string namepart = Mi.NRefactory.TypeSystem.ReflectionHelper.SplitTypeParameterCountFromReflectionName(type.Name);
 				MemberType memberType = new MemberType { Target = typeRef, MemberName = namepart };
 				memberType.AddAnnotation(type);
 				if ((options & ConvertTypeOptions.IncludeTypeParameterDefinitions) == ConvertTypeOptions.IncludeTypeParameterDefinitions) {
@@ -423,7 +423,7 @@ namespace ICSharpCode.Decompiler.Ast
 						}
 					}
 					
-					name = ICSharpCode.NRefactory.TypeSystem.ReflectionHelper.SplitTypeParameterCountFromReflectionName(name);
+					name = Mi.NRefactory.TypeSystem.ReflectionHelper.SplitTypeParameterCountFromReflectionName(name);
 					
 					AstType astType;
 					if ((options & ConvertTypeOptions.IncludeNamespace) == ConvertTypeOptions.IncludeNamespace && ns.Length > 0) {
@@ -468,7 +468,7 @@ namespace ICSharpCode.Decompiler.Ast
 				TypeReference type = mt.Annotation<TypeReference>();
 				if (type != null) {
 					int typeParameterCount;
-					ICSharpCode.NRefactory.TypeSystem.ReflectionHelper.SplitTypeParameterCountFromReflectionName(type.Name, out typeParameterCount);
+					Mi.NRefactory.TypeSystem.ReflectionHelper.SplitTypeParameterCountFromReflectionName(type.Name, out typeParameterCount);
 					if (typeParameterCount > typeArguments.Count)
 						typeParameterCount = typeArguments.Count;
 					mt.TypeArguments.AddRange(typeArguments.GetRange(typeArguments.Count - typeParameterCount, typeParameterCount));
@@ -1189,7 +1189,7 @@ namespace ICSharpCode.Decompiler.Ast
 		static void ConvertCustomAttributes(AstNode attributedNode, ICustomAttributeProvider customAttributeProvider, string attributeTarget = null)
 		{
 			if (customAttributeProvider.HasCustomAttributes) {
-				var attributes = new List<ICSharpCode.NRefactory.CSharp.Attribute>();
+				var attributes = new List<Mi.NRefactory.CSharp.Attribute>();
 				foreach (var customAttribute in customAttributeProvider.CustomAttributes) {
 					if (customAttribute.AttributeType.Name == "ExtensionAttribute" && customAttribute.AttributeType.Namespace == "System.Runtime.CompilerServices") {
 						// don't show the ExtensionAttribute (it's converted to the 'this' modifier)
@@ -1200,7 +1200,7 @@ namespace ICSharpCode.Decompiler.Ast
 						continue;
 					}
 					
-					var attribute = new ICSharpCode.NRefactory.CSharp.Attribute();
+					var attribute = new Mi.NRefactory.CSharp.Attribute();
 					attribute.AddAnnotation(customAttribute);
 					attribute.Type = ConvertType(customAttribute.AttributeType);
 					attributes.Add(attribute);

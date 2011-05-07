@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace ICSharpCode.NRefactory.TypeSystem.Implementation
+namespace Mi.NRefactory.TypeSystem.Implementation
 {
 	/// <summary>
 	/// Base class for immutable objects. Provides implementation for IFreezable that reports the

@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ICSharpCode.NRefactory.TypeSystem
+namespace Mi.NRefactory.TypeSystem
 {
 	public sealed class ParameterListComparer : IEqualityComparer<IParameterizedMember>
 	{

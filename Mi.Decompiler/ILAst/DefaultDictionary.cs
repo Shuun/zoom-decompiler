@@ -20,7 +20,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ICSharpCode.Decompiler.ILAst
+namespace Mi.Decompiler.ILAst
 {
 	/// <summary>
 	/// Dictionary with default values.

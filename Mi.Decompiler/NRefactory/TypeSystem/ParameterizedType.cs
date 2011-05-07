@@ -8,9 +8,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace ICSharpCode.NRefactory.TypeSystem
+namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
 	/// ParameterizedType represents an instance of a generic type.

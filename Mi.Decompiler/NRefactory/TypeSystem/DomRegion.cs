@@ -3,9 +3,9 @@
 
 using System;
 using System.Globalization;
-using ICSharpCode.NRefactory.CSharp;
+using Mi.NRefactory.CSharp;
 
-namespace ICSharpCode.NRefactory.TypeSystem
+namespace Mi.NRefactory.TypeSystem
 {
 	public struct DomRegion : IEquatable<DomRegion>
 	{

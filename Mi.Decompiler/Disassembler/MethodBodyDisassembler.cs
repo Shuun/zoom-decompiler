@@ -21,13 +21,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-using ICSharpCode.Decompiler;
-using ICSharpCode.Decompiler.FlowAnalysis;
-using ICSharpCode.Decompiler.ILAst;
+using Mi.Decompiler;
+using Mi.Decompiler.FlowAnalysis;
+using Mi.Decompiler.ILAst;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.Disassembler
+namespace Mi.Decompiler.Disassembler
 {
 	/// <summary>
 	/// Disassembles a method body.

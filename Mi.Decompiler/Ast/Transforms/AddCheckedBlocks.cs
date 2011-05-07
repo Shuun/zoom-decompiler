@@ -18,10 +18,10 @@
 
 using System;
 using System.Linq;
-using ICSharpCode.Decompiler.ILAst;
-using ICSharpCode.NRefactory.CSharp;
+using Mi.Decompiler.ILAst;
+using Mi.NRefactory.CSharp;
 
-namespace ICSharpCode.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.Ast.Transforms
 {
 	/// <summary>
 	/// Add checked/unchecked blocks.

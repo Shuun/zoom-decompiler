@@ -26,7 +26,7 @@
 
 using System;
 
-namespace ICSharpCode.NRefactory
+namespace Mi.NRefactory
 {
 	public interface ITextEditorAdapter
 	{

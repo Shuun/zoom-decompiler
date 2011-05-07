@@ -22,7 +22,7 @@ using System.Diagnostics;
 using System.Linq;
 using Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler.ILAst
+namespace Mi.Decompiler.ILAst
 {
 	/// <summary>
 	/// IL AST transformation that introduces array, object and collection initializers.

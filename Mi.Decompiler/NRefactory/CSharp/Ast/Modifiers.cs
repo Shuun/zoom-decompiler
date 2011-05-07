@@ -28,7 +28,7 @@
 
 using System;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	// For compatibility with old nrefactory - same flags.
 	[Flags]

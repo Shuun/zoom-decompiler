@@ -3,7 +3,7 @@
 
 using System;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	/// <summary>
 	/// Represents an AstType as an expression.

@@ -25,7 +25,7 @@
 // THE SOFTWARE.
 using System.Collections.Generic;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	public class IdentifierExpression : Expression
 	{

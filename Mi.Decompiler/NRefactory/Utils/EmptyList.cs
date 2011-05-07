@@ -4,7 +4,7 @@
 using System;
 using System.Collections.ObjectModel;
 
-namespace ICSharpCode.NRefactory
+namespace Mi.NRefactory
 {
 	static class EmptyList<T>
 	{

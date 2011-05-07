@@ -25,7 +25,7 @@ using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 using Cecil = Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler.ILAst
+namespace Mi.Decompiler.ILAst
 {
 	public class ILAstBuilder
 	{

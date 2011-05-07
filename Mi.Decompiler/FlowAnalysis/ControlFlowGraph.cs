@@ -23,9 +23,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
-using ICSharpCode.NRefactory.Utils;
+using Mi.NRefactory.Utils;
 
-namespace ICSharpCode.Decompiler.FlowAnalysis
+namespace Mi.Decompiler.FlowAnalysis
 {
 	/// <summary>
 	/// Contains the control flow graph.

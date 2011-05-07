@@ -19,7 +19,7 @@
 using System;
 using System.IO;
 
-namespace ICSharpCode.Decompiler
+namespace Mi.Decompiler
 {
 	public sealed class PlainTextOutput : ITextOutput
 	{

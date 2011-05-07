@@ -3,7 +3,7 @@
 
 using System;
 
-namespace ICSharpCode.NRefactory.TypeSystem
+namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
 	/// Base class for the visitor pattern on <see cref="IType"/>.

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	/// <summary>
 	/// Represents the role a node plays within its parent.

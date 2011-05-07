@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 
-namespace ICSharpCode.NRefactory.Utils
+namespace Mi.NRefactory.Utils
 {
 	/// <summary>
 	/// Allows the registration of static "caching types" which can then be used to efficiently retrieve an

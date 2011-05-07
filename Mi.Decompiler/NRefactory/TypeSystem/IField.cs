@@ -4,7 +4,7 @@
 using System;
 using System.Diagnostics.Contracts;
 
-namespace ICSharpCode.NRefactory.TypeSystem
+namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
 	/// Represents a field or constant.

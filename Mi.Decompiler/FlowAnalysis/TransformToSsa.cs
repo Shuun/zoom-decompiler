@@ -25,7 +25,7 @@ using System.Linq;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.FlowAnalysis
+namespace Mi.Decompiler.FlowAnalysis
 {
 	/// <summary>
 	/// Convers a method to static single assignment form.

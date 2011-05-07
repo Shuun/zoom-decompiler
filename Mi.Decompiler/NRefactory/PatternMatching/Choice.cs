@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ICSharpCode.NRefactory.PatternMatching
+namespace Mi.NRefactory.PatternMatching
 {
 	/// <summary>
 	/// Matches one of several alternatives.

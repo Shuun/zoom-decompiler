@@ -1,8 +1,8 @@
 ﻿
 using System;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace ICSharpCode.NRefactory.TypeSystem
+namespace Mi.NRefactory.TypeSystem
 {
 	public class ByReferenceType : TypeWithElementType
 	{

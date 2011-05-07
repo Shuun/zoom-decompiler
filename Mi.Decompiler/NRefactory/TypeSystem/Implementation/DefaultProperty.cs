@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ICSharpCode.NRefactory.TypeSystem.Implementation
+namespace Mi.NRefactory.TypeSystem.Implementation
 {
 	/// <summary>
 	/// Default implementation of <see cref="IProperty"/>.

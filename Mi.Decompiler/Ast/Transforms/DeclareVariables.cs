@@ -21,10 +21,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.CSharp.Analysis;
+using Mi.NRefactory.CSharp;
+using Mi.NRefactory.CSharp.Analysis;
 
-namespace ICSharpCode.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.Ast.Transforms
 {
 	/// <summary>
 	/// Moves variable declarations to improved positions.

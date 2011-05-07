@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ICSharpCode
+namespace Mi
 {
     internal sealed class ReaderWriterLockSlim
     {

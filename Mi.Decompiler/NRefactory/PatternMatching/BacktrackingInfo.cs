@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ICSharpCode.NRefactory.PatternMatching
+namespace Mi.NRefactory.PatternMatching
 {
 	/// <summary>
 	/// Container for the backtracking info.

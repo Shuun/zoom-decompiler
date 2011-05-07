@@ -19,9 +19,9 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
-using ICSharpCode.NRefactory.CSharp;
+using Mi.NRefactory.CSharp;
 
-namespace ICSharpCode.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.Ast.Transforms
 {
 	/// <summary>
 	/// Decompiles query expressions.

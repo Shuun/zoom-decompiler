@@ -8,10 +8,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using Mi.NRefactory.TypeSystem.Implementation;
 using Mi.Assemblies;
 
-namespace ICSharpCode.NRefactory.TypeSystem
+namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
 	/// Allows loading an IProjectContent from an already compiled assembly.

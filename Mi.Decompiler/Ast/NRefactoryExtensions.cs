@@ -2,10 +2,10 @@
 // This code is distributed under MIT X11 license (for details please see \doc\license.txt)
 
 using System;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.PatternMatching;
+using Mi.NRefactory.CSharp;
+using Mi.NRefactory.PatternMatching;
 
-namespace ICSharpCode.Decompiler.Ast
+namespace Mi.Decompiler.Ast
 {
 	static class NRefactoryExtensions
 	{

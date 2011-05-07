@@ -20,10 +20,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using ICSharpCode.Decompiler.FlowAnalysis;
+using Mi.Decompiler.FlowAnalysis;
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.Disassembler
+namespace Mi.Decompiler.Disassembler
 {
 	/// <summary>
 	/// Specifies the type of an IL structure.

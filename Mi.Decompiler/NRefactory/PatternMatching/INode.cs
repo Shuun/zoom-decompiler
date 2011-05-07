@@ -3,7 +3,7 @@
 
 using System;
 
-namespace ICSharpCode.NRefactory.PatternMatching
+namespace Mi.NRefactory.PatternMatching
 {
 	/// <summary>
 	/// AST node that supports pattern matching.

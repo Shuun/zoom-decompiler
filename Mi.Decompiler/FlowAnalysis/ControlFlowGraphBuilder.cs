@@ -23,7 +23,7 @@ using System.Linq;
 
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.FlowAnalysis
+namespace Mi.Decompiler.FlowAnalysis
 {
 	/// <summary>
 	/// Constructs the Control Flow Graph from a Cecil method body.

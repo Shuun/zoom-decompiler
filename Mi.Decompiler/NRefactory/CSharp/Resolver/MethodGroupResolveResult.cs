@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-using ICSharpCode.NRefactory.TypeSystem;
+using Mi.NRefactory.TypeSystem;
 
-namespace ICSharpCode.NRefactory.CSharp.Resolver
+namespace Mi.NRefactory.CSharp.Resolver
 {
 	/// <summary>
 	/// Represents a group of methods.

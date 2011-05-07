@@ -26,7 +26,7 @@
 
 using System;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	/// <summary>
 	/// Left Operator= Right

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler.Ast
+namespace Mi.Decompiler.Ast
 {
 	public static class TypesHierarchyHelpers
 	{

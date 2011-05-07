@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using ICSharpCode.NRefactory.TypeSystem;
+using Mi.NRefactory.TypeSystem;
 
-namespace ICSharpCode.NRefactory.CSharp.Resolver
+namespace Mi.NRefactory.CSharp.Resolver
 {
 	/// <summary>
 	/// Reference to a qualified type or namespace name.

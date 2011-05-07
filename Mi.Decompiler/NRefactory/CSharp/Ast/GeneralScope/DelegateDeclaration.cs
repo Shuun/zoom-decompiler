@@ -27,7 +27,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	/// <summary>
 	/// delegate ReturnType Name&lt;TypeParameters&gt;(Parameters) where Constraints;

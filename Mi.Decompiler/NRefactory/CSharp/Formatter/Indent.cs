@@ -25,7 +25,7 @@
 // THE SOFTWARE.
 using System;
 
-namespace ICSharpCode.NRefactory.CSharp
+namespace Mi.NRefactory.CSharp
 {
 	public class Indent
 	{

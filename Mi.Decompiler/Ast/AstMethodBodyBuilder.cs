@@ -4,17 +4,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
-using ICSharpCode.Decompiler.Ast.Transforms;
-using ICSharpCode.Decompiler.ILAst;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.PatternMatching;
-using ICSharpCode.NRefactory.Utils;
+using Mi.Decompiler.Ast.Transforms;
+using Mi.Decompiler.ILAst;
+using Mi.NRefactory.CSharp;
+using Mi.NRefactory.PatternMatching;
+using Mi.NRefactory.Utils;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 
-namespace ICSharpCode.Decompiler.Ast
+namespace Mi.Decompiler.Ast
 {
-	using Ast = ICSharpCode.NRefactory.CSharp;
+	using Ast = Mi.NRefactory.CSharp;
 	using Cecil = Mi.Assemblies;
 	
 	public class AstMethodBodyBuilder
@@ -57,7 +57,7 @@ namespace ICSharpCode.Decompiler.Ast
 					} catch (OperationCanceledException) {
 						throw;
 					} catch (Exception ex) {
-						throw new ICSharpCode.Decompiler.DecompilerException(methodDef, ex);
+						throw new Mi.Decompiler.DecompilerException(methodDef, ex);
 					}
 				}
 			} finally {

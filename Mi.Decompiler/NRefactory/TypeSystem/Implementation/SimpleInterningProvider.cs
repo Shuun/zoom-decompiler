@@ -8,9 +8,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-using ICSharpCode.NRefactory.Utils;
+using Mi.NRefactory.Utils;
 
-namespace ICSharpCode.NRefactory.TypeSystem.Implementation
+namespace Mi.NRefactory.TypeSystem.Implementation
 {
 	/// <summary>
 	/// Simple interning provider.
