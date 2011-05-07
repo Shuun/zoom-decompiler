@@ -283,23 +283,59 @@
   <data name="Switch_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Switch.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
   </data>
+  <data name="S_AssemblyCustomAttribute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\CustomAttributes\bin\Debug\S_AssemblyCustomAttribute.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
   <data name="S_AssemblyCustomAttribute_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\CustomAttributes\S_AssemblyCustomAttribute.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="S_AssemblyCustomAttribute_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\CustomAttributes\bin\Debug\S_AssemblyCustomAttribute.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="S_CustomAttributes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\CustomAttributes\bin\Debug\S_CustomAttributes.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="S_CustomAttributeSamples" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\CustomAttributes\bin\Debug\S_CustomAttributeSamples.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
   <data name="S_CustomAttributeSamples_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\CustomAttributes\S_CustomAttributeSamples.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
   </data>
+  <data name="S_CustomAttributeSamples_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\CustomAttributes\bin\Debug\S_CustomAttributeSamples.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
   <data name="S_CustomAttributes_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\CustomAttributes\S_CustomAttributes.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="S_CustomAttributes_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\CustomAttributes\bin\Debug\S_CustomAttributes.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="S_EnumSamples" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Types\bin\Debug\S_EnumSamples.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
   <data name="S_EnumSamples_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Types\S_EnumSamples.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
   </data>
+  <data name="S_EnumSamples_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Types\bin\Debug\S_EnumSamples.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="S_TypeDeclarations" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Types\bin\Debug\S_TypeDeclarations.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
   <data name="S_TypeDeclarations_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Types\S_TypeDeclarations.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
   </data>
+  <data name="S_TypeDeclarations_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Types\bin\Debug\S_TypeDeclarations.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="S_TypeMemberDeclarations" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Types\bin\Debug\S_TypeMemberDeclarations.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
   <data name="S_TypeMemberDeclarations_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Types\S_TypeMemberDeclarations.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="S_TypeMemberDeclarations_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Types\bin\Debug\S_TypeMemberDeclarations.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
   <data name="UndocumentedExpressions_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\UndocumentedExpressions.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>

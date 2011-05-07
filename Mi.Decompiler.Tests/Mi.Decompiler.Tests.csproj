@@ -226,6 +226,18 @@
     <None Include="SampleInput\bin\Debug\ValueTypes.pdb" />
     <None Include="SampleInput\bin\Debug\YieldReturn.dll" />
     <None Include="SampleInput\bin\Debug\YieldReturn.pdb" />
+    <None Include="SampleInput\Types\bin\Debug\S_EnumSamples.dll" />
+    <None Include="SampleInput\Types\bin\Debug\S_EnumSamples.pdb" />
+    <None Include="SampleInput\Types\bin\Debug\S_TypeDeclarations.dll" />
+    <None Include="SampleInput\Types\bin\Debug\S_TypeDeclarations.pdb" />
+    <None Include="SampleInput\Types\bin\Debug\S_TypeMemberDeclarations.dll" />
+    <None Include="SampleInput\Types\bin\Debug\S_TypeMemberDeclarations.pdb" />
+    <None Include="SampleInput\CustomAttributes\bin\Debug\S_AssemblyCustomAttribute.dll" />
+    <None Include="SampleInput\CustomAttributes\bin\Debug\S_AssemblyCustomAttribute.pdb" />
+    <None Include="SampleInput\CustomAttributes\bin\Debug\S_CustomAttributes.dll" />
+    <None Include="SampleInput\CustomAttributes\bin\Debug\S_CustomAttributes.pdb" />
+    <None Include="SampleInput\CustomAttributes\bin\Debug\S_CustomAttributeSamples.dll" />
+    <None Include="SampleInput\CustomAttributes\bin\Debug\S_CustomAttributeSamples.pdb" />
     <Content Include="StackTests\StackTests.exe" />
   </ItemGroup>
   <ItemGroup>
