@@ -17,8 +17,8 @@ namespace Mi.Decompiler.Tests.Helpers
 			if (section.AttributeTarget == "assembly" &&
 				(type.Identifier == "CompilationRelaxations" 
                 || type.Identifier == "RuntimeCompatibility"
-                || type.Identifier == "TargetFramework")
-                || type.Identifier == "Debuggable")
+                || type.Identifier == "TargetFramework"
+                || type.Identifier == "Debuggable"))
 			{
 				attribute.Remove();
 				if (section.Attributes.Count == 0)

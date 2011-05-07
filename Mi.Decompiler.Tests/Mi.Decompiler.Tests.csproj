@@ -238,6 +238,8 @@
     <None Include="SampleInput\CustomAttributes\bin\Debug\S_CustomAttributes.pdb" />
     <None Include="SampleInput\CustomAttributes\bin\Debug\S_CustomAttributeSamples.dll" />
     <None Include="SampleInput\CustomAttributes\bin\Debug\S_CustomAttributeSamples.pdb" />
+    <None Include="SampleInput\bin\Debug\Generics.pdb" />
+    <None Include="SampleInput\bin\Debug\Generics.dll" />
     <Content Include="StackTests\StackTests.exe" />
   </ItemGroup>
   <ItemGroup>
