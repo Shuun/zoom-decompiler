@@ -1,17 +1,17 @@
 using System;
 using System.Linq;
 
-using Mono.Cecil;
-using Mono.Cecil.Cil;
+using Mi.Assemblies;
+using Mi.Assemblies.Cil;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class VariableTests : BaseTestFixture {
 
-		[Test]
+		[TestMethod]
 		public void AddVariableIndex ()
 		{
 			var object_ref = new TypeReference ("System", "Object", null, null, false);
@@ -28,7 +28,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (1, y.Index);
 		}
 
-		[Test]
+		[TestMethod]
 		public void RemoveAtVariableIndex ()
 		{
 			var object_ref = new TypeReference ("System", "Object", null, null, false);
@@ -54,7 +54,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (1, z.Index);
 		}
 
-		[Test]
+		[TestMethod]
 		public void RemoveVariableIndex ()
 		{
 			var object_ref = new TypeReference ("System", "Object", null, null, false);
@@ -80,7 +80,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (1, z.Index);
 		}
 
-		[Test]
+		[TestMethod]
 		public void InsertVariableIndex ()
 		{
 			var object_ref = new TypeReference ("System", "Object", null, null, false);

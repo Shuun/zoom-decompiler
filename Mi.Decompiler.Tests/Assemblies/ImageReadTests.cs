@@ -1,18 +1,18 @@
 using System;
 using System.IO;
 
-using Mono.Cecil;
-using Mono.Cecil.PE;
-using Mono.Cecil.Metadata;
+using Mi.Assemblies;
+using Mi.Assemblies.PE;
+using Mi.Assemblies.Metadata;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class ImageReadTests : BaseTestFixture {
 
-		[Test]
+		[TestMethod]
 		public void ImageSections ()
 		{
 			var image = GetResourceImage ("hello.exe");
@@ -23,7 +23,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (".reloc", image.Sections [2].Name);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImageMetadataVersion ()
 		{
 			var image = GetResourceImage ("hello.exe");
@@ -33,7 +33,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (TargetRuntime.Net_1_1, image.Runtime);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImageModuleKind ()
 		{
 			var image = GetResourceImage ("hello.exe");
@@ -46,7 +46,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (ModuleKind.Windows, image.Kind);
 		}
 
-		[Test]
+		[TestMethod]
 		public void MetadataHeaps ()
 		{
 			var image = GetResourceImage ("hello.exe");
@@ -69,7 +69,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (new byte [0], image.BlobHeap.Read (0));
 		}
 
-		[Test]
+		[TestMethod]
 		public void TablesHeap ()
 		{
 			var image = GetResourceImage ("hello.exe");
@@ -88,7 +88,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (1, heap [Table.AssemblyRef].Length);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ReadX64Image ()
 		{
 			var image = GetResourceImage ("hello.x64.exe");
@@ -97,7 +97,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (ModuleAttributes.ILOnly, image.Attributes);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ReadIA64Image ()
 		{
 			var image = GetResourceImage ("hello.ia64.exe");
@@ -106,7 +106,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (ModuleAttributes.ILOnly, image.Attributes);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ReadX86Image ()
 		{
 			var image = GetResourceImage ("hello.x86.exe");
@@ -115,7 +115,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (ModuleAttributes.ILOnly | ModuleAttributes.Required32Bit, image.Attributes);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ReadAnyCpuImage ()
 		{
 			var image = GetResourceImage ("hello.anycpu.exe");

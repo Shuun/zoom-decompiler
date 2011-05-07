@@ -3,15 +3,15 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-using Mono.Cecil;
-using Mono.Cecil.Metadata;
-using Mono.Cecil.PE;
+using Mi.Assemblies;
+using Mi.Assemblies.Metadata;
+using Mi.Assemblies.PE;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class SecurityDeclarationTests : BaseTestFixture {
 
 		[TestModule ("decsec-xml.dll")]

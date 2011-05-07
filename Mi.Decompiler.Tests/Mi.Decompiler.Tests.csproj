@@ -91,6 +91,32 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Assemblies\Addin.cs" />
+    <Compile Include="Assemblies\AssemblyInfo.cs" />
+    <Compile Include="Assemblies\AssemblyTests.cs" />
+    <Compile Include="Assemblies\BaseTestFixture.cs" />
+    <Compile Include="Assemblies\CompilationService.cs" />
+    <Compile Include="Assemblies\CustomAttributesTests.cs" />
+    <Compile Include="Assemblies\EventTests.cs" />
+    <Compile Include="Assemblies\Extensions.cs" />
+    <Compile Include="Assemblies\FieldTests.cs" />
+    <Compile Include="Assemblies\Formatter.cs" />
+    <Compile Include="Assemblies\ILProcessorTests.cs" />
+    <Compile Include="Assemblies\ImageReadTests.cs" />
+    <Compile Include="Assemblies\ImportCecilTests.cs" />
+    <Compile Include="Assemblies\ImportReflectionTests.cs" />
+    <Compile Include="Assemblies\Linq.cs" />
+    <Compile Include="Assemblies\MethodBodyTests.cs" />
+    <Compile Include="Assemblies\MethodTests.cs" />
+    <Compile Include="Assemblies\ModuleTests.cs" />
+    <Compile Include="Assemblies\NestedTypesTests.cs" />
+    <Compile Include="Assemblies\ParameterTests.cs" />
+    <Compile Include="Assemblies\PropertyTests.cs" />
+    <Compile Include="Assemblies\ResolveTests.cs" />
+    <Compile Include="Assemblies\SecurityDeclarationTests.cs" />
+    <Compile Include="Assemblies\TypeParserTests.cs" />
+    <Compile Include="Assemblies\TypeTests.cs" />
+    <Compile Include="Assemblies\VariableTests.cs" />
     <Compile Include="CodeSampleFileParser.cs">
       <SubType>Code</SubType>
     </Compile>

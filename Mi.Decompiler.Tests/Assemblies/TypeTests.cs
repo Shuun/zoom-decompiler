@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
 
-using Mono.Cecil;
-using Mono.Cecil.Cil;
-using Mono.Cecil.Metadata;
+using Mi.Assemblies;
+using Mi.Assemblies.Cil;
+using Mi.Assemblies.Metadata;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class TypeTests : BaseTestFixture {
 
 		[TestCSharp ("Layouts.cs")]

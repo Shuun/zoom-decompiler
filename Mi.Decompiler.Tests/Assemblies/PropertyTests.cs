@@ -1,10 +1,10 @@
 using System.Linq;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class PropertyTests : BaseTestFixture {
 
 		[TestCSharp ("Properties.cs")]

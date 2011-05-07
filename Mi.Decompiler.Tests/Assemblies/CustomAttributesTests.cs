@@ -4,15 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using Mono.Cecil;
-using Mono.Cecil.Metadata;
-using Mono.Cecil.PE;
+using Mi.Assemblies;
+using Mi.Assemblies.Metadata;
+using Mi.Assemblies.PE;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class CustomAttributesTests : BaseTestFixture {
 
 		[TestCSharp ("CustomAttributes.cs")]
@@ -342,7 +342,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("System.Collections.Generic.Dictionary`2<System.String,OpenGeneric`2<Machin,System.Int32>[,]>", type.FullName);
 		}
 
-		[Test]
+		[TestMethod]
 		public void DefineCustomAttributeFromBlob ()
 		{
 			var file = Path.Combine (Path.GetTempPath (), "CaBlob.dll");

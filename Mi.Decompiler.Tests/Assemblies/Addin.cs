@@ -2,12 +2,12 @@ using System;
 using System.IO;
 using System.Reflection;
 
-using NUnit.Core;
-using NUnit.Core.Extensibility;
+// using NUnit.Core;
+// using NUnit.Core.Extensibility;
 
-using Mono.Cecil.Cil;
+using Mi.Assemblies.Cil;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
 	public abstract class TestCecilAttribute : Attribute {
 

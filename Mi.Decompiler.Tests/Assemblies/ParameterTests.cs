@@ -1,14 +1,14 @@
 using System;
 using System.Linq;
 
-using Mono.Cecil;
-using Mono.Cecil.Metadata;
+using Mi.Assemblies;
+using Mi.Assemblies.Metadata;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class ParameterTests : BaseTestFixture {
 
 		[TestModule ("marshal.dll")]
@@ -114,7 +114,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (-1, baz.Constant);
 		}
 
-		[Test]
+		[TestMethod]
 		public void AddParameterIndex ()
 		{
 			var object_ref = new TypeReference ("System", "Object", null, null, false);
@@ -133,7 +133,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (method, y.Method);
 		}
 
-		[Test]
+		[TestMethod]
 		public void RemoveAtParameterIndex ()
 		{
 			var object_ref = new TypeReference ("System", "Object", null, null, false);
@@ -158,7 +158,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (1, z.Index);
 		}
 
-		[Test]
+		[TestMethod]
 		public void RemoveParameterIndex ()
 		{
 			var object_ref = new TypeReference ("System", "Object", null, null, false);
@@ -183,7 +183,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (1, z.Index);
 		}
 
-		[Test]
+		[TestMethod]
 		public void InsertParameterIndex ()
 		{
 			var object_ref = new TypeReference ("System", "Object", null, null, false);

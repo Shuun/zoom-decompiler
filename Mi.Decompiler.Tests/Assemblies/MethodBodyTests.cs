@@ -1,14 +1,14 @@
 using System;
 using System.Linq;
 
-using Mono.Cecil;
-using Mono.Cecil.Cil;
+using Mi.Assemblies;
+using Mi.Assemblies.Cil;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class MethodBodyTests : BaseTestFixture {
 
 		[TestIL ("hello.il")]
@@ -245,7 +245,7 @@ namespace Mono.Cecil.Tests {
 			return str.Trim ().Replace ("\r\n", "\n");
 		}
 
-		[Test]
+		[TestMethod]
 		public void AddInstruction ()
 		{
 			var object_ref = new TypeReference ("System", "Object", null, null, false);
@@ -266,7 +266,7 @@ namespace Mono.Cecil.Tests {
 			Assert.IsNull (second.Next);
 		}
 
-		[Test]
+		[TestMethod]
 		public void InsertInstruction ()
 		{
 			var object_ref = new TypeReference ("System", "Object", null, null, false);
@@ -297,7 +297,7 @@ namespace Mono.Cecil.Tests {
 			Assert.IsNull (third.Next);
 		}
 
-		[Test]
+		[TestMethod]
 		public void InsertAfterLastInstruction ()
 		{
 			var object_ref = new TypeReference ("System", "Object", null, null, false);
@@ -328,7 +328,7 @@ namespace Mono.Cecil.Tests {
 			Assert.IsNull (third.Next);
 		}
 
-		[Test]
+		[TestMethod]
 		public void RemoveInstruction ()
 		{
 			var object_ref = new TypeReference ("System", "Object", null, null, false);

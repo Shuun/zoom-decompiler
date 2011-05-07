@@ -1,13 +1,13 @@
 using System;
 
-using Mono.Cecil;
-using Mono.Cecil.Metadata;
+using Mi.Assemblies;
+using Mi.Assemblies.Metadata;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class EventTests : BaseTestFixture {
 
 		[TestCSharp ("Events.cs")]

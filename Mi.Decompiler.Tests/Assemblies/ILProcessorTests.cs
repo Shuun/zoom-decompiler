@@ -1,17 +1,17 @@
 using System;
 using System.Linq;
 
-using Mono.Cecil;
-using Mono.Cecil.Cil;
+using Mi.Assemblies;
+using Mi.Assemblies.Cil;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class ILProcessorTests : BaseTestFixture {
 
-		[Test]
+		[TestMethod]
 		public void Append ()
 		{
 			var method = CreateTestMethod ();
@@ -23,7 +23,7 @@ namespace Mono.Cecil.Tests {
 			AssertOpCodeSequence (new [] { OpCodes.Ret }, method);
 		}
 
-		[Test]
+		[TestMethod]
 		public void InsertBefore ()
 		{
 			var method = CreateTestMethod (OpCodes.Ldloc_0, OpCodes.Ldloc_2, OpCodes.Ldloc_3);
@@ -38,7 +38,7 @@ namespace Mono.Cecil.Tests {
 			AssertOpCodeSequence (new [] { OpCodes.Ldloc_0, OpCodes.Ldloc_1, OpCodes.Ldloc_2, OpCodes.Ldloc_3 }, method);
 		}
 
-		[Test]
+		[TestMethod]
 		public void InsertAfter ()
 		{
 			var method = CreateTestMethod (OpCodes.Ldloc_0, OpCodes.Ldloc_2, OpCodes.Ldloc_3);

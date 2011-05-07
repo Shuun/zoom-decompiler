@@ -3,13 +3,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-using Mono.Cecil;
+using Mi.Assemblies;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class ModuleTests : BaseTestFixture {
 
 		[TestModule ("hello.exe")]
@@ -184,7 +184,7 @@ namespace Mono.Cecil.Tests {
 			Assert.IsNull (module.Image.BlobHeap);
 		}
 
-		[Test]
+		[TestMethod]
 		public void MixedModeModule ()
 		{
 			var module = GetResourceModule ("cppcli.dll");
@@ -193,14 +193,14 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (string.Empty, module.ModuleReferences [0].Name);
 		}
 
-		[Test]
+		[TestMethod]
 		[ExpectedException (typeof (BadImageFormatException))]
 		public void OpenIrrelevantFile ()
 		{
 			GetResourceModule ("text_file.txt");
 		}
 
-		[Test]
+		[TestMethod]
 		public void WriteModuleTwice ()
 		{
 			var module = GetResourceModule ("iterator.exe");
@@ -212,7 +212,7 @@ namespace Mono.Cecil.Tests {
 			module.Write (file);
 		}
 
-		[Test]
+		[TestMethod]
 		public void GetTypeNamespacePlusName ()
 		{
 			var module = GetResourceModule ("moda.netmodule");
@@ -221,7 +221,7 @@ namespace Mono.Cecil.Tests {
 			Assert.IsNotNull (type);
 		}
 
-		[Test]
+		[TestMethod]
 		public void OpenModuleImmediate ()
 		{
 			var module = GetResourceModule ("hello.exe", ReadingMode.Immediate);
@@ -229,7 +229,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (ReadingMode.Immediate, module.ReadingMode);
 		}
 
-		[Test]
+		[TestMethod]
 		public void OpenModuleDeferred ()
 		{
 			var module = GetResourceModule ("hello.exe", ReadingMode.Deferred);
