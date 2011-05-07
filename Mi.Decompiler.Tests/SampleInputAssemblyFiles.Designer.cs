@@ -147,33 +147,6 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to using System;
-        ///using System.Collections.Generic;
-        ///using System.Linq;
-        ///using System.Text;
-        ///using Microsoft.VisualStudio.TestTools.UnitTesting;
-        ///
-        ///namespace Mi.Decompiler.Tests.Types
-        ///{
-        ///	[TestClass]
-        ///	public class EnumTests : DecompilerTestBase
-        ///	{
-        ///		[TestMethod]
-        ///		public void EnumSamples()
-        ///		{
-        ///			ValidateFileRoundtrip(@&quot;S_EnumSamples.cs&quot;);
-        ///		}
-        ///	}
-        ///}
-        ///.
-        /// </summary>
-        internal static string EnumTests {
-            get {
-                return ResourceManager.GetString("EnumTests", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
         ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
         ///
@@ -540,6 +513,105 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        /////$CS
+        ///using System;
+        /////$CE
+        ///
+        ///public static class S_EnumSamples
+        ///{
+        ///
+        ///    //$$ SingleValue
+        ///    public class TS_SingleValue
+        ///    {
+        ///        public AttributeTargets Method()
+        ///        {
+        ///            return AttributeTargets.Class;
+        ///        }
+        ///    }
+        ///    //$$ TwoValuesOr
+        ///    public class TS_TwoValuesOr
+        ///    {
+        ///         [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string S_EnumSamples {
+            get {
+                return ResourceManager.GetString("S_EnumSamples", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///
+        ///namespace ClassMultiInterface
+        ///{
+        ///	public interface IA
+        ///	{
+        ///	}
+        ///	public interface IA2 : IA
+        ///	{
+        ///	}
+        ///	public interface IB
+        ///	{
+        ///	}
+        ///	public class C : IA2, IB
+        ///	{
+        ///	}
+        ///}
+        ///.
+        /// </summary>
+        internal static string S_TypeDeclarations {
+            get {
+                return ResourceManager.GetString("S_TypeDeclarations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        /////$CS
+        ///using System;
+        /////$CE
+        ///
+        /////$$ IndexerWithGetOnly
+        ///namespace IndexerWithGetOnly
+        ///{
+        ///	public class MyClass
+        ///	{
+        ///		public int this[int i]
+        ///		{
+        ///			get
+        ///			{
+        ///				return i;
+        ///			}
+        ///		}
+        ///	}
+        ///}
+        /////$$ IndexerWithSetOnly
+        ///namespace IndexerWithSetOnly
+        ///{
+        ///	public class MyClass
+        ///	{
+        ///		public int this[int i]
+        ///		{
+        ///			set
+        ///			{
+        ///			}
+        ///		}
+        ///	}
+        ///}
+        /////$$  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string S_TypeMemberDeclarations {
+            get {
+                return ResourceManager.GetString("S_TypeMemberDeclarations", resourceCulture);
+            }
+        }
+        
         internal static byte[] SampleInputAssembly {
             get {
                 object obj = ResourceManager.GetObject("SampleInputAssembly", resourceCulture);
@@ -589,33 +661,6 @@ namespace Mi.Decompiler.Tests {
             get {
                 object obj = ResourceManager.GetObject("System_Core", resourceCulture);
                 return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to using System;
-        ///using System.Collections.Generic;
-        ///using System.Linq;
-        ///using System.Text;
-        ///using Microsoft.VisualStudio.TestTools.UnitTesting;
-        ///
-        ///namespace Mi.Decompiler.Tests.Types
-        ///{
-        ///	[TestClass]
-        ///	public class TypeTests : DecompilerTestBase
-        ///	{
-        ///		[TestMethod]
-        ///		public void TypeMemberDeclarations()
-        ///		{
-        ///			ValidateFileRoundtrip(@&quot;S_TypeMemberDeclarations.cs&quot;);
-        ///		}
-        ///	}
-        ///}
-        ///.
-        /// </summary>
-        internal static string TypeTests {
-            get {
-                return ResourceManager.GetString("TypeTests", resourceCulture);
             }
         }
         

@@ -12,7 +12,7 @@ namespace Mi.Decompiler.Tests.Types
 		[TestMethod]
 		public void EnumSamples()
 		{
-			ValidateFileRoundtrip(@"S_EnumSamples.cs");
+			ValidateFileRoundtrip(@"S_EnumSamples");
 		}
 	}
 }

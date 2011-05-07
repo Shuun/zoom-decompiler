@@ -115,6 +115,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SampleInputAssemblyFiles.resx</DependentUpon>
     </Compile>
+    <None Include="SampleInputAssembly\Types\S_EnumSamples.cs" />
+    <None Include="SampleInputAssembly\Types\S_TypeDeclarations.cs" />
+    <None Include="SampleInputAssembly\Types\S_TypeMemberDeclarations.cs" />
     <Compile Include="TestRunner.cs">
       <SubType>Code</SubType>
     </Compile>
