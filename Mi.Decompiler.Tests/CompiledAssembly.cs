@@ -56,6 +56,9 @@ namespace Mi.Decompiler.Tests
 
             var rp = new ReaderParameters(ReadingMode.Immediate);
             rp.AssemblyResolver = new Resolver((asmRef, _rp) => asmRef.Name == Mscorlib.Name.Name ? Mscorlib : SystemCore);
+            //rp.SymbolReaderProvider
+            rp.ReadSymbols = true;
+            rp.SymbolStream = new MemoryStream(SampleInputAssemblyFiles.SampleInputAssembly_pdb);
 
             Assembly = AssemblyDefinition.ReadAssembly(
                 new MemoryStream(SampleInputAssemblyFiles.SampleInputAssembly),
