@@ -128,7 +128,8 @@ namespace Mi.Decompiler.Tests
             string code = SampleInputAssemblyFiles.ResourceManager.GetString(fileName);
             AssemblyDefinition assembly = CompiledAssembly.Assembly;
 			AstBuilder decompiler = new AstBuilder(new DecompilerContext(assembly.MainModule));
-			decompiler.AddAssembly(assembly);
+            var type = assembly.MainModule.Types.First(t => t.Name == fileName);
+			decompiler.AddType(type);
 			new Helpers.RemoveCompilerAttribute().Run(decompiler.CompilationUnit);
 			StringWriter output = new StringWriter();
 			decompiler.GenerateCode(new PlainTextOutput(output));

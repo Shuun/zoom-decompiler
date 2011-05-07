@@ -12,7 +12,7 @@ namespace Mi.Decompiler.Tests.Types
 		[TestMethod]
 		public void TypeMemberDeclarations()
 		{
-			ValidateFileRoundtrip(@"Types\S_TypeMemberDeclarations.cs");
+			ValidateFileRoundtrip(@"S_TypeMemberDeclarations.cs");
 		}
 	}
 }

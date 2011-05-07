@@ -121,15 +121,6 @@
     <Compile Include="Types\EnumTests.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\S_EnumSamples.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Types\S_TypeDeclarations.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Types\S_TypeMemberDeclarations.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Types\TypeTests.cs">
       <SubType>Code</SubType>
     </Compile>
