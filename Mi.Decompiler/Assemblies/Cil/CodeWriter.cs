@@ -38,7 +38,7 @@ using RVA = System.UInt32;
 
 #if !READ_ONLY
 
-namespace Mono.Cecil.Cil {
+namespace Mi.Assemblies.Cil {
 
 	sealed class CodeWriter : ByteBuffer {
 

@@ -38,9 +38,9 @@ using System.Runtime.Serialization;
 using Mono.Security.Cryptography;
 #endif
 
-using Mono.Cecil.PE;
+using Mi.Assemblies.PE;
 
-namespace Mono.Cecil {
+namespace Mi.Assemblies {
 
 	// Most of this code has been adapted
 	// from Jeroen Frijters' fantastic work

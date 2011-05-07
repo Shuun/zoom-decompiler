@@ -212,7 +212,7 @@ namespace Microsoft.Cci.Pdb {
       ReadUInt8(out j);
       ReadUInt8(out k);
 
-      guid = new Guid(a, b, c, d, e, f, g, h, i, j, k);
+      guid = new Guid((int)a, (short)b, (short)c, d, e, f, g, h, i, j, k);
     }
 
     internal string ReadString() {

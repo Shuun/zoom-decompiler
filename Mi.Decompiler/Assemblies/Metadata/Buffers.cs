@@ -36,7 +36,7 @@ using RVA = System.UInt32;
 
 #if !READ_ONLY
 
-namespace Mono.Cecil.Metadata {
+namespace Mi.Assemblies.Metadata {
 
 	sealed class TableHeapBuffer : HeapBuffer {
 

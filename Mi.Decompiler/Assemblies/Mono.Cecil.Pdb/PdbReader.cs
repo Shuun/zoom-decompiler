@@ -32,9 +32,9 @@ using System.IO;
 
 using Microsoft.Cci.Pdb;
 
-using Mono.Cecil.Cil;
+using Mi.Assemblies.Cil;
 
-namespace Mono.Cecil.Pdb {
+namespace Mi.Assemblies.Pdb {
 
 	public class PdbReader : ISymbolReader {
 

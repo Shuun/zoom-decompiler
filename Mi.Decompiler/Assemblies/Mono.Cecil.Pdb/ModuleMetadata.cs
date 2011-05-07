@@ -4,7 +4,7 @@ using System.Text;
 
 #if !READ_ONLY
 
-namespace Mono.Cecil.Pdb {
+namespace Mi.Assemblies.Pdb {
 
 	[ComImport, InterfaceType (ComInterfaceType.InterfaceIsIUnknown), Guid ("BA3FEE4C-ECB9-4e41-83B7-183FA41CD859")]
 	interface IMetaDataEmit {
@@ -78,7 +78,7 @@ namespace Mono.Cecil.Pdb {
 		uint GetTypeDefProps (uint td, IntPtr szTypeDef, uint cchTypeDef, out uint pchTypeDef, ref uint pdwTypeDefFlags);
 		uint GetInterfaceImplProps (uint iiImpl, out uint pClass);
 		uint GetTypeRefProps (uint tr, out uint ptkResolutionScope, StringBuilder szName, uint cchName);
-		uint ResolveTypeRef (uint tr, [In] ref Guid riid, [MarshalAs (UnmanagedType.Interface)] out object ppIScope);
+		uint ResolveTypeRef (uint tr, [In] ref Guid riid, [MarshalAs (UnmanagedType.IUnknown)] out object ppIScope);
 		uint EnumMembers (ref uint phEnum, uint cl, [MarshalAs (UnmanagedType.LPArray, SizeParamIndex = 3)] uint [] rMembers, uint cMax);
 		uint EnumMembersWithName (ref uint phEnum, uint cl, string szName, [MarshalAs (UnmanagedType.LPArray, SizeParamIndex = 4)] uint [] rMembers, uint cMax);
 		uint EnumMethods (ref uint phEnum, uint cl, IntPtr /* uint* */ rMethods, uint cMax);
