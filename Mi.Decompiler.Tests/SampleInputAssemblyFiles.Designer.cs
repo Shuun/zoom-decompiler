@@ -578,6 +578,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] System_Core {
+            get {
+                object obj = ResourceManager.GetObject("System_Core", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to using System;
         ///using System.Collections.Generic;
