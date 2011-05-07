@@ -23,7 +23,7 @@ using System.IO;
 using System.Linq;
 
 using ICSharpCode.Decompiler.Disassembler;
-using Mi.Cecil.Cil;
+using Mi.Assemblies.Cil;
 
 namespace ICSharpCode.Decompiler.FlowAnalysis
 {

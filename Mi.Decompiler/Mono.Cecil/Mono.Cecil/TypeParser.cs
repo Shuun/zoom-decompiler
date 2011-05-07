@@ -29,11 +29,11 @@
 using System;
 using System.Text;
 
-using Mi.Cecil.Metadata;
+using Mi.Assemblies.Metadata;
 
 using Mi;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	class TypeParser {
 

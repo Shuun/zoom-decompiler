@@ -29,7 +29,7 @@
 using Mi.Collections.Generic;
 using Mi;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public sealed class FieldDefinition : FieldReference, IMemberDefinition, IConstantProvider, IMarshalInfoProvider {
 

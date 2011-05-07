@@ -20,8 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-using Mi.Cecil;
-using Mi.Cecil.Cil;
+using Mi.Assemblies;
+using Mi.Assemblies.Cil;
 
 namespace ICSharpCode.Decompiler.FlowAnalysis
 {

@@ -31,11 +31,11 @@ using System.Text;
 
 using Mi.Collections.Generic;
 
-using MD = Mi.Cecil.Metadata;
+using MD = Mi.Assemblies.Metadata;
 
 using Mi;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public sealed class GenericInstanceType : TypeSpecification, IGenericInstance, IGenericContext {
 

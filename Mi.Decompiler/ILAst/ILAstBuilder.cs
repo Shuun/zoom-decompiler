@@ -21,9 +21,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Mi.Cecil;
-using Mi.Cecil.Cil;
-using Cecil = Mi.Cecil;
+using Mi.Assemblies;
+using Mi.Assemblies.Cil;
+using Cecil = Mi.Assemblies;
 
 namespace ICSharpCode.Decompiler.ILAst
 {

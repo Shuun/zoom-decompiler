@@ -35,7 +35,7 @@ using Mi.Collections.Generic;
 
 using Mi;
 
-namespace Mi.Cecil.Cil {
+namespace Mi.Assemblies.Cil {
 
 	[StructLayout (LayoutKind.Sequential)]
 	public struct ImageDebugDirectory {

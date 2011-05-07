@@ -28,9 +28,9 @@
 
 using System;
 
-using MD = Mi.Cecil.Metadata;
+using MD = Mi.Assemblies.Metadata;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public sealed class ByReferenceType : TypeSpecification {
 

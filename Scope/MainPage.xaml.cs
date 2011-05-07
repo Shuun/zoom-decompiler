@@ -11,7 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using ICSharpCode.Decompiler;
 using ICSharpCode.Decompiler.Ast;
-using Mi.Cecil;
+using Mi.Assemblies;
 using System.IO;
 
 namespace Mi.Scope
@@ -132,8 +132,8 @@ namespace Mi.Scope
                 {
                     try
                     {
-                        var para = new Mi.Cecil.ReaderParameters(Mi.Cecil.ReadingMode.Immediate);
-                        Mi.Cecil.AssemblyDefinition asm;
+                        var para = new Mi.Assemblies.ReaderParameters(Mi.Assemblies.ReadingMode.Immediate);
+                        Mi.Assemblies.AssemblyDefinition asm;
                         para.AssemblyResolver = new Resolver(
                             (asmName, _p) =>
                                 assembies.FirstOrDefault(
@@ -143,7 +143,7 @@ namespace Mi.Scope
                                         asmName.FullName,
                                         StringComparison.OrdinalIgnoreCase)));
 
-                        asm = Mi.Cecil.AssemblyDefinition.ReadAssembly(buf, para);
+                        asm = Mi.Assemblies.AssemblyDefinition.ReadAssembly(buf, para);
 
                         this.assembies.Add(asm);
 

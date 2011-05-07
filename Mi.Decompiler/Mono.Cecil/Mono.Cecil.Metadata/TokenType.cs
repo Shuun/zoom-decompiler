@@ -26,7 +26,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public enum TokenType : uint {
 		Module = 0x00000000,

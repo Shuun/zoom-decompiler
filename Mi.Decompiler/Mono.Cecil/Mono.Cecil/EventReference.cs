@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public abstract class EventReference : MemberReference {
 

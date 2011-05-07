@@ -29,7 +29,7 @@
 using System;
 using Mi;
 
-namespace Mi.Cecil.PE {
+namespace Mi.Assemblies.PE {
 
 	class ByteBuffer {
 

@@ -13,8 +13,8 @@ using ICSharpCode.Decompiler.Ast.Transforms;
 using ICSharpCode.Decompiler.ILAst;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Utils;
-using Mi.Cecil;
-using Mi.Cecil.Cil;
+using Mi.Assemblies;
+using Mi.Assemblies.Cil;
 
 namespace ICSharpCode.Decompiler.Ast
 {
@@ -336,19 +336,19 @@ namespace ICSharpCode.Decompiler.Ast
 				return AstType.Null;
 			}
 			
-			if (type is Mi.Cecil.ByReferenceType) {
+			if (type is Mi.Assemblies.ByReferenceType) {
 				typeIndex++;
 				// by reference type cannot be represented in C#; so we'll represent it as a pointer instead
-				return ConvertType((type as Mi.Cecil.ByReferenceType).ElementType, typeAttributes, ref typeIndex, options)
+				return ConvertType((type as Mi.Assemblies.ByReferenceType).ElementType, typeAttributes, ref typeIndex, options)
 					.MakePointerType();
-			} else if (type is Mi.Cecil.PointerType) {
+			} else if (type is Mi.Assemblies.PointerType) {
 				typeIndex++;
-				return ConvertType((type as Mi.Cecil.PointerType).ElementType, typeAttributes, ref typeIndex, options)
+				return ConvertType((type as Mi.Assemblies.PointerType).ElementType, typeAttributes, ref typeIndex, options)
 					.MakePointerType();
-			} else if (type is Mi.Cecil.ArrayType) {
+			} else if (type is Mi.Assemblies.ArrayType) {
 				typeIndex++;
-				return ConvertType((type as Mi.Cecil.ArrayType).ElementType, typeAttributes, ref typeIndex, options)
-					.MakeArrayType((type as Mi.Cecil.ArrayType).Rank);
+				return ConvertType((type as Mi.Assemblies.ArrayType).ElementType, typeAttributes, ref typeIndex, options)
+					.MakeArrayType((type as Mi.Assemblies.ArrayType).Rank);
 			} else if (type is GenericInstanceType) {
 				GenericInstanceType gType = (GenericInstanceType)type;
 				if (gType.ElementType.Namespace == "System" && gType.ElementType.Name == "Nullable`1" && gType.GenericArguments.Count == 1) {

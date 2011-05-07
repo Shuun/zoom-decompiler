@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using ICSharpCode.Decompiler.ILAst;
-using Mi.Cecil;
+using Mi.Assemblies;
 
 namespace ICSharpCode.Decompiler.Ast
 {

@@ -18,7 +18,7 @@
 
 using System;
 using System.Runtime.Serialization;
-using Mi.Cecil;
+using Mi.Assemblies;
 
 namespace ICSharpCode.Decompiler
 {

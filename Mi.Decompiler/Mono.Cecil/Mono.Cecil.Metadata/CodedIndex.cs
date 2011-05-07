@@ -26,7 +26,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mi.Cecil.Metadata {
+namespace Mi.Assemblies.Metadata {
 
 	enum CodedIndex {
 		TypeDefOrRef,

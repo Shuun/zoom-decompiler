@@ -29,7 +29,7 @@
 using System;
 using System.Text;
 
-namespace Mi.Cecil.Cil {
+namespace Mi.Assemblies.Cil {
 
 	public sealed class Instruction {
 

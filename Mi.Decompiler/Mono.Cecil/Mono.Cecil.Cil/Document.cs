@@ -30,7 +30,7 @@ using System;
 
 using Mi;
 
-namespace Mi.Cecil.Cil {
+namespace Mi.Assemblies.Cil {
 
 	public enum DocumentType {
 		Other,

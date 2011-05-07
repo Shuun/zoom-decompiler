@@ -28,7 +28,7 @@
 
 using System.Collections.Generic;
 
-namespace Mi.Cecil.Metadata {
+namespace Mi.Assemblies.Metadata {
 
 	struct Row<T1, T2> {
 		internal T1 Col1;

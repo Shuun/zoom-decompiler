@@ -29,11 +29,11 @@
 using System;
 using System.Collections.Generic;
 
-using Mi.Cecil.Metadata;
+using Mi.Assemblies.Metadata;
 
 using Mi.Collections.Generic;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	using Slot = Row<string, string>;
 

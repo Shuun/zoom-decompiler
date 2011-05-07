@@ -28,9 +28,9 @@
 
 using System;
 
-using Mi.Cecil.Metadata;
+using Mi.Assemblies.Metadata;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	static partial class Mixin {
 

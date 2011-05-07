@@ -31,7 +31,7 @@ using System.IO;
 
 using Mi.Collections.Generic;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public sealed class AssemblyDefinition : ICustomAttributeProvider, ISecurityDeclarationProvider {
 

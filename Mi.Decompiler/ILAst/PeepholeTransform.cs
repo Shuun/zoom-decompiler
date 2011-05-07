@@ -22,7 +22,7 @@ using System.Diagnostics;
 using System.Linq;
 
 using ICSharpCode.NRefactory.Utils;
-using Mi.Cecil;
+using Mi.Assemblies;
 
 namespace ICSharpCode.Decompiler.ILAst
 {

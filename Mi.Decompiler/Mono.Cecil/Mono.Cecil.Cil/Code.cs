@@ -26,7 +26,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mi.Cecil.Cil {
+namespace Mi.Assemblies.Cil {
 
 	public enum Code {
 		Nop,

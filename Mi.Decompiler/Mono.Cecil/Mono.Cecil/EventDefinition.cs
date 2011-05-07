@@ -30,7 +30,7 @@ using Mi.Collections.Generic;
 
 using Mi;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public sealed class EventDefinition : EventReference, IMemberDefinition {
 

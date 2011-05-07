@@ -30,7 +30,7 @@ using System;
 
 using RVA = System.UInt32;
 
-namespace Mi.Cecil.PE {
+namespace Mi.Assemblies.PE {
 
 	struct DataDirectory {
 

@@ -29,7 +29,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public static class GlobalAssemblyResolver {
 

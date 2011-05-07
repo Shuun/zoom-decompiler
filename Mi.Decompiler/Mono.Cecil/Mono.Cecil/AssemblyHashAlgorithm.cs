@@ -26,7 +26,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public enum AssemblyHashAlgorithm : uint {
 		None		= 0x0000,

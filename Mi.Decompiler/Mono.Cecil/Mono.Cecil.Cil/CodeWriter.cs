@@ -31,8 +31,8 @@ using System.Collections.Generic;
 
 using Mi.Collections.Generic;
 
-using Mi.Cecil.Metadata;
-using Mi.Cecil.PE;
+using Mi.Assemblies.Metadata;
+using Mi.Assemblies.PE;
 
 using RVA = System.UInt32;
 

@@ -32,14 +32,14 @@ using System.IO;
 using System.Text;
 
 using Mi.Collections.Generic;
-using Mi.Cecil.Cil;
-using Mi.Cecil.Metadata;
-using Mi.Cecil.PE;
+using Mi.Assemblies.Cil;
+using Mi.Assemblies.Metadata;
+using Mi.Assemblies.PE;
 
 using RVA = System.UInt32;
 using Mi;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	abstract class ModuleReader {
 

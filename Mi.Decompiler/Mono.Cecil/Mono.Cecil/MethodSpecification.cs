@@ -30,7 +30,7 @@ using System;
 
 using Mi.Collections.Generic;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public abstract class MethodSpecification : MethodReference {
 

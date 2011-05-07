@@ -33,7 +33,7 @@ using System.Text;
 
 using Mi;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public class AssemblyNameReference : IMetadataScope {
 

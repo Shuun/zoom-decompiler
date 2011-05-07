@@ -32,7 +32,7 @@ using Mi.Collections.Generic;
 
 using Mi;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public struct CustomAttributeArgument {
 

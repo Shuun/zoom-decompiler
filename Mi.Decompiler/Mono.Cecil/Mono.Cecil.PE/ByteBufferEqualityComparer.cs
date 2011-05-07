@@ -29,7 +29,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Mi.Cecil.PE {
+namespace Mi.Assemblies.PE {
 
 	sealed class ByteBufferEqualityComparer : IEqualityComparer<ByteBuffer> {
 

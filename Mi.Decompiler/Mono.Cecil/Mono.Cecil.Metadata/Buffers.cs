@@ -30,7 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Mi.Cecil.PE;
+using Mi.Assemblies.PE;
 
 using RVA = System.UInt32;
 

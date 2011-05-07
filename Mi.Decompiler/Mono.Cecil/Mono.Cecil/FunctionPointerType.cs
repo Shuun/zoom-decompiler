@@ -29,9 +29,9 @@
 using System;
 using System.Text;
 using Mi.Collections.Generic;
-using MD = Mi.Cecil.Metadata;
+using MD = Mi.Assemblies.Metadata;
 
-namespace Mi.Cecil {
+namespace Mi.Assemblies {
 
 	public sealed class FunctionPointerType : TypeSpecification, IMethodSignature {
 
