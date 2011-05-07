@@ -1,12 +1,12 @@
 using System;
 
-using Mono.Cecil;
+using Mi.Assemblies;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class NestedTypesTests : BaseTestFixture {
 
 		[TestCSharp ("NestedTypes.cs")]

@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-using Mono.Cecil;
-using Mono.Cecil.Cil;
+using Mi.Assemblies;
+using Mi.Assemblies.Cil;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class ResolveTests : BaseTestFixture {
 
-		[Test]
+		[TestMethod]
 		public void StringEmpty ()
 		{
 			var string_empty = GetReference<Func<string>, FieldReference> (
@@ -31,7 +31,7 @@ namespace Mono.Cecil.Tests {
 
 		delegate string GetSubstring (string str, int start, int length);
 
-		[Test]
+		[TestMethod]
 		public void StringSubstring ()
 		{
 			var string_substring = GetReference<GetSubstring, MethodReference> (
@@ -45,7 +45,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("mscorlib", definition.Module.Assembly.Name.Name);
 		}
 
-		[Test]
+		[TestMethod]
 		public void StringLength ()
 		{
 			var string_length = GetReference<Func<string, int>, MethodReference> (s => s.Length);
@@ -59,7 +59,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("mscorlib", definition.Module.Assembly.Name.Name);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ListOfStringAdd ()
 		{
 			var list_add = GetReference<Action<List<string>>, MethodReference> (
@@ -75,7 +75,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("mscorlib", definition.Module.Assembly.Name.Name);
 		}
 
-		[Test]
+		[TestMethod]
 		public void DictionaryOfStringTypeDefinitionTryGetValue ()
 		{
 			var try_get_value = GetReference<Func<Dictionary<string, TypeDefinition>, string, bool>, MethodReference> (
@@ -104,7 +104,7 @@ namespace Mono.Cecil.Tests {
 			}
 		}
 
-		[Test]
+		[TestMethod]
 		public void ExportedTypeFromModule ()
 		{
 			var resolver = new CustomResolver ();
@@ -121,7 +121,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("Module.A.Foo", definition.FullName);
 		}
 
-		[Test]
+		[TestMethod]
 		public void TypeForwarder ()
 		{
 			var resolver = new CustomResolver ();
@@ -142,7 +142,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("mscorlib", definition.Module.Assembly.Name.Name);
 		}
 
-		[Test]
+		[TestMethod]
 		public void NestedTypeForwarder ()
 		{
 			var resolver = new CustomResolver ();
@@ -164,7 +164,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("mscorlib", definition.Module.Assembly.Name.Name);
 		}
 
-		[Test]
+		[TestMethod]
 		public void RectangularArrayResolveGetMethod ()
 		{
 			var get_a_b = GetReference<Func<int[,], int>, MethodReference> (matrix => matrix [2, 2]);
@@ -174,7 +174,7 @@ namespace Mono.Cecil.Tests {
 			Assert.IsNull (get_a_b.Resolve ());
 		}
 
-		[Test]
+		[TestMethod]
 		public void ResolveFunctionPointer ()
 		{
 			var module = GetResourceModule ("cppcli.dll");
@@ -190,10 +190,10 @@ namespace Mono.Cecil.Tests {
 			Assert.IsNull (fnptr.Resolve ());
 		}
 
-		[Test]
+		[TestMethod]
 		public void ResolveGenericParameter ()
 		{
-			var collection = typeof (Mono.Collections.Generic.Collection<>).ToDefinition ();
+			var collection = typeof (Mi.Collections.Generic.Collection<>).ToDefinition ();
 			var parameter = collection.GenericParameters [0];
 
 			Assert.IsNotNull (parameter);
@@ -201,7 +201,7 @@ namespace Mono.Cecil.Tests {
 			Assert.IsNull (parameter.Resolve ());
 		}
 
-		[Test]
+		[TestMethod]
 		public void ResolveNullVersionAssembly ()
 		{
 			var reference = AssemblyNameReference.Parse ("System.Core");

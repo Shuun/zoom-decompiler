@@ -1,14 +1,14 @@
 using System;
 using System.Linq;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class TypeParserTests : BaseTestFixture {
 
-		[Test]
+		[TestMethod]
 		public void SimpleStringReference ()
 		{
 			var module = GetCurrentModule ();
@@ -24,10 +24,10 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("String", type.Name);
 			Assert.AreEqual (MetadataType.String, type.MetadataType);
 			Assert.IsFalse (type.IsValueType);
-			Assert.IsInstanceOfType (typeof (TypeReference), type);
+            Assert.IsInstanceOfType(type, typeof(TypeReference));
 		}
 
-		[Test]
+		[TestMethod]
 		public void SimpleInt32Reference ()
 		{
 			var module = GetCurrentModule ();
@@ -46,7 +46,7 @@ namespace Mono.Cecil.Tests {
 			Assert.IsInstanceOfType (typeof (TypeReference), type);
 		}
 
-		[Test]
+		[TestMethod]
 		public void SimpleTypeDefinition ()
 		{
 			var module = GetCurrentModule ();
@@ -62,7 +62,7 @@ namespace Mono.Cecil.Tests {
 			Assert.IsInstanceOfType (typeof (TypeDefinition), type);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ByRefTypeReference ()
 		{
 			var module = GetCurrentModule ();
@@ -84,7 +84,7 @@ namespace Mono.Cecil.Tests {
 			Assert.IsInstanceOfType (typeof (TypeReference), type);
 		}
 
-		[Test]
+		[TestMethod]
 		public void FullyQualifiedTypeReference ()
 		{
 			var module = GetCurrentModule ();
@@ -101,7 +101,7 @@ namespace Mono.Cecil.Tests {
 			Assert.IsInstanceOfType (typeof (TypeReference), type);
 		}
 
-		[Test]
+		[TestMethod]
 		public void OpenGenericType ()
 		{
 			var module = GetCurrentModule ();
@@ -121,7 +121,7 @@ namespace Mono.Cecil.Tests {
 
 		public class ID {}
 
-		[Test]
+		[TestMethod]
 		public void SimpleNestedType ()
 		{
 			var module = GetCurrentModule ();
@@ -140,7 +140,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (fullname, TypeParser.ToParseable (type));
 		}
 
-		[Test]
+		[TestMethod]
 		public void TripleNestedTypeWithScope ()
 		{
 			var module = GetCurrentModule ();
@@ -180,7 +180,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (1, type.GenericParameters.Count);
 		}
 
-		[Test]
+		[TestMethod]
 		public void Vector ()
 		{
 			var module = GetCurrentModule ();
@@ -206,7 +206,7 @@ namespace Mono.Cecil.Tests {
 			Assert.IsInstanceOfType (typeof (TypeReference), type);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ThreeDimensionalArray ()
 		{
 			var module = GetCurrentModule ();
@@ -230,7 +230,7 @@ namespace Mono.Cecil.Tests {
 			Assert.IsInstanceOfType (typeof (TypeReference), type);
 		}
 
-		[Test]
+		[TestMethod]
 		public void GenericInstanceExternArguments ()
 		{
 			var module = GetCurrentModule ();
@@ -267,7 +267,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("String", argument.Name);
 		}
 
-		[Test]
+		[TestMethod]
 		public void GenericInstanceMixedArguments ()
 		{
 			var module = GetCurrentModule ();
@@ -307,7 +307,7 @@ namespace Mono.Cecil.Tests {
 
 		public class Bar {}
 
-		[Test]
+		[TestMethod]
 		public void GenericInstanceTwoNonFqArguments ()
 		{
 			var module = GetCurrentModule ();
@@ -341,7 +341,7 @@ namespace Mono.Cecil.Tests {
 			Assert.IsInstanceOfType (typeof (TypeDefinition), argument);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ComplexGenericInstanceMixedArguments ()
 		{
 			var module = GetCurrentModule ();

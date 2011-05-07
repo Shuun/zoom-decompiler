@@ -5,16 +5,16 @@ using System.IO;
 using SR = System.Reflection;
 using System.Runtime.CompilerServices;
 
-using Mono.Cecil.Cil;
+using Mi.Assemblies.Cil;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
-	[TestFixture]
+	[TestClass]
 	public class ImportReflectionTests : BaseTestFixture {
 
-		[Test]
+		[TestMethod]
 		public void ImportString ()
 		{
 			var get_string = Compile<Func<string>> ((_, body) => {
@@ -26,7 +26,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("yo dawg!", get_string ());
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportInt ()
 		{
 			var add = Compile<Func<int, int, int>> ((_, body) => {
@@ -40,7 +40,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (42, add (40, 2));
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportStringByRef ()
 		{
 			var get_string = Compile<Func<string, string>> ((module, body) => {
@@ -81,7 +81,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("foo", get_string ("foo"));
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportStringArray ()
 		{
 			var identity = Compile<Func<string [,], string [,]>> ((module, body) => {
@@ -95,7 +95,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (array, identity (array));
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportFieldStringEmpty ()
 		{
 			var get_empty = Compile<Func<string>> ((module, body) => {
@@ -107,7 +107,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("", get_empty ());
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportStringConcat ()
 		{
 			var concat = Compile<Func<string, string, string>> ((module, body) => {
@@ -140,7 +140,7 @@ namespace Mono.Cecil.Tests {
 			}
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportGenericField ()
 		{
 			var get_field = Compile<Func<Generic<string>, string>> ((module, body) => {
@@ -157,7 +157,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("foo", get_field (generic));
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportGenericMethod ()
 		{
 			var generic_identity = Compile<Func<Generic<int>, int, int>> ((module, body) => {
@@ -171,7 +171,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (42, generic_identity (new Generic<int> (), 42));
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportGenericMethodSpec ()
 		{
 			var gen_spec_id = Compile<Func<Generic<string>, int, int>> ((module, body) => {
@@ -186,7 +186,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual (42, gen_spec_id (new Generic<string> (), 42));
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportComplexGenericMethodSpec ()
 		{
 			var gen_spec_id = Compile<Func<Generic<string>, int, int>> ((module, body) => {
@@ -206,7 +206,7 @@ namespace Mono.Cecil.Tests {
 			public List<TFoo> list;
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportGenericTypeDefOrOpen ()
 		{
 			var module = typeof (Foo<>).ToDefinition ().Module;
@@ -218,7 +218,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("Mono.Cecil.Tests.ImportReflectionTests/Foo`1<TFoo>", foo_open.FullName);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportGenericTypeFromContext ()
 		{
 			var list_foo = typeof (Foo<>).GetField ("list").FieldType;
@@ -233,7 +233,7 @@ namespace Mono.Cecil.Tests {
 				generic_foo.FullName);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportGenericTypeDefFromContext ()
 		{
 			var foo_open = typeof (Foo<>).MakeGenericType (typeof (Foo<>).GetGenericArguments () [0]);
@@ -248,7 +248,7 @@ namespace Mono.Cecil.Tests {
 				generic_foo.FullName);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportArrayTypeDefFromContext ()
 		{
 			var foo_open = typeof (Foo<>).MakeGenericType (typeof (Foo<>).GetGenericArguments () [0]);
@@ -263,7 +263,7 @@ namespace Mono.Cecil.Tests {
 				array_foo.FullName);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportGenericFieldFromContext ()
 		{
 			var list_foo = typeof (Foo<>).GetField ("list").FieldType;
@@ -279,7 +279,7 @@ namespace Mono.Cecil.Tests {
 				generic_field.FullName);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportGenericMethodFromContext ()
 		{
 			var list_foo = typeof (Foo<>).GetField ("list").FieldType;
@@ -295,7 +295,7 @@ namespace Mono.Cecil.Tests {
 				generic_method.FullName);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportMethodOnOpenGenericType ()
 		{
 			var module = typeof (Generic<>).ToDefinition ().Module;
@@ -305,7 +305,7 @@ namespace Mono.Cecil.Tests {
 			Assert.AreEqual ("T Mono.Cecil.Tests.ImportReflectionTests/Generic`1<T>::Method(T)", method.FullName);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ImportGenericMethodOnOpenGenericType ()
 		{
 			var module = typeof (Generic<>).ToDefinition ().Module;

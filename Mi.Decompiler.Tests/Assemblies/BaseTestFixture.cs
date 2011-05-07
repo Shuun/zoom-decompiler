@@ -2,11 +2,11 @@ using System;
 using System.IO;
 using System.Reflection;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Mono.Cecil.PE;
+using Mi.Assemblies.PE;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
 	public abstract class BaseTestFixture {
 

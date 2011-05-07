@@ -5,9 +5,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Mono.Cecil.Tests {
+namespace Mi.Assemblies.Tests {
 
 	struct CompilationResult {
 		internal DateTime source_write_time;
