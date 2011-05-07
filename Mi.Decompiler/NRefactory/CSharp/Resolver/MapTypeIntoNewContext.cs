@@ -2,11 +2,11 @@
 // This code is distributed under MIT X11 license (for details please see \doc\license.txt)
 
 using System;
-using ICSharpCode.NRefactory.TypeSystem;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
-using ICSharpCode.NRefactory.Utils;
+using Mi.NRefactory.TypeSystem;
+using Mi.NRefactory.TypeSystem.Implementation;
+using Mi.NRefactory.Utils;
 
-namespace ICSharpCode.NRefactory.CSharp.Resolver
+namespace Mi.NRefactory.CSharp.Resolver
 {
 	/// <summary>
 	/// Converts a type by replacing all type definitions with the equivalent definitions in the new context.
