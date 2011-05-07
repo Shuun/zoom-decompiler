@@ -1,0 +1,519 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{984CC812-9470-4A13-AFF9-CC44068D666C}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Mi</RootNamespace>
+    <AssemblyName>Mi.Decompiler</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug .NET3.5' ">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE;DOTNET35</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;READ_ONLY;NET_3_5</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE;SILVERLIGHT;READ_ONLY;NET_3_5</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.CoreEx" Condition=" '$(Configuration)' == 'Debug .NET3.5' ">
+      <HintPath>..\..\packages\Rx v1.0.2856.0\System.CoreEx.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading" Condition=" '$(Configuration)' == 'Debug .NET3.5' ">
+      <HintPath>..\..\packages\Rx v1.0.2856.0\System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ast\AstBuilder.cs" />
+    <Compile Include="Ast\AstMethodBodyBuilder.cs" />
+    <Compile Include="Ast\CecilTypeResolveContext.cs" />
+    <Compile Include="Ast\CommentStatement.cs" />
+    <Compile Include="Ast\DecompilerContext.cs" />
+    <Compile Include="Ast\NameVariables.cs" />
+    <Compile Include="Ast\NRefactoryExtensions.cs" />
+    <Compile Include="Ast\TextOutputFormatter.cs" />
+    <Compile Include="Ast\Transforms\AddCheckedBlocks.cs" />
+    <Compile Include="Ast\Transforms\CombineQueryExpressions.cs" />
+    <Compile Include="Ast\Transforms\ContextTrackingVisitor.cs" />
+    <Compile Include="Ast\Transforms\ConvertConstructorCallIntoInitializer.cs" />
+    <Compile Include="Ast\Transforms\DeclareVariables.cs" />
+    <Compile Include="Ast\Transforms\DelegateConstruction.cs" />
+    <Compile Include="Ast\Transforms\IntroduceExtensionMethods.cs" />
+    <Compile Include="Ast\Transforms\IntroduceQueryExpressions.cs" />
+    <Compile Include="Ast\Transforms\IntroduceUnsafeModifier.cs" />
+    <Compile Include="Ast\Transforms\IntroduceUsingDeclarations.cs" />
+    <Compile Include="Ast\Transforms\ReplaceMethodCallsWithOperators.cs" />
+    <Compile Include="Ast\Transforms\PushNegation.cs" />
+    <Compile Include="Ast\Transforms\TransformationPipeline.cs" />
+    <Compile Include="Ast\Transforms\PatternStatementTransform.cs" />
+    <Compile Include="Ast\TypesHierarchyHelpers.cs" />
+    <Compile Include="CecilExtensions.cs" />
+    <Compile Include="CodeMappings.cs" />
+    <Compile Include="CollectionExtensions.cs" />
+    <Compile Include="Compatibility\CancellationToken.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Compatibility\NonSerializedAttribute.cs" />
+    <Compile Include="Compatibility\OperationCanceledException.cs" />
+    <Compile Include="Compatibility\ReaderWriterLockSlim.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Compatibility\SerializableAttribute.cs" />
+    <Compile Include="Empty.cs" />
+    <Compile Include="DecompilerException.cs" />
+    <Compile Include="DecompilerSettings.cs" />
+    <Compile Include="Disassembler\DisassemblerHelpers.cs" />
+    <Compile Include="Disassembler\ILStructure.cs" />
+    <Compile Include="Disassembler\MethodBodyDisassembler.cs" />
+    <Compile Include="Disassembler\ReflectionDisassembler.cs" />
+    <Compile Include="FlowAnalysis\ControlFlowEdge.cs" />
+    <Compile Include="FlowAnalysis\ControlFlowGraph.cs" />
+    <Compile Include="FlowAnalysis\ControlFlowGraphBuilder.cs" />
+    <Compile Include="FlowAnalysis\ControlFlowNode.cs" />
+    <Compile Include="FlowAnalysis\ControlStructureDetector.cs" />
+    <Compile Include="FlowAnalysis\OpCodeInfo.cs" />
+    <Compile Include="FlowAnalysis\SimplifyByRefCalls.cs" />
+    <Compile Include="FlowAnalysis\SsaBlock.cs" />
+    <Compile Include="FlowAnalysis\SsaForm.cs" />
+    <Compile Include="FlowAnalysis\SsaFormBuilder.cs" />
+    <Compile Include="FlowAnalysis\SsaInstruction.cs" />
+    <Compile Include="FlowAnalysis\SsaOptimization.cs" />
+    <Compile Include="FlowAnalysis\SsaVariable.cs" />
+    <Compile Include="FlowAnalysis\TransformToSsa.cs" />
+    <Compile Include="ILAst\InitializerPeepholeTransforms.cs" />
+    <Compile Include="ILAst\DefaultDictionary.cs" />
+    <Compile Include="ILAst\GotoRemoval.cs" />
+    <Compile Include="ILAst\ILAstBuilder.cs" />
+    <Compile Include="ILAst\ILAstOptimizer.cs" />
+    <Compile Include="ILAst\ILAstTypes.cs" />
+    <Compile Include="ILAst\ILCodes.cs" />
+    <Compile Include="ILAst\ILInlining.cs" />
+    <Compile Include="ILAst\LoopsAndConditions.cs" />
+    <Compile Include="ILAst\PatternMatching.cs" />
+    <Compile Include="ILAst\PeepholeTransform.cs" />
+    <Compile Include="ILAst\SimpleControlFlow.cs" />
+    <Compile Include="ILAst\TypeAnalysis.cs" />
+    <Compile Include="ILAst\YieldReturnDecompiler.cs" />
+    <Compile Include="ITextOutput.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Cil\Code.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Cil\CodeReader.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Cil\CodeWriter.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Cil\Document.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Cil\ExceptionHandler.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Cil\ILProcessor.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Cil\Instruction.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Cil\MethodBody.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Cil\OpCode.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Cil\OpCodes.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Cil\SequencePoint.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Cil\Symbols.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Cil\VariableDefinition.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Cil\VariableReference.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Metadata\BlobHeap.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Metadata\Buffers.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Metadata\CodedIndex.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Metadata\ElementType.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Metadata\GuidHeap.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Metadata\Heap.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Metadata\MetadataToken.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Metadata\Row.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Metadata\StringHeap.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Metadata\TableHeap.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Metadata\TokenType.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Metadata\UserStringHeap.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.Metadata\Utilities.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.PE\BinaryStreamReader.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.PE\BinaryStreamWriter.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.PE\ByteBuffer.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.PE\ByteBufferEqualityComparer.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.PE\DataDirectory.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.PE\Image.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.PE\ImageReader.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.PE\ImageWriter.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.PE\Section.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil.PE\TextMap.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\ArrayType.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\AssemblyDefinition.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\AssemblyFlags.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\AssemblyHashAlgorithm.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\AssemblyInfo.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\AssemblyLinkedResource.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\AssemblyNameDefinition.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\AssemblyNameReference.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\AssemblyReader.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\AssemblyWriter.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\BaseAssemblyResolver.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\CallSite.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\CustomAttribute.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\DefaultAssemblyResolver.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\EmbeddedResource.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\EventAttributes.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\EventDefinition.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\EventReference.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\ExportedType.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\FieldAttributes.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\FieldDefinition.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\FieldReference.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\FileAttributes.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\FunctionPointerType.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\GenericInstanceMethod.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\GenericInstanceType.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\GenericParameter.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\GenericParameterAttributes.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\IConstantProvider.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\ICustomAttributeProvider.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\IGenericInstance.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\IGenericParameterProvider.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\IMarshalInfoProvider.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\IMemberDefinition.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\IMetadataScope.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\IMetadataTokenProvider.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\IMethodSignature.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\Import.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\LinkedResource.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\ManifestResourceAttributes.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\MarshalInfo.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\MemberDefinitionCollection.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\MemberReference.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\MetadataResolver.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\MetadataSystem.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\MethodAttributes.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\MethodCallingConvention.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\MethodDefinition.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\MethodImplAttributes.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\MethodReference.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\MethodReturnType.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\MethodSemanticsAttributes.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\MethodSpecification.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\Modifiers.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\ModuleDefinition.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\ModuleKind.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\ModuleReference.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\NativeType.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\ParameterAttributes.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\ParameterDefinition.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\ParameterDefinitionCollection.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\ParameterReference.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\PinnedType.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\PInvokeAttributes.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\PInvokeInfo.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\PointerType.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\PropertyAttributes.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\PropertyDefinition.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\PropertyReference.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\ReferenceType.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\Resource.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\SecurityDeclaration.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\SentinelType.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\TargetRuntime.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\TypeAttributes.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\TypeDefinition.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\TypeDefinitionCollection.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\TypeParser.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\TypeReference.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\TypeSpecification.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\TypeSystem.cs" />
+    <Compile Include="Mono.Cecil\Mono.Cecil\VariantType.cs" />
+    <Compile Include="Mono.Cecil\Mono.Collections.Generic\Collection.cs" />
+    <Compile Include="Mono.Cecil\Mono.Collections.Generic\ReadOnlyCollection.cs" />
+    <Compile Include="Mono.Cecil\Mono.Security.Cryptography\CryptoConvert.cs" />
+    <Compile Include="Mono.Cecil\Mono.Security.Cryptography\CryptoService.cs" />
+    <Compile Include="Mono.Cecil\System.Runtime.CompilerServices\ExtensionAttribute.cs" />
+    <Compile Include="NRefactory\CSharp\Analysis\ControlFlow.cs" />
+    <Compile Include="NRefactory\CSharp\Analysis\DefiniteAssignmentAnalysis.cs" />
+    <Compile Include="NRefactory\CSharp\Analysis\MinimalResolveContext.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\AstLocation.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\AstNode.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\AstNodeCollection.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\AstType.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\CompilationUnit.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\ComposedType.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\CSharpModifierToken.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\CSharpTokenNode.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\DepthFirstAstVisitor.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\AnonymousMethodExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\AnonymousTypeCreateExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\ArrayCreateExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\ArrayInitializerExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\AsExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\AssignmentExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\BaseReferenceExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\BinaryOperatorExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\CastExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\CheckedExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\ConditionalExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\DefaultValueExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\DirectionExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\EmptyExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\Expression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\IdentifierExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\IndexerExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\InvocationExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\IsExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\LambdaExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\MemberReferenceExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\NamedArgumentExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\NullReferenceExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\ObjectCreateExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\ParenthesizedExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\PointerReferenceExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\PrimitiveExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\QueryExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\SizeOfExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\StackAllocExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\ThisReferenceExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\TypeOfExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\TypeReferenceExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\UnaryOperatorExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\UncheckedExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Expressions\UndocumentedExpression.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\GeneralScope\Attribute.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\GeneralScope\AttributeSection.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\GeneralScope\Comment.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\GeneralScope\Constraint.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\GeneralScope\DelegateDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\GeneralScope\ExternAliasDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\GeneralScope\NamespaceDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\GeneralScope\TypeDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\GeneralScope\TypeParameterDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\GeneralScope\UsingAliasDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\GeneralScope\UsingDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\IAstVisitor.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Identifier.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\MemberType.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Modifiers.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\NodeType.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\PrimitiveType.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Role.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\SimpleType.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\BlockStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\BreakStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\CheckedStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\ContinueStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\DoWhileStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\EmptyStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\ExpressionStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\FixedStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\ForeachStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\ForStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\GotoStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\IfElseStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\LabelStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\LockStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\ReturnStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\Statement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\SwitchStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\ThrowStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\TryCatchStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\UncheckedStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\UnsafeStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\UsingStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\VariableDeclarationStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\WhileStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\YieldBreakStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\Statements\YieldStatement.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\Accessor.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\AttributedNode.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\ConstructorDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\DestructorDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\EnumMemberDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\EventDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\FieldDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\FixedFieldDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\FixedVariableInitializer.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\IndexerDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\MemberDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\MethodDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\OperatorDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\ParameterDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\PropertyDeclaration.cs" />
+    <Compile Include="NRefactory\CSharp\Ast\TypeMembers\VariableInitializer.cs" />
+    <Compile Include="NRefactory\CSharp\Formatter\AstFormattingVisitor.cs" />
+    <Compile Include="NRefactory\CSharp\Formatter\Change.cs" />
+    <Compile Include="NRefactory\CSharp\Formatter\CSharpFormattingOptions.cs" />
+    <Compile Include="NRefactory\CSharp\Formatter\Indent.cs" />
+    <Compile Include="NRefactory\CSharp\Formatter\ITextEditorAdapter.cs" />
+    <Compile Include="NRefactory\CSharp\OutputVisitor\InsertParenthesesVisitor.cs" />
+    <Compile Include="NRefactory\CSharp\OutputVisitor\IOutputFormatter.cs" />
+    <Compile Include="NRefactory\CSharp\OutputVisitor\OutputVisitor.cs" />
+    <Compile Include="NRefactory\CSharp\OutputVisitor\TextWriterOutputFormatter.cs" />
+    <Compile Include="NRefactory\CSharp\Parser\ParsedFile.cs" />
+    <Compile Include="NRefactory\CSharp\Parser\TypeSystemConvertVisitor.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\AliasNamespaceReference.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\AmbiguousResolveResult.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\ByReferenceResolveResult.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\ConstantResolveResult.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\Conversions.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\CSharpResolver.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\ErrorResolveResult.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\IResolveVisitorNavigator.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\ITypeOrNamespaceReference.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\LocalResolveResult.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\MemberLookup.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\MemberResolveResult.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\MemberTypeOrNamespaceReference.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\MethodGroupResolveResult.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\NamespaceResolveResult.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\NodeListResolveVisitorNavigator.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\OverloadResolution.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\OverloadResolutionErrors.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\ResolveResult.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\ResolveVisitor.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\SimpleTypeOrNamespaceReference.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\TypeInference.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\TypeResolveResult.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\UnknownMemberResolveResult.cs" />
+    <Compile Include="NRefactory\CSharp\Resolver\UsingScope.cs" />
+    <Compile Include="NRefactory\PatternMatching\AnyNode.cs" />
+    <Compile Include="NRefactory\PatternMatching\Backreference.cs" />
+    <Compile Include="NRefactory\PatternMatching\BacktrackingInfo.cs" />
+    <Compile Include="NRefactory\PatternMatching\Choice.cs" />
+    <Compile Include="NRefactory\PatternMatching\INode.cs" />
+    <Compile Include="NRefactory\PatternMatching\IPatternAstVisitor.cs" />
+    <Compile Include="NRefactory\PatternMatching\Match.cs" />
+    <Compile Include="NRefactory\PatternMatching\NamedNode.cs" />
+    <Compile Include="NRefactory\PatternMatching\OptionalNode.cs" />
+    <Compile Include="NRefactory\PatternMatching\Pattern.cs" />
+    <Compile Include="NRefactory\PatternMatching\Repeat.cs" />
+    <Compile Include="NRefactory\TypeSystem\Accessibility.cs" />
+    <Compile Include="NRefactory\TypeSystem\ArrayType.cs" />
+    <Compile Include="NRefactory\TypeSystem\ByReferenceType.cs" />
+    <Compile Include="NRefactory\TypeSystem\CecilLoader.cs" />
+    <Compile Include="NRefactory\TypeSystem\ClassType.cs" />
+    <Compile Include="NRefactory\TypeSystem\DomRegion.cs" />
+    <Compile Include="NRefactory\TypeSystem\EntityType.cs" />
+    <Compile Include="NRefactory\TypeSystem\ExtensionMethods.cs" />
+    <Compile Include="NRefactory\TypeSystem\IAccessor.cs" />
+    <Compile Include="NRefactory\TypeSystem\IAttribute.cs" />
+    <Compile Include="NRefactory\TypeSystem\IConstantValue.cs" />
+    <Compile Include="NRefactory\TypeSystem\IConversions.cs" />
+    <Compile Include="NRefactory\TypeSystem\IDocumentationProvider.cs" />
+    <Compile Include="NRefactory\TypeSystem\IEntity.cs" />
+    <Compile Include="NRefactory\TypeSystem\IEvent.cs" />
+    <Compile Include="NRefactory\TypeSystem\IExplicitInterfaceImplementation.cs" />
+    <Compile Include="NRefactory\TypeSystem\IField.cs" />
+    <Compile Include="NRefactory\TypeSystem\IFreezable.cs" />
+    <Compile Include="NRefactory\TypeSystem\IInterningProvider.cs" />
+    <Compile Include="NRefactory\TypeSystem\IMember.cs" />
+    <Compile Include="NRefactory\TypeSystem\IMethod.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\AbstractFreezable.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\AbstractMember.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\AbstractType.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\CompositeTypeResolveContext.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\DefaultAccessor.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\DefaultAttribute.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\DefaultEvent.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\DefaultExplicitInterfaceImplementation.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\DefaultField.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\DefaultMethod.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\DefaultParameter.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\DefaultProperty.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\DefaultTypeDefinition.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\DefaultTypeParameter.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\GetClassTypeReference.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\MethodTypeParameterSubstitution.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\NestedTypeReference.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\ProxyTypeResolveContext.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\SimpleConstantValue.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\SimpleInterningProvider.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\SimpleProjectContent.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\SpecializedEvent.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\SpecializedField.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\SpecializedMethod.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\SpecializedProperty.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\TypeStorage.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\TypeWithElementType.cs" />
+    <Compile Include="NRefactory\TypeSystem\Implementation\VoidTypeDefinition.cs" />
+    <Compile Include="NRefactory\TypeSystem\INamedElement.cs" />
+    <Compile Include="NRefactory\TypeSystem\IntersectionType.cs" />
+    <Compile Include="NRefactory\TypeSystem\IParameter.cs" />
+    <Compile Include="NRefactory\TypeSystem\IParameterizedMember.cs" />
+    <Compile Include="NRefactory\TypeSystem\IProjectContent.cs" />
+    <Compile Include="NRefactory\TypeSystem\IProperty.cs" />
+    <Compile Include="NRefactory\TypeSystem\ISupportsInterning.cs" />
+    <Compile Include="NRefactory\TypeSystem\ISynchronizedTypeResolveContext.cs" />
+    <Compile Include="NRefactory\TypeSystem\IType.cs" />
+    <Compile Include="NRefactory\TypeSystem\ITypeDefinition.cs" />
+    <Compile Include="NRefactory\TypeSystem\ITypeParameter.cs" />
+    <Compile Include="NRefactory\TypeSystem\ITypeReference.cs" />
+    <Compile Include="NRefactory\TypeSystem\ITypeResolveContext.cs" />
+    <Compile Include="NRefactory\TypeSystem\IVariable.cs" />
+    <Compile Include="NRefactory\TypeSystem\KnownTypeReference.cs" />
+    <Compile Include="NRefactory\TypeSystem\NullableType.cs" />
+    <Compile Include="NRefactory\TypeSystem\ParameterizedType.cs" />
+    <Compile Include="NRefactory\TypeSystem\ParameterListComparer.cs" />
+    <Compile Include="NRefactory\TypeSystem\PointerType.cs" />
+    <Compile Include="NRefactory\TypeSystem\ReflectionHelper.cs" />
+    <Compile Include="NRefactory\TypeSystem\ReflectionNameParseException.cs" />
+    <Compile Include="NRefactory\TypeSystem\SharedTypes.cs" />
+    <Compile Include="NRefactory\TypeSystem\TypeVisitor.cs" />
+    <Compile Include="NRefactory\Utils\BitVector16.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="NRefactory\Utils\BusyManager.cs" />
+    <Compile Include="NRefactory\Utils\CacheManager.cs" />
+    <Compile Include="NRefactory\Utils\CSharpPrimitiveCast.cs" />
+    <Compile Include="NRefactory\Utils\DotNet35Compat.cs" />
+    <Compile Include="NRefactory\Utils\EmptyList.cs" />
+    <Compile Include="NRefactory\Utils\ExtensionMethods.cs" />
+    <Compile Include="NRefactory\Utils\GraphVizGraph.cs" />
+    <Compile Include="NRefactory\Utils\TreeTraversal.cs" />
+    <Compile Include="PlainTextOutput.cs" />
+    <Compile Include="ReferenceResolvingException.cs" />
+    <Compile Include="TextOutputWriter.cs" />
+    <None Include="Properties\AssemblyInfo.template.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
