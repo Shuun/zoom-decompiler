@@ -271,7 +271,7 @@ namespace ICSharpCode.Decompiler.FlowAnalysis
 //			}
 			if (DominanceFrontier != null && DominanceFrontier.Any()) {
 				writer.WriteLine();
-				writer.Write("DominanceFrontier: " + string.Join(",", DominanceFrontier.OrderBy(d => d.BlockIndex).Select(d => d.BlockIndex.ToString())));
+				writer.Write("DominanceFrontier: " + DotNet35Compat.StringJoin(",", DominanceFrontier.OrderBy(d => d.BlockIndex).Select(d => d.BlockIndex.ToString())));
 			}
 			foreach (Instruction inst in this.Instructions) {
 				writer.WriteLine();

@@ -183,26 +183,17 @@ namespace ICSharpCode.NRefactory.CSharp
 		}
 		
 		#if DOTNET35
-		void WriteCommaSeparatedList(IEnumerable<VariableInitializer> list)
+		void WriteCommaSeparatedList<TAstNode>(IEnumerable<TAstNode> list)
+            where TAstNode : AstNode
 		{
-			WriteCommaSeparatedList(list.SafeCast<VariableInitializer, AstNode>());
+			WriteCommaSeparatedList(list.SafeCast<TAstNode, AstNode>());
 		}
 		
-		void WriteCommaSeparatedList(IEnumerable<AstType> list)
+		void WriteCommaSeparatedListInParenthesis<TAstNode>(IEnumerable<TAstNode> list, bool spaceWithin)
+            where TAstNode : AstNode
 		{
-			WriteCommaSeparatedList(list.SafeCast<AstType, AstNode>());
+			WriteCommaSeparatedListInParenthesis(list.SafeCast<TAstNode, AstNode>(), spaceWithin);
 		}
-		
-		void WriteCommaSeparatedListInParenthesis(IEnumerable<Expression> list, bool spaceWithin)
-		{
-			WriteCommaSeparatedListInParenthesis(list.SafeCast<Expression, AstNode>(), spaceWithin);
-		}
-		
-		void WriteCommaSeparatedListInParenthesis(IEnumerable<ParameterDeclaration> list, bool spaceWithin)
-		{
-			WriteCommaSeparatedListInParenthesis(list.SafeCast<ParameterDeclaration, AstNode>(), spaceWithin);
-		}
-
 		#endif
 
 		void WriteCommaSeparatedListInBrackets(IEnumerable<ParameterDeclaration> list, bool spaceWithin)

@@ -105,6 +105,14 @@ namespace ICSharpCode.TreeView
 			list.InsertRange(index, newNodes);
 			OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, newNodes, index));
 		}
+
+#if DOTNET35
+        public void InsertRange<TSharpTreeNode>(int index, IEnumerable<TSharpTreeNode> nodes)
+            where TSharpTreeNode : SharpTreeNode
+        {
+            InsertRange(index, nodes.SafeCast<TSharpTreeNode, SharpTreeNode>());
+        }
+#endif
 		
 		public void RemoveAt(int index)
 		{
@@ -134,6 +142,14 @@ namespace ICSharpCode.TreeView
 		{
 			InsertRange(this.Count, nodes);
 		}
+
+#if DOTNET35
+        public void AddRange<TSharpTreeNode>(IEnumerable<TSharpTreeNode> nodes)
+            where TSharpTreeNode : SharpTreeNode
+        {
+            InsertRange(this.Count, nodes.SafeCast<TSharpTreeNode, SharpTreeNode>());
+        }
+#endif
 		
 		public void Clear()
 		{

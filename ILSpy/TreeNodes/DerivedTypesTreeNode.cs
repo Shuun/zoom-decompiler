@@ -61,7 +61,8 @@ namespace ICSharpCode.ILSpy.TreeNodes
 		{
 			// FetchChildren() runs on the main thread; but the enumerator will be consumed on a background thread
 			var assemblies = list.GetAssemblies().Select(node => node.AssemblyDefinition).Where(asm => asm != null).ToArray();
-			return FindDerivedTypes(type, assemblies, cancellationToken);
+			return FindDerivedTypes(type, assemblies, cancellationToken)
+                .SafeCast<DerivedTypesEntryNode, ILSpyTreeNode>();
 		}
 		
 		internal static IEnumerable<DerivedTypesEntryNode> FindDerivedTypes(TypeDefinition type, AssemblyDefinition[] assemblies, CancellationToken cancellationToken)
@@ -141,7 +142,8 @@ namespace ICSharpCode.ILSpy.TreeNodes
 		IEnumerable<ILSpyTreeNode> FetchChildren(CancellationToken ct)
 		{
 			// FetchChildren() runs on the main thread; but the enumerator will be consumed on a background thread
-			return DerivedTypesTreeNode.FindDerivedTypes(def, assemblies, ct);
+			return DerivedTypesTreeNode.FindDerivedTypes(def, assemblies, ct)
+                .SafeCast<DerivedTypesEntryNode, ILSpyTreeNode>();
 		}
 		
 		public override void ActivateItem(System.Windows.RoutedEventArgs e)
