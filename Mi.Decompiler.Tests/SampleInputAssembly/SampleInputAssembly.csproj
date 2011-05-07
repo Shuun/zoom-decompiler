@@ -41,8 +41,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CallOverloadedMethod.cs" />
-    <Compile Include="CheckedUnchecked.cs" />
+    <Compile Include="Assemblies\CustomAttributes.cs" />
+    <Compile Include="Assemblies\Events.cs" />
+    <Compile Include="Assemblies\Fields.cs" />
+    <Compile Include="Assemblies\Generics.cs" />
+    <Compile Include="Assemblies\Interfaces.cs" />
+    <Compile Include="Assemblies\Layouts.cs" />
+    <Compile Include="Assemblies\Methods.cs" />
+    <Compile Include="Assemblies\NestedTypes.cs" />
+    <Compile Include="Assemblies\Properties.cs" />
     <Compile Include="CustomAttributes\S_AssemblyCustomAttribute.cs" />
     <Compile Include="CustomAttributes\S_CustomAttributes.cs" />
     <Compile Include="CustomAttributes\S_CustomAttributeSamples.cs" />
