@@ -9,10 +9,10 @@ using System.Collections.Generic;
 
 namespace Microsoft.Cci.Pdb {
   internal class PdbFunction {
-    static internal readonly Guid msilMetaData = new Guid(0xc6ea3fc9, 0x59b3, 0x49d6, 0xbc, 0x25,
+    static internal readonly Guid msilMetaData = new Guid(unchecked((int)0xc6ea3fc9), 0x59b3, 0x49d6, 0xbc, 0x25,
                                                         0x09, 0x02, 0xbb, 0xab, 0xb4, 0x60);
-    static internal readonly IComparer byAddress = new PdbFunctionsByAddress();
-    static internal readonly IComparer byToken = new PdbFunctionsByToken();
+    static internal readonly IComparer<PdbFunction> byAddress = new PdbFunctionsByAddress();
+    static internal readonly IComparer<PdbFunction> byToken = new PdbFunctionsByToken();
 
     internal uint token;
     internal uint slotToken;
@@ -361,10 +361,8 @@ namespace Microsoft.Cci.Pdb {
       }
     }
 
-    internal class PdbFunctionsByAddress : IComparer {
-      public int Compare(Object x, Object y) {
-        PdbFunction fx = (PdbFunction)x;
-        PdbFunction fy = (PdbFunction)y;
+    internal class PdbFunctionsByAddress : IComparer<PdbFunction> {
+        public int Compare(PdbFunction fx, PdbFunction fy) {
 
         if (fx.segment < fy.segment) {
           return -1;
@@ -380,11 +378,8 @@ namespace Microsoft.Cci.Pdb {
       }
     }
 
-    internal class PdbFunctionsByToken : IComparer {
-      public int Compare(Object x, Object y) {
-        PdbFunction fx = (PdbFunction)x;
-        PdbFunction fy = (PdbFunction)y;
-
+    internal class PdbFunctionsByToken : IComparer<PdbFunction> {
+      public int Compare(PdbFunction fx, PdbFunction fy) {
         if (fx.token < fy.token) {
           return -1;
         } else if (fx.token > fy.token) {

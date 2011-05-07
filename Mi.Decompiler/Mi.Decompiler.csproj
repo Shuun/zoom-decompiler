@@ -49,6 +49,13 @@
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE;SILVERLIGHT;READ_ONLY;NET_3_5</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;NET_3_5</DefineConstants>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DefineConstants>TRACE;SILVERLIGHT;NET_3_5</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.CoreEx" Condition=" '$(Configuration)' == 'Debug .NET3.5' ">
       <HintPath>..\..\packages\Rx v1.0.2856.0\System.CoreEx.dll</HintPath>
@@ -68,6 +75,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\BitAccess.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\BitSet.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\CvInfo.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\DataStream.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\DbiDbgHdr.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\DbiHeader.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\DbiModuleInfo.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\DbiSecCon.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\Interfaces.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\IntHashTable.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\MsfDirectory.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbConstant.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbDebugException.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbException.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbFile.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbFileHeader.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbFunction.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbLine.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbLines.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbReader.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbScope.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbSlot.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbSource.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\PdbWriter.cs" />
+    <Compile Include="Assemblies\Microsoft.Cci.Pdb\SourceLocationProvider.cs" />
+    <Compile Include="Assemblies\Mono.Cecil.Pdb\ModuleMetadata.cs" />
+    <Compile Include="Assemblies\Mono.Cecil.Pdb\PdbHelper.cs" />
+    <Compile Include="Assemblies\Mono.Cecil.Pdb\PdbReader.cs" />
     <Compile Include="Ast\AstBuilder.cs" />
     <Compile Include="Ast\AstMethodBodyBuilder.cs" />
     <Compile Include="Ast\CecilTypeResolveContext.cs" />
@@ -504,6 +539,7 @@
     <Compile Include="PlainTextOutput.cs" />
     <Compile Include="ReferenceResolvingException.cs" />
     <Compile Include="TextOutputWriter.cs" />
+    <None Include="Assemblies\Microsoft.Cci.Pdb\LICENSE" />
     <None Include="Properties\AssemblyInfo.template.cs" />
   </ItemGroup>
   <ItemGroup />

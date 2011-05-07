@@ -171,9 +171,9 @@ namespace Microsoft.Cci.Pdb {
 
               string name = (string)names[(int)chk.name];
               int guidStream;
-              Guid doctypeGuid = SymDocumentType.Text;
-              Guid languageGuid = SymLanguageType.CSharp;
-              Guid vendorGuid = SymLanguageVendor.Microsoft;
+              Guid doctypeGuid = new Guid("5a869d0b-6611-11d3-bd2a-0000f80849bd");
+              Guid languageGuid = new Guid("3f5162f8-07c6-11d3-9053-00c04fa302a1");
+              Guid vendorGuid = new Guid("994b45c4-e6e9-11d2-903f-00c04fa302a1");
               if (nameIndex.TryGetValue("/src/files/"+name, out guidStream)) {
                 var guidBits = new BitAccess(0x100);
                 dir.streams[guidStream].Read(reader, guidBits);
@@ -279,7 +279,7 @@ namespace Microsoft.Cci.Pdb {
     static void LoadFuncsFromDbiModule(BitAccess bits,
                                        DbiModuleInfo info,
                                        IntHashTable names,
-                                       ArrayList funcList,
+                                       ICollection<PdbFunction> funcList,
                                        bool readStrings,
                                        MsfDirectory dir,
                                        Dictionary<string, int> nameIndex,
@@ -322,7 +322,7 @@ namespace Microsoft.Cci.Pdb {
       }
 
       // Read gpmod section.
-      ArrayList modList = new ArrayList();
+      var modList = new List<DbiModuleInfo>();
       int end = bits.Position + dh.gpmodiSize;
       while (bits.Position < end) {
         DbiModuleInfo mod = new DbiModuleInfo(bits, readStrings);
@@ -334,7 +334,7 @@ namespace Microsoft.Cci.Pdb {
       }
 
       if (modList.Count > 0) {
-        modules = (DbiModuleInfo[])modList.ToArray(typeof(DbiModuleInfo));
+        modules = modList.ToArray();
       } else {
         modules = null;
       }
@@ -387,7 +387,7 @@ namespace Microsoft.Cci.Pdb {
       dir.streams[3].Read(reader, bits);
       LoadDbiStream(bits, out modules, out header, readAllStrings);
 
-      ArrayList funcList = new ArrayList();
+      var funcList = new List<PdbFunction>();
 
       if (modules != null) {
         for (int m = 0; m < modules.Length; m++) {
@@ -399,7 +399,7 @@ namespace Microsoft.Cci.Pdb {
         }
       }
 
-      PdbFunction[] funcs = (PdbFunction[])funcList.ToArray(typeof(PdbFunction));
+      PdbFunction[] funcs = funcList.ToArray();
 
       // After reading the functions, apply the token remapping table if it exists.
       if (header.snTokenRidMap != 0 && header.snTokenRidMap != 0xffff) {
