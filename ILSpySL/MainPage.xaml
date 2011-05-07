@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid Grid.ColumnSpan="3" Margin="0,0,0,4">
-            <StackPanel HorizontalAlignment="Left">
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                 <Button Name="openButton" Click="openButton_Click">
                     Open
                 </Button>

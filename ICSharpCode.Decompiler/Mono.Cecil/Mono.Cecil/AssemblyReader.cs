@@ -2682,7 +2682,7 @@ namespace Mono.Cecil {
 
 		ArrayType ReadArrayTypeSignature ()
 		{
-			var array = new ArrayType (ReadTypeSignature ());
+			var elementType = ReadTypeSignature ();
 
 			var rank = ReadCompressedUInt32 ();
 
@@ -2694,7 +2694,7 @@ namespace Mono.Cecil {
 			for (int i = 0; i < low_bounds.Length; i++)
 				low_bounds [i] = ReadCompressedInt32 ();
 
-			array.Dimensions.Clear ();
+            var dimensions = new ArrayDimension[rank];
 
 			for (int i = 0; i < rank; i++) {
 				int? lower = null, upper = null;
@@ -2705,10 +2705,10 @@ namespace Mono.Cecil {
 				if (i < sizes.Length)
 					upper = lower + (int) sizes [i] - 1;
 
-				array.Dimensions.Add (new ArrayDimension (lower, upper));
+				dimensions[i] = new ArrayDimension (lower, upper);
 			}
 
-			return array;
+			return new ArrayType(elementType, dimensions);
 		}
 
 		TypeReference GetTypeDefOrRef (MetadataToken token)
