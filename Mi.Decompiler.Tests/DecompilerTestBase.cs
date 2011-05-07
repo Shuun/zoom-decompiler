@@ -10,8 +10,6 @@ using Mi.Decompiler.Tests.Helpers;
 using Mi.Assemblies;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using SampleInputAssemblyFiles = Mi.Decompiler.Tests.Decompiler.SampleInputAssemblyFiles;
-
 namespace Mi.Decompiler.Tests
 {
 	public abstract class DecompilerTestBase
@@ -52,9 +50,10 @@ namespace Mi.Decompiler.Tests
 		{
 			DecompilerSettings settings = new DecompilerSettings();
 			settings.FullyQualifyAmbiguousTypeNames = false;
-			AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(new MemoryStream(SampleInputAssemblyFiles.SampleInputAssembly));
-            var testClass = assembly.MainModule.Types.First(c => c.Name == testClassName); 
-			AstBuilder decompiler = new AstBuilder(new DecompilerContext(assembly.MainModule) { Settings = settings });
+			AssemblyDefinition assembly = CompiledAssembly.Assembly;
+            var testClass = assembly.MainModule.Types.First(c => c.Name == testClassName);
+            var ctx = new DecompilerContext(assembly.MainModule) { Settings = settings };
+			AstBuilder decompiler = new AstBuilder(ctx);
 			decompiler.AddType(testClass);
 			new Helpers.RemoveCompilerAttribute().Run(decompiler.CompilationUnit);
 			StringWriter output = new StringWriter();

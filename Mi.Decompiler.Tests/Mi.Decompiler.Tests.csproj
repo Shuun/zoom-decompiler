@@ -79,57 +79,58 @@
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
       <HintPath>$(MSBuildExtensionsPath)\..\Microsoft SDKs\Silverlight\v4.0\Toolkit\Apr10\Testing\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows" />
-    <Reference Include="mscorlib" />
-    <Reference Include="system" />
+    <Reference Include="mscorlib, Version=2.0.5.0" />
+    <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Decompiler\CodeSampleFileParser.cs">
+    <Compile Include="CodeSampleFileParser.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Decompiler\CustomAttributes.code.cs">
+    <Compile Include="CompiledAssembly.cs" />
+    <Compile Include="CustomAttributes.code.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Decompiler\CustomAttributes\CustomAttributeTests.cs">
+    <Compile Include="CustomAttributes\CustomAttributeTests.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Decompiler\DecompilerTestBase.cs">
+    <Compile Include="DecompilerTestBase.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Decompiler\Helpers\CodeAssert.cs">
+    <Compile Include="Helpers\CodeAssert.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Decompiler\Helpers\RemoveCompilerAttribute.cs">
+    <Compile Include="Helpers\RemoveCompilerAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Decompiler\SampleInputAssemblyFiles.Designer.cs">
+    <Compile Include="SampleInputAssemblyFiles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SampleInputAssemblyFiles.resx</DependentUpon>
     </Compile>
-    <Compile Include="Decompiler\TestRunner.cs">
+    <Compile Include="TestRunner.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Decompiler\Types\EnumTests.cs">
+    <Compile Include="Types\EnumTests.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Decompiler\Types\S_EnumSamples.cs">
+    <Compile Include="Types\S_EnumSamples.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Decompiler\Types\S_TypeDeclarations.cs">
+    <Compile Include="Types\S_TypeDeclarations.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Decompiler\Types\S_TypeMemberDeclarations.cs">
+    <Compile Include="Types\S_TypeMemberDeclarations.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Decompiler\Types\TypeTests.cs">
+    <Compile Include="Types\TypeTests.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DiffLib\AlignedDiff.cs" />
@@ -174,8 +175,8 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Decompiler\BooleanConsumedAsInteger.il" />
-    <None Include="Decompiler\StackTests\StackTests.il" />
+    <None Include="BooleanConsumedAsInteger.il" />
+    <None Include="StackTests\StackTests.il" />
     <None Include="DiffLib\LICENSE.markdown" />
     <None Include="DiffLib\README.markdown" />
     <None Include="DiffLib\SIGNING.markdown" />
@@ -188,12 +189,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Decompiler\StackTests\StackTests.exe" />
+    <Content Include="StackTests\StackTests.exe" />
+    <None Include="SampleInputAssembly\bin\Debug\mscorlib.dll" />
     <None Include="SampleInputAssembly\bin\Debug\SampleInputAssembly.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Decompiler\SampleInputAssemblyFiles.resx">
+    <EmbeddedResource Include="SampleInputAssemblyFiles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>SampleInputAssemblyFiles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
