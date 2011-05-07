@@ -119,9 +119,22 @@
     <Compile Include="Decompiler\Types\S_TypeMemberDeclarations.cs" />
     <Compile Include="Decompiler\Types\TypeTests.cs" />
     <Compile Include="Decompiler\UndocumentedExpressions.cs" />
-    <Compile Include="Decompiler\UnsafeCode.cs" />
+    <None Include="Decompiler\UnsafeCode.cs" />
     <Compile Include="Decompiler\ValueTypes.cs" />
     <Compile Include="Decompiler\YieldReturn.cs" />
+    <Compile Include="DiffLib\AlignedDiff.cs" />
+    <Compile Include="DiffLib\AlignedDiffChange.cs" />
+    <Compile Include="DiffLib\ChangeType.cs" />
+    <Compile Include="DiffLib\Diff.cs" />
+    <Compile Include="DiffLib\DiffChange.cs" />
+    <Compile Include="DiffLib\EnumerableExtensions.cs" />
+    <Compile Include="DiffLib\IAlignmentFilter.cs" />
+    <Compile Include="DiffLib\ISimilarityComparer.cs" />
+    <Compile Include="DiffLib\LongestCommonSubstring.cs" />
+    <Compile Include="DiffLib\LongestCommonSubstringResult.cs" />
+    <Compile Include="DiffLib\StringAlignmentFilter.cs" />
+    <Compile Include="DiffLib\StringSimilarityComparer.cs" />
+    <Compile Include="DiffLib\StringSimilarityFilterPredicate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Empty.cs" />
   </ItemGroup>
@@ -134,6 +147,9 @@
   <ItemGroup>
     <None Include="Decompiler\BooleanConsumedAsInteger.il" />
     <None Include="Decompiler\StackTests\StackTests.il" />
+    <None Include="DiffLib\LICENSE.markdown" />
+    <None Include="DiffLib\README.markdown" />
+    <None Include="DiffLib\SIGNING.markdown" />
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
