@@ -172,7 +172,7 @@
   <data name="Loops" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\bin\Debug\Loops.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
-  <data name="Loops1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Loops_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\bin\Debug\Loops.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
   <data name="MultidimensionalArray" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -222,5 +222,95 @@
   </data>
   <data name="YieldReturn_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\bin\Debug\YieldReturn.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="CallOverloadedMethod_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\CallOverloadedMethod.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="CheckedUnchecked_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\CheckedUnchecked.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="CustomAttributes_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\CustomAttributes.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
+  </data>
+  <data name="DelegateConstruction_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\DelegateConstruction.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="Events_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\Events.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
+  </data>
+  <data name="ExceptionHandling_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\ExceptionHandling.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="Fields_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\Fields.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
+  </data>
+  <data name="Generics_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\Generics.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
+  </data>
+  <data name="IncrementDecrement_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\IncrementDecrement.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="InitializerTests_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\InitializerTests.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="Interfaces_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\Interfaces.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
+  </data>
+  <data name="Layouts_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\Layouts.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
+  </data>
+  <data name="Loops_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Loops.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="Methods_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\Methods.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
+  </data>
+  <data name="MultidimensionalArray_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\MultidimensionalArray.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="NestedTypes_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\NestedTypes.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
+  </data>
+  <data name="PropertiesAndEvents_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\PropertiesAndEvents.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="Properties_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\Properties.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
+  </data>
+  <data name="QueryExpressions_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\QueryExpressions.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="Switch_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Switch.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="S_AssemblyCustomAttribute_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\CustomAttributes\S_AssemblyCustomAttribute.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="S_CustomAttributeSamples_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\CustomAttributes\S_CustomAttributeSamples.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="S_CustomAttributes_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\CustomAttributes\S_CustomAttributes.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="S_EnumSamples_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Types\S_EnumSamples.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="S_TypeDeclarations_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Types\S_TypeDeclarations.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="S_TypeMemberDeclarations_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Types\S_TypeMemberDeclarations.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="UndocumentedExpressions_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\UndocumentedExpressions.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="UnsafeCode_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\UnsafeCode.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="ValueTypes_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\ValueTypes.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="YieldReturn_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\YieldReturn.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
   </data>
 </root>

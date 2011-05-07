@@ -115,6 +115,36 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SampleInputFiles.resx</DependentUpon>
     </Compile>
+    <None Include="SampleInput\CallOverloadedMethod.cs" />
+    <None Include="SampleInput\CheckedUnchecked.cs" />
+    <None Include="SampleInput\Assemblies\CustomAttributes.cs" />
+    <None Include="SampleInput\DelegateConstruction.cs" />
+    <None Include="SampleInput\Assemblies\Events.cs" />
+    <None Include="SampleInput\ExceptionHandling.cs" />
+    <None Include="SampleInput\Assemblies\Fields.cs" />
+    <None Include="SampleInput\Assemblies\Generics.cs" />
+    <None Include="SampleInput\IncrementDecrement.cs" />
+    <None Include="SampleInput\InitializerTests.cs" />
+    <None Include="SampleInput\Assemblies\Interfaces.cs" />
+    <None Include="SampleInput\Assemblies\Layouts.cs" />
+    <None Include="SampleInput\Loops.cs" />
+    <None Include="SampleInput\Assemblies\Methods.cs" />
+    <None Include="SampleInput\MultidimensionalArray.cs" />
+    <None Include="SampleInput\Assemblies\NestedTypes.cs" />
+    <None Include="SampleInput\Assemblies\Properties.cs" />
+    <None Include="SampleInput\PropertiesAndEvents.cs" />
+    <None Include="SampleInput\QueryExpressions.cs" />
+    <None Include="SampleInput\CustomAttributes\S_AssemblyCustomAttribute.cs" />
+    <None Include="SampleInput\CustomAttributes\S_CustomAttributes.cs" />
+    <None Include="SampleInput\CustomAttributes\S_CustomAttributeSamples.cs" />
+    <None Include="SampleInput\Types\S_EnumSamples.cs" />
+    <None Include="SampleInput\Types\S_TypeDeclarations.cs" />
+    <None Include="SampleInput\Types\S_TypeMemberDeclarations.cs" />
+    <None Include="SampleInput\Switch.cs" />
+    <None Include="SampleInput\UndocumentedExpressions.cs" />
+    <None Include="SampleInput\UnsafeCode.cs" />
+    <None Include="SampleInput\ValueTypes.cs" />
+    <None Include="SampleInput\YieldReturn.cs" />
     <Compile Include="TestRunner.cs">
       <SubType>Code</SubType>
     </Compile>

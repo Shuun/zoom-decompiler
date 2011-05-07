@@ -67,6 +67,38 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///using System.Collections.Generic;
+        ///
+        ///public class CallOverloadedMethod
+        ///{
+        ///	public void OverloadedMethod(object a)
+        ///	{
+        ///	}
+        ///	
+        ///	public void OverloadedMethod(int? a)
+        ///	{
+        ///	}
+        ///	
+        ///	public void OverloadedMethod(string a)
+        ///	{
+        ///	}
+        ///	
+        ///	public void Call()
+        ///	{
+        ///		this.OverloadedMethod(&quot;(string)&quot;);
+        ///		this.OverloadedMethod((obje [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CallOverloadedMethod_cs {
+            get {
+                return ResourceManager.GetString("CallOverloadedMethod_cs", resourceCulture);
+            }
+        }
+        
         internal static byte[] CallOverloadedMethod_pdb {
             get {
                 object obj = ResourceManager.GetObject("CallOverloadedMethod_pdb", resourceCulture);
@@ -78,6 +110,30 @@ namespace Mi.Decompiler.Tests {
             get {
                 object obj = ResourceManager.GetObject("CheckedUnchecked", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///public class CheckedUnchecked
+        ///{
+        ///	public int Operators(int a, int b)
+        ///	{
+        ///		int num = checked(a + b);
+        ///		int num2 = a + b;
+        ///		int num3 = checked(a - b);
+        ///		int num4 = a - b;
+        ///		int num5 = checked(a * b);
+        ///		int num6 = a * b;
+        ///		int num7 = a / b;
+        ///		int num8 = a % b;
+        ///		// The division operators / and % only exist in one form  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CheckedUnchecked_cs {
+            get {
+                return ResourceManager.GetString("CheckedUnchecked_cs", resourceCulture);
             }
         }
         
@@ -95,6 +151,38 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///using System.Runtime.CompilerServices;
+        ///
+        ///[assembly: Foo (&quot;bingo&quot;)]
+        ///
+        ///[assembly: TypeForwardedTo (typeof (System.Diagnostics.DebuggableAttribute))]
+        ///
+        ///enum Bingo : short {
+        ///	Fuel = 2,
+        ///	Binga = 4,
+        ///}
+        ///
+        ////*
+        ///in System.Security.AccessControl
+        ///
+        ///	[Flags]
+        ///	public enum AceFlags : byte {
+        ///		None = 0,
+        ///		ObjectInherit = 0x01,
+        ///		ContainerInherit = 0x02,
+        ///		NoPropagateInherit = 0x04,
+        ///		InheritOnly = 0x08,
+        ///		InheritanceFlags = ObjectInherit | ContainerInherit | NoPropagateInherit | Inh [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CustomAttributes_cs {
+            get {
+                return ResourceManager.GetString("CustomAttributes_cs", resourceCulture);
+            }
+        }
+        
         internal static byte[] CustomAttributes_pdb {
             get {
                 object obj = ResourceManager.GetObject("CustomAttributes_pdb", resourceCulture);
@@ -109,10 +197,57 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///using System.Collections.Generic;
+        ///using System.Linq;
+        ///
+        ///public static class DelegateConstruction
+        ///{
+        ///	class InstanceTests
+        ///	{
+        ///		public Action CaptureOfThis()
+        ///		{
+        ///			return delegate {
+        ///				CaptureOfThis();
+        ///			};
+        ///		}
+        ///		
+        ///		public Action CaptureOfThisAndParameter(int a)
+        ///		{
+        ///			return delegate {
+        ///				CaptureOfThi [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string DelegateConstruction_cs {
+            get {
+                return ResourceManager.GetString("DelegateConstruction_cs", resourceCulture);
+            }
+        }
+        
         internal static byte[] DelegateConstruction_pdb {
             get {
                 object obj = ResourceManager.GetObject("DelegateConstruction_pdb", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///
+        ///delegate void Pan (object sender, EventArgs args);
+        ///
+        ///abstract class Foo {
+        ///
+        ///	public abstract event Pan Bar;
+        ///}
+        ///.
+        /// </summary>
+        internal static string Events_cs {
+            get {
+                return ResourceManager.GetString("Events_cs", resourceCulture);
             }
         }
         
@@ -123,6 +258,50 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///
+        ///public class ExceptionHandling
+        ///{
+        ///	public void MethodEndingWithEndFinally()
+        ///	{
+        ///		try
+        ///		{
+        ///			throw null;
+        ///		}
+        ///		finally
+        ///		{
+        ///			Console.WriteLine();
+        ///		}
+        ///	}
+        ///	
+        ///	public void MethodEndingWithRethrow()
+        ///	{
+        ///		try
+        ///		{
+        ///			throw null;
+        ///		}
+        ///		catch
+        ///		{
+        ///			throw;
+        ///		}
+        ///	}
+        ///	
+        ///	public void TryCatchFinally()
+        ///	{
+        ///		try
+        ///		{
+        ///	 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ExceptionHandling_cs {
+            get {
+                return ResourceManager.GetString("ExceptionHandling_cs", resourceCulture);
+            }
+        }
+        
         internal static byte[] ExceptionHandling_pdb {
             get {
                 object obj = ResourceManager.GetObject("ExceptionHandling_pdb", resourceCulture);
@@ -130,10 +309,145 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Runtime.InteropServices;
+        ///
+        ///class Foo {
+        ///	Bar bar;
+        ///}
+        ///
+        ///class Bar {
+        ///	volatile int oiseau;
+        ///}
+        ///
+        ///class Baz {
+        ///	bool @bool;
+        ///	char @char;
+        ///	sbyte @sbyte;
+        ///	byte @byte;
+        ///	short int16;
+        ///	ushort uint16;
+        ///	int int32;
+        ///	uint uint32;
+        ///	long int64;
+        ///	ulong uint64;
+        ///	float single;
+        ///	double @double;
+        ///	string @string;
+        ///	object @object;
+        ///}
+        ///
+        ///enum Pim {
+        ///	Pam = 1,
+        ///	Poum = 2,
+        ///}
+        ///
+        ///class PanPan {
+        ///
+        ///	public const PanPan Peter = null;
+        ///	public const string QQ = &quot;qq&quot;;
+        ///	public const string nil = null;
+        ///	public const object obj =  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Fields_cs {
+            get {
+                return ResourceManager.GetString("Fields_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///
+        ///class Foo&lt;TBar, TBaz&gt; {}
+        ///
+        ///abstract class Bar&lt;T&gt; {
+        ///
+        ///	T bang;
+        ///
+        ///	public abstract Bar&lt;T&gt; Self ();
+        ///
+        ///	public abstract Bar&lt;string&gt; SelfString ();
+        ///}
+        ///
+        ///abstract class Baz {
+        ///
+        ///	public abstract TBang Gazonk&lt;TBang&gt; (object o);
+        ///
+        ///	public abstract Bar&lt;TBingo&gt; Gazoo&lt;TBingo&gt; ();
+        ///}
+        ///
+        ///class Zap {}
+        ///interface IZoom {}
+        ///
+        ///class Bongo&lt;T&gt; where T : Zap, IZoom {
+        ///
+        ///	enum Dang {
+        ///		Ding = 2,
+        ///		Dong = 12,
+        ///	}
+        ///}
+        ///
+        ///class Parent&lt;T&gt; {}
+        ///class Child&lt;T&gt; : Parent&lt;T&gt; {
+        ///	public T [] array;
+        ///}
+        ///class TamChil [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Generics_cs {
+            get {
+                return ResourceManager.GetString("Generics_cs", resourceCulture);
+            }
+        }
+        
         internal static byte[] IncrementDecrement {
             get {
                 object obj = ResourceManager.GetObject("IncrementDecrement", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///
+        ///public class IncrementDecrement
+        ///{
+        ///	[Flags]
+        ///	private enum MyEnum
+        ///	{
+        ///		None = 0,
+        ///		One = 1,
+        ///		Two = 2,
+        ///		Four = 4
+        ///	}
+        ///	
+        ///	public class MutableClass
+        ///	{
+        ///		public int Field;
+        ///		
+        ///		public int Property
+        ///		{
+        ///			get;
+        ///			set;
+        ///		}
+        ///		
+        ///		public uint this[string name]
+        ///		{
+        ///			get
+        ///			{
+        ///				return 0u;
+        ///			}
+        ///			set
+        ///			{
+        ///		 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string IncrementDecrement_cs {
+            get {
+                return ResourceManager.GetString("IncrementDecrement_cs", resourceCulture);
             }
         }
         
@@ -151,10 +465,107 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///using System.Collections.Generic;
+        ///
+        ///public class InitializerTests
+        ///{
+        ///	enum MyEnum
+        ///	{
+        ///		a,
+        ///		b
+        ///	}
+        ///	
+        ///	enum MyEnum2
+        ///	{
+        ///		c,
+        ///		d
+        ///	}
+        ///	
+        ///	class Data
+        ///	{
+        ///		public InitializerTests.MyEnum a
+        ///		{
+        ///			get;
+        ///			set;
+        ///		}
+        ///		public List&lt;InitializerTests.MyEnum2&gt; PropertyList
+        ///		{
+        ///			get;
+        ///			set;
+        ///		}
+        ///		public List&lt;Initializ [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string InitializerTests_cs {
+            get {
+                return ResourceManager.GetString("InitializerTests_cs", resourceCulture);
+            }
+        }
+        
         internal static byte[] InitializerTests_pdb {
             get {
                 object obj = ResourceManager.GetObject("InitializerTests_pdb", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///
+        ///interface IFoo {}
+        ///interface IBar : IFoo  {}
+        ///
+        ///abstract class Bar : IBar {}
+        ///
+        ///interface IBingo {
+        ///	void Foo ();
+        ///	void Bar ();
+        ///}
+        ///
+        ///class Bingo : IBingo {
+        ///
+        ///	void IBingo.Foo ()
+        ///	{
+        ///	}
+        ///
+        ///	void IBingo.Bar ()
+        ///	{
+        ///	}
+        ///}
+        ///.
+        /// </summary>
+        internal static string Interfaces_cs {
+            get {
+                return ResourceManager.GetString("Interfaces_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Runtime.InteropServices;
+        ///
+        ///[StructLayout (LayoutKind.Explicit, Size = 16)]
+        ///public struct Foo {
+        ///	[FieldOffset (0)] public ushort Bar;
+        ///	[FieldOffset (2)] public ushort Baz;
+        ///	[FieldOffset (4)] public uint Gazonk;
+        ///}
+        ///
+        ///class Babar {
+        ///}
+        ///
+        ///class Locke {
+        ///	public int [] integers = new int [] { 1, 2, 3, 4 };
+        ///}
+        ///.
+        /// </summary>
+        internal static string Layouts_cs {
+            get {
+                return ResourceManager.GetString("Layouts_cs", resourceCulture);
             }
         }
         
@@ -165,10 +576,68 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
-        internal static byte[] Loops1 {
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///using System.Collections;
+        ///using System.Collections.Generic;
+        ///
+        ///public class Loops
+        ///{
+        ///	public void ForEach(IEnumerable&lt;string&gt; enumerable)
+        ///	{
+        ///		foreach (string current in enumerable)
+        ///		{
+        ///			current.ToLower();
+        ///		}
+        ///	}
+        ///	
+        ///	public void ForEachOverList(List&lt;string&gt; list)
+        ///	{
+        ///		// List has a struct as enumerator, [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Loops_cs {
             get {
-                object obj = ResourceManager.GetObject("Loops1", resourceCulture);
+                return ResourceManager.GetString("Loops_cs", resourceCulture);
+            }
+        }
+        
+        internal static byte[] Loops_pdb {
+            get {
+                object obj = ResourceManager.GetObject("Loops_pdb", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Runtime.InteropServices;
+        ///
+        ///abstract class Foo {
+        ///	public abstract void Bar (int a);
+        ///}
+        ///
+        ///class Bar {
+        ///
+        ///	[DllImport (&quot;foo.dll&quot;)]
+        ///	public extern static void Pan ([MarshalAs (UnmanagedType.I4)] int i);
+        ///}
+        ///
+        ///public class Baz {
+        ///
+        ///	public void PrintAnswer ()
+        ///	{
+        ///		Console.WriteLine (&quot;answer: {0}&quot;, 42);
+        ///	}
+        ///}
+        ///
+        ///.
+        /// </summary>
+        internal static string Methods_cs {
+            get {
+                return ResourceManager.GetString("Methods_cs", resourceCulture);
             }
         }
         
@@ -186,6 +655,39 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///
+        ///public class MultidimensionalArray
+        ///{
+        ///	internal class Generic&lt;T, S&gt; where T : new()
+        ///	{
+        ///		private T[,] a = new T[20, 20];
+        ///		private S[,][] b = new S[20, 20][];
+        ///
+        ///		public T this[int i, int j]
+        ///		{
+        ///			get
+        ///			{
+        ///				return this.a[i, j];
+        ///			}
+        ///			set
+        ///			{
+        ///				this.a[i, j] = value;
+        ///			}
+        ///		}
+        ///		
+        ///		public void Te [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MultidimensionalArray_cs {
+            get {
+                return ResourceManager.GetString("MultidimensionalArray_cs", resourceCulture);
+            }
+        }
+        
         internal static byte[] MultidimensionalArray_pdb {
             get {
                 object obj = ResourceManager.GetObject("MultidimensionalArray_pdb", resourceCulture);
@@ -193,10 +695,94 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to class Foo {
+        ///	class Bar {
+        ///		class Baz {
+        ///		}
+        ///	}
+        ///}
+        ///
+        ///class Bingo {
+        ///	public class Fuel {
+        ///	}
+        ///
+        ///	public static Fuel GetFuel ()
+        ///	{
+        ///		return null;
+        ///	}
+        ///}
+        ///.
+        /// </summary>
+        internal static string NestedTypes_cs {
+            get {
+                return ResourceManager.GetString("NestedTypes_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///
+        ///abstract class Foo {
+        ///
+        ///	public abstract int Bar { get; }
+        ///	public abstract string Baz { get; set; }
+        ///	public abstract string Gazonk { set; }
+        ///}
+        ///
+        ///abstract class Bar {
+        ///
+        ///	public abstract Foo this [int a, string s] { set; }
+        ///}
+        ///
+        ///class Baz {
+        ///
+        ///	public string Bingo { get; set; }
+        ///}
+        ///.
+        /// </summary>
+        internal static string Properties_cs {
+            get {
+                return ResourceManager.GetString("Properties_cs", resourceCulture);
+            }
+        }
+        
         internal static byte[] PropertiesAndEvents {
             get {
                 object obj = ResourceManager.GetObject("PropertiesAndEvents", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///using System.Text;
+        ///
+        ///public class PropertiesAndEvents
+        ///{
+        ///	public event EventHandler AutomaticEvent;
+        ///	
+        ///	[field: NonSerialized]
+        ///	public event EventHandler AutomaticEventWithInitializer = delegate
+        ///	{
+        ///	}
+        ///	;
+        ///	
+        ///	public event EventHandler CustomEvent
+        ///	{
+        ///		add
+        ///		{
+        ///			this.AutomaticEvent += value;
+        ///		}
+        ///		remove
+        ///	 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string PropertiesAndEvents_cs {
+            get {
+                return ResourceManager.GetString("PropertiesAndEvents_cs", resourceCulture);
             }
         }
         
@@ -214,6 +800,35 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///using System.Collections.Generic;
+        ///using System.Linq;
+        ///
+        ///public class QueryExpressions
+        ///{
+        ///	public class Customer
+        ///	{
+        ///		public int CustomerID;
+        ///		public IEnumerable&lt;QueryExpressions.Order&gt; Orders;
+        ///		public string Name;
+        ///		public string Country;
+        ///		public string City;
+        ///	}
+        ///	
+        ///	public class Order
+        ///	{
+        ///		public int Or [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string QueryExpressions_cs {
+            get {
+                return ResourceManager.GetString("QueryExpressions_cs", resourceCulture);
+            }
+        }
+        
         internal static byte[] QueryExpressions_pdb {
             get {
                 object obj = ResourceManager.GetObject("QueryExpressions_pdb", resourceCulture);
@@ -221,10 +836,216 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///
+        ///[assembly: CLSCompliant(false)].
+        /// </summary>
+        internal static string S_AssemblyCustomAttribute_cs {
+            get {
+                return ResourceManager.GetString("S_AssemblyCustomAttribute_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///
+        ///namespace aa
+        ///{
+        ///	public static class CustomAttributes
+        ///	{
+        ///		[Flags]
+        ///		public enum EnumWithFlag
+        ///		{
+        ///			All = 15,
+        ///			None = 0,
+        ///			Item1 = 1,
+        ///			Item2 = 2,
+        ///			Item3 = 4,
+        ///			Item4 = 8
+        ///		}
+        ///		[AttributeUsage(AttributeTargets.All)]
+        ///		public class MyAttribute : Attribute
+        ///		{
+        ///			public MyAttribute(object val)
+        ///	 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string S_CustomAttributes_cs {
+            get {
+                return ResourceManager.GetString("S_CustomAttributes_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        /////$CS
+        ///using System;
+        /////$CE
+        ///
+        /////$$ TargetModule (ignored)
+        /////[module: CLSCompliantAttribute(false)]
+        /////$$ ParameterlessAttributeUsage
+        ///namespace ParameterLessAttributeUsage
+        ///{
+        ///	[Flags]
+        ///	public enum EnumWithFlagsAttribute
+        ///	{
+        ///		None = 0
+        ///	}
+        ///}
+        /////$$ AttributeWithEnumArgument
+        ///namespace AttributeWithEnumArgument
+        ///{
+        ///	[AttributeUsa [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string S_CustomAttributeSamples_cs {
+            get {
+                return ResourceManager.GetString("S_CustomAttributeSamples_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        /////$CS
+        ///using System;
+        /////$CE
+        ///
+        ///public static class S_EnumSamples
+        ///{
+        ///
+        ///    //$$ SingleValue
+        ///    public class TS_SingleValue
+        ///    {
+        ///        public AttributeTargets Method()
+        ///        {
+        ///            return AttributeTargets.Class;
+        ///        }
+        ///    }
+        ///    //$$ TwoValuesOr
+        ///    public class TS_TwoValuesOr
+        ///    {
+        ///         [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string S_EnumSamples_cs {
+            get {
+                return ResourceManager.GetString("S_EnumSamples_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///
+        ///namespace ClassMultiInterface
+        ///{
+        ///	public interface IA
+        ///	{
+        ///	}
+        ///	public interface IA2 : IA
+        ///	{
+        ///	}
+        ///	public interface IB
+        ///	{
+        ///	}
+        ///	public class C : IA2, IB
+        ///	{
+        ///	}
+        ///}
+        ///.
+        /// </summary>
+        internal static string S_TypeDeclarations_cs {
+            get {
+                return ResourceManager.GetString("S_TypeDeclarations_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        /////$CS
+        ///using System;
+        /////$CE
+        ///
+        /////$$ IndexerWithGetOnly
+        ///namespace IndexerWithGetOnly
+        ///{
+        ///	public class MyClass
+        ///	{
+        ///		public int this[int i]
+        ///		{
+        ///			get
+        ///			{
+        ///				return i;
+        ///			}
+        ///		}
+        ///	}
+        ///}
+        /////$$ IndexerWithSetOnly
+        ///namespace IndexerWithSetOnly
+        ///{
+        ///	public class MyClass
+        ///	{
+        ///		public int this[int i]
+        ///		{
+        ///			set
+        ///			{
+        ///			}
+        ///		}
+        ///	}
+        ///}
+        /////$$  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string S_TypeMemberDeclarations_cs {
+            get {
+                return ResourceManager.GetString("S_TypeMemberDeclarations_cs", resourceCulture);
+            }
+        }
+        
         internal static byte[] Switch {
             get {
                 object obj = ResourceManager.GetObject("Switch", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///
+        ///public static class Switch
+        ///{
+        ///	public static string ShortSwitchOverString(string text)
+        ///	{
+        ///		switch (text) {
+        ///			case &quot;First case&quot;:
+        ///				return &quot;Text&quot;;
+        ///			default:
+        ///				return &quot;Default&quot;;
+        ///		}
+        ///	}
+        ///	
+        ///	public static string SwitchOverString1(string text)
+        ///	{
+        ///		switch (text)
+        ///		{
+        ///			case &quot;First case&quot;:
+        ///				return &quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Switch_cs {
+            get {
+                return ResourceManager.GetString("Switch_cs", resourceCulture);
             }
         }
         
@@ -256,6 +1077,31 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///
+        ///public class UndocumentedExpressions
+        ///{
+        ///	public static int GetArgCount(__arglist)
+        ///	{
+        ///		ArgIterator argIterator = new ArgIterator(__arglist);
+        ///		return argIterator.GetRemainingCount();
+        ///	}
+        ///	
+        ///	public static void MakeTypedRef(object o)
+        ///	{
+        ///		TypedReference tr = __makeref(o);
+        ///		UndocumentedExpressions.Accept [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string UndocumentedExpressions_cs {
+            get {
+                return ResourceManager.GetString("UndocumentedExpressions_cs", resourceCulture);
+            }
+        }
+        
         internal static byte[] UndocumentedExpressions_pdb {
             get {
                 object obj = ResourceManager.GetObject("UndocumentedExpressions_pdb", resourceCulture);
@@ -267,6 +1113,39 @@ namespace Mi.Decompiler.Tests {
             get {
                 object obj = ResourceManager.GetObject("UnsafeCode", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///
+        ///public class UnsafeCode
+        ///{
+        ///	public unsafe int* NullPointer
+        ///	{
+        ///		get
+        ///		{
+        ///			return null;
+        ///		}
+        ///	}
+        ///	
+        ///	public unsafe long ConvertDoubleToLong(double d)
+        ///	{
+        ///		return *(long*)(&amp;d);
+        ///	}
+        ///	
+        ///	public unsafe void PassRefParameterAsPointer(ref int p)
+        ///	{
+        ///		fixed (int* ptr = &amp;p)
+        ///		{
+        ///			this.PassPointerAsRefParameter(pt [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string UnsafeCode_cs {
+            get {
+                return ResourceManager.GetString("UnsafeCode_cs", resourceCulture);
             }
         }
         
@@ -284,6 +1163,41 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///
+        ///public static class ValueTypes
+        ///{
+        ///	public struct S
+        ///	{
+        ///		public int Field;
+        ///		
+        ///		public S(int field)
+        ///		{
+        ///			this.Field = field;
+        ///		}
+        ///		
+        ///		public void SetField()
+        ///		{
+        ///			this.Field = 5;
+        ///		}
+        ///		
+        ///		public void MethodCalls()
+        ///		{
+        ///			this.SetField();
+        ///			ValueTypes.S.Test(this);
+        ///			ValueTypes.S.Test(ref this);
+        ///		 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ValueTypes_cs {
+            get {
+                return ResourceManager.GetString("ValueTypes_cs", resourceCulture);
+            }
+        }
+        
         internal static byte[] ValueTypes_pdb {
             get {
                 object obj = ResourceManager.GetObject("ValueTypes_pdb", resourceCulture);
@@ -295,6 +1209,34 @@ namespace Mi.Decompiler.Tests {
             get {
                 object obj = ResourceManager.GetObject("YieldReturn", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
+        ///using System.Collections.Generic;
+        ///
+        ///public static class YieldReturn
+        ///{
+        ///	public static IEnumerable&lt;string&gt; SimpleYieldReturn()
+        ///	{
+        ///		yield return &quot;A&quot;;
+        ///		yield return &quot;B&quot;;
+        ///		yield return &quot;C&quot;;
+        ///	}
+        ///	
+        ///	public static IEnumerable&lt;int&gt; YieldReturnInLoop()
+        ///	{
+        ///		for (int i = 0; i &lt; 100; i++) {
+        ///			yield return i;
+        ///		 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string YieldReturn_cs {
+            get {
+                return ResourceManager.GetString("YieldReturn_cs", resourceCulture);
             }
         }
         
