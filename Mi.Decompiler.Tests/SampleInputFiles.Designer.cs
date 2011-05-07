@@ -836,6 +836,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] S_AssemblyCustomAttribute {
+            get {
+                object obj = ResourceManager.GetObject("S_AssemblyCustomAttribute", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
         ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
@@ -847,6 +854,20 @@ namespace Mi.Decompiler.Tests {
         internal static string S_AssemblyCustomAttribute_cs {
             get {
                 return ResourceManager.GetString("S_AssemblyCustomAttribute_cs", resourceCulture);
+            }
+        }
+        
+        internal static byte[] S_AssemblyCustomAttribute_pdb {
+            get {
+                object obj = ResourceManager.GetObject("S_AssemblyCustomAttribute_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] S_CustomAttributes {
+            get {
+                object obj = ResourceManager.GetObject("S_CustomAttributes", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -882,6 +903,20 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] S_CustomAttributes_pdb {
+            get {
+                object obj = ResourceManager.GetObject("S_CustomAttributes_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] S_CustomAttributeSamples {
+            get {
+                object obj = ResourceManager.GetObject("S_CustomAttributeSamples", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
         ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
@@ -909,6 +944,20 @@ namespace Mi.Decompiler.Tests {
         internal static string S_CustomAttributeSamples_cs {
             get {
                 return ResourceManager.GetString("S_CustomAttributeSamples_cs", resourceCulture);
+            }
+        }
+        
+        internal static byte[] S_CustomAttributeSamples_pdb {
+            get {
+                object obj = ResourceManager.GetObject("S_CustomAttributeSamples_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] S_EnumSamples {
+            get {
+                object obj = ResourceManager.GetObject("S_EnumSamples", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -942,6 +991,20 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] S_EnumSamples_pdb {
+            get {
+                object obj = ResourceManager.GetObject("S_EnumSamples_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] S_TypeDeclarations {
+            get {
+                object obj = ResourceManager.GetObject("S_TypeDeclarations", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to using System;
         ///
@@ -965,6 +1028,20 @@ namespace Mi.Decompiler.Tests {
         internal static string S_TypeDeclarations_cs {
             get {
                 return ResourceManager.GetString("S_TypeDeclarations_cs", resourceCulture);
+            }
+        }
+        
+        internal static byte[] S_TypeDeclarations_pdb {
+            get {
+                object obj = ResourceManager.GetObject("S_TypeDeclarations_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] S_TypeMemberDeclarations {
+            get {
+                object obj = ResourceManager.GetObject("S_TypeMemberDeclarations", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -1008,6 +1085,13 @@ namespace Mi.Decompiler.Tests {
         internal static string S_TypeMemberDeclarations_cs {
             get {
                 return ResourceManager.GetString("S_TypeMemberDeclarations_cs", resourceCulture);
+            }
+        }
+        
+        internal static byte[] S_TypeMemberDeclarations_pdb {
+            get {
+                object obj = ResourceManager.GetObject("S_TypeMemberDeclarations_pdb", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
