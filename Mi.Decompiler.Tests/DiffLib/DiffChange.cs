@@ -43,11 +43,11 @@ namespace DiffLib
         public DiffChange(bool equal, int length1, int length2)
         {
             if (length1 < 0)
-                throw new ArgumentOutOfRangeException("length1", length1, "length1 must be 0 or greater");
+                throw new ArgumentOutOfRangeException("length1");
             if (length2 < 0)
-                throw new ArgumentOutOfRangeException("length2", length2, "length2 must be 0 or greater");
+                throw new ArgumentOutOfRangeException("length2");
             if (equal && length1 != length2)
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "length1 ({0}) must be equal to length2 ({1}) when the equal parameter is true", length1, length2));
+                throw new ArgumentException("equal");
 
             _Equal = equal;
             _Length1 = length1;
