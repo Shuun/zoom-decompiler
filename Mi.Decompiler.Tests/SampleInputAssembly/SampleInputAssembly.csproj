@@ -63,7 +63,7 @@
     <Compile Include="UndocumentedExpressions.cs" />
     <Compile Include="ValueTypes.cs" />
     <Compile Include="YieldReturn.cs" />
-    <None Include="UnsafeCode.cs" />
+    <Compile Include="UnsafeCode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

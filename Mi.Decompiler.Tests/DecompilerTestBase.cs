@@ -28,6 +28,7 @@ namespace Mi.Decompiler.Tests
             var reader = new StringReader(text);
             while (true)
             {
+
                 string line = reader.ReadLine();
                 if (line == null)
                     yield break;
