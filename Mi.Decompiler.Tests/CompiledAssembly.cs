@@ -43,26 +43,27 @@ namespace Mi.Decompiler.Tests
             }
         }
 
-        public static readonly AssemblyDefinition Mscorlib;
-        public static readonly AssemblyDefinition SystemCore;
-        public static readonly AssemblyDefinition Assembly;
+        static readonly Lazy<AssemblyDefinition> m_Assembly = new Lazy<AssemblyDefinition>(LoadAssembly);
+        public static AssemblyDefinition Assembly { get { return m_Assembly.Value; } }
 
-        static CompiledAssembly()
+        static AssemblyDefinition LoadAssembly()
         {
-            Mscorlib = AssemblyDefinition.ReadAssembly(
+            var mscorlib = AssemblyDefinition.ReadAssembly(
                 new MemoryStream(SampleInputAssemblyFiles.mscorlib));
-            SystemCore = AssemblyDefinition.ReadAssembly(
+            var systemCore = AssemblyDefinition.ReadAssembly(
                 new MemoryStream(SampleInputAssemblyFiles.System_Core));
 
             var rp = new ReaderParameters(ReadingMode.Immediate);
-            rp.AssemblyResolver = new Resolver((asmRef, _rp) => asmRef.Name == Mscorlib.Name.Name ? Mscorlib : SystemCore);
-            //rp.SymbolReaderProvider
+            rp.AssemblyResolver = new Resolver((asmRef, _rp) => asmRef.Name == mscorlib.Name.Name ? mscorlib : systemCore);
+            rp.SymbolReaderProvider = new Mi.Assemblies.Pdb.PdbReaderProvider();
             rp.ReadSymbols = true;
             rp.SymbolStream = new MemoryStream(SampleInputAssemblyFiles.SampleInputAssembly_pdb);
 
-            Assembly = AssemblyDefinition.ReadAssembly(
+            var result = AssemblyDefinition.ReadAssembly(
                 new MemoryStream(SampleInputAssemblyFiles.SampleInputAssembly),
                 rp);
+
+            return result;
         }
     }
 }
