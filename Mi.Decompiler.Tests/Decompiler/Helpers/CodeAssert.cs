@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using DiffLib;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ICSharpCode.Decompiler.Tests.Helpers
 {
