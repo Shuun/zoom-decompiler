@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ICSharpCode.Decompiler.Tests.Types
 {
-	[TestFixture]
+	[TestClass]
 	public class TypeTests : DecompilerTestBase
 	{
-		[Test]
+		[TestMethod]
 		public void TypeMemberDeclarations()
 		{
 			ValidateFileRoundtrip(@"Types\S_TypeMemberDeclarations.cs");
