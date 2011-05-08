@@ -103,6 +103,9 @@
     <Compile Include="Assemblies\FieldTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Assemblies\ImportCecilTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CodeSampleFileParser.cs">
       <SubType>Code</SubType>
     </Compile>

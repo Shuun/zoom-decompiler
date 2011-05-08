@@ -10,8 +10,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class ImageReadTests : BaseTestFixture {
-
+	public class ImageReadTests
+    {
 		[TestMethod]
 		public void ImageSections ()
 		{

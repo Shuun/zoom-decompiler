@@ -43,15 +43,19 @@ namespace Mi.Decompiler.Tests
             }
         }
 
-        static readonly AssemblyDefinition Mscorlib = AssemblyDefinition.ReadAssembly(
-            new MemoryStream(SampleInputFiles.mscorlib));
-        static readonly AssemblyDefinition SystemCore = AssemblyDefinition.ReadAssembly(
-            new MemoryStream(SampleInputFiles.System_Core));
-        static readonly AssemblyDefinition System = AssemblyDefinition.ReadAssembly(
-            new MemoryStream(SampleInputFiles.system));
+        static readonly List<AssemblyDefinition> assemblyCache = new List<AssemblyDefinition>();
 
         public static AssemblyDefinition LoadAssembly(string assembly)
         {
+            var fromCache = assemblyCache.FirstOrDefault(
+                            loadedAsm => string.Equals(
+                                assembly,
+                                loadedAsm.Name.Name,
+                                StringComparison.OrdinalIgnoreCase));
+
+            if (fromCache != null)
+                return fromCache;
+
             var bytes = (byte[])SampleInputFiles.ResourceManager.GetObject(assembly);
 
             if (bytes == null)
@@ -59,22 +63,17 @@ namespace Mi.Decompiler.Tests
 
             var dllStream = new MemoryStream(bytes);
             MemoryStream pdbStream;
-            try
             {
-                pdbStream = new MemoryStream((byte[])SampleInputFiles.ResourceManager.GetObject(assembly + "_pdb"));
-            }
-            catch
-            {
-                pdbStream = null;
+                var pdbBytes = (byte[])SampleInputFiles.ResourceManager.GetObject(assembly + "_pdb");
+                if(pdbBytes==null)
+                    pdbStream = null;
+                else
+                    pdbStream = new MemoryStream(pdbBytes);
             }
 
             var para = new ReaderParameters(ReadingMode.Immediate)
             {
-                AssemblyResolver = new Resolver((asmRef, _rp) =>
-                    asmRef.Name == Mscorlib.Name.Name ? Mscorlib :
-                    asmRef.Name == SystemCore.Name.Name ? SystemCore :
-                    asmRef.Name == System.Name.Name ? System :
-                    null),
+                AssemblyResolver = new Resolver((asmRef, _rp) => LoadAssembly(asmRef.Name)),
                 SymbolReaderProvider = pdbStream == null ? null : new Mi.Assemblies.Pdb.PdbReaderProvider(),
                 SymbolStream = pdbStream,
                 ReadSymbols = true
@@ -83,6 +82,8 @@ namespace Mi.Decompiler.Tests
             var result = AssemblyDefinition.ReadAssembly(
                 dllStream,
                 para);
+
+            assemblyCache.Add(result);
 
             return result;
         }
