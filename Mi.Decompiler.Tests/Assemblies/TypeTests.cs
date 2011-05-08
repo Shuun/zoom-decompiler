@@ -6,15 +6,17 @@ using Mi.Assemblies.Cil;
 using Mi.Assemblies.Metadata;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Mi.Decompiler.Tests;
 
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class TypeTests : BaseTestFixture {
-
-		[TestCSharp ("Layouts.cs")]
-		public void TypeLayout (ModuleDefinition module)
-		{
+	public class TypeTests
+    {
+		[TestMethod]
+        public void TypeLayout()
+        {
+            var module = SampleInputLoader.LoadAssembly("Layouts").MainModule;
 			var foo = module.GetType ("Foo");
 			Assert.IsNotNull (foo);
 			Assert.IsTrue (foo.IsValueType);
@@ -28,9 +30,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.IsFalse (babar.HasLayoutInfo);
 		}
 
-		[TestIL ("types.il")]
-		public void SimpleInterfaces (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void SimpleInterfaces()
+        {
+            var module = SampleInputLoader.LoadAssembly("types").MainModule;
 			var ibaz = module.GetType ("IBaz");
 			Assert.IsNotNull (ibaz);
 
@@ -44,9 +47,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("IFoo", interfaces [1].FullName);
 		}
 
-		[TestCSharp ("Generics.cs")]
-		public void GenericTypeDefinition (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void GenericTypeDefinition()
+        {
+            var module = SampleInputLoader.LoadAssembly("GenericsAsm").MainModule;
 			var foo = module.GetType ("Foo`2");
 			Assert.IsNotNull (foo);
 
@@ -64,9 +68,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (foo, tbaz.Owner);
 		}
 
-		[TestCSharp ("Generics.cs")]
-		public void ConstrainedGenericType (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void ConstrainedGenericType()
+        {
+            var module = SampleInputLoader.LoadAssembly("GenericsAsm").MainModule;
 			var bongo_t = module.GetType ("Bongo`1");
 			Assert.IsNotNull (bongo_t);
 
@@ -81,9 +86,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("IZoom", t.Constraints [1].FullName);
 		}
 
-		[TestCSharp ("Generics.cs")]
-		public void GenericBaseType (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void GenericBaseType()
+        {
+            var module = SampleInputLoader.LoadAssembly("GenericsAsm").MainModule;
 			var child = module.GetType ("Child`1");
 
 			var child_t = child.GenericParameters [0];
@@ -96,9 +102,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (child_t, instance.GenericArguments [0]);
 		}
 
-		[TestCSharp ("Generics.cs")]
-		public void GenericConstraintOnGenericParameter (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void GenericConstraintOnGenericParameter()
+        {
+            var module = SampleInputLoader.LoadAssembly("GenericsAsm").MainModule;
 			var duel = module.GetType ("Duel`3");
 
 			Assert.AreEqual (3, duel.GenericParameters.Count);
@@ -111,9 +118,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (t2, t3.Constraints [0]);
 		}
 
-		[TestCSharp ("Generics.cs")]
-		public void GenericForwardBaseType (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void GenericForwardBaseType()
+        {
+            var module = SampleInputLoader.LoadAssembly("GenericsAsm").MainModule;
 			var tamchild = module.GetType ("TamChild");
 
 			Assert.IsNotNull (tamchild);
@@ -127,9 +135,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (module.GetType ("Tamtam"), generic_instance.GenericArguments [0]);
 		}
 
-		[TestCSharp ("Generics.cs")]
-		public void TypeExtentingGenericOfSelf (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void TypeExtentingGenericOfSelf()
+        {
+            var module = SampleInputLoader.LoadAssembly("GenericsAsm").MainModule;
 			var rec_child = module.GetType ("RecChild");
 
 			Assert.IsNotNull (rec_child);
@@ -143,9 +152,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (rec_child, generic_instance.GenericArguments [0]);
 		}
 
-		[TestCSharp ("Methods.cs")]
-		public void TypeReferenceValueType (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void TypeReferenceValueType()
+        {
+            var module = SampleInputLoader.LoadAssembly("Methods").MainModule;
 			var baz = module.GetType ("Baz");
 			var method = baz.GetMethod ("PrintAnswer");
 
@@ -155,9 +165,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.IsTrue (int32.IsValueType);
 		}
 
-		[TestModule ("gifaceref.exe")]
-		public void GenericInterfaceReference (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void GenericInterfaceReference()
+        {
+            var module = SampleInputLoader.LoadAssembly("gifaceref").MainModule;
 			var type = module.GetType ("Program");
 			var iface = type.Interfaces [0];
 
