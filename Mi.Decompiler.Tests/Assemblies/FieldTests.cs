@@ -133,7 +133,7 @@ namespace Mi.Assemblies.Tests {
 		[TestMethod]
 		public void GenericFieldDefinition ()
 		{
-            var module = SampleInputLoader.LoadAssembly("Generics").MainModule;
+            var module = SampleInputLoader.LoadAssembly("GenericsAsm").MainModule;
 		
 			var bar = module.GetType ("Bar`1");
 			Assert.IsNotNull (bar);
@@ -290,7 +290,7 @@ namespace Mi.Assemblies.Tests {
 		[TestMethod]
 		public void NestedEnumOfGenericTypeDefinition ()
 		{
-            var module = SampleInputLoader.LoadAssembly("Generics").MainModule;
+            var module = SampleInputLoader.LoadAssembly("GenericsAsm").MainModule;
 		
 			var dang = module.GetType ("Bongo`1/Dang");
 			Assert.IsNotNull (dang);
