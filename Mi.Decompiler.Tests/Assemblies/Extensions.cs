@@ -62,12 +62,10 @@ namespace Mi.Assemblies.Tests {
 
 		public static MethodReference MakeGeneric (this MethodReference self, params TypeReference [] arguments)
 		{
-			var reference = new MethodReference {
-				Name = self.Name,
+			var reference = new MethodReference(self.Name, self.ReturnType) {
 				DeclaringType = self.DeclaringType.MakeGenericType (arguments),
 				HasThis = self.HasThis,
 				ExplicitThis = self.ExplicitThis,
-				ReturnType = self.ReturnType,
 				CallingConvention = self.CallingConvention,
 			};
 
@@ -82,10 +80,8 @@ namespace Mi.Assemblies.Tests {
 
 		public static FieldReference MakeGeneric (this FieldReference self, params TypeReference [] arguments)
 		{
-			return new FieldReference {
-				Name = self.Name,
-				DeclaringType = self.DeclaringType.MakeGenericType (arguments),
-				FieldType = self.FieldType,
+			return new FieldReference(self.Name, self.FieldType) {
+				DeclaringType = self.DeclaringType.MakeGenericType (arguments)
 			};
 		}
 	}

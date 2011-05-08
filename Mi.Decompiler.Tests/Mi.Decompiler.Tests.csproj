@@ -97,6 +97,9 @@
     <Compile Include="Assemblies\EventTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Assemblies\Extensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CodeSampleFileParser.cs">
       <SubType>Code</SubType>
     </Compile>
