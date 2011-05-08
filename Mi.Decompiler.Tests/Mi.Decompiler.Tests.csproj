@@ -115,6 +115,9 @@
     <Compile Include="Assemblies\ModuleTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Assemblies\NestedTypesTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CodeSampleFileParser.cs">
       <SubType>Code</SubType>
     </Compile>

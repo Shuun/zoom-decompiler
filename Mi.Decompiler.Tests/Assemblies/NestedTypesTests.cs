@@ -3,15 +3,17 @@ using System;
 using Mi.Assemblies;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Mi.Decompiler.Tests;
 
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class NestedTypesTests : BaseTestFixture {
-
-		[TestCSharp ("NestedTypes.cs")]
-		public void NestedTypes (ModuleDefinition module)
+	public class NestedTypesTests 
+    {
+		[TestMethod]
+		public void NestedTypes ()
 		{
+            var module = SampleInputLoader.LoadAssembly("NestedTypes").MainModule;
 			var foo = module.GetType ("Foo");
 
 			Assert.AreEqual ("Foo", foo.Name);
@@ -33,9 +35,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (module, baz.Module);
 		}
 
-		[TestCSharp ("NestedTypes.cs")]
-		public void DirectNestedType (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void DirectNestedType()
+        {
+            var module = SampleInputLoader.LoadAssembly("NestedTypes").MainModule;
 			var bingo = module.GetType ("Bingo");
 			var get_fuel = bingo.GetMethod ("GetFuel");
 
