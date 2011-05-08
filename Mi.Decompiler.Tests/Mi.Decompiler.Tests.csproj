@@ -24,7 +24,7 @@
     <TestPageFileName>TestPage.html</TestPageFileName>
     <CreateTestPage>true</CreateTestPage>
     <ValidateXaml>true</ValidateXaml>
-    <EnableOutOfBrowser>false</EnableOutOfBrowser>
+    <EnableOutOfBrowser>true</EnableOutOfBrowser>
     <OutOfBrowserSettingsFile>Properties\OutOfBrowserSettings.xml</OutOfBrowserSettingsFile>
     <UsePlatformExtensions>false</UsePlatformExtensions>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
@@ -303,6 +303,7 @@
     <None Include="Assemblies\Resources\assemblies\varargs.exe" />
     <None Include="Assemblies\Resources\assemblies\boxedoptarg.dll" />
     <None Include="Assemblies\Resources\assemblies\catch.exe" />
+    <None Include="Properties\OutOfBrowserSettings.xml" />
     <Content Include="StackTests\StackTests.exe" />
   </ItemGroup>
   <ItemGroup>
