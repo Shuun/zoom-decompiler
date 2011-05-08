@@ -52,8 +52,21 @@ namespace Mi.Decompiler.Tests
 
         public static AssemblyDefinition LoadAssembly(string assembly)
         {
-            var dllStream = new MemoryStream((byte[])SampleInputFiles.ResourceManager.GetObject(assembly));
-            var pdbStream = new MemoryStream((byte[])SampleInputFiles.ResourceManager.GetObject(assembly+"_pdb"));
+            var bytes = (byte[])SampleInputFiles.ResourceManager.GetObject(assembly);
+
+            if (bytes == null)
+                throw new FileNotFoundException("Assembly '"+assembly+"' was not found in resources.");
+
+            var dllStream = new MemoryStream(bytes);
+            MemoryStream pdbStream;
+            try
+            {
+                pdbStream = new MemoryStream((byte[])SampleInputFiles.ResourceManager.GetObject(assembly + "_pdb"));
+            }
+            catch
+            {
+                pdbStream = null;
+            }
 
             var para = new ReaderParameters(ReadingMode.Immediate)
             {
@@ -62,7 +75,7 @@ namespace Mi.Decompiler.Tests
                     asmRef.Name == SystemCore.Name.Name ? SystemCore :
                     asmRef.Name == System.Name.Name ? System :
                     null),
-                SymbolReaderProvider = new Mi.Assemblies.Pdb.PdbReaderProvider(),
+                SymbolReaderProvider = pdbStream == null ? null : new Mi.Assemblies.Pdb.PdbReaderProvider(),
                 SymbolStream = pdbStream,
                 ReadSymbols = true
             };

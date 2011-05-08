@@ -81,6 +81,8 @@ namespace Mi.Assemblies {
 		{
 			var module = ReadModule (image, parameters);
 
+            if(parameters.SymbolStream!=null
+                || !string.IsNullOrEmpty(module.FullyQualifiedName))
 			ReadSymbols (module, parameters);
 
 			if (parameters.AssemblyResolver != null)
@@ -93,8 +95,8 @@ namespace Mi.Assemblies {
 		{
 			var symbol_reader_provider = parameters.SymbolReaderProvider;
 
-			if (symbol_reader_provider == null && parameters.ReadSymbols)
-				symbol_reader_provider = SymbolProvider.GetPlatformReaderProvider ();
+            if (symbol_reader_provider == null && parameters.ReadSymbols)
+                symbol_reader_provider = new Mi.Assemblies.Pdb.PdbReaderProvider();
 
 			if (symbol_reader_provider != null) {
 				module.SymbolReaderProvider = symbol_reader_provider;

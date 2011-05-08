@@ -63,7 +63,7 @@ namespace Mi.Assemblies.PE {
 		void ReadImage ()
 		{
 			if (BaseStream.Length < 128)
-				throw new BadImageFormatException ();
+				throw new BadImageFormatException ("Stream is too small (only "+BaseStream.Length+" bytes.");
 
 			// - DOSHeader
 
@@ -73,14 +73,14 @@ namespace Mi.Assemblies.PE {
 			// End					64
 
 			if (ReadUInt16 () != 0x5a4d)
-				throw new BadImageFormatException ();
+				throw new BadImageFormatException ("MZ header signature expected.");
 
 			Advance (58);
 
 			MoveTo (ReadUInt32 ());
 
 			if (ReadUInt32 () != 0x00004550)
-				throw new BadImageFormatException ();
+				throw new BadImageFormatException ("PE header signature expected after DOS header.");
 
 			// - PEFileHeader
 
@@ -208,7 +208,7 @@ namespace Mi.Assemblies.PE {
 			cli = ReadDataDirectory ();
 
 			if (cli.IsZero)
-				throw new BadImageFormatException ();
+				throw new BadImageFormatException ("CLI data directory is missing.");
 
 			// Reserved				8
 			Advance (8);
@@ -334,7 +334,7 @@ namespace Mi.Assemblies.PE {
 			MoveTo (metadata);
 
 			if (ReadUInt32 () != 0x424a5342)
-				throw new BadImageFormatException ();
+                throw new BadImageFormatException("Magic signature 424a5342h is expected.");
 
 			// MajorVersion			2
 			// MinorVersion			2
@@ -351,7 +351,7 @@ namespace Mi.Assemblies.PE {
 
 			var section = image.GetSectionAtVirtualAddress (metadata.VirtualAddress);
 			if (section == null)
-				throw new BadImageFormatException ();
+				throw new BadImageFormatException ("Section is missing.");
 
 			image.MetadataSection = section;
 
@@ -672,7 +672,7 @@ namespace Mi.Assemblies.PE {
 				reader.ReadImage ();
 				return reader.image;
 			} catch (EndOfStreamException e) {
-				throw new BadImageFormatException (stream.GetFullyQualifiedName (), e);
+				throw new BadImageFormatException ("Stream end is unexpected.", e);
 			}
 		}
 	}

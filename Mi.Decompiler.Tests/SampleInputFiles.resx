@@ -409,4 +409,85 @@
   <data name="YieldReturn_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\YieldReturn.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
   </data>
+  <data name="boxedoptarg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\boxedoptarg.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="catch_exe" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\catch.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="cppcli" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\cppcli.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="decsec1_xml" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\decsec1-xml.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="decsec_att" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\decsec-att.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="decsec_xml" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\decsec-xml.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="fptr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\fptr.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="gifaceref" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\gifaceref.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="hello" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\hello.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="hello1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\hello1.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="hellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\hellow.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="hello_anycpu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\hello.anycpu.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="hello_ia64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\hello.ia64.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="hello_x64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\hello.x64.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="hello_x86" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\hello.x86.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="iterator" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\iterator.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="libhello" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\libhello.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="libres" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\libres.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="marshal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\marshal.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="mma" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\mma.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="moda" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\moda.netmodule;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="modb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\modb.netmodule;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="noblob" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\noblob.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="pinvoke" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\pinvoke.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="switch_dll" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\switch.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="text_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\text_file.txt;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
+  </data>
+  <data name="varargs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assemblies\Resources\assemblies\varargs.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
 </root>

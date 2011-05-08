@@ -100,6 +100,9 @@
     <Compile Include="Assemblies\Extensions.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Assemblies\FieldTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CodeSampleFileParser.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -124,6 +127,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SampleInputFiles.resx</DependentUpon>
     </Compile>
+    <None Include="Assemblies\Resources\assemblies\moda.netmodule" />
+    <None Include="Assemblies\Resources\assemblies\modb.netmodule" />
     <None Include="SampleInput\CallOverloadedMethod.cs" />
     <None Include="SampleInput\CheckedUnchecked.cs" />
     <None Include="SampleInput\Assemblies\CustomAttributes.cs" />
@@ -267,6 +272,31 @@
     <None Include="SampleInput\Assemblies\bin\Debug\NestedTypes.pdb" />
     <None Include="SampleInput\Assemblies\bin\Debug\Properties.dll" />
     <None Include="SampleInput\Assemblies\bin\Debug\Properties.pdb" />
+    <None Include="Assemblies\Resources\assemblies\cppcli.dll" />
+    <None Include="Assemblies\Resources\assemblies\decsec1-xml.dll" />
+    <None Include="Assemblies\Resources\assemblies\decsec-att.dll" />
+    <None Include="Assemblies\Resources\assemblies\decsec-xml.dll" />
+    <None Include="Assemblies\Resources\assemblies\fptr.exe" />
+    <None Include="Assemblies\Resources\assemblies\gifaceref.exe" />
+    <None Include="Assemblies\Resources\assemblies\hello.anycpu.exe" />
+    <None Include="Assemblies\Resources\assemblies\hello.exe" />
+    <None Include="Assemblies\Resources\assemblies\hello.ia64.exe" />
+    <None Include="Assemblies\Resources\assemblies\hello.x64.exe" />
+    <None Include="Assemblies\Resources\assemblies\hello.x86.exe" />
+    <None Include="Assemblies\Resources\assemblies\hello1.exe" />
+    <None Include="Assemblies\Resources\assemblies\hellow.exe" />
+    <None Include="Assemblies\Resources\assemblies\iterator.exe" />
+    <None Include="Assemblies\Resources\assemblies\libhello.dll" />
+    <None Include="Assemblies\Resources\assemblies\libres.dll" />
+    <None Include="Assemblies\Resources\assemblies\marshal.dll" />
+    <None Include="Assemblies\Resources\assemblies\mma.exe" />
+    <None Include="Assemblies\Resources\assemblies\noblob.dll" />
+    <None Include="Assemblies\Resources\assemblies\pinvoke.exe" />
+    <None Include="Assemblies\Resources\assemblies\switch.exe" />
+    <None Include="Assemblies\Resources\assemblies\text_file.txt" />
+    <None Include="Assemblies\Resources\assemblies\varargs.exe" />
+    <None Include="Assemblies\Resources\assemblies\boxedoptarg.dll" />
+    <None Include="Assemblies\Resources\assemblies\catch.exe" />
     <Content Include="StackTests\StackTests.exe" />
   </ItemGroup>
   <ItemGroup>

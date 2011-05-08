@@ -92,9 +92,9 @@ namespace Mi.Assemblies {
 			var name = module.assembly != null ? module.assembly.Name : null;
 			var fq_name = stream.GetFullyQualifiedName ();
 			var symbol_writer_provider = parameters.SymbolWriterProvider;
-			if (symbol_writer_provider == null && parameters.WriteSymbols)
-				symbol_writer_provider = SymbolProvider.GetPlatformWriterProvider ();
-			var symbol_writer = GetSymbolWriter (module, fq_name, symbol_writer_provider);
+            var symbol_writer = symbol_writer_provider!=null ?
+			    GetSymbolWriter (module, fq_name, symbol_writer_provider) :
+                null;
 
 #if !SILVERLIGHT && !CF
 			if (parameters.StrongNameKeyPair != null && name != null)
