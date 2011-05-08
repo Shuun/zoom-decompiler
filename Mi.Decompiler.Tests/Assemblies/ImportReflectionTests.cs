@@ -12,7 +12,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class ImportReflectionTests : BaseTestFixture {
+	public class ImportReflectionTests 
+    {
 
 		[TestMethod]
 		public void ImportString ()
@@ -46,15 +47,12 @@ namespace Mi.Assemblies.Tests {
 			var get_string = Compile<Func<string, string>> ((module, body) => {
 				var type = module.Types [1];
 
-				var method_by_ref = new MethodDefinition {
-					Name = "ModifyString",
-					IsPrivate = true,
-					IsStatic = true,
-				};
+				var method_by_ref = new MethodDefinition(
+                    "ModifyString",
+                    MethodAttributes.Private | MethodAttributes.Static,
+                    module.Import (typeof (void)));
 
 				type.Methods.Add (method_by_ref);
-
-				method_by_ref.MethodReturnType.ReturnType = module.Import (typeof (void));
 
 				method_by_ref.Parameters.Add (new ParameterDefinition (module.Import (typeof (string))));
 				method_by_ref.Parameters.Add (new ParameterDefinition (module.Import (typeof (string).MakeByRefType ())));
@@ -376,15 +374,12 @@ namespace Mi.Assemblies.Tests {
 		{
 			var module = type.Module;
 
-			var method = new MethodDefinition {
-				Name = "Run",
-				IsPublic = true,
-				IsStatic = true,
-			};
+			var method = new MethodDefinition(
+                "Run",
+                MethodAttributes.Public | MethodAttributes.Static,
+                module.Import (pattern.ReturnType));
 
 			type.Methods.Add (method);
-
-			method.MethodReturnType.ReturnType = module.Import (pattern.ReturnType);
 
 			foreach (var parameter_pattern in pattern.GetParameters ())
 				method.Parameters.Add (new ParameterDefinition (module.Import (parameter_pattern.ParameterType)));
