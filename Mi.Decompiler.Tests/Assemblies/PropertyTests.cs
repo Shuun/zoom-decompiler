@@ -1,15 +1,17 @@
 using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Mi.Decompiler.Tests;
 
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class PropertyTests : BaseTestFixture {
-
-		[TestCSharp ("Properties.cs")]
-		public void AbstractMethod (ModuleDefinition module)
+	public class PropertyTests 
+    {
+		[TestMethod]
+		public void AbstractMethod ()
 		{
+            var module = SampleInputLoader.LoadAssembly("Properties").MainModule;
 			var type = module.GetType ("Foo");
 
 			Assert.IsTrue (type.HasProperties);
@@ -53,9 +55,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (MethodSemanticsAttributes.Setter, property.SetMethod.SemanticsAttributes);
 		}
 
-		[TestIL ("others.il")]
-		public void OtherMethod (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void OtherMethod()
+        {
+            var module = SampleInputLoader.LoadAssembly("others").MainModule;
 			var type = module.GetType ("Others");
 
 			Assert.IsTrue (type.HasProperties);
@@ -82,9 +85,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("bet_Context", other.Name);
 		}
 
-		[TestCSharp ("Properties.cs")]
-		public void SetOnlyIndexer (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void SetOnlyIndexer()
+        {
+            var module = SampleInputLoader.LoadAssembly("Properties").MainModule;
 			var type = module.GetType ("Bar");
 			var indexer = type.Properties.Where (property => property.Name == "Item").First ();
 
@@ -95,9 +99,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("System.String", parameters [1].ParameterType.FullName);
 		}
 
-		[TestCSharp ("Properties.cs")]
-		public void ReadSemanticsFirst (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void ReadSemanticsFirst()
+        {
+            var module = SampleInputLoader.LoadAssembly("Properties").MainModule;
 			var type = module.GetType ("Baz");
 			var setter = type.GetMethod ("set_Bingo");
 
