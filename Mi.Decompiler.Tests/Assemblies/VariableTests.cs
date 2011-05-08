@@ -9,8 +9,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class VariableTests : BaseTestFixture {
-
+	public class VariableTests
+    {
 		[TestMethod]
 		public void AddVariableIndex ()
 		{
