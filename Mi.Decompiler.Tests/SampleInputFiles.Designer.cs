@@ -455,43 +455,31 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to using System;
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
+        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
+        ///
+        ///using System;
         ///using System.Collections.Generic;
         ///
-        ///class Foo&lt;TBar, TBaz&gt; {}
-        ///
-        ///abstract class Bar&lt;T&gt; {
-        ///
-        ///	T bang;
-        ///
-        ///	public abstract Bar&lt;T&gt; Self ();
-        ///
-        ///	public abstract Bar&lt;string&gt; SelfString ();
-        ///}
-        ///
-        ///abstract class Baz {
-        ///
-        ///	public abstract TBang Gazonk&lt;TBang&gt; (object o);
-        ///
-        ///	public abstract Bar&lt;TBingo&gt; Gazoo&lt;TBingo&gt; ();
-        ///}
-        ///
-        ///class Zap {}
-        ///interface IZoom {}
-        ///
-        ///class Bongo&lt;T&gt; where T : Zap, IZoom {
-        ///
-        ///	enum Dang {
-        ///		Ding = 2,
-        ///		Dong = 12,
-        ///	}
-        ///}
-        ///
-        ///class Parent&lt;T&gt; {}
-        ///class Child&lt;T&gt; : Parent&lt;T&gt; {
-        ///	public T [] array;
-        ///}
-        ///class TamChil [rest of string was truncated]&quot;;.
+        ///public static class Generics
+        ///{
+        ///	public class MyArray&lt;T&gt;
+        ///	{
+        ///		public class NestedClass&lt;Y&gt;
+        ///		{
+        ///			public T Item1;
+        ///			public Y Item2;
+        ///		}
+        ///		
+        ///		private T[] arr;
+        ///		
+        ///		public MyArray(int capacity)
+        ///		{
+        ///			this.arr = new T[capacity];
+        ///		}
+        ///		
+        ///		public void Size(int capacity)
+        ///	 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Generics_cs {
             get {
