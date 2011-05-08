@@ -351,7 +351,9 @@ namespace Mi.Assemblies.Tests {
 			using (var stream = new MemoryStream ()) {
 				module.Write (stream);
 				//File.WriteAllBytes (Path.Combine (Path.Combine (Path.GetTempPath (), "cecil"), module.Name + ".dll"), stream.ToArray ());
-				return SR.Assembly.Load (stream.ToArray ());
+                var p = new System.Windows.AssemblyPart();
+                var result = p.Load(stream);
+                return result; // SR.Assembly.Load(stream.ToArray());
 			}
 		}
 
