@@ -82,7 +82,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events", "..\Mi.Decompiler.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fields", "..\Mi.Decompiler.Tests\SampleInput\Assemblies\Fields.csproj", "{D3FF4B60-7BBE-4398-868A-8231FBAE1E6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generics", "..\Mi.Decompiler.Tests\SampleInput\Assemblies\Generics.csproj", "{608229A9-6004-4C15-8C4C-D59AF4C9A095}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericsAsm", "..\Mi.Decompiler.Tests\SampleInput\Assemblies\GenericsAsm.csproj", "{608229A9-6004-4C15-8C4C-D59AF4C9A095}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "..\Mi.Decompiler.Tests\SampleInput\Assemblies\Interfaces.csproj", "{9998AA42-F882-4607-946F-CAABBA1A48C3}"
 EndProject

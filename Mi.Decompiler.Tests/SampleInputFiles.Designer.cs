@@ -1450,9 +1450,9 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
-        internal static byte[] System_Core {
+        internal static byte[] SystemCore {
             get {
-                object obj = ResourceManager.GetObject("System_Core", resourceCulture);
+                object obj = ResourceManager.GetObject("SystemCore", resourceCulture);
                 return ((byte[])(obj));
             }
         }

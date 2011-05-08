@@ -49,14 +49,14 @@ namespace Mi.Decompiler.Tests
         {
             var fromCache = assemblyCache.FirstOrDefault(
                             loadedAsm => string.Equals(
-                                assembly,
-                                loadedAsm.Name.Name,
+                                assembly.Replace(".", ""),
+                                loadedAsm.Name.Name.Replace(".",""),
                                 StringComparison.OrdinalIgnoreCase));
 
             if (fromCache != null)
                 return fromCache;
 
-            var bytes = (byte[])SampleInputFiles.ResourceManager.GetObject(assembly);
+            var bytes = (byte[])SampleInputFiles.ResourceManager.GetObject(assembly.Replace(".", ""));
 
             if (bytes == null)
                 throw new FileNotFoundException("Assembly '"+assembly+"' was not found in resources.");
