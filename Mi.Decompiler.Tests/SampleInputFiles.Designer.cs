@@ -60,6 +60,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] boxedoptarg {
+            get {
+                object obj = ResourceManager.GetObject("boxedoptarg", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] CallOverloadedMethod {
             get {
                 object obj = ResourceManager.GetObject("CallOverloadedMethod", resourceCulture);
@@ -106,6 +113,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] catch_exe {
+            get {
+                object obj = ResourceManager.GetObject("catch_exe", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] CheckedUnchecked {
             get {
                 object obj = ResourceManager.GetObject("CheckedUnchecked", resourceCulture);
@@ -140,6 +154,13 @@ namespace Mi.Decompiler.Tests {
         internal static byte[] CheckedUnchecked_pdb {
             get {
                 object obj = ResourceManager.GetObject("CheckedUnchecked_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] cppcli {
+            get {
+                object obj = ResourceManager.GetObject("cppcli", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -200,6 +221,27 @@ namespace Mi.Decompiler.Tests {
         internal static byte[] CustomAttributesAsm_pdb {
             get {
                 object obj = ResourceManager.GetObject("CustomAttributesAsm_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] decsec_att {
+            get {
+                object obj = ResourceManager.GetObject("decsec_att", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] decsec_xml {
+            get {
+                object obj = ResourceManager.GetObject("decsec_xml", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] decsec1_xml {
+            get {
+                object obj = ResourceManager.GetObject("decsec1_xml", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -398,6 +440,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] fptr {
+            get {
+                object obj = ResourceManager.GetObject("fptr", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] Generics {
             get {
                 object obj = ResourceManager.GetObject("Generics", resourceCulture);
@@ -467,6 +516,62 @@ namespace Mi.Decompiler.Tests {
         internal static byte[] GenericsAsm_pdb {
             get {
                 object obj = ResourceManager.GetObject("GenericsAsm_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] gifaceref {
+            get {
+                object obj = ResourceManager.GetObject("gifaceref", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] hello {
+            get {
+                object obj = ResourceManager.GetObject("hello", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] hello_anycpu {
+            get {
+                object obj = ResourceManager.GetObject("hello_anycpu", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] hello_ia64 {
+            get {
+                object obj = ResourceManager.GetObject("hello_ia64", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] hello_x64 {
+            get {
+                object obj = ResourceManager.GetObject("hello_x64", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] hello_x86 {
+            get {
+                object obj = ResourceManager.GetObject("hello_x86", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] hello1 {
+            get {
+                object obj = ResourceManager.GetObject("hello1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] hellow {
+            get {
+                object obj = ResourceManager.GetObject("hellow", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -628,6 +733,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] iterator {
+            get {
+                object obj = ResourceManager.GetObject("iterator", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] Layouts {
             get {
                 object obj = ResourceManager.GetObject("Layouts", resourceCulture);
@@ -663,6 +775,20 @@ namespace Mi.Decompiler.Tests {
         internal static byte[] Layouts_pdb {
             get {
                 object obj = ResourceManager.GetObject("Layouts_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] libhello {
+            get {
+                object obj = ResourceManager.GetObject("libhello", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] libres {
+            get {
+                object obj = ResourceManager.GetObject("libres", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -709,6 +835,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] marshal {
+            get {
+                object obj = ResourceManager.GetObject("marshal", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] Methods {
             get {
                 object obj = ResourceManager.GetObject("Methods", resourceCulture);
@@ -749,6 +882,27 @@ namespace Mi.Decompiler.Tests {
         internal static byte[] Methods_pdb {
             get {
                 object obj = ResourceManager.GetObject("Methods_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] mma {
+            get {
+                object obj = ResourceManager.GetObject("mma", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] moda {
+            get {
+                object obj = ResourceManager.GetObject("moda", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] modb {
+            get {
+                object obj = ResourceManager.GetObject("modb", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -842,6 +996,20 @@ namespace Mi.Decompiler.Tests {
         internal static byte[] NestedTypes_pdb {
             get {
                 object obj = ResourceManager.GetObject("NestedTypes_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] noblob {
+            get {
+                object obj = ResourceManager.GetObject("noblob", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] pinvoke {
+            get {
+                object obj = ResourceManager.GetObject("pinvoke", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1273,6 +1441,13 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] switch_dll {
+            get {
+                object obj = ResourceManager.GetObject("switch_dll", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] Switch_pdb {
             get {
                 object obj = ResourceManager.GetObject("Switch_pdb", resourceCulture);
@@ -1291,6 +1466,16 @@ namespace Mi.Decompiler.Tests {
             get {
                 object obj = ResourceManager.GetObject("System_Core", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cecil ftw!
+        ///.
+        /// </summary>
+        internal static string text_file {
+            get {
+                return ResourceManager.GetString("text_file", resourceCulture);
             }
         }
         
@@ -1425,6 +1610,13 @@ namespace Mi.Decompiler.Tests {
         internal static byte[] ValueTypes_pdb {
             get {
                 object obj = ResourceManager.GetObject("ValueTypes_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] varargs {
+            get {
+                object obj = ResourceManager.GetObject("varargs", resourceCulture);
                 return ((byte[])(obj));
             }
         }

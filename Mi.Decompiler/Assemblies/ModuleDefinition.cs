@@ -866,7 +866,7 @@ namespace Mi.Assemblies {
 			if (string.IsNullOrEmpty (fq_name))
 				throw new InvalidOperationException ();
 
-			var provider = SymbolProvider.GetPlatformReaderProvider ();
+            var provider = new Mi.Assemblies.Pdb.PdbReaderProvider();
 
 			SymbolReader = provider.GetSymbolReader (this, fq_name);
 

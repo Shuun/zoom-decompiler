@@ -5,22 +5,25 @@ using Mi.Assemblies.Metadata;
 using Mi.Assemblies.PE;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Mi.Decompiler.Tests;
 
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class FieldTests : BaseTestFixture {
-
-		[TestCSharp ("Fields.cs")]
-		public void TypeDefField (ModuleDefinition module)
+	public class FieldTests
+    {
+		[TestMethod]
+		public void TypeDefField ()
 		{
+            var module = SampleInputLoader.LoadAssembly("Fields").MainModule;
+
 			var type = module.Types [1];
 			Assert.AreEqual ("Foo", type.Name);
 			Assert.AreEqual (1, type.Fields.Count);
 
 			var field = type.Fields [0];
 			Assert.AreEqual ("bar", field.Name);
-			Assert.AreEqual (1, field.MetadataToken.RID);
+			Assert.AreEqual (1u, field.MetadataToken.RID);
 			Assert.IsNotNull (field.FieldType);
 			Assert.AreEqual ("Bar", field.FieldType.FullName);
 			Assert.AreEqual (TokenType.Field, field.MetadataToken.TokenType);
@@ -28,9 +31,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.IsNull (field.Constant);
 		}
 
-		[TestCSharp ("Fields.cs")]
-		public void PrimitiveTypes (ModuleDefinition module)
+		[TestMethod]
+		public void PrimitiveTypes ()
 		{
+            var module = SampleInputLoader.LoadAssembly("Fields").MainModule;
+		
 			var type = module.GetType ("Baz");
 
 			AssertField (type, "char", typeof (char));
@@ -49,9 +54,11 @@ namespace Mi.Assemblies.Tests {
 			AssertField (type, "object", typeof (object));
 		}
 
-		[TestCSharp ("Fields.cs")]
-		public void VolatileField (ModuleDefinition module)
+		[TestMethod]
+		public void VolatileField ()
 		{
+            var module = SampleInputLoader.LoadAssembly("Fields").MainModule;
+		
 			var type = module.GetType ("Bar");
 
 			Assert.IsTrue (type.HasFields);
@@ -65,9 +72,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.IsFalse (field.HasConstant);
 		}
 
-		[TestCSharp ("Layouts.cs")]
-		public void FieldLayout (ModuleDefinition module)
+		[TestMethod]
+		public void FieldLayout ()
 		{
+            var module = SampleInputLoader.LoadAssembly("Layouts").MainModule;
+		
 			var foo = module.GetType ("Foo");
 			Assert.IsNotNull (foo);
 
@@ -94,32 +103,38 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (4, field.Offset);
 		}
 
-		[TestCSharp ("Layouts.cs")]
-		public void FieldRVA (ModuleDefinition module)
+		[TestMethod]
+		public void FieldRVA ()
 		{
-			var priv_impl = GetPrivateImplementationType (module);
-			Assert.IsNotNull (priv_impl);
+            //var module = SampleInputLoader.LoadAssembly("Layouts").MainModule;
+		
+            //var priv_impl = GetPrivateImplementationType (module);
+            //Assert.IsNotNull (priv_impl);
 
-			Assert.AreEqual (1, priv_impl.Fields.Count);
+            //Assert.AreEqual (1, priv_impl.Fields.Count);
 
-			var field = priv_impl.Fields [0];
+            //var field = priv_impl.Fields [0];
 
-			Assert.IsNotNull (field);
-			Assert.AreNotEqual (0, field.RVA);
-			Assert.IsNotNull (field.InitialValue);
-			Assert.AreEqual (16, field.InitialValue.Length);
+            //Assert.IsNotNull (field);
+            //Assert.AreNotEqual (0, field.RVA);
+            //Assert.IsNotNull (field.InitialValue);
+            //Assert.AreEqual (16, field.InitialValue.Length);
 
-			var buffer = new ByteBuffer (field.InitialValue);
+            //var buffer = new ByteBuffer (field.InitialValue);
 
-			Assert.AreEqual (1, buffer.ReadUInt32 ());
-			Assert.AreEqual (2, buffer.ReadUInt32 ());
-			Assert.AreEqual (3, buffer.ReadUInt32 ());
-			Assert.AreEqual (4, buffer.ReadUInt32 ());
+            //Assert.AreEqual (1, buffer.ReadUInt32 ());
+            //Assert.AreEqual (2, buffer.ReadUInt32 ());
+            //Assert.AreEqual (3, buffer.ReadUInt32 ());
+            //Assert.AreEqual (4, buffer.ReadUInt32 ());
+
+            Assert.Fail("Commented out, using mysterious ByteBuffer");
 		}
 
-		[TestCSharp ("Generics.cs")]
-		public void GenericFieldDefinition (ModuleDefinition module)
+		[TestMethod]
+		public void GenericFieldDefinition ()
 		{
+            var module = SampleInputLoader.LoadAssembly("Generics").MainModule;
+		
 			var bar = module.GetType ("Bar`1");
 			Assert.IsNotNull (bar);
 
@@ -136,9 +151,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (t, bang.FieldType);
 		}
 
-		[TestIL ("types.il")]
-		public void ArrayFields (ModuleDefinition module)
+		[TestMethod]
+		public void ArrayFields ()
 		{
+            var module = SampleInputLoader.LoadAssembly("types").MainModule;
+		
 			var types = module.GetType ("Types");
 			Assert.IsNotNull (types);
 
@@ -165,9 +182,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (null, array.Dimensions [1].UpperBound);
 		}
 
-		[TestCSharp ("Fields.cs")]
-		public void EnumFieldsConstant (ModuleDefinition module)
+		[TestMethod]
+		public void EnumFieldsConstant ()
 		{
+            var module = SampleInputLoader.LoadAssembly("Fields").MainModule;
+		
 			var pim = module.GetType ("Pim");
 			Assert.IsNotNull (pim);
 
@@ -179,9 +198,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (2, (int) field.Constant);
 		}
 
-		[TestCSharp ("Fields.cs")]
-		public void StringAndClassConstant (ModuleDefinition module)
+		[TestMethod]
+		public void StringAndClassConstant ()
 		{
+            var module = SampleInputLoader.LoadAssembly("Fields").MainModule;
+		
 			var panpan = module.GetType ("PanPan");
 			Assert.IsNotNull (panpan);
 
@@ -196,9 +217,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (null, (string) field.Constant);
 		}
 
-		[TestCSharp ("Fields.cs")]
-		public void ObjectConstant (ModuleDefinition module)
+		[TestMethod]
+		public void ObjectConstant ()
 		{
+            var module = SampleInputLoader.LoadAssembly("Fields").MainModule;
+		
 			var panpan = module.GetType ("PanPan");
 			Assert.IsNotNull (panpan);
 
@@ -207,9 +230,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.IsNull (field.Constant);
 		}
 
-		[TestIL ("types.il")]
-		public void NullPrimitiveConstant (ModuleDefinition module)
+		[TestMethod]
+		public void NullPrimitiveConstant ()
 		{
+            var module = SampleInputLoader.LoadAssembly("types").MainModule;
+		
 			var fields = module.GetType ("Fields");
 
 			var field = fields.GetField ("int32_nullref");
@@ -217,9 +242,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (null, field.Constant);
 		}
 
-		[TestCSharp ("Fields.cs")]
-		public void ArrayConstant (ModuleDefinition module)
+		[TestMethod]
+		public void ArrayConstant ()
 		{
+            var module = SampleInputLoader.LoadAssembly("Fields").MainModule;
+		
 			var panpan = module.GetType ("PanPan");
 			Assert.IsNotNull (panpan);
 
@@ -228,39 +255,43 @@ namespace Mi.Assemblies.Tests {
 			Assert.IsNull (field.Constant);
 		}
 
-		[TestIL ("types.il")]
-		public void ConstantCoalescing (ModuleDefinition module)
+		[TestMethod]
+		public void ConstantCoalescing ()
 		{
+            var module = SampleInputLoader.LoadAssembly("types").MainModule;
+		
 			var fields = module.GetType ("Fields");
 
 			var field = fields.GetField ("int32_int16");
 			Assert.AreEqual ("System.Int32", field.FieldType.FullName);
 			Assert.IsTrue (field.HasConstant);
-			Assert.IsInstanceOfType (typeof (short), field.Constant);
+            Assert.IsInstanceOfType(field.Constant, typeof(short));
 			Assert.AreEqual ((short) 1, field.Constant);
 
 			field = fields.GetField ("int16_int32");
 			Assert.AreEqual ("System.Int16", field.FieldType.FullName);
 			Assert.IsTrue (field.HasConstant);
-			Assert.IsInstanceOfType (typeof (int), field.Constant);
+            Assert.IsInstanceOfType(field.Constant, typeof(int));
 			Assert.AreEqual (1, field.Constant);
 
 			field = fields.GetField ("char_int16");
 			Assert.AreEqual ("System.Char", field.FieldType.FullName);
 			Assert.IsTrue (field.HasConstant);
-			Assert.IsInstanceOfType (typeof (short), field.Constant);
+            Assert.IsInstanceOfType(field.Constant, typeof(short));
 			Assert.AreEqual ((short) 1, field.Constant);
 
 			field = fields.GetField ("int16_char");
 			Assert.AreEqual ("System.Int16", field.FieldType.FullName);
 			Assert.IsTrue (field.HasConstant);
-			Assert.IsInstanceOfType (typeof (char), field.Constant);
+            Assert.IsInstanceOfType(field.Constant, typeof(char));
 			Assert.AreEqual ('s', field.Constant);
 		}
 
-		[TestCSharp ("Generics.cs")]
-		public void NestedEnumOfGenericTypeDefinition (ModuleDefinition module)
+		[TestMethod]
+		public void NestedEnumOfGenericTypeDefinition ()
 		{
+            var module = SampleInputLoader.LoadAssembly("Generics").MainModule;
+		
 			var dang = module.GetType ("Bongo`1/Dang");
 			Assert.IsNotNull (dang);
 
@@ -273,9 +304,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (12, field.Constant);
 		}
 
-		[TestModule ("marshal.dll")]
-		public void MarshalAsFixedStr (ModuleDefinition module)
+		[TestMethod]
+		public void MarshalAsFixedStr ()
 		{
+            var module = SampleInputLoader.LoadAssembly("marshal").MainModule;
+		
 			var boc = module.GetType ("Boc");
 			var field = boc.GetField ("a");
 
@@ -288,9 +321,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (42, info.Size);
 		}
 
-		[TestModule ("marshal.dll")]
-		public void MarshalAsFixedArray (ModuleDefinition module)
+		[TestMethod]
+		public void MarshalAsFixedArray ()
 		{
+            var module = SampleInputLoader.LoadAssembly("marshal").MainModule;
+		
 			var boc = module.GetType ("Boc");
 			var field = boc.GetField ("b");
 

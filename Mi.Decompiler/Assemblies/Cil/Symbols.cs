@@ -185,7 +185,7 @@ namespace Mi.Assemblies.Cil {
 
 		static SR.AssemblyName GetPlatformSymbolAssemblyName ()
 		{
-			var cecil_name = typeof (SymbolProvider).Assembly.GetName ();
+			var cecil_name = new System.Reflection.AssemblyName(typeof (SymbolProvider).Assembly.FullName);
 
 			var name = new SR.AssemblyName {
 				Name = "Mono.Cecil." + symbol_kind,
