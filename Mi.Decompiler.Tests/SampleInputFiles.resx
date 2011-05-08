@@ -121,7 +121,7 @@
   <data name="mscorlib" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\mscorlibdll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="System_Core" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="SystemCore" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\System.Coredll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="system" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -266,10 +266,10 @@
     <value>SampleInput\bin\Debug\Generics.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
   <data name="GenericsAsm" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>SampleInput\Assemblies\bin\Debug\Generics.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+    <value>SampleInput\Assemblies\bin\Debug\GenericsAsm.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
   <data name="GenericsAsm_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>SampleInput\Assemblies\bin\Debug\Generics.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+    <value>SampleInput\Assemblies\bin\Debug\GenericsAsm.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
   <data name="Generics_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Generics.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;Windows-1252</value>
