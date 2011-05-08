@@ -91,6 +91,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Assemblies\CustomAttributesTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Assemblies\EventTests.cs">
       <SubType>Code</SubType>
     </Compile>
