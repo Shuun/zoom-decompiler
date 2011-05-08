@@ -5,15 +5,17 @@ using Mi.Assemblies;
 using Mi.Assemblies.Metadata;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Mi.Decompiler.Tests;
 
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class ParameterTests : BaseTestFixture {
-
-		[TestModule ("marshal.dll")]
-		public void MarshalAsI4 (ModuleDefinition module)
+	public class ParameterTests 
+    {
+		[TestMethod]
+		public void MarshalAsI4 ()
 		{
+            var module = SampleInputLoader.LoadAssembly("marshal").MainModule;
 			var bar = module.GetType ("Bar");
 			var pan = bar.GetMethod ("Pan");
 
@@ -28,9 +30,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (NativeType.I4, info.NativeType);
 		}
 
-		[TestModule ("marshal.dll")]
-		public void CustomMarshaler (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void CustomMarshaler()
+        {
+            var module = SampleInputLoader.LoadAssembly("marshal").MainModule;
 			var bar = module.GetType ("Bar");
 			var pan = bar.GetMethod ("PanPan");
 
@@ -49,9 +52,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (module, info.ManagedType.Scope);
 		}
 
-		[TestModule ("marshal.dll")]
-		public void SafeArrayMarshaler (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void SafeArrayMarshaler()
+        {
+            var module = SampleInputLoader.LoadAssembly("marshal").MainModule;
 			var bar = module.GetType ("Bar");
 			var pan = bar.GetMethod ("PanPan");
 
@@ -62,9 +66,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (VariantType.Dispatch, info.ElementType);
 		}
 
-		[TestModule ("marshal.dll")]
-		public void ArrayMarshaler (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void ArrayMarshaler()
+        {
+            var module = SampleInputLoader.LoadAssembly("marshal").MainModule;
 			var bar = module.GetType ("Bar");
 			var pan = bar.GetMethod ("PanPan");
 
@@ -89,9 +94,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (-1, info.SizeParameterIndex);
 		}
 
-		[TestModule ("marshal.dll")]
-		public void ArrayMarshalerSized (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void ArrayMarshalerSized()
+        {
+            var module = SampleInputLoader.LoadAssembly("marshal").MainModule;
 			var delegate_type = module.GetType ("SomeMethod");
 			var parameter = delegate_type.GetMethod ("Invoke").Parameters [1];
 
@@ -103,9 +109,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (0, array_info.SizeParameterMultiplier);
 		}
 
-		[TestModule ("boxedoptarg.dll")]
-		public void BoxedDefaultArgumentValue (ModuleDefinition module)
-		{
+		[TestMethod ]
+        public void BoxedDefaultArgumentValue()
+        {
+            var module = SampleInputLoader.LoadAssembly("boxedoptarg").MainModule;
 			var foo = module.GetType ("Foo");
 			var bar = foo.GetMethod ("Bar");
 			var baz = bar.Parameters [0];
@@ -207,9 +214,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (2, z.Index);
 		}
 
-		[TestIL ("hello.il")]
-		public void GenericParameterConstant (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void GenericParameterConstant()
+        {
+            var module = SampleInputLoader.LoadAssembly("hello").MainModule;
 			var foo = module.GetType ("Foo");
 			var method = foo.GetMethod ("GetState");
 
