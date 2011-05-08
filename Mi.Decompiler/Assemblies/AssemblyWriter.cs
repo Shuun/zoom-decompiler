@@ -28,10 +28,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using System.Text;
 
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 using Mi.Assemblies.Cil;
 using Mi.Assemblies.Metadata;
 using Mi.Assemblies.PE;
@@ -1279,8 +1280,8 @@ namespace Mi.Assemblies {
 
 		void AddGenericParameters ()
 		{
-			var items = this.generic_parameters.items;
-			var size = this.generic_parameters.size;
+			var items = this.generic_parameters.ToArray();
+			var size = this.generic_parameters.Count;
 			Array.Sort (items, 0, size, new GenericParameterComparer ());
 
 			var generic_param_table = GetTable<GenericParamTable> (Table.GenericParam);

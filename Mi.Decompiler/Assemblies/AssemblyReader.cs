@@ -31,7 +31,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 using Mi.Assemblies.Cil;
 using Mi.Assemblies.Metadata;
 using Mi.Assemblies.PE;
@@ -538,7 +538,7 @@ namespace Mi.Assemblies {
 
 		public Collection<ModuleDefinition> ReadModules ()
 		{
-			var modules = new Collection<ModuleDefinition> (1);
+			var modules = new Collection<ModuleDefinition> ();
 			modules.Add (this.module);
 
 			int length = MoveTo (Table.File);
@@ -610,7 +610,7 @@ namespace Mi.Assemblies {
 		public Collection<Resource> ReadResources ()
 		{
 			int length = MoveTo (Table.ManifestResource);
-			var resources = new Collection<Resource> (length);
+			var resources = new Collection<Resource> ();
 
 			for (int i = 1; i <= length; i++) {
 				var offset = ReadUInt32 ();
@@ -1088,7 +1088,7 @@ namespace Mi.Assemblies {
 			if (!metadata.TryGetInterfaceMapping (type, out mapping))
 				return new Collection<TypeReference> ();
 
-			var interfaces = new Collection<TypeReference> (mapping.Length);
+			var interfaces = new Collection<TypeReference> ();
 
 			this.context = type;
 
@@ -1788,7 +1788,7 @@ namespace Mi.Assemblies {
 
 			metadata.RemoveGenericParameterRange (provider);
 
-			var generic_parameters = new Collection<GenericParameter> ((int) range.Length);
+			var generic_parameters = new Collection<GenericParameter> ();
 
 			for (uint i = 0; i < range.Length; i++) {
 				ReadUInt16 (); // index
@@ -1871,7 +1871,7 @@ namespace Mi.Assemblies {
 			if (!metadata.TryGetGenericConstraintMapping (generic_parameter, out mapping))
 				return new Collection<TypeReference> ();
 
-			var constraints = new Collection<TypeReference> (mapping.Length);
+			var constraints = new Collection<TypeReference> ();
 
 			this.context = (IGenericContext) generic_parameter.Owner;
 
@@ -1924,7 +1924,7 @@ namespace Mi.Assemblies {
 			if (!metadata.TryGetOverrideMapping (method, out mapping))
 				return new Collection<MethodReference> ();
 
-			var overrides = new Collection<MethodReference> (mapping.Length);
+			var overrides = new Collection<MethodReference> ();
 
 			this.context = method;
 
@@ -2330,7 +2330,7 @@ namespace Mi.Assemblies {
 				|| !MoveTo (Table.CustomAttribute, range.Start))
 				return new Collection<CustomAttribute> ();
 
-			var custom_attributes = new Collection<CustomAttribute> ((int) range.Length);
+			var custom_attributes = new Collection<CustomAttribute> ();
 
 			for (int i = 0; i < range.Length; i++) {
 				ReadMetadataToken (CodedIndex.HasCustomAttribute);
@@ -2449,7 +2449,7 @@ namespace Mi.Assemblies {
 				|| !MoveTo (Table.DeclSecurity, range.Start))
 				return new Collection<SecurityDeclaration> ();
 
-			var security_declarations = new Collection<SecurityDeclaration> ((int) range.Length);
+			var security_declarations = new Collection<SecurityDeclaration> ();
 
 			for (int i = 0; i < range.Length; i++) {
 				var action = (SecurityAction) ReadUInt16 ();
@@ -2481,7 +2481,7 @@ namespace Mi.Assemblies {
 
 			reader.position++;
 			var count = reader.ReadCompressedUInt32 ();
-			var attributes = new Collection<SecurityAttribute> ((int) count);
+			var attributes = new Collection<SecurityAttribute> ();
 
 			for (int i = 0; i < count; i++)
 				attributes.Add (reader.ReadSecurityAttribute ());
@@ -2492,12 +2492,12 @@ namespace Mi.Assemblies {
 		void ReadXmlSecurityDeclaration (uint signature, SecurityDeclaration declaration)
 		{
 			var blob = ReadBlob (signature);
-			var attributes = new Collection<SecurityAttribute> (1);
+			var attributes = new Collection<SecurityAttribute> ();
 
 			var attribute = new SecurityAttribute (
 				module.TypeSystem.LookupType ("System.Security.Permissions", "PermissionSetAttribute"));
 
-			attribute.properties = new Collection<CustomAttributeNamedArgument> (1);
+			attribute.properties = new Collection<CustomAttributeNamedArgument> ();
 			attribute.properties.Add (
 				new CustomAttributeNamedArgument (
 					"XML",
@@ -2516,7 +2516,7 @@ namespace Mi.Assemblies {
 			if (length == 0)
 				return new Collection<ExportedType> ();
 
-			var exported_types = new Collection<ExportedType> (length);
+			var exported_types = new Collection<ExportedType> ();
 
 			for (int i = 1; i <= length; i++) {
 				var attributes = (TypeAttributes) ReadUInt32 ();
@@ -2843,7 +2843,7 @@ namespace Mi.Assemblies {
 			if (count == 0)
 				return;
 
-			attribute.arguments = new Collection<CustomAttributeArgument> (count);
+			attribute.arguments = new Collection<CustomAttributeArgument> ();
 
 			for (int i = 0; i < count; i++)
 				attribute.arguments.Add (

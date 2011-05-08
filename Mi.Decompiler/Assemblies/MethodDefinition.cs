@@ -27,7 +27,7 @@
 //
 
 using Mi.Assemblies.Cil;
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 
 using RVA = System.UInt32;
 
@@ -463,7 +463,7 @@ namespace Mi.Assemblies {
 
 			var parameters = method.Parameters;
 
-			if (index < 0 || index >= parameters.size)
+			if (index < 0 || index >= parameters.Count)
 				return null;
 
 			return parameters [index];
@@ -473,7 +473,7 @@ namespace Mi.Assemblies {
 		{
 			var variables = self.Variables;
 
-			if (index < 0 || index >= variables.size)
+			if (index < 0 || index >= variables.Count)
 				return null;
 
 			return variables [index];

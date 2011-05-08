@@ -29,7 +29,8 @@
 using System;
 
 using Mi.Assemblies.PE;
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 using RVA = System.UInt32;
 
@@ -240,8 +241,8 @@ namespace Mi.Assemblies.Cil {
 
 		void ResolveBranches (Collection<Instruction> instructions)
 		{
-			var items = instructions.items;
-			var size = instructions.size;
+            var items = instructions.ToArray();
+			var size = instructions.Count;
 
 			for (int i = 0; i < size; i++) {
 				var instruction = items [i];
@@ -269,8 +270,8 @@ namespace Mi.Assemblies.Cil {
 
 		static Instruction GetInstruction (Collection<Instruction> instructions, int offset)
 		{
-			var size = instructions.size;
-			var items = instructions.items;
+			var size = instructions.Count;
+			var items = instructions.ToArray();
 			if (offset < 0 || offset > items [size - 1].offset)
 				return null;
 

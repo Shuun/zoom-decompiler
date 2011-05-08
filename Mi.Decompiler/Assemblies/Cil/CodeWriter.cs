@@ -28,8 +28,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 
 using Mi.Assemblies.Metadata;
 using Mi.Assemblies.PE;
@@ -161,8 +162,8 @@ namespace Mi.Assemblies.Cil {
 		void WriteInstructions ()
 		{
 			var instructions = body.Instructions;
-			var items = instructions.items;
-			var size = instructions.size;
+			var items = instructions.ToArray();
+			var size = instructions.Count;
 
 			for (int i = 0; i < size; i++) {
 				var instruction = items [i];
@@ -264,7 +265,7 @@ namespace Mi.Assemblies.Cil {
 		int GetTargetOffset (Instruction instruction)
 		{
 			if (instruction == null) {
-				var last = body.instructions [body.instructions.size - 1];
+				var last = body.instructions [body.instructions.Count - 1];
 				return last.offset + last.GetSize ();
 			}
 
@@ -310,8 +311,8 @@ namespace Mi.Assemblies.Cil {
 		{
 			int offset = 0;
 			var instructions = body.instructions;
-			var items = instructions.items;
-			var count = instructions.size;
+			var items = instructions.ToArray();
+			var count = instructions.Count;
 			var stack_size = 0;
 			var max_stack = 0;
 			Dictionary<Instruction, int> stack_sizes = null;

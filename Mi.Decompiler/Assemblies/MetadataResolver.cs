@@ -29,7 +29,7 @@
 using System;
 using System.Collections.Generic;
 
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Mi.Assemblies {
 

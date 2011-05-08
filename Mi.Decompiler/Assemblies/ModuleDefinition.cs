@@ -34,7 +34,7 @@ using SR = System.Reflection;
 using Mi.Assemblies.Cil;
 using Mi.Assemblies.Metadata;
 using Mi.Assemblies.PE;
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 using Mi;
 
 namespace Mi.Assemblies {
