@@ -121,6 +121,9 @@
     <Compile Include="Assemblies\ParameterTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Assemblies\PropertyTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CodeSampleFileParser.cs">
       <SubType>Code</SubType>
     </Compile>
