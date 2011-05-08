@@ -30,7 +30,7 @@ using System;
 
 namespace Mi.Assemblies {
 
-	public enum ModuleKind {
+	public enum     ModuleKind {
 		Dll,
 		Console,
 		Windows,
