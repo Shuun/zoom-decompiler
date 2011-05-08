@@ -564,8 +564,8 @@ namespace Mi.Assemblies {
 
 		string GetModuleFileName (string name)
 		{
-			if (module.FullyQualifiedName == null)
-				throw new NotSupportedException ();
+			if (string.IsNullOrEmpty(module.FullyQualifiedName))
+				return name;
 
 			var path = Path.GetDirectoryName (module.FullyQualifiedName);
 			return Path.Combine (path, name);

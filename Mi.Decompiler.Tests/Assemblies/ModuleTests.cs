@@ -6,34 +6,40 @@ using System.Linq;
 using Mi.Assemblies;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Mi.Decompiler.Tests;
 
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class ModuleTests : BaseTestFixture {
-
-		[TestModule ("hello.exe")]
-		public void SingleModule (ModuleDefinition module)
+	public class ModuleTests 
+    {
+		[TestMethod]
+		public void SingleModule ()
 		{
-			var assembly = module.Assembly;
+            var assembly = SampleInputLoader.LoadAssembly("hello");
+			var module = assembly.MainModule;
 
 			Assert.AreEqual (1, assembly.Modules.Count);
 			Assert.IsNotNull (assembly.MainModule);
 		}
 
-		[TestModule ("hello.exe")]
-		public void EntryPoint (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void EntryPoint()
+        {
+            var assembly = SampleInputLoader.LoadAssembly("hello");
+            var module = assembly.MainModule;
+
 			var entry_point = module.EntryPoint;
 			Assert.IsNotNull (entry_point);
 
 			Assert.AreEqual ("System.Void Program::Main()", entry_point.ToString ());
 		}
 
-		[TestModule ("mma.exe")]
-		public void MultiModules (ModuleDefinition module)
-		{
-			var assembly = module.Assembly;
+		[TestMethod]
+        public void MultiModules()
+        {
+            var assembly = SampleInputLoader.LoadAssembly("mma");
+            var module = assembly.MainModule;
 
 			Assert.AreEqual (3, assembly.Modules.Count);
 
@@ -49,38 +55,50 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (ModuleKind.NetModule, assembly.Modules [2].Kind);
 		}
 
-		[TestModule ("hello.exe")]
-		public void ModuleInformation (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void ModuleInformation()
+        {
+            var assembly = SampleInputLoader.LoadAssembly("hello");
+            var module = assembly.MainModule;
+
 			Assert.IsNotNull (module);
 
 			Assert.AreEqual ("hello.exe", module.Name);
 			Assert.AreEqual (new Guid ("C3BC2BD3-2576-4D00-A80E-465B5632415F"), module.Mvid);
 		}
 
-		[TestModule ("hello.exe")]
-		public void AssemblyReferences (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void AssemblyReferences()
+        {
+            var assembly = SampleInputLoader.LoadAssembly("hello");
+            var module = assembly.MainModule;
+
 			Assert.AreEqual (1, module.AssemblyReferences.Count);
 
 			var reference = module.AssemblyReferences [0];
 
 			Assert.AreEqual ("mscorlib", reference.Name);
 			Assert.AreEqual (new Version (2, 0, 0, 0), reference.Version);
-			Assert.AreEqual (new byte [] { 0xB7, 0x7A, 0x5C, 0x56, 0x19, 0x34, 0xE0, 0x89 }, reference.PublicKeyToken);
+			Assert.IsTrue (Enumerable.SequenceEqual( new byte [] { 0xB7, 0x7A, 0x5C, 0x56, 0x19, 0x34, 0xE0, 0x89 }, reference.PublicKeyToken));
 		}
 
-		[TestModule ("pinvoke.exe")]
-		public void ModuleReferences (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void ModuleReferences()
+        {
+            var assembly = SampleInputLoader.LoadAssembly("pinvoke");
+            var module = assembly.MainModule;
+
 			Assert.AreEqual (2, module.ModuleReferences.Count);
 			Assert.AreEqual ("kernel32.dll", module.ModuleReferences [0].Name);
 			Assert.AreEqual ("shell32.dll", module.ModuleReferences [1].Name);
 		}
 
-		[TestModule ("hello.exe")]
-		public void Types (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void Types()
+        {
+            var assembly = SampleInputLoader.LoadAssembly("hello");
+            var module = assembly.MainModule;
+
 			Assert.AreEqual (2, module.Types.Count);
 			Assert.AreEqual ("<Module>", module.Types [0].FullName);
 			Assert.AreEqual ("<Module>", module.GetType ("<Module>").FullName);
@@ -88,9 +106,12 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("Program", module.GetType ("Program").FullName);
 		}
 
-		[TestModule ("libres.dll")]
-		public void LinkedResource (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void LinkedResource()
+        {
+            var assembly = SampleInputLoader.LoadAssembly("libres");
+            var module = assembly.MainModule;
+
 			var resource = module.Resources.Where (res => res.Name == "linked.txt").First () as LinkedResource;
 			Assert.IsNotNull (resource);
 
@@ -100,9 +121,12 @@ namespace Mi.Assemblies.Tests {
 			Assert.IsTrue (resource.IsPublic);
 		}
 
-		[TestModule ("libres.dll")]
-		public void EmbeddedResource (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void EmbeddedResource()
+        {
+            var assembly = SampleInputLoader.LoadAssembly("libres");
+            var module = assembly.MainModule;
+
 			var resource = module.Resources.Where (res => res.Name == "embedded1.txt").First () as EmbeddedResource;
 			Assert.IsNotNull (resource);
 
@@ -124,9 +148,12 @@ namespace Mi.Assemblies.Tests {
 				Assert.AreEqual ("World", reader.ReadToEnd ());
 		}
 
-		[TestModule ("mma.exe")]
-		public void ExportedTypeFromNetModule (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void ExportedTypeFromNetModule()
+        {
+            var assembly = SampleInputLoader.LoadAssembly("mma");
+            var module = assembly.MainModule;
+
 			Assert.IsTrue (module.HasExportedTypes);
 			Assert.AreEqual (2, module.ExportedTypes.Count);
 
@@ -141,9 +168,12 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("modb.netmodule", exported_type.Scope.Name);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void NestedTypeForwarder (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void NestedTypeForwarder()
+        {
+            var assembly = SampleInputLoader.LoadAssembly("CustomAttributes");
+            var module = assembly.MainModule;
+
 			Assert.IsTrue (module.HasExportedTypes);
 			Assert.AreEqual (2, module.ExportedTypes.Count);
 
@@ -160,9 +190,12 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("mscorlib", nested_exported_type.Scope.Name);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void HasTypeReference (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void HasTypeReference()
+        {
+            var assembly = SampleInputLoader.LoadAssembly("CustomAttributes");
+            var module = assembly.MainModule;
+
 			Assert.IsTrue (module.HasTypeReference ("System.Attribute"));
 			Assert.IsTrue (module.HasTypeReference ("mscorlib", "System.Attribute"));
 
@@ -170,18 +203,27 @@ namespace Mi.Assemblies.Tests {
 			Assert.IsFalse (module.HasTypeReference ("System.Linq.Enumerable"));
 		}
 
-		[TestModule ("libhello.dll")]
-		public void Win32FileVersion (ModuleDefinition module)
-		{
-			var version = FileVersionInfo.GetVersionInfo (module.FullyQualifiedName);
+		[TestMethod]
+        public void Win32FileVersion()
+        {
+            var assembly = SampleInputLoader.LoadAssembly("libhello");
+            var module = assembly.MainModule;
 
-			Assert.AreEqual ("0.0.0.0", version.FileVersion);
+            //var version = FileVersionInfo.GetVersionInfo (module.FullyQualifiedName);
+
+            //Assert.AreEqual ("0.0.0.0", version.FileVersion);
+
+            Assert.Fail("FileVersionInfo is not available.");
 		}
 
-		[TestModule ("noblob.dll")]
-		public void ModuleWithoutBlob (ModuleDefinition module)
-		{
-			Assert.IsNull (module.Image.BlobHeap);
+		[TestMethod]
+        public void ModuleWithoutBlob()
+        {
+            //var assembly = SampleInputLoader.LoadAssembly("noblob");
+            //var module = assembly.MainModule;
+            //Assert.IsNull (module.Image.BlobHeap);
+
+            throw new NotImplementedException("Module.Image is internal.");
 		}
 
 		[TestMethod]
@@ -226,7 +268,7 @@ namespace Mi.Assemblies.Tests {
 		{
 			var module = GetResourceModule ("hello.exe", ReadingMode.Immediate);
 
-			Assert.AreEqual (ReadingMode.Immediate, module.ReadingMode);
+			//Assert.AreEqual (ReadingMode.Immediate, module.ReadingMode);
 		}
 
 		[TestMethod]
@@ -234,7 +276,17 @@ namespace Mi.Assemblies.Tests {
 		{
 			var module = GetResourceModule ("hello.exe", ReadingMode.Deferred);
 
-			Assert.AreEqual (ReadingMode.Deferred, module.ReadingMode);
+			//Assert.AreEqual (ReadingMode.Deferred, module.ReadingMode);
 		}
+
+        ModuleDefinition GetResourceModule(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        ModuleDefinition GetResourceModule(string name, ReadingMode mode)
+        {
+            throw new NotImplementedException();
+        }
 	}
 }
