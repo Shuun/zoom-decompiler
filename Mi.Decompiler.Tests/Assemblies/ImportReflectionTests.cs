@@ -207,7 +207,8 @@ namespace Mi.Assemblies.Tests {
 		[TestMethod]
 		public void ImportGenericTypeDefOrOpen ()
 		{
-			var module = typeof (Foo<>).ToDefinition ().Module;
+            var asm = AssemblyDefinition.CreateAssembly(new AssemblyNameDefinition("A", new Version(0, 0)), "A", ModuleKind.Dll);
+			var module = asm.MainModule;
 
 			var foo_def = module.Import (typeof (Foo<>));
 			var foo_open = module.Import (typeof (Foo<>), foo_def);
@@ -219,13 +220,15 @@ namespace Mi.Assemblies.Tests {
 		[TestMethod]
 		public void ImportGenericTypeFromContext ()
 		{
+            var asm = AssemblyDefinition.CreateAssembly(new AssemblyNameDefinition("A", new Version(0, 0)), "A", ModuleKind.Dll);
+
 			var list_foo = typeof (Foo<>).GetField ("list").FieldType;
 			var generic_list_foo_open = typeof (Generic<>).MakeGenericType (list_foo);
 
-			var foo_def = typeof (Foo<>).ToDefinition ();
-			var module = foo_def.Module;
+			var foo_ref = asm.MainModule.Import(typeof (Foo<>));
+			var module = asm.MainModule;
 
-			var generic_foo = module.Import (generic_list_foo_open, foo_def);
+			var generic_foo = module.Import (generic_list_foo_open, foo_ref);
 
 			Assert.AreEqual ("Mi.Assemblies.Tests.ImportReflectionTests/Generic`1<System.Collections.Generic.List`1<TFoo>>",
 				generic_foo.FullName);
@@ -268,14 +271,16 @@ namespace Mi.Assemblies.Tests {
 		[TestMethod]
 		public void ImportGenericFieldFromContext ()
 		{
+            var asm = AssemblyDefinition.CreateAssembly(new AssemblyNameDefinition("A", new Version(0, 0)), "A", ModuleKind.Dll);
+
 			var list_foo = typeof (Foo<>).GetField ("list").FieldType;
 			var generic_list_foo_open = typeof (Generic<>).MakeGenericType (list_foo);
 			var generic_list_foo_open_field = generic_list_foo_open.GetField ("Field");
 
-			var foo_def = typeof (Foo<>).ToDefinition ();
-			var module = foo_def.Module;
+			var foo_ref = asm.MainModule.Import(typeof (Foo<>));
+			var module = asm.MainModule;
 
-			var generic_field = module.Import (generic_list_foo_open_field, foo_def);
+			var generic_field = module.Import (generic_list_foo_open_field, foo_ref);
 
 			Assert.AreEqual ("TFoo Mi.Assemblies.Tests.ImportReflectionTests/Generic`1<System.Collections.Generic.List`1<TFoo>>::Field",
 				generic_field.FullName);
@@ -284,14 +289,16 @@ namespace Mi.Assemblies.Tests {
 		[TestMethod]
 		public void ImportGenericMethodFromContext ()
 		{
+            var asm = AssemblyDefinition.CreateAssembly(new AssemblyNameDefinition("A", new Version(0, 0)), "A", ModuleKind.Dll);
+
 			var list_foo = typeof (Foo<>).GetField ("list").FieldType;
 			var generic_list_foo_open = typeof (Generic<>).MakeGenericType (list_foo);
 			var generic_list_foo_open_method = generic_list_foo_open.GetMethod ("Method");
 
-			var foo_def = typeof (Foo<>).ToDefinition ();
-			var module = foo_def.Module;
+			var foo_ref = asm.MainModule.Import(typeof (Foo<>));
+			var module = foo_ref.Module;
 
-			var generic_method = module.Import (generic_list_foo_open_method, foo_def);
+			var generic_method = module.Import (generic_list_foo_open_method, foo_ref);
 
 			Assert.AreEqual ("TFoo Mi.Assemblies.Tests.ImportReflectionTests/Generic`1<System.Collections.Generic.List`1<TFoo>>::Method(TFoo)",
 				generic_method.FullName);
@@ -300,7 +307,8 @@ namespace Mi.Assemblies.Tests {
 		[TestMethod]
 		public void ImportMethodOnOpenGenericType ()
 		{
-			var module = typeof (Generic<>).ToDefinition ().Module;
+            var asm = AssemblyDefinition.CreateAssembly(new AssemblyNameDefinition("A", new Version(0, 0)), "A", ModuleKind.Dll);
+			var module = asm.MainModule;
 
 			var method = module.Import (typeof (Generic<>).GetMethod ("Method"));
 
@@ -310,7 +318,8 @@ namespace Mi.Assemblies.Tests {
 		[TestMethod]
 		public void ImportGenericMethodOnOpenGenericType ()
 		{
-			var module = typeof (Generic<>).ToDefinition ().Module;
+            var asm = AssemblyDefinition.CreateAssembly(new AssemblyNameDefinition("A", new Version(0, 0)), "A", ModuleKind.Dll);
+			var module = asm.MainModule;
 
 			var generic_method = module.Import (typeof (Generic<>).GetMethod ("GenericMethod"));
 
