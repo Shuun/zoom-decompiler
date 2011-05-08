@@ -29,7 +29,7 @@
 using System;
 using System.IO;
 
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Mi.Assemblies {
 
@@ -64,7 +64,7 @@ namespace Mi.Assemblies {
 				if (main_module.HasImage)
 					return main_module.Read (ref modules, this, (_, reader) => reader.ReadModules ());
 
-				return modules = new Collection<ModuleDefinition> (1) { main_module };
+				return modules = new Collection<ModuleDefinition> { main_module };
 			}
 		}
 

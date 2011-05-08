@@ -28,7 +28,7 @@
 
 using System;
 
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 
 using Mi;
 
@@ -129,35 +129,37 @@ namespace Mi.Assemblies.Cil {
 		}
 
 		internal VariableDefinitionCollection (int capacity)
-			: base (capacity)
 		{
 		}
 
-		protected override void OnAdd (VariableDefinition item, int index)
-		{
-			item.index = index;
-		}
+        protected override void InsertItem(int index, VariableDefinition item)
+        {
+            item.index = index;
 
-		protected override void OnInsert (VariableDefinition item, int index)
-		{
-			item.index = index;
+            for (int i = index; i < this.Count; i++)
+                this[i].index = i + 1;
+            
+            base.InsertItem(index, item);
+        }
 
-			for (int i = index; i < size; i++)
-				items [i].index = i + 1;
-		}
+        protected override void SetItem(int index, VariableDefinition item)
+        {
+            item.index = index;
 
-		protected override void OnSet (VariableDefinition item, int index)
-		{
-			item.index = index;
-		}
+            base.SetItem(index, item);
+        }
 
-		protected override void OnRemove (VariableDefinition item, int index)
-		{
-			item.index = -1;
+        protected override void RemoveItem(int index)
+        {
+            var item = this[index];
 
-			for (int i = index + 1; i < size; i++)
-				items [i].index = i - 1;
-		}
+            item.index = -1;
+
+            for (int i = index + 1; i < this.Count; i++)
+                this[i].index = i - 1;
+            
+            base.RemoveItem(index);
+        }
 	}
 
 	class InstructionCollection : Collection<Instruction> {
@@ -167,28 +169,24 @@ namespace Mi.Assemblies.Cil {
 		}
 
 		internal InstructionCollection (int capacity)
-			: base (capacity)
 		{
 		}
 
-		protected override void OnAdd (Instruction item, int index)
+        protected override void InsertItem(int index, Instruction item)
+        {
+            OnInsert(index, item);
+            
+            base.InsertItem(index, item);
+        }
+
+        void OnInsert(int index, Instruction item)
 		{
-			if (index == 0)
+			if (this.Count == 0)
 				return;
 
-			var previous = items [index - 1];
-			previous.next = item;
-			item.previous = previous;
-		}
-
-		protected override void OnInsert (Instruction item, int index)
-		{
-			if (size == 0)
-				return;
-
-			var current = items [index];
+			var current = index < this.Count ? this [index] : null;
 			if (current == null) {
-				var last = items [index - 1];
+				var last = this [index - 1];
 				last.next = item;
 				item.previous = last;
 				return;
@@ -204,29 +202,35 @@ namespace Mi.Assemblies.Cil {
 			item.next = current;
 		}
 
-		protected override void OnSet (Instruction item, int index)
-		{
-			var current = items [index];
+        protected override void SetItem(int index, Instruction item)
+        {
+            var current = this[index];
 
-			item.previous = current.previous;
-			item.next = current.next;
+            item.previous = current.previous;
+            item.next = current.next;
 
-			current.previous = null;
-			current.next = null;
-		}
+            current.previous = null;
+            current.next = null;
+            
+            base.SetItem(index, item);
+        }
 
-		protected override void OnRemove (Instruction item, int index)
-		{
-			var previous = item.previous;
-			if (previous != null)
-				previous.next = item.next;
+        protected override void RemoveItem(int index)
+        {
+            var item = this[index];
 
-			var next = item.next;
-			if (next != null)
-				next.previous = item.previous;
+            var previous = item.previous;
+            if (previous != null)
+                previous.next = item.next;
 
-			item.previous = null;
-			item.next = null;
-		}
+            var next = item.next;
+            if (next != null)
+                next.previous = item.previous;
+
+            item.previous = null;
+            item.next = null;
+            
+            base.RemoveItem(index);
+        }
 	}
 }

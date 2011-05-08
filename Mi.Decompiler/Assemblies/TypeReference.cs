@@ -29,7 +29,7 @@
 using System;
 
 using Mi.Assemblies.Metadata;
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 
 using Mi;
 

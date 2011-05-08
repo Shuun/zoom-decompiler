@@ -21,7 +21,8 @@ using System.Collections.Generic;
 using System.Threading;
 
 using Mi.Assemblies;
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
+
 
 namespace Mi.Decompiler.Disassembler
 {

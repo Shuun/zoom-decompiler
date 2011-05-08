@@ -30,7 +30,7 @@ using System;
 using System.Text;
 
 using Mi;
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Mi.Assemblies {
 

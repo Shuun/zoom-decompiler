@@ -28,7 +28,7 @@
 
 using System;
 
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Mi.Assemblies {
 
@@ -42,39 +42,39 @@ namespace Mi.Assemblies {
 		}
 
 		internal ParameterDefinitionCollection (IMethodSignature method, int capacity)
-			: base (capacity)
 		{
 			this.method = method;
 		}
 
-		protected override void OnAdd (ParameterDefinition item, int index)
-		{
-			item.method = method;
-			item.index = index;
-		}
+        protected override void InsertItem(int index, ParameterDefinition item)
+        {
+            item.method = method;
+            item.index = index;
 
-		protected override void OnInsert (ParameterDefinition item, int index)
-		{
-			item.method = method;
-			item.index = index;
+            for (int i = index; i < this.Count; i++)
+                this[i].index = i + 1;
+            
+            base.InsertItem(index, item);
+        }
 
-			for (int i = index; i < size; i++)
-				items [i].index = i + 1;
-		}
+        protected override void SetItem(int index, ParameterDefinition item)
+        {
+            item.method = method;
+            item.index = index;
+            
+            base.SetItem(index, item);
+        }
 
-		protected override void OnSet (ParameterDefinition item, int index)
-		{
-			item.method = method;
-			item.index = index;
-		}
+        protected override void RemoveItem(int index)
+        {
+            var item = this[index];
+            item.method = null;
+            item.index = -1;
 
-		protected override void OnRemove (ParameterDefinition item, int index)
-		{
-			item.method = null;
-			item.index = -1;
-
-			for (int i = index + 1; i < size; i++)
-				items [i].index = i - 1;
-		}
+            for (int i = index + 1; i < this.Count; i++)
+                this[i].index = i - 1;
+            
+            base.RemoveItem(index);
+        }
 	}
 }

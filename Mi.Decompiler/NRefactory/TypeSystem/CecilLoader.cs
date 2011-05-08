@@ -574,7 +574,7 @@ namespace Mi.NRefactory.TypeSystem
 		}
 		#endregion
 		
-		void AddCustomAttributes(Mi.Collections.Generic.Collection<CustomAttribute> attributes, IList<IAttribute> targetCollection)
+		void AddCustomAttributes(Collection<CustomAttribute> attributes, IList<IAttribute> targetCollection)
 		{
 			foreach (var cecilAttribute in attributes) {
 				TypeReference type = cecilAttribute.AttributeType;

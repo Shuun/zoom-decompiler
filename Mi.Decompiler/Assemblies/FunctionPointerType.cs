@@ -28,7 +28,7 @@
 
 using System;
 using System.Text;
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 using MD = Mi.Assemblies.Metadata;
 
 namespace Mi.Assemblies {

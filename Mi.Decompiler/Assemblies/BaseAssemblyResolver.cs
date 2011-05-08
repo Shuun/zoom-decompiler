@@ -28,10 +28,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using System.Text;
 
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Mi.Assemblies {
 
@@ -88,9 +89,7 @@ namespace Mi.Assemblies {
 
 		public string [] GetSearchDirectories ()
 		{
-			var directories = new string [this.directories.size];
-			Array.Copy (this.directories.items, directories, directories.Length);
-			return directories;
+            return directories.ToArray();
 		}
 
 		public virtual AssemblyDefinition Resolve (string fullName)
@@ -110,7 +109,7 @@ namespace Mi.Assemblies {
 
 		protected BaseAssemblyResolver ()
 		{
-			directories = new Collection<string> (2) { ".", "bin" };
+			directories = new Collection<string> () { ".", "bin" };
 		}
 
 		AssemblyDefinition GetAssembly (string file, ReaderParameters parameters)

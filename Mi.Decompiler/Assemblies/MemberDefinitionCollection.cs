@@ -28,7 +28,7 @@
 
 using System;
 
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Mi.Assemblies {
 
@@ -42,36 +42,37 @@ namespace Mi.Assemblies {
 		}
 
 		internal MemberDefinitionCollection (TypeDefinition container, int capacity)
-			: base (capacity)
 		{
 			this.container = container;
 		}
 
-		protected override void OnAdd (T item, int index)
-		{
-			Attach (item);
-		}
+        protected override void InsertItem(int index, T item)
+        {
+            Attach(item);
+            base.InsertItem(index, item);
+        }
 
-		protected sealed override void OnSet (T item, int index)
-		{
-			Attach (item);
-		}
+        protected override void SetItem(int index, T item)
+        {
+            var oldItem = this[index];
+            Detach(oldItem);
+            Attach(item);
+        }
 
-		protected sealed override void OnInsert (T item, int index)
-		{
-			Attach (item);
-		}
+        protected override void RemoveItem(int index)
+        {
+            var item = this[index];
+            Detach(item);
+            base.RemoveItem(index);
+        }
 
-		protected sealed override void OnRemove (T item, int index)
-		{
-			Detach (item);
-		}
-
-		protected sealed override void OnClear ()
-		{
-			foreach (var definition in this)
-				Detach (definition);
-		}
+        protected override void ClearItems()
+        {
+            foreach (var definition in this)
+                Detach(definition);
+            
+            base.ClearItems();
+        }
 
 		void Attach (T element)
 		{

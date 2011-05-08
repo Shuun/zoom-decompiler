@@ -439,13 +439,13 @@ namespace Mi.Decompiler.Ast
 			private class DummyGenericParameterProvider : IGenericParameterProvider
 			{
 				readonly Mi.Assemblies.GenericParameterType type;
-				readonly Mi.Collections.Generic.Collection<GenericParameter> parameters;
+				readonly Collection<GenericParameter> parameters;
 
 				public DummyGenericParameterProvider(bool methodTypeParameter)
 				{
 					type = methodTypeParameter ? Mi.Assemblies.GenericParameterType.Method :
 						Mi.Assemblies.GenericParameterType.Type;
-					parameters = new Mi.Collections.Generic.Collection<GenericParameter>(1);
+					parameters = new Collection<GenericParameter>();
 					parameters.Add(new GenericParameter(this));
 		}
 
@@ -469,7 +469,7 @@ namespace Mi.Decompiler.Ast
 					get { throw new NotImplementedException(); }
 				}
 
-				Mi.Collections.Generic.Collection<GenericParameter> IGenericParameterProvider.GenericParameters
+				Collection<GenericParameter> IGenericParameterProvider.GenericParameters
 				{
 					get { return parameters; }
 				}

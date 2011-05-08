@@ -31,7 +31,7 @@ using System.Collections.Generic;
 
 using Mi.Assemblies.Metadata;
 
-using Mi.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Mi.Assemblies {
 
@@ -49,37 +49,39 @@ namespace Mi.Assemblies {
 		}
 
 		internal TypeDefinitionCollection (ModuleDefinition container, int capacity)
-			: base (capacity)
 		{
 			this.container = container;
 			this.name_cache = new Dictionary<Slot, TypeDefinition> (capacity, new RowEqualityComparer ());
 		}
 
-		protected override void OnAdd (TypeDefinition item, int index)
-		{
-			Attach (item);
-		}
+        protected override void InsertItem(int index, TypeDefinition item)
+        {
+            Attach(item);
+            base.InsertItem(index, item);
+        }
 
-		protected override void OnSet (TypeDefinition item, int index)
-		{
-			Attach (item);
-		}
+        protected override void SetItem(int index, TypeDefinition item)
+        {
+            var oldItem = this[index];
+            Detach(oldItem);
+            Attach(item);
+            base.SetItem(index, item);
+        }
 
-		protected override void OnInsert (TypeDefinition item, int index)
-		{
-			Attach (item);
-		}
+        protected override void RemoveItem(int index)
+        {
+            var item = this[index];
+            Detach(item);
+            base.RemoveItem(index);
+        }
 
-		protected override void OnRemove (TypeDefinition item, int index)
-		{
-			Detach (item);
-		}
-
-		protected override void OnClear ()
-		{
-			foreach (var type in this)
-				Detach (type);
-		}
+        protected override void ClearItems()
+        {
+            foreach (var type in this)
+                Detach(type);
+            
+            base.ClearItems();
+        }
 
 		void Attach (TypeDefinition type)
 		{
