@@ -20,18 +20,21 @@ namespace Mi.Assemblies.Tests {
 
 		public static TypeDefinition ToDefinition (this Type self)
 		{
+            throw new NotImplementedException(self.GetType().Name + ".ToDefinition() is not implemented.");
 			var module = ModuleDefinition.ReadModule (self.Module.FullyQualifiedName);
 			return (TypeDefinition) module.LookupToken (self.MetadataToken);
 		}
 
 		public static MethodDefinition ToDefinition (this SR.MethodBase method)
 		{
+            throw new NotImplementedException(method.ReflectedType.Name+"."+method.Name + ".ToDefinition() is not implemented.");
 			var declaring_type = method.DeclaringType.ToDefinition ();
 			return (MethodDefinition) declaring_type.Module.LookupToken (method.MetadataToken);
 		}
 
 		public static FieldDefinition ToDefinition (this SR.FieldInfo field)
 		{
+            throw new NotImplementedException(field.ReflectedType.Name + "." + field.Name + ".ToDefinition() is not implemented.");
 			var declaring_type = field.DeclaringType.ToDefinition ();
 			return (FieldDefinition) declaring_type.Module.LookupToken (field.MetadataToken);
 		}
