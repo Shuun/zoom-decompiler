@@ -9,15 +9,18 @@ using Mi.Assemblies.Metadata;
 using Mi.Assemblies.PE;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Mi.Decompiler.Tests;
 
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class CustomAttributesTests : BaseTestFixture {
-
-		[TestCSharp ("CustomAttributes.cs")]
-		public void StringArgumentOnType (ModuleDefinition module)
+	public class CustomAttributesTests
+    {
+		[TestMethod]
+		public void StringArgumentOnType ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
+
 			var hamster = module.GetType ("Hamster");
 
 			Assert.IsTrue (hamster.HasCustomAttributes);
@@ -33,9 +36,11 @@ namespace Mi.Assemblies.Tests {
 			AssertArgument ("bar", attribute.ConstructorArguments [0]);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void NullString (ModuleDefinition module)
+		[TestMethod]
+		public void NullString ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
+		
 			var dentist = module.GetType ("Dentist");
 
 			var attribute = GetAttribute (dentist, "Foo");
@@ -44,9 +49,10 @@ namespace Mi.Assemblies.Tests {
 			AssertArgument<string> (null, attribute.ConstructorArguments [0]);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void Primitives1 (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void Primitives1()
+        {
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
 			var steven = module.GetType ("Steven");
 
 			var attribute = GetAttribute (steven, "Foo");
@@ -61,9 +67,10 @@ namespace Mi.Assemblies.Tests {
 			AssertArgument<char> ('c', attribute.ConstructorArguments [6]);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void Primitives2 (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void Primitives2()
+        {
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
 			var seagull = module.GetType ("Seagull");
 
 			var attribute = GetAttribute (seagull, "Foo");
@@ -77,9 +84,10 @@ namespace Mi.Assemblies.Tests {
 			AssertArgument<double> (64.646464, attribute.ConstructorArguments [5]);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void StringArgumentOnAssembly (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void StringArgumentOnAssembly()
+        {
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
 			var assembly = module.Assembly;
 
 			var attribute = GetAttribute (assembly, "Foo");
@@ -88,9 +96,10 @@ namespace Mi.Assemblies.Tests {
 			AssertArgument ("bingo", attribute.ConstructorArguments [0]);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void CharArray (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void CharArray()
+        {
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
 			var rifle = module.GetType ("Rifle");
 
 			var attribute = GetAttribute (rifle, "Foo");
@@ -111,32 +120,35 @@ namespace Mi.Assemblies.Tests {
 				AssertArgument (str [i], array [i]);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void BoxedArguments (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void BoxedArguments()
+        {
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
 			var worm = module.GetType ("Worm");
 
 			var attribute = GetAttribute (worm, "Foo");
 			Assert.IsNotNull (attribute);
 
-			Assert.AreEqual (".ctor ((Object:(String:\"2\")), (Object:(I4:2)))", PrettyPrint (attribute));
+			Assert.AreEqual (".ctor ((Object:(String:\"2\")), (Object:(Int32:2)))", PrettyPrint (attribute));
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void BoxedArraysArguments (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void BoxedArraysArguments()
+        {
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
 			var sheep = module.GetType ("Sheep");
 
 			var attribute = GetAttribute (sheep, "Foo");
 			Assert.IsNotNull (attribute);
 
 			// [Foo (new object [] { "2", 2, 'c' }, new object [] { new object [] { 1, 2, 3}, null })]
-			AssertCustomAttribute (".ctor ((Object:(Object[]:{(Object:(String:\"2\")), (Object:(I4:2)), (Object:(Char:'c'))})), (Object:(Object[]:{(Object:(Object[]:{(Object:(I4:1)), (Object:(I4:2)), (Object:(I4:3))})), (Object:(String:null))})))", attribute);
+            AssertCustomAttribute(".ctor ((Object:(Object[]:{(Object:(String:\"2\")), (Object:(Int32:2)), (Object:(Char:'c'))})), (Object:(Object[]:{(Object:(Object[]:{(Object:(Int32:1)), (Object:(Int32:2)), (Object:(Int32:3))})), (Object:(String:null))})))", attribute);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void FieldsAndProperties (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void FieldsAndProperties()
+        {
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
 			var angola = module.GetType ("Angola");
 
 			var attribute = GetAttribute (angola, "Foo");
@@ -145,7 +157,7 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (2, attribute.Fields.Count);
 
 			var argument = attribute.Fields.Where (a => a.Name == "Pan").First ();
-			AssertCustomAttributeArgument ("(Object:(Object[]:{(Object:(I4:1)), (Object:(String:\"2\")), (Object:(Char:'3'))}))", argument);
+            AssertCustomAttributeArgument("(Object:(Object[]:{(Object:(Int32:1)), (Object:(String:\"2\")), (Object:(Char:'3'))}))", argument);
 
 			argument = attribute.Fields.Where (a => a.Name == "PanPan").First ();
 			AssertCustomAttributeArgument ("(String[]:{(String:\"yo\"), (String:\"yo\")})", argument);
@@ -159,9 +171,10 @@ namespace Mi.Assemblies.Tests {
 			AssertArgument<string> (null, argument);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void BoxedStringField (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void BoxedStringField()
+        {
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
 			var type = module.GetType ("BoxedStringField");
 
 			var attribute = GetAttribute (type, "Foo");
@@ -173,9 +186,11 @@ namespace Mi.Assemblies.Tests {
 			AssertCustomAttributeArgument ("(Object:(String:\"fiouuu\"))", argument);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void TypeDefinitionEnum (ModuleDefinition module)
+		[TestMethod]
+		public void TypeDefinitionEnum ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
+		
 			var zero = module.GetType ("Zero");
 
 			var attribute = GetAttribute (zero, "Foo");
@@ -187,9 +202,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("Bingo", attribute.ConstructorArguments [0].Type.FullName);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void TypeReferenceEnum (ModuleDefinition module)
+		[TestMethod]
+		public void TypeReferenceEnum ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
+		
 			var ace = module.GetType ("Ace");
 
 			var attribute = GetAttribute (ace, "Foo");
@@ -202,9 +219,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (module, attribute.ConstructorArguments [0].Type.Module);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void BoxedEnumReference (ModuleDefinition module)
+		[TestMethod]
+		public void BoxedEnumReference ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
+		
 			var bzzz = module.GetType ("Bzzz");
 
 			var attribute = GetAttribute (bzzz, "Foo");
@@ -216,7 +235,7 @@ namespace Mi.Assemblies.Tests {
 
 			var argument = attribute.ConstructorArguments [0];
 
-			AssertCustomAttributeArgument ("(Object:(Object[]:{(Object:(Bingo:2)), (Object:(Bingo:4))}))", argument);
+			AssertCustomAttributeArgument ("(Object:(Object[]:{(Object:(ValueType:2)), (Object:(ValueType:4))}))", argument);
 
 			argument = attribute.ConstructorArguments [1];
 
@@ -227,9 +246,11 @@ namespace Mi.Assemblies.Tests {
 			AssertCustomAttributeArgument ("(Object:(System.Security.AccessControl.AceFlags:4))", argument);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void TypeOfTypeDefinition (ModuleDefinition module)
+		[TestMethod]
+		public void TypeOfTypeDefinition ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
+		
 			var typed = module.GetType ("Typed");
 
 			var attribute = GetAttribute (typed, "Foo");
@@ -247,9 +268,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("Bingo", type.FullName);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void TypeOfNestedTypeDefinition (ModuleDefinition module)
+		[TestMethod]
+		public void TypeOfNestedTypeDefinition ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
+		
 			var typed = module.GetType ("NestedTyped");
 
 			var attribute = GetAttribute (typed, "Foo");
@@ -267,9 +290,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("FooAttribute/Token", type.FullName);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void FieldTypeOf (ModuleDefinition module)
+		[TestMethod]
+		public void FieldTypeOf ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
+		
 			var truc = module.GetType ("Truc");
 
 			var attribute = GetAttribute (truc, "Foo");
@@ -285,9 +310,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("Typed", type.FullName);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void FieldNullTypeOf (ModuleDefinition module)
+		[TestMethod]
+		public void FieldNullTypeOf ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
+		
 			var truc = module.GetType ("Machin");
 
 			var attribute = GetAttribute (truc, "Foo");
@@ -300,9 +327,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.IsNull (argument.Value);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void OpenGenericTypeOf (ModuleDefinition module)
+		[TestMethod]
+		public void OpenGenericTypeOf ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
+		
 			var open_generic = module.GetType ("OpenGeneric`2");
 			Assert.IsNotNull (open_generic);
 
@@ -321,9 +350,11 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("System.Collections.Generic.Dictionary`2", type.FullName);
 		}
 
-		[TestCSharp ("CustomAttributes.cs")]
-		public void ClosedGenericTypeOf (ModuleDefinition module)
+		[TestMethod]
+		public void ClosedGenericTypeOf ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("CustomAttributes").MainModule;
+		
 			var closed_generic = module.GetType ("ClosedGeneric");
 			Assert.IsNotNull (closed_generic);
 
@@ -345,37 +376,38 @@ namespace Mi.Assemblies.Tests {
 		[TestMethod]
 		public void DefineCustomAttributeFromBlob ()
 		{
-			var file = Path.Combine (Path.GetTempPath (), "CaBlob.dll");
+            //var file = Path.Combine (Path.GetTempPath (), "CaBlob.dll");
 
-			var module = ModuleDefinition.CreateModule ("CaBlob.dll", new ModuleParameters { Kind = ModuleKind.Dll, Runtime = TargetRuntime.Net_2_0 });
-			var assembly_title_ctor = module.Import (typeof (System.Reflection.AssemblyTitleAttribute).GetConstructor (new [] {typeof (string)}));
+            //var module = ModuleDefinition.CreateModule ("CaBlob.dll", new ModuleParameters { Kind = ModuleKind.Dll, Runtime = TargetRuntime.Net_2_0 });
+            //var assembly_title_ctor = module.Import (typeof (System.Reflection.AssemblyTitleAttribute).GetConstructor (new [] {typeof (string)}));
 
-			Assert.IsNotNull (assembly_title_ctor);
+            //Assert.IsNotNull (assembly_title_ctor);
 
-			var buffer = new ByteBuffer ();
-			buffer.WriteUInt16 (1); // ca signature
+            //var buffer = new ByteBuffer ();
+            //buffer.WriteUInt16 (1); // ca signature
 
-			var title = Encoding.UTF8.GetBytes ("CaBlob");
+            //var title = Encoding.UTF8.GetBytes ("CaBlob");
 
-			buffer.WriteCompressedUInt32 ((uint) title.Length);
-			buffer.WriteBytes (title);
+            //buffer.WriteCompressedUInt32 ((uint) title.Length);
+            //buffer.WriteBytes (title);
 
-			buffer.WriteUInt16 (0); // named arguments
+            //buffer.WriteUInt16 (0); // named arguments
 
-			var blob = new byte [buffer.length];
-			Buffer.BlockCopy (buffer.buffer, 0, blob, 0, buffer.length);
+            //var blob = new byte [buffer.length];
+            //Buffer.BlockCopy (buffer.buffer, 0, blob, 0, buffer.length);
 
-			var attribute = new CustomAttribute (assembly_title_ctor, blob);
-			module.Assembly.CustomAttributes.Add (attribute);
+            //var attribute = new CustomAttribute (assembly_title_ctor, blob);
+            //module.Assembly.CustomAttributes.Add (attribute);
 
-			module.Write (file);
+            //module.Write (file);
 
-			module = ModuleDefinition.ReadModule (file);
+            //module = ModuleDefinition.ReadModule (file);
 
-			attribute = GetAttribute (module.Assembly, "AssemblyTitle");
+            //attribute = GetAttribute (module.Assembly, "AssemblyTitle");
 
-			Assert.IsNotNull (attribute);
-			Assert.AreEqual ("CaBlob", (string) attribute.ConstructorArguments [0].Value);
+            //Assert.IsNotNull (attribute);
+            //Assert.AreEqual ("CaBlob", (string) attribute.ConstructorArguments [0].Value);
+            Assert.Fail("Test needs to be converted (uses mysterious ByteBuffer)");
 		}
 
 		static void AssertCustomAttribute (string expected, CustomAttribute attribute)
@@ -474,11 +506,9 @@ namespace Mi.Assemblies.Tests {
 		{
 			if (type.IsArray) {
 				ArrayType array = (ArrayType) type;
-				signature.AppendFormat ("{0}[]", array.ElementType.etype.ToString ());
-			} else if (type.etype == ElementType.None) {
-				signature.Append (type.FullName);
+				signature.AppendFormat ("{0}[]", array.ElementType.MetadataType.ToString ());
 			} else
-				signature.Append (type.etype.ToString ());
+				signature.Append (type.MetadataType.ToString ());
 		}
 
 		static void AssertArgument<T> (T value, CustomAttributeNamedArgument named_argument)
