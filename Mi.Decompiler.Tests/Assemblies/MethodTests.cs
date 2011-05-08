@@ -5,15 +5,18 @@ using Mi.Assemblies;
 using Mi.Assemblies.Metadata;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Mi.Decompiler.Tests;
 
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class MethodTests : BaseTestFixture {
-
-		[TestCSharp ("Methods.cs")]
-		public void AbstractMethod (ModuleDefinition module)
+	public class MethodTests 
+    {
+		[TestMethod]
+		public void AbstractMethod ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("Methods").MainModule;
+
 			var type = module.Types [1];
 			Assert.AreEqual ("Foo", type.Name);
 			Assert.AreEqual (2, type.Methods.Count);
@@ -31,9 +34,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("System.Int32", parameter.ParameterType.FullName);
 		}
 
-		[TestCSharp ("Methods.cs")]
-		public void SimplePInvoke (ModuleDefinition module)
+		[TestMethod]
+		public void SimplePInvoke ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("Methods").MainModule;
 			var bar = module.GetType ("Bar");
 			var pan = bar.GetMethod ("Pan");
 
@@ -45,9 +49,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("foo.dll", pan.PInvokeInfo.Module.Name);
 		}
 
-		[TestCSharp ("Generics.cs")]
-		public void GenericMethodDefinition (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void GenericMethodDefinition()
+        {
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("GenericsAsm").MainModule;
 			var baz = module.GetType ("Baz");
 
 			var gazonk = baz.GetMethod ("Gazonk");
@@ -59,9 +64,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("TBang", gazonk.GenericParameters [0].Name);
 		}
 
-		[TestCSharp ("Generics.cs")]
-		public void ReturnGenericInstance (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void ReturnGenericInstance()
+        {
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("GenericsAsm").MainModule;
 			var bar = module.GetType ("Bar`1");
 
 			var self = bar.GetMethod ("Self");
@@ -86,9 +92,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("System.String", bar_str_instance.GenericArguments [0].FullName);
 		}
 
-		[TestCSharp ("Generics.cs")]
-		public void ReturnGenericInstanceWithMethodParameter (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void ReturnGenericInstanceWithMethodParameter()
+        {
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("GenericsAsm").MainModule;
 			var baz = module.GetType ("Baz");
 
 			var gazoo = baz.GetMethod ("Gazoo");
@@ -103,9 +110,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (gazoo.GenericParameters [0], bar_bingo_instance.GenericArguments [0]);
 		}
 
-		[TestCSharp ("Interfaces.cs")]
-		public void SimpleOverrides (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void SimpleOverrides()
+        {
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("Interfaces").MainModule;
 			var ibingo = module.GetType ("IBingo");
 			var ibingo_foo = ibingo.GetMethod ("Foo");
 			Assert.IsNotNull (ibingo_foo);
@@ -128,9 +136,10 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (ibingo_bar, bar.Overrides [0]);
 		}
 
-		[TestModule ("varargs.exe")]
-		public void VarArgs (ModuleDefinition module)
+		[TestMethod]
+        public void VarArgs ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("varargs").MainModule;
 			var module_type = module.Types [0];
 
 			Assert.AreEqual (3, module_type.Methods.Count);
@@ -139,26 +148,28 @@ namespace Mi.Assemblies.Tests {
 			var baz = module_type.GetMethod ("Baz");
 			var foo = module_type.GetMethod ("Foo");
 
-			Assert.IsTrue (bar.IsVarArg ());
-			Assert.IsFalse (baz.IsVarArg ());
+            Assert.IsTrue((bar.CallingConvention & MethodCallingConvention.VarArg) != 0);
+            Assert.IsFalse((baz.CallingConvention & MethodCallingConvention.VarArg) != 0);
 
-			Assert.IsTrue(foo.IsVarArg ());
+            Assert.IsTrue((foo.CallingConvention & MethodCallingConvention.VarArg) != 0);
 
 			var bar_reference = (MethodReference) baz.Body.Instructions.Where (i => i.Offset == 0x000a).First ().Operand;
 
-			Assert.IsTrue (bar_reference.IsVarArg ());
-			Assert.AreEqual (0, bar_reference.GetSentinelPosition ());
+            Assert.IsTrue((bar_reference.CallingConvention & MethodCallingConvention.VarArg) != 0);
+			Assert.IsTrue (bar_reference.Parameters[0].ParameterType.IsSentinel);
 
 			var foo_reference = (MethodReference) baz.Body.Instructions.Where (i => i.Offset == 0x0023).First ().Operand;
 
-			Assert.IsTrue (foo_reference.IsVarArg ());
+            Assert.IsTrue((foo_reference.CallingConvention & MethodCallingConvention.VarArg) != 0);
 
-			Assert.AreEqual (1, foo_reference.GetSentinelPosition ());
+			Assert.IsFalse (foo_reference.Parameters[0].ParameterType.IsSentinel);
+            Assert.IsTrue(foo_reference.Parameters[1].ParameterType.IsSentinel);
 		}
 
-		[TestCSharp ("Generics.cs")]
-		public void GenericInstanceMethod (ModuleDefinition module)
-		{
+		[TestMethod]
+        public void GenericInstanceMethod()
+        {
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("GenericsAsm").MainModule;
 			var type = module.GetType ("It");
 			var method = type.GetMethod ("ReadPwow");
 
@@ -176,15 +187,16 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreNotEqual (0, instance.MetadataToken.RID);
 		}
 
-		[TestCSharp ("Generics.cs")]
-		public void MethodRefDeclaredOnGenerics (ModuleDefinition module)
+		[TestMethod]
+		public void MethodRefDeclaredOnGenerics ()
 		{
+            ModuleDefinition module = SampleInputLoader.LoadAssembly("GenericsAsm").MainModule;
 			var type = module.GetType ("Tamtam");
 			var beta = type.GetMethod ("Beta");
 			var charlie = type.GetMethod ("Charlie");
 
-			var new_list_beta = (MethodReference) beta.Body.Instructions [0].Operand;
-			var new_list_charlie = (MethodReference) charlie.Body.Instructions [0].Operand;
+			var new_list_beta = (MethodReference) beta.Body.Instructions.First(i=>i.OpCode != Mi.Assemblies.Cil.OpCodes.Nop).Operand;
+            var new_list_charlie = (MethodReference)charlie.Body.Instructions.First(i => i.OpCode != Mi.Assemblies.Cil.OpCodes.Nop).Operand;
 
 			Assert.AreEqual ("System.Collections.Generic.List`1<TBeta>", new_list_beta.DeclaringType.FullName);
 			Assert.AreEqual ("System.Collections.Generic.List`1<TCharlie>", new_list_charlie.DeclaringType.FullName);

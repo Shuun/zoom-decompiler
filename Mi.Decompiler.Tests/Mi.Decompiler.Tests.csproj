@@ -109,6 +109,9 @@
     <Compile Include="Assemblies\ImportReflectionTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Assemblies\MethodTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CodeSampleFileParser.cs">
       <SubType>Code</SubType>
     </Compile>
