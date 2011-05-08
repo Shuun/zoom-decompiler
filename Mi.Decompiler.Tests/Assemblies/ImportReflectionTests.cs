@@ -212,8 +212,8 @@ namespace Mi.Assemblies.Tests {
 			var foo_def = module.Import (typeof (Foo<>));
 			var foo_open = module.Import (typeof (Foo<>), foo_def);
 
-			Assert.AreEqual ("Mono.Cecil.Tests.ImportReflectionTests/Foo`1", foo_def.FullName);
-			Assert.AreEqual ("Mono.Cecil.Tests.ImportReflectionTests/Foo`1<TFoo>", foo_open.FullName);
+			Assert.AreEqual ("Mi.Assemblies.Tests.ImportReflectionTests/Foo`1", foo_def.FullName);
+			Assert.AreEqual ("Mi.Assemblies.Tests.ImportReflectionTests/Foo`1<TFoo>", foo_open.FullName);
 		}
 
 		[TestMethod]
@@ -227,37 +227,41 @@ namespace Mi.Assemblies.Tests {
 
 			var generic_foo = module.Import (generic_list_foo_open, foo_def);
 
-			Assert.AreEqual ("Mono.Cecil.Tests.ImportReflectionTests/Generic`1<System.Collections.Generic.List`1<TFoo>>",
+			Assert.AreEqual ("Mi.Assemblies.Tests.ImportReflectionTests/Generic`1<System.Collections.Generic.List`1<TFoo>>",
 				generic_foo.FullName);
 		}
 
 		[TestMethod]
 		public void ImportGenericTypeDefFromContext ()
 		{
+            var asm = AssemblyDefinition.CreateAssembly(new AssemblyNameDefinition("A", new Version(0, 0)), "A", ModuleKind.Dll);
+
 			var foo_open = typeof (Foo<>).MakeGenericType (typeof (Foo<>).GetGenericArguments () [0]);
 			var generic_foo_open = typeof (Generic<>).MakeGenericType (foo_open);
 
-			var foo_def = typeof (Foo<>).ToDefinition ();
-			var module = foo_def.Module;
+            var foo_ref = asm.MainModule.Import(typeof(Foo<>));
+			var module = asm.MainModule;
 
-			var generic_foo = module.Import (generic_foo_open, foo_def);
+			var generic_foo = module.Import (generic_foo_open, foo_ref);
 
-			Assert.AreEqual ("Mono.Cecil.Tests.ImportReflectionTests/Generic`1<Mono.Cecil.Tests.ImportReflectionTests/Foo`1<TFoo>>",
+			Assert.AreEqual ("Mi.Assemblies.Tests.ImportReflectionTests/Generic`1<Mi.Assemblies.Tests.ImportReflectionTests/Foo`1<TFoo>>",
 				generic_foo.FullName);
 		}
 
 		[TestMethod]
 		public void ImportArrayTypeDefFromContext ()
 		{
+            var asm = AssemblyDefinition.CreateAssembly(new AssemblyNameDefinition ("A", new Version(0,0)), "A", ModuleKind.Dll);
+
 			var foo_open = typeof (Foo<>).MakeGenericType (typeof (Foo<>).GetGenericArguments () [0]);
 			var foo_open_array = foo_open.MakeArrayType ();
 
-			var foo_def = typeof (Foo<>).ToDefinition ();
-			var module = foo_def.Module;
+			var foo_ref = asm.MainModule.Import(typeof (Foo<>));
+			var module = asm.MainModule;
 
-			var array_foo = module.Import (foo_open_array, foo_def);
+			var array_foo = module.Import (foo_open_array, foo_ref);
 
-			Assert.AreEqual ("Mono.Cecil.Tests.ImportReflectionTests/Foo`1<TFoo>[]",
+            Assert.AreEqual("Mi.Assemblies.Tests.ImportReflectionTests/Foo`1<TFoo>[]",
 				array_foo.FullName);
 		}
 
@@ -273,7 +277,7 @@ namespace Mi.Assemblies.Tests {
 
 			var generic_field = module.Import (generic_list_foo_open_field, foo_def);
 
-			Assert.AreEqual ("TFoo Mono.Cecil.Tests.ImportReflectionTests/Generic`1<System.Collections.Generic.List`1<TFoo>>::Field",
+			Assert.AreEqual ("TFoo Mi.Assemblies.Tests.ImportReflectionTests/Generic`1<System.Collections.Generic.List`1<TFoo>>::Field",
 				generic_field.FullName);
 		}
 
@@ -289,7 +293,7 @@ namespace Mi.Assemblies.Tests {
 
 			var generic_method = module.Import (generic_list_foo_open_method, foo_def);
 
-			Assert.AreEqual ("TFoo Mono.Cecil.Tests.ImportReflectionTests/Generic`1<System.Collections.Generic.List`1<TFoo>>::Method(TFoo)",
+			Assert.AreEqual ("TFoo Mi.Assemblies.Tests.ImportReflectionTests/Generic`1<System.Collections.Generic.List`1<TFoo>>::Method(TFoo)",
 				generic_method.FullName);
 		}
 
@@ -300,7 +304,7 @@ namespace Mi.Assemblies.Tests {
 
 			var method = module.Import (typeof (Generic<>).GetMethod ("Method"));
 
-			Assert.AreEqual ("T Mono.Cecil.Tests.ImportReflectionTests/Generic`1<T>::Method(T)", method.FullName);
+			Assert.AreEqual ("T Mi.Assemblies.Tests.ImportReflectionTests/Generic`1<T>::Method(T)", method.FullName);
 		}
 
 		[TestMethod]
@@ -310,11 +314,11 @@ namespace Mi.Assemblies.Tests {
 
 			var generic_method = module.Import (typeof (Generic<>).GetMethod ("GenericMethod"));
 
-			Assert.AreEqual ("TS Mono.Cecil.Tests.ImportReflectionTests/Generic`1<T>::GenericMethod(T,TS)", generic_method.FullName);
+			Assert.AreEqual ("TS Mi.Assemblies.Tests.ImportReflectionTests/Generic`1<T>::GenericMethod(T,TS)", generic_method.FullName);
 
 			generic_method = module.Import (typeof (Generic<>).GetMethod ("GenericMethod"), generic_method);
 
-			Assert.AreEqual ("TS Mono.Cecil.Tests.ImportReflectionTests/Generic`1<T>::GenericMethod<TS>(T,TS)", generic_method.FullName);
+			Assert.AreEqual ("TS Mi.Assemblies.Tests.ImportReflectionTests/Generic`1<T>::GenericMethod<TS>(T,TS)", generic_method.FullName);
 		}
 
 		delegate void Emitter (ModuleDefinition module, MethodBody body);
@@ -346,7 +350,7 @@ namespace Mi.Assemblies.Tests {
 		{
 			using (var stream = new MemoryStream ()) {
 				module.Write (stream);
-				File.WriteAllBytes (Path.Combine (Path.Combine (Path.GetTempPath (), "cecil"), module.Name + ".dll"), stream.ToArray ());
+				//File.WriteAllBytes (Path.Combine (Path.Combine (Path.GetTempPath (), "cecil"), module.Name + ".dll"), stream.ToArray ());
 				return SR.Assembly.Load (stream.ToArray ());
 			}
 		}
