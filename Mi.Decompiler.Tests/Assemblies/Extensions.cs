@@ -20,7 +20,7 @@ namespace Mi.Assemblies.Tests {
 
 		public static TypeDefinition ToDefinition (this Type self)
 		{
-            throw new NotImplementedException(self.GetType().Name + ".ToDefinition() is not implemented.");
+            throw new NotImplementedException(self.Name + ".ToDefinition() is not implemented.");
 			var module = ModuleDefinition.ReadModule (self.Module.FullyQualifiedName);
 			return (TypeDefinition) module.LookupToken (self.MetadataToken);
 		}
