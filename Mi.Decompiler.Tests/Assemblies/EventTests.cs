@@ -12,7 +12,7 @@ namespace Mi.Assemblies.Tests {
 	public class EventTests {
 
 		[TestMethod]
-		public void TestCSharp ()
+		public void TestEventsCS ()
 		{
             var module = SampleInputLoader.LoadAssembly("Events").MainModule;
 
@@ -38,7 +38,7 @@ namespace Mi.Assemblies.Tests {
 		}
 
 		[TestMethod]
-		public void OtherMethod ()
+		public void TestOthersIL ()
 		{
             ModuleDefinition module = SampleInputLoader.LoadAssembly("Others").MainModule;
 			var type = module.GetType ("Others");
