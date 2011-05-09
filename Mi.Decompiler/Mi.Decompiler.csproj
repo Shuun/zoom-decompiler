@@ -290,7 +290,6 @@
     <Compile Include="Assemblies\TypeSpecification.cs" />
     <Compile Include="Assemblies\TypeSystem.cs" />
     <Compile Include="Assemblies\VariantType.cs" />
-    <Compile Include="Assemblies\Security.Cryptography\CryptoConvert.cs" />
     <Compile Include="Assemblies\Security.Cryptography\CryptoService.cs" />
     <Compile Include="Assemblies\System.Runtime.CompilerServices\ExtensionAttribute.cs" />
     <Compile Include="NRefactory\CSharp\Analysis\ControlFlow.cs" />
