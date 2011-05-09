@@ -44,6 +44,10 @@ namespace Mi.Assemblies
         Collection<CustomAttribute> custom_attributes;
         Collection<SecurityDeclaration> security_declarations;
 
+        internal AssemblyDefinition()
+        {
+        }
+
         public AssemblyNameDefinition Name
         {
             get { return name; }
@@ -116,10 +120,6 @@ namespace Mi.Assemblies
         public Collection<SecurityDeclaration> SecurityDeclarations
         {
             get { return security_declarations ?? (this.GetSecurityDeclarations(ref security_declarations, main_module)); }
-        }
-
-        internal AssemblyDefinition()
-        {
         }
 
 #if !READ_ONLY
