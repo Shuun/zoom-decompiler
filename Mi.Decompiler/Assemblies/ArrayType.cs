@@ -27,37 +27,14 @@
 //
 
 using System;
-using System.Text;
-using System.Collections.ObjectModel;
-using MD = Mi.Assemblies.Metadata;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-using Mi;
+using MD = Mi.Assemblies.Metadata;
 
 namespace Mi.Assemblies
 {
-    public struct ArrayDimension
-    {
-        readonly int m_LowerBound;
-        readonly int m_UpperBoundIncremented;
-
-        public ArrayDimension(int? lowerBound, int? upperBound)
-        {
-            this.m_LowerBound = lowerBound ?? -1;
-            this.m_UpperBoundIncremented = (upperBound ?? -1) + 1;
-        }
-
-        public int? LowerBound { get { return m_LowerBound == 0 ? (int?)null : m_LowerBound; } }
-        public int? UpperBound { get { return m_UpperBoundIncremented == 0 ? (int?)null : m_UpperBoundIncremented - 1; } }
-
-        public bool IsSized { get { return m_LowerBound > 0 || m_UpperBoundIncremented != 0; } }
-
-        public override string ToString()
-        {
-            return IsSized ? this.LowerBound + "..." + this.UpperBound : "~";
-        }
-    }
-
     public sealed class ArrayType : TypeSpecification
     {
         static readonly System.Collections.ObjectModel.ReadOnlyCollection<ArrayDimension> VectorDimension = new System.Collections.ObjectModel.ReadOnlyCollection<ArrayDimension>(
@@ -137,7 +114,7 @@ namespace Mi.Assemblies
                     if (i > 0)
                         suffix.Append(",");
 
-                    if(m_Dimensions[i].IsSized)
+                    if (m_Dimensions[i].IsSized)
                         suffix.Append(m_Dimensions[i].ToString());
                 }
                 suffix.Append("]");

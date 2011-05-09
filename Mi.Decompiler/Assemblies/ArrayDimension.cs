@@ -1,5 +1,5 @@
 //
-// TableHeap.cs
+// ArrayType.cs
 //
 // Author:
 //   Jb Evain (jbevain@gmail.com)
@@ -27,32 +27,31 @@
 //
 
 using System;
-using Mi.Assemblies.PE;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace Mi.Assemblies.Metadata
+namespace Mi.Assemblies
 {
-    sealed class TableHeap : Heap
+    public struct ArrayDimension
     {
-        public long Valid;
-        public long Sorted;
+        readonly int m_LowerBound;
+        readonly int m_UpperBoundIncremented;
 
-        public const int TableCount = 45;
-
-        public readonly TableInformation[] Tables = new TableInformation[TableCount];
-
-        public TableInformation this[Table table]
+        public ArrayDimension(int? lowerBound, int? upperBound)
         {
-            get { return Tables[(int)table]; }
+            this.m_LowerBound = lowerBound ?? -1;
+            this.m_UpperBoundIncremented = (upperBound ?? -1) + 1;
         }
 
-        public TableHeap(Section section, uint start, uint size)
-            : base(section, start, size)
-        {
-        }
+        public int? LowerBound { get { return m_LowerBound == 0 ? (int?)null : m_LowerBound; } }
+        public int? UpperBound { get { return m_UpperBoundIncremented == 0 ? (int?)null : m_UpperBoundIncremented - 1; } }
 
-        public bool HasTable(Table table)
+        public bool IsSized { get { return m_LowerBound > 0 || m_UpperBoundIncremented != 0; } }
+
+        public override string ToString()
         {
-            return (Valid & (1L << (int)table)) != 0;
+            return IsSized ? this.LowerBound + "..." + this.UpperBound : "~";
         }
     }
 }
