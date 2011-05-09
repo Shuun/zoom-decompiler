@@ -6,6 +6,7 @@
     <OutputType>Library</OutputType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectGuid>{018A03F3-580A-4035-B0F3-9F73EF2241CC}</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
