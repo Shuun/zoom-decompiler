@@ -37,8 +37,6 @@ namespace Mi.Assemblies
 {
     public sealed class AssemblyDefinition : ICustomAttributeProvider, ISecurityDeclarationProvider
     {
-        AssemblyNameDefinition name;
-
         internal ModuleDefinition main_module;
         Collection<ModuleDefinition> modules;
         Collection<CustomAttribute> custom_attributes;
@@ -48,15 +46,11 @@ namespace Mi.Assemblies
         {
         }
 
-        public AssemblyNameDefinition Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
+        public AssemblyNameDefinition Name { get; set; }
 
         public string FullName
         {
-            get { return name != null ? name.FullName : string.Empty; }
+            get { return Name != null ? Name.FullName : string.Empty; }
         }
 
         public MetadataToken MetadataToken
