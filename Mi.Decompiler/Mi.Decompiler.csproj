@@ -69,6 +69,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assemblies\ArrayDimension.cs" />
+    <Compile Include="Assemblies\Metadata\TableHeap.cs" />
+    <Compile Include="Assemblies\Metadata\TableInformation.cs" />
     <Compile Include="Assemblies\Microsoft.Cci.Pdb\BitAccess.cs" />
     <Compile Include="Assemblies\Microsoft.Cci.Pdb\BitSet.cs" />
     <Compile Include="Assemblies\Microsoft.Cci.Pdb\CvInfo.cs" />
@@ -191,7 +194,7 @@
     <Compile Include="Assemblies\Metadata\MetadataToken.cs" />
     <Compile Include="Assemblies\Metadata\Row.cs" />
     <Compile Include="Assemblies\Metadata\StringHeap.cs" />
-    <Compile Include="Assemblies\Metadata\TableHeap.cs" />
+    <Compile Include="Assemblies\Metadata\Table.cs" />
     <Compile Include="Assemblies\Metadata\TokenType.cs" />
     <Compile Include="Assemblies\Metadata\UserStringHeap.cs" />
     <Compile Include="Assemblies\Metadata\Utilities.cs" />

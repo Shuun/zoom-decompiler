@@ -31,28 +31,10 @@ using Mi.Assemblies.PE;
 
 namespace Mi.Assemblies.Metadata
 {
-    sealed class TableHeap : Heap
+    struct TableInformation
     {
-        public long Valid;
-        public long Sorted;
-
-        public const int TableCount = 45;
-
-        public readonly TableInformation[] Tables = new TableInformation[TableCount];
-
-        public TableInformation this[Table table]
-        {
-            get { return Tables[(int)table]; }
-        }
-
-        public TableHeap(Section section, uint start, uint size)
-            : base(section, start, size)
-        {
-        }
-
-        public bool HasTable(Table table)
-        {
-            return (Valid & (1L << (int)table)) != 0;
-        }
+        public uint Offset;
+        public uint Length;
+        public uint RowSize;
     }
 }

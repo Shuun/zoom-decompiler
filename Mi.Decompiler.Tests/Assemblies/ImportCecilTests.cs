@@ -214,7 +214,7 @@ namespace Mi.Assemblies.Tests {
 
 			var method = module.Import (generic.GetMethod ("Method"));
 
-			Assert.AreEqual ("T Mono.Cecil.Tests.ImportCecilTests/Generic`1::Method(T)", method.FullName);
+			Assert.AreEqual ("T Mi.Assemblies.Tests.ImportCecilTests/Generic`1<T>::Method(T)", method.FullName);
 		}
 
 		delegate void Emitter (ModuleDefinition module, MethodBody body);
