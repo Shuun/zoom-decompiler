@@ -212,7 +212,6 @@
     <Compile Include="Assemblies\AssemblyDefinition.cs" />
     <Compile Include="Assemblies\AssemblyFlags.cs" />
     <Compile Include="Assemblies\AssemblyHashAlgorithm.cs" />
-    <Compile Include="Assemblies\AssemblyInfo.cs" />
     <Compile Include="Assemblies\AssemblyLinkedResource.cs" />
     <Compile Include="Assemblies\AssemblyNameDefinition.cs" />
     <Compile Include="Assemblies\AssemblyNameReference.cs" />

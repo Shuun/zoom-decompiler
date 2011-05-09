@@ -28,30 +28,24 @@
 
 using System;
 
-namespace Mi.Assemblies {
+namespace Mi.Assemblies
+{
 
-	public sealed class AssemblyLinkedResource : Resource {
+    public sealed class AssemblyLinkedResource : Resource
+    {
+        public AssemblyLinkedResource(string name, ManifestResourceAttributes flags)
+            : base(name, flags)
+        {
+        }
 
-		AssemblyNameReference reference;
+        public AssemblyLinkedResource(string name, ManifestResourceAttributes flags, AssemblyNameReference reference)
+            : base(name, flags)
+        {
+            this.Assembly = reference;
+        }
 
-		public AssemblyNameReference Assembly {
-			get { return reference; }
-			set { reference = value; }
-		}
+        public AssemblyNameReference Assembly { get; set; }
 
-		public override ResourceType ResourceType {
-			get { return ResourceType.AssemblyLinked; }
-		}
-
-		public AssemblyLinkedResource (string name, ManifestResourceAttributes flags)
-			: base (name, flags)
-		{
-		}
-
-		public AssemblyLinkedResource (string name, ManifestResourceAttributes flags, AssemblyNameReference reference)
-			: base (name, flags)
-		{
-			this.reference = reference;
-		}
-	}
+        public override ResourceType ResourceType { get { return ResourceType.AssemblyLinked; } }
+    }
 }
