@@ -23,12 +23,12 @@ namespace Mi.Assemblies.Tests {
 				var method_by_ref = new MethodDefinition(
                     "ModifyString",
                     MethodAttributes.Private | MethodAttributes.Static, 
-                    module.Import (typeof (void).ToDefinition ()));
+                    module.Import (typeof (void)));
 
 				type.Methods.Add (method_by_ref);
 
-				method_by_ref.Parameters.Add (new ParameterDefinition (module.Import (typeof (string).ToDefinition ())));
-				method_by_ref.Parameters.Add (new ParameterDefinition (module.Import (new ByReferenceType (typeof (string).ToDefinition ()))));
+				method_by_ref.Parameters.Add (new ParameterDefinition (module.Import (typeof (string))));
+				method_by_ref.Parameters.Add (new ParameterDefinition (module.Import (new ByReferenceType ( module.Import(typeof (string))))));
 
 				var m_il = method_by_ref.Body.GetILProcessor ();
 				m_il.Emit (OpCodes.Ldarg_1);
@@ -36,7 +36,7 @@ namespace Mi.Assemblies.Tests {
 				m_il.Emit (OpCodes.Stind_Ref);
 				m_il.Emit (OpCodes.Ret);
 
-				var v_0 = new VariableDefinition (module.Import (typeof (string).ToDefinition ()));
+				var v_0 = new VariableDefinition (module.Import (typeof (string)));
 				body.Variables.Add (v_0);
 
 				var il = body.GetILProcessor ();
@@ -71,7 +71,7 @@ namespace Mi.Assemblies.Tests {
 		{
 			var get_empty = Compile<Func<string>> ((module, body) => {
 				var il = body.GetILProcessor ();
-				il.Emit (OpCodes.Ldsfld, module.Import (typeof (string).GetField ("Empty").ToDefinition ()));
+				il.Emit (OpCodes.Ldsfld, module.Import (typeof (string).GetField ("Empty")));
 				il.Emit (OpCodes.Ret);
 			});
 
@@ -85,7 +85,7 @@ namespace Mi.Assemblies.Tests {
 				var il = body.GetILProcessor ();
 				il.Emit (OpCodes.Ldarg_0);
 				il.Emit (OpCodes.Ldarg_1);
-				il.Emit (OpCodes.Call, module.Import (typeof (string).GetMethod ("Concat", new [] { typeof (string), typeof (string) }).ToDefinition ()));
+				il.Emit (OpCodes.Call, module.Import (typeof (string).GetMethod ("Concat", new [] { typeof (string), typeof (string) })));
 				il.Emit (OpCodes.Ret);
 			});
 
@@ -209,7 +209,7 @@ namespace Mi.Assemblies.Tests {
 		[TestMethod]
 		public void ImportMethodOnOpenGeneric ()
 		{
-			var generic = typeof (Generic<>).ToDefinition ();
+			var generic = typeof (Generic<>);
 			var module = ModuleDefinition.CreateModule ("foo", ModuleKind.Dll);
 
 			var method = module.Import (generic.GetMethod ("Method"));
@@ -244,12 +244,15 @@ namespace Mi.Assemblies.Tests {
 
 		static SR.Assembly LoadTestModule (ModuleDefinition module)
 		{
-			using (var stream = new MemoryStream ()) {
-				module.Write (stream);
-				File.WriteAllBytes (Path.Combine (Path.Combine (Path.GetTempPath (), "cecil"), module.Name + ".dll"), stream.ToArray ());
-				return SR.Assembly.Load (stream.ToArray ());
-			}
-		}
+            using (var stream = new MemoryStream())
+            {
+                module.Write(stream);
+                //File.WriteAllBytes (Path.Combine (Path.Combine (Path.GetTempPath (), "cecil"), module.Name + ".dll"), stream.ToArray ());
+                var p = new System.Windows.AssemblyPart();
+                var result = p.Load(stream);
+                return result; // SR.Assembly.Load(stream.ToArray());
+            }
+        }
 
 		static ModuleDefinition CreateTestModule<TDelegate> (string name, Emitter emitter)
 		{
