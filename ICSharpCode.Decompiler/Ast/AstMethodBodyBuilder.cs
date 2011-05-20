@@ -485,9 +485,12 @@ namespace ICSharpCode.Decompiler.Ast
 						return arg1;
 					else
 						return arg1.CastTo(operandAsTypeRef);
-					case ILCode.Isinst:         return arg1.CastAs(operandAsTypeRef);
-					case ILCode.Box:            return arg1;
-					case ILCode.Unbox:          return InlineAssembly(byteCode, args);
+				case ILCode.Isinst:
+					return arg1.CastAs(operandAsTypeRef);
+				case ILCode.Box:
+					return arg1;
+				case ILCode.Unbox:
+					return MakeRef(arg1.CastTo(operandAsTypeRef));
 					#endregion
 					#region Indirect
 				case ILCode.Ldind_Ref:
@@ -539,11 +542,7 @@ namespace ICSharpCode.Decompiler.Ast
 					case ILCode.Endfilter:   return InlineAssembly(byteCode, args);
 					case ILCode.Endfinally:  return null;
 					case ILCode.Initblk:     return InlineAssembly(byteCode, args);
-				case ILCode.Initobj:
-					if (args[0] is DirectionExpression)
-						return new AssignmentExpression(((DirectionExpression)args[0]).Expression.Detach(), MakeDefaultValue((TypeReference)operand));
-					else
-						return InlineAssembly(byteCode, args);
+					case ILCode.Initobj:      return InlineAssembly(byteCode, args);
 				case ILCode.DefaultValue:
 					return MakeDefaultValue((TypeReference)operand);
 					case ILCode.Jmp: return InlineAssembly(byteCode, args);
@@ -602,7 +601,7 @@ namespace ICSharpCode.Decompiler.Ast
 					case ILCode.Ldstr:  return new Ast.PrimitiveExpression(operand);
 				case ILCode.Ldtoken:
 					if (operand is Cecil.TypeReference) {
-						return new Ast.TypeOfExpression { Type = operandAsTypeRef }.Member("TypeHandle");
+						return new Ast.TypeOfExpression { Type = AddEmptyTypeArgumentsForUnboundGenerics(operandAsTypeRef) }.Member("TypeHandle");
 					} else {
 						return InlineAssembly(byteCode, args);
 					}
@@ -748,6 +747,35 @@ namespace ICSharpCode.Decompiler.Ast
 				default:
 					throw new Exception("Unknown OpCode: " + byteCode.Code);
 			}
+		}
+		
+		AstType AddEmptyTypeArgumentsForUnboundGenerics(AstType type)
+		{
+			TypeReference typeRef = type.Annotation<TypeReference>();
+			if (typeRef == null)
+				return type;
+			TypeDefinition typeDef = typeRef.Resolve(); // need to resolve to figure out the number of type parameters
+			if (typeDef == null || !typeDef.HasGenericParameters)
+				return type;
+			SimpleType sType = type as SimpleType;
+			MemberType mType = type as MemberType;
+			if (sType != null) {
+				while (typeDef.GenericParameters.Count > sType.TypeArguments.Count) {
+					sType.TypeArguments.Add(new SimpleType(""));
+				}
+			}
+			
+			if (mType != null) {
+				AddEmptyTypeArgumentsForUnboundGenerics(mType.Target);
+				
+				int outerTypeParamCount = typeDef.DeclaringType == null ? 0 : typeDef.DeclaringType.GenericParameters.Count;
+				
+				while (typeDef.GenericParameters.Count - outerTypeParamCount > mType.TypeArguments.Count) {
+					mType.TypeArguments.Add(new SimpleType(""));
+				}
+			}
+			
+			return type;
 		}
 		
 		static readonly AstNode objectInitializerPattern = new AssignmentExpression(

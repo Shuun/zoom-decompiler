@@ -963,7 +963,9 @@ namespace ICSharpCode.NRefactory.CSharp
 				case '\v':
 					return "\\v";
 				default:
-					if (char.IsControl(ch) || char.IsSurrogate(ch)) {
+					if (char.IsControl(ch) || char.IsSurrogate(ch) ||
+					    // print all uncommon white spaces as numbers
+					    (char.IsWhiteSpace(ch) && ch != ' ')) {
 						return "\\u" + ((int)ch).ToString("x4");
 					} else {
 						return ch.ToString();
@@ -1102,7 +1104,9 @@ namespace ICSharpCode.NRefactory.CSharp
 			queryFromClause.Type.AcceptVisitor(this, data);
 			Space();
 			WriteIdentifier(queryFromClause.Identifier);
+			Space();
 			WriteKeyword("in", QueryFromClause.InKeywordRole);
+			Space();
 			queryFromClause.Expression.AcceptVisitor(this, data);
 			return EndNode(queryFromClause);
 		}
@@ -2143,7 +2147,9 @@ namespace ICSharpCode.NRefactory.CSharp
 				// "1.0 / /*comment*/a", then we need to insert a space in front of the comment.
 				formatter.Space();
 			}
+			formatter.StartNode(comment);
 			formatter.WriteComment(comment.CommentType, comment.Content);
+			formatter.EndNode(comment);
 			lastWritten = LastWritten.Whitespace;
 			return null;
 		}
