@@ -17,6 +17,7 @@ namespace ICSharpCode.Decompiler.Ast
 		readonly ITextOutput output;
 		readonly Stack<AstNode> nodeStack = new Stack<AstNode>();
 		int braceLevelWithinType = -1;
+		bool inDocumentationComment = false;
 		
 		public TextOutputFormatter(ITextOutput output)
 		{
@@ -102,7 +103,7 @@ namespace ICSharpCode.Decompiler.Ast
 			output.WriteLine();
 		}
 		
-		public void WriteComment(CommentType commentType, string content)
+		public void WriteComment(CommentType commentType, string content, bool isLastLine = false)
 		{
 			switch (commentType) {
 				case CommentType.SingleLine:
@@ -115,8 +116,16 @@ namespace ICSharpCode.Decompiler.Ast
 					output.Write("*/");
 					break;
 				case CommentType.Documentation:
+					if (!inDocumentationComment)
+						output.MarkFoldStart("///" + content, true);
 					output.Write("///");
-					output.WriteLine(content);
+					output.Write(content);
+					inDocumentationComment = true;
+					if (isLastLine) {
+						inDocumentationComment = false;
+						output.MarkFoldEnd();
+					}
+					output.WriteLine();
 					break;
 			}
 		}
@@ -127,7 +136,7 @@ namespace ICSharpCode.Decompiler.Ast
 			if (ranges != null && ranges.Count > 0)
 			{
 				// find the ancestor that has method mapping as annotation
-				if (node.Ancestors != null && node.Ancestors.Count() > 0)
+				if (node.Parent != null)
 				{
 					var n = node.Ancestors.FirstOrDefault(a => a.Annotation<MemberMapping>() != null);
 					if (n != null) {
