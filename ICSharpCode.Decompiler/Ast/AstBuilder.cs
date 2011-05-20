@@ -228,15 +228,6 @@ namespace ICSharpCode.Decompiler.Ast
 			astType.TypeParameters.AddRange(MakeTypeParameters(genericParameters));
 			astType.Constraints.AddRange(MakeConstraints(genericParameters));
 			
-			// Nested types
-			foreach (TypeDefinition nestedTypeDef in typeDef.NestedTypes) {
-				if (MemberIsHidden(nestedTypeDef, context.Settings))
-					continue;
-				var nestedType = CreateType(nestedTypeDef);
-				SetNewModifier(nestedType);
-				astType.AddChild(nestedType, TypeDeclaration.MemberRole);
-			}
-			
 			AttributedNode result = astType;
 			if (typeDef.IsEnum) {
 				long expectedEnumMemberValue = 0;
@@ -597,6 +588,15 @@ namespace ICSharpCode.Decompiler.Ast
 		
 		void AddTypeMembers(TypeDeclaration astType, TypeDefinition typeDef)
 		{
+			// Nested types
+			foreach (TypeDefinition nestedTypeDef in typeDef.NestedTypes) {
+				if (MemberIsHidden(nestedTypeDef, context.Settings))
+					continue;
+				var nestedType = CreateType(nestedTypeDef);
+				SetNewModifier(nestedType);
+				astType.AddChild(nestedType, TypeDeclaration.MemberRole);
+			}
+			
 			// Add fields
 			foreach(FieldDefinition fieldDef in typeDef.Fields) {
 				if (MemberIsHidden(fieldDef, context.Settings)) continue;
@@ -729,6 +729,9 @@ namespace ICSharpCode.Decompiler.Ast
 			astMethod.Body = CreateMethodBody(methodDef, astMethod.Parameters);
 			ConvertAttributes(astMethod, methodDef);
 			astMethod.WithAnnotation(methodMapping);
+			if (methodDef.IsStatic && methodDef.DeclaringType.IsBeforeFieldInit && !astMethod.Body.IsNull) {
+				astMethod.Body.InsertChildAfter(null, new Comment(" Note: this type is marked as 'beforefieldinit'."), AstNode.Roles.Comment);
+			}
 			return astMethod;
 		}
 
@@ -1433,7 +1436,7 @@ namespace ICSharpCode.Decompiler.Ast
 					if (baseType.HasFields && AnyIsHiddenBy(baseType.Fields, member))
 						return true;
 					if (includeBaseMethods && baseType.HasMethods
-							&& AnyIsHiddenBy(baseType.Methods, member, m => !m.IsSpecialName))
+					    && AnyIsHiddenBy(baseType.Methods, member, m => !m.IsSpecialName))
 						return true;
 					if (baseType.HasNestedTypes && AnyIsHiddenBy(baseType.NestedTypes, member))
 						return true;
@@ -1447,8 +1450,8 @@ namespace ICSharpCode.Decompiler.Ast
 			where T : IMemberDefinition
 		{
 			return members.Any(m => m.Name == derived.Name
-				&& (condition == null || condition(m))
-				&& TypesHierarchyHelpers.IsVisibleFromDerived(m, derived.DeclaringType));
+			                   && (condition == null || condition(m))
+			                   && TypesHierarchyHelpers.IsVisibleFromDerived(m, derived.DeclaringType));
 		}
 		
 		/// <summary>
