@@ -71,7 +71,7 @@ namespace Mi.Decompiler.Ast.Transforms
 		public override object VisitTypeDeclaration(TypeDeclaration typeDeclaration, object data)
 		{
 			// Handle initializers on instance fields
-			HandleInstanceFieldInitializers(typeDeclaration.Members);
+			HandleInstanceFieldInitializers(typeDeclaration.Members.Cast<AstNode>());
 			
 			// Now convert base constructor calls to initializers:
 			base.VisitTypeDeclaration(typeDeclaration, data);
@@ -80,7 +80,7 @@ namespace Mi.Decompiler.Ast.Transforms
 			RemoveSingleEmptyConstructor(typeDeclaration);
 			
 			// Handle initializers on static fields:
-			HandleStaticFieldInitializers(typeDeclaration.Members);
+			HandleStaticFieldInitializers(typeDeclaration.Members.Cast<AstNode>());
 			return null;
 		}
 		
