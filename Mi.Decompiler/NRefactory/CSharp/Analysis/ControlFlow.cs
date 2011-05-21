@@ -147,7 +147,7 @@ namespace Mi.NRefactory.CSharp.Analysis
 		{
 			return BuildControlFlowGraph(statement, new ResolveVisitor(
 				new CSharpResolver(context, cancellationToken),
-				null, ConstantModeResolveVisitorNavigator.Skip));
+				ConstantModeResolveVisitorNavigator.Skip));
 		}
 		
 		public IList<ControlFlowNode> BuildControlFlowGraph(Statement statement, ResolveVisitor resolveVisitor)
