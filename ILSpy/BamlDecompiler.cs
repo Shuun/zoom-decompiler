@@ -403,7 +403,7 @@ namespace ICSharpCode.ILSpy.Baml
 						}
 						return output;
 					}),
-				t => textView.Show(t.Result, highlighting)
+				t => textView.ShowNode(t.Result, this, highlighting)
 			);
 			return true;
 		}
