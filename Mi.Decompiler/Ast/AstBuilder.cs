@@ -1302,10 +1302,10 @@ namespace Mi.Decompiler.Ast
 		{
 			if (!secDeclProvider.HasSecurityDeclarations)
 				return;
-			var attributes = new List<ICSharpCode.NRefactory.CSharp.Attribute>();
+			var attributes = new List<Mi.NRefactory.CSharp.Attribute>();
 			foreach (var secDecl in secDeclProvider.SecurityDeclarations) {
 				foreach (var secAttribute in secDecl.SecurityAttributes) {
-					var attribute = new ICSharpCode.NRefactory.CSharp.Attribute();
+					var attribute = new Mi.NRefactory.CSharp.Attribute();
 					attribute.AddAnnotation(secAttribute);
 					attribute.Type = ConvertType(secAttribute.AttributeType);
 					attributes.Add(attribute);
