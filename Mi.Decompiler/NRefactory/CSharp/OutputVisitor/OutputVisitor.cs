@@ -944,7 +944,11 @@ namespace Mi.NRefactory.CSharp
 			return ConvertChar(ch);
 		}
 		
-		static string ConvertChar(char ch)
+		/// <summary>
+		/// Gets the escape sequence for the specified character.
+		/// </summary>
+		/// <remarks>This method does not convert ' or ".</remarks>
+		public static string ConvertChar(char ch)
 		{
 			switch (ch) {
 				case '\\':
@@ -966,7 +970,9 @@ namespace Mi.NRefactory.CSharp
 				case '\v':
 					return "\\v";
 				default:
-					if (char.IsControl(ch) || char.IsSurrogate(ch)) {
+					if (char.IsControl(ch) || char.IsSurrogate(ch) ||
+					    // print all uncommon white spaces as numbers
+					    (char.IsWhiteSpace(ch) && ch != ' ')) {
 						return "\\u" + ((int)ch).ToString("x4");
 					} else {
 						return ch.ToString();
@@ -974,7 +980,10 @@ namespace Mi.NRefactory.CSharp
 			}
 		}
 		
-		static string ConvertString(string str)
+		/// <summary>
+		/// Converts special characters to escape sequences within the given string.
+		/// </summary>
+		public static string ConvertString(string str)
 		{
 			StringBuilder sb = new StringBuilder();
 			foreach (char ch in str) {
@@ -2148,7 +2157,9 @@ namespace Mi.NRefactory.CSharp
 				// "1.0 / /*comment*/a", then we need to insert a space in front of the comment.
 				formatter.Space();
 			}
+			formatter.StartNode(comment);
 			formatter.WriteComment(comment.CommentType, comment.Content);
+			formatter.EndNode(comment);
 			lastWritten = LastWritten.Whitespace;
 			return null;
 		}
