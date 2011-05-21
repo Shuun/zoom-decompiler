@@ -38,7 +38,6 @@ namespace Mi.NRefactory.CSharp.Resolver
 	{
 		static readonly ResolveResult errorResult = new ErrorResolveResult(SharedTypes.UnknownType);
 		CSharpResolver resolver;
-		readonly ParsedFile parsedFile;
 		readonly Dictionary<AstNode, ResolveResult> cache = new Dictionary<AstNode, ResolveResult>();
 		
 		readonly IResolveVisitorNavigator navigator;
@@ -62,12 +61,11 @@ namespace Mi.NRefactory.CSharp.Resolver
 		/// The navigator, which controls where the resolve visitor will switch between scanning mode and resolving mode.
 		/// If you pass <c>null</c>, then <c>ResolveAll</c> mode will be used.
 		/// </param>
-		public ResolveVisitor(CSharpResolver resolver, ParsedFile parsedFile, IResolveVisitorNavigator navigator = null)
+		public ResolveVisitor(CSharpResolver resolver, IResolveVisitorNavigator navigator = null)
 		{
 			if (resolver == null)
 				throw new ArgumentNullException("resolver");
 			this.resolver = resolver;
-			this.parsedFile = parsedFile;
 			this.navigator = navigator;
 			if (navigator == null)
 				mode = ResolveVisitorNavigationMode.ResolveAll;
@@ -168,8 +166,6 @@ namespace Mi.NRefactory.CSharp.Resolver
 		{
 			UsingScope previousUsingScope = resolver.UsingScope;
 			try {
-				if (parsedFile != null)
-					resolver.UsingScope = parsedFile.RootUsingScope;
 				ScanChildren(unit);
 				return null;
 			} finally {
@@ -181,9 +177,6 @@ namespace Mi.NRefactory.CSharp.Resolver
 		{
 			UsingScope previousUsingScope = resolver.UsingScope;
 			try {
-				if (parsedFile != null) {
-					resolver.UsingScope = parsedFile.GetUsingScope(namespaceDeclaration.StartLocation);
-				}
 				ScanChildren(namespaceDeclaration);
 				return new NamespaceResolveResult(resolver.UsingScope.NamespaceName);
 			} finally {
@@ -205,8 +198,6 @@ namespace Mi.NRefactory.CSharp.Resolver
 							break;
 						}
 					}
-				} else if (parsedFile != null) {
-					newTypeDefinition = parsedFile.GetTopLevelTypeDefinition(typeDeclaration.StartLocation);
 				}
 				if (newTypeDefinition != null)
 					resolver.CurrentTypeDefinition = newTypeDefinition;

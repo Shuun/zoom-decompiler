@@ -86,7 +86,7 @@ namespace Mi.NRefactory.CSharp.Analysis
 		
 		public DefiniteAssignmentAnalysis(Statement rootStatement, ITypeResolveContext context, CancellationToken cancellationToken = default(CancellationToken))
 			: this(rootStatement, new ResolveVisitor(new CSharpResolver(context ?? MinimalResolveContext.Instance, cancellationToken),
-			                                         null, ConstantModeResolveVisitorNavigator.Skip))
+			                                         ConstantModeResolveVisitorNavigator.Skip))
 		{
 		}
 		
