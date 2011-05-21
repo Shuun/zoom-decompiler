@@ -409,7 +409,6 @@
     <Compile Include="NRefactory\CSharp\OutputVisitor\IOutputFormatter.cs" />
     <Compile Include="NRefactory\CSharp\OutputVisitor\OutputVisitor.cs" />
     <Compile Include="NRefactory\CSharp\OutputVisitor\TextWriterOutputFormatter.cs" />
-    <Compile Include="NRefactory\CSharp\Parser\TypeSystemConvertVisitor.cs" />
     <Compile Include="NRefactory\CSharp\Resolver\AliasNamespaceReference.cs" />
     <Compile Include="NRefactory\CSharp\Resolver\AmbiguousResolveResult.cs" />
     <Compile Include="NRefactory\CSharp\Resolver\ByReferenceResolveResult.cs" />
