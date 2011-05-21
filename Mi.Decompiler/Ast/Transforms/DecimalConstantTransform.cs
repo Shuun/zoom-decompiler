@@ -17,11 +17,11 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.PatternMatching;
-using Mono.Cecil;
+using Mi.NRefactory.CSharp;
+using Mi.NRefactory.PatternMatching;
+using Mi.Assemblies;
 
-namespace ICSharpCode.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.Ast.Transforms
 {
 	/// <summary>
 	/// Transforms decimal constant fields.
