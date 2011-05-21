@@ -400,7 +400,6 @@
     <Compile Include="NRefactory\CSharp\Ast\TypeMembers\ParameterDeclaration.cs" />
     <Compile Include="NRefactory\CSharp\Ast\TypeMembers\PropertyDeclaration.cs" />
     <Compile Include="NRefactory\CSharp\Ast\TypeMembers\VariableInitializer.cs" />
-    <Compile Include="NRefactory\CSharp\Formatter\Change.cs" />
     <Compile Include="NRefactory\CSharp\Formatter\CSharpFormattingOptions.cs" />
     <Compile Include="NRefactory\CSharp\Formatter\Indent.cs" />
     <Compile Include="NRefactory\CSharp\Formatter\ITextEditorAdapter.cs" />
