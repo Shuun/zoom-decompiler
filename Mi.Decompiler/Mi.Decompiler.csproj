@@ -401,7 +401,6 @@
     <Compile Include="NRefactory\CSharp\Ast\TypeMembers\PropertyDeclaration.cs" />
     <Compile Include="NRefactory\CSharp\Ast\TypeMembers\VariableInitializer.cs" />
     <Compile Include="NRefactory\CSharp\Formatter\CSharpFormattingOptions.cs" />
-    <Compile Include="NRefactory\CSharp\Formatter\Indent.cs" />
     <Compile Include="NRefactory\CSharp\Formatter\ITextEditorAdapter.cs" />
     <Compile Include="NRefactory\CSharp\OutputVisitor\InsertParenthesesVisitor.cs" />
     <Compile Include="NRefactory\CSharp\OutputVisitor\IOutputFormatter.cs" />
