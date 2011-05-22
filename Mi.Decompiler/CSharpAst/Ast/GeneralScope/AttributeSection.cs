@@ -28,24 +28,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	/// <summary>
+    using Mi.NRefactory.PatternMatching;
+    
+    /// <summary>
 	/// [AttributeTarget: Attributes]
 	/// </summary>
 	public class AttributeSection : AstNode
 	{
 		#region PatternPlaceholder
-		public static implicit operator AttributeSection(PatternMatching.Pattern pattern)
+		public static implicit operator AttributeSection(Pattern pattern)
 		{
 			return pattern != null ? new PatternPlaceholder(pattern) : null;
 		}
 		
-		sealed class PatternPlaceholder : AttributeSection, PatternMatching.INode
+		sealed class PatternPlaceholder : AttributeSection, INode
 		{
-			readonly PatternMatching.Pattern child;
+			readonly Pattern child;
 			
-			public PatternPlaceholder(PatternMatching.Pattern child)
+			public PatternPlaceholder(Pattern child)
 			{
 				this.child = child;
 			}
@@ -59,12 +61,12 @@ namespace Mi.NRefactory.CSharp
 				return visitor.VisitPatternPlaceholder(this, child, data);
 			}
 			
-			protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+			protected internal override bool DoMatch(AstNode other, Match match)
 			{
 				return child.DoMatch(other, match);
 			}
 			
-			bool PatternMatching.INode.DoMatchCollection(Role role, PatternMatching.INode pos, PatternMatching.Match match, PatternMatching.BacktrackingInfo backtrackingInfo)
+			bool INode.DoMatchCollection(Role role, INode pos, Match match, BacktrackingInfo backtrackingInfo)
 			{
 				return child.DoMatchCollection(role, pos, match, backtrackingInfo);
 			}
@@ -102,7 +104,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitAttributeSection (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			AttributeSection o = other as AttributeSection;
 			return o != null && this.AttributeTarget == o.AttributeTarget && this.Attributes.DoMatch(o.Attributes, match);

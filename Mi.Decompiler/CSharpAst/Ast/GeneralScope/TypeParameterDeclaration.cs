@@ -2,11 +2,15 @@
 // This code is distributed under MIT X11 license (for details please see \doc\license.txt)
 
 using System;
-using Mi.NRefactory.TypeSystem;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	/// <summary>
+    using Mi.NRefactory.TypeSystem;
+    using Mi.NRefactory.PatternMatching;
+    
+    /// <summary>
 	/// [in|out] Name
 	/// 
 	/// Represents a type parameter.
@@ -44,7 +48,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitTypeParameterDeclaration(this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			TypeParameterDeclaration o = other as TypeParameterDeclaration;
 			return o != null && this.Variance == o.Variance && MatchString(this.Name, o.Name) && this.Attributes.DoMatch(o.Attributes, match);

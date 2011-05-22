@@ -1,5 +1,5 @@
 ﻿// 
-// DelegateDeclaration.cs
+// TypeDeclaration.cs
 //
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
@@ -24,25 +24,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// delegate ReturnType Name&lt;TypeParameters&gt;(Parameters) where Constraints;
+    using Mi.NRefactory.PatternMatching;
+    using Mi.NRefactory.TypeSystem;
+
+    /// <summary>
+	/// class Name&lt;TypeParameters&gt; : BaseTypes where Constraints;
 	/// </summary>
-	public class DelegateDeclaration : AttributedNode
+	public class TypeDeclaration : AttributedNode
 	{
+		public readonly static Role<CSharpTokenNode> ColonRole = Roles.Colon;
+		public readonly static Role<AstType> BaseTypeRole = new Role<AstType>("BaseType", AstType.Null);
+		public readonly static Role<AttributedNode> MemberRole = new Role<AttributedNode>("Member");
+		
 		public override NodeType NodeType {
 			get {
 				return NodeType.TypeDeclaration;
 			}
 		}
 		
-		public AstType ReturnType {
-			get { return GetChildByRole (Roles.Type); }
-			set { SetChildByRole (Roles.Type, value); }
+		public ClassType ClassType {
+			get;
+			set;
 		}
 		
 		public string Name {
@@ -58,34 +67,38 @@ namespace Mi.NRefactory.CSharp
 			get { return GetChildrenByRole (Roles.TypeParameter); }
 		}
 		
-		public CSharpTokenNode LParToken {
-			get { return GetChildByRole (Roles.LPar); }
-		}
-		
-		public AstNodeCollection<ParameterDeclaration> Parameters {
-			get { return GetChildrenByRole (Roles.Parameter); }
-		}
-		
-		public CSharpTokenNode RParToken {
-			get { return GetChildByRole (Roles.RPar); }
+		public AstNodeCollection<AstType> BaseTypes {
+			get { return GetChildrenByRole (BaseTypeRole); }
 		}
 		
 		public AstNodeCollection<Constraint> Constraints {
 			get { return GetChildrenByRole (Roles.Constraint); }
 		}
 		
-		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
-		{
-			return visitor.VisitDelegateDeclaration (this, data);
+		public CSharpTokenNode LBraceToken {
+			get { return GetChildByRole (Roles.LBrace); }
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		public AstNodeCollection<AttributedNode> Members {
+			get { return GetChildrenByRole (MemberRole); }
+		}
+		
+		public CSharpTokenNode RBraceToken {
+			get { return GetChildByRole (Roles.RBrace); }
+		}
+		
+		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			DelegateDeclaration o = other as DelegateDeclaration;
-			return o != null && this.MatchAttributesAndModifiers(o, match)
-				&& this.ReturnType.DoMatch(o.ReturnType, match) && MatchString(this.Name, o.Name)
-				&& this.TypeParameters.DoMatch(o.TypeParameters, match) && this.Parameters.DoMatch(o.Parameters, match)
-				&& this.Constraints.DoMatch(o.Constraints, match);
+			return visitor.VisitTypeDeclaration (this, data);
+		}
+		
+		protected internal override bool DoMatch(AstNode other, Match match)
+		{
+			TypeDeclaration o = other as TypeDeclaration;
+			return o != null && this.ClassType == o.ClassType && this.MatchAttributesAndModifiers(o, match)
+				&& MatchString(this.Name, o.Name) && this.TypeParameters.DoMatch(o.TypeParameters, match)
+				&& this.BaseTypes.DoMatch(o.BaseTypes, match) && this.Constraints.DoMatch(o.Constraints, match)
+				&& this.Members.DoMatch(o.Members, match);
 		}
 	}
 }
