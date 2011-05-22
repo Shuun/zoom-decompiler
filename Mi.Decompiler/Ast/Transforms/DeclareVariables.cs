@@ -21,8 +21,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Mi.NRefactory.CSharp;
-using Mi.NRefactory.CSharp.Analysis;
+using Mi.CSharpAst;
+using Mi.CSharpAst.Analysis;
 
 namespace Mi.Decompiler.Ast.Transforms
 {

@@ -18,7 +18,7 @@
 
 using System;
 using System.Threading;
-using Mi.NRefactory.CSharp;
+using Mi.CSharpAst;
 
 namespace Mi.Decompiler.Ast.Transforms
 {

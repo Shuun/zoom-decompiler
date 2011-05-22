@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mi.NRefactory.CSharp;
+using Mi.CSharpAst;
 using Mi.NRefactory.PatternMatching;
 
 namespace Mi.Decompiler.Ast.Transforms

@@ -2,11 +2,14 @@
 // This code is distributed under MIT X11 license (for details please see \doc\license.txt)
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Mi.NRefactory.PatternMatching
 {
-	/// <summary>
+    using Mi.CSharpAst;
+    
+    /// <summary>
 	/// Matches the last entry in the specified named group.
 	/// </summary>
 	public class Backreference : Pattern
@@ -55,13 +58,13 @@ namespace Mi.NRefactory.PatternMatching
 		
 		public override bool DoMatch(INode other, Match match)
 		{
-			CSharp.IdentifierExpression ident = other as CSharp.IdentifierExpression;
+			IdentifierExpression ident = other as IdentifierExpression;
 			if (ident == null || ident.TypeArguments.Any())
 				return false;
-			CSharp.AstNode referenced = (CSharp.AstNode)match.Get(referencedGroupName).Last();
+			var referenced = (AstNode)match.Get(referencedGroupName).Last();
 			if (referenced == null)
 				return false;
-			return ident.Identifier == referenced.GetChildByRole(CSharp.AstNode.Roles.Identifier).Name;
+			return ident.Identifier == referenced.GetChildByRole(AstNode.Roles.Identifier).Name;
 		}
 		
 		public override S AcceptVisitor<T, S>(IPatternAstVisitor<T, S> visitor, T data)

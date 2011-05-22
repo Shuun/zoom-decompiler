@@ -2,7 +2,7 @@
 // This code is distributed under MIT X11 license (for details please see \doc\license.txt)
 
 using System;
-using Mi.NRefactory.CSharp;
+using Mi.CSharpAst;
 using Mi.NRefactory.PatternMatching;
 
 namespace Mi.Decompiler.Ast
@@ -40,7 +40,7 @@ namespace Mi.Decompiler.Ast
 			return new NamedNode(patternGroupName, node);
 		}
 		
-		public static void AddNamedArgument(this NRefactory.CSharp.Attribute attribute, string name, Expression argument)
+		public static void AddNamedArgument(this CSharpAst.Attribute attribute, string name, Expression argument)
 		{
 			attribute.Arguments.Add(new AssignmentExpression(new IdentifierExpression(name), argument));
 		}

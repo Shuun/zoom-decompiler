@@ -23,7 +23,7 @@ using System.Linq;
 using System.Threading;
 using Mi.Decompiler;
 using Mi.Decompiler.ILAst;
-using Mi.NRefactory.CSharp;
+using Mi.CSharpAst;
 using Mi.NRefactory.PatternMatching;
 using Mi.Assemblies;
 
