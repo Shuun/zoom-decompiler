@@ -29,20 +29,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	public class MemberType : AstType
+    using Mi.NRefactory.PatternMatching;
+
+    public class SimpleType : AstType
 	{
-		public static readonly Role<AstType> TargetRole = new Role<AstType>("Target", AstType.Null);
-		
-		public bool IsDoubleColon { get; set; }
-		
-		public AstType Target {
-			get { return GetChildByRole(TargetRole); }
-			set { SetChildByRole(TargetRole, value); }
+		public SimpleType()
+		{
 		}
 		
-		public string MemberName {
+		public SimpleType(string identifier)
+		{
+			this.Identifier = identifier;
+		}
+		
+		public SimpleType(string identifier, AstLocation location)
+		{
+			SetChildByRole (Roles.Identifier, new Identifier(identifier, location));
+		}
+		
+		public string Identifier {
 			get {
 				return GetChildByRole (Roles.Identifier).Name;
 			}
@@ -57,24 +64,18 @@ namespace Mi.NRefactory.CSharp
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitMemberType (this, data);
+			return visitor.VisitSimpleType (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			MemberType o = other as MemberType;
-			return o != null && this.IsDoubleColon == o.IsDoubleColon && MatchString(this.MemberName, o.MemberName) && this.Target.DoMatch(o.Target, match);
+			SimpleType o = other as SimpleType;
+			return o != null && MatchString(this.Identifier, o.Identifier) && this.TypeArguments.DoMatch(o.TypeArguments, match);
 		}
 		
 		public override string ToString()
 		{
-			StringBuilder b = new StringBuilder();
-			b.Append(this.Target);
-			if (IsDoubleColon)
-				b.Append("::");
-			else
-				b.Append('.');
-			b.Append(this.MemberName);
+			StringBuilder b = new StringBuilder(this.Identifier);
 			if (this.TypeArguments.Any()) {
 				b.Append('<');
 				b.Append(string.Join(", ", this.TypeArguments));

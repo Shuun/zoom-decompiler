@@ -3,9 +3,11 @@
 
 using System;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	/// <summary>
+    using Mi.NRefactory.PatternMatching;
+    
+    /// <summary>
 	/// AST visitor.
 	/// </summary>
 	public interface IAstVisitor<in T, out S>
@@ -126,6 +128,6 @@ namespace Mi.NRefactory.CSharp
 		S VisitCSharpTokenNode(CSharpTokenNode cSharpTokenNode, T data);
 		S VisitIdentifier(Identifier identifier, T data);
 		
-		S VisitPatternPlaceholder(AstNode placeholder, PatternMatching.Pattern pattern, T data);
+		S VisitPatternPlaceholder(AstNode placeholder, Pattern pattern, T data);
 	}
 }

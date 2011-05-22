@@ -25,10 +25,13 @@
 // THE SOFTWARE.
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	public class CompilationUnit : AstNode 
+    using Mi.NRefactory.PatternMatching;
+    
+    public class CompilationUnit : AstNode 
 	{
 		public static readonly Role<AstNode> MemberRole = new Role<AstNode>("Member", AstNode.Null);
 		
@@ -42,7 +45,7 @@ namespace Mi.NRefactory.CSharp
 		{
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			CompilationUnit o = other as CompilationUnit;
 			return o != null && GetChildrenByRole(MemberRole).DoMatch(o.GetChildrenByRole(MemberRole), match);

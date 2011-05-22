@@ -25,10 +25,14 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	/// <summary>
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
 	/// AST visitor with a default implementation that visits all node depth-first.
 	/// </summary>
 	public abstract class DepthFirstAstVisitor<T, S> : IAstVisitor<T, S>
@@ -590,7 +594,7 @@ namespace Mi.NRefactory.CSharp
 			return VisitChildren (emptyExpression, data);
 		}
 		
-		public virtual S VisitPatternPlaceholder(AstNode placeholder, PatternMatching.Pattern pattern, T data)
+		public virtual S VisitPatternPlaceholder(AstNode placeholder, Pattern pattern, T data)
 		{
 			return VisitChildren (placeholder, data);
 		}

@@ -23,12 +23,14 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
+    using Mi.NRefactory.PatternMatching;
 	
 	public class CSharpModifierToken : CSharpTokenNode
 	{
@@ -48,7 +50,7 @@ namespace Mi.NRefactory.CSharp
 			}
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			CSharpModifierToken o = other as CSharpModifierToken;
 			return o != null && this.modifier == o.modifier;

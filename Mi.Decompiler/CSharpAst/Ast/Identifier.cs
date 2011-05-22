@@ -1,10 +1,10 @@
 ﻿// 
-// TokenNode.cs
+// Identifier.cs
 //  
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
-// Copyright (c) 2010 Novell, Inc (http://www.novell.com)
+// Copyright (c) 2009 Novell, Inc (http://www.novell.com)
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,19 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	public class CSharpTokenNode : AstNode
+    using Mi.NRefactory.PatternMatching;
+    
+    public class Identifier : AstNode
 	{
-		public static new readonly CSharpTokenNode Null = new NullCSharpTokenNode ();
-		class NullCSharpTokenNode : CSharpTokenNode
+		public static readonly new Identifier Null = new NullIdentifier ();
+		class NullIdentifier : Identifier
 		{
 			public override bool IsNull {
 				get {
@@ -38,26 +43,39 @@ namespace Mi.NRefactory.CSharp
 				}
 			}
 			
-			public NullCSharpTokenNode () : base (AstLocation.Empty, 0)
-			{
-			}
-			
 			public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 			{
 				return default (S);
 			}
 			
-			protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+			protected internal override bool DoMatch(AstNode other, Match match)
 			{
 				return other == null || other.IsNull;
 			}
 		}
 		
-		
 		public override NodeType NodeType {
 			get {
-				return NodeType.Token;
+				return NodeType.Unknown;
 			}
+		}
+		
+		string name;
+		public string Name {
+			get { return this.name; }
+			set { 
+				if (value == null)
+					throw new ArgumentNullException("value");
+				this.name = value;
+			}
+		}
+		
+		/// <summary>
+		/// True if this is a verbatim identifier (starting with '@')
+		/// </summary>
+		public bool IsVerbatim {
+			get;
+			set;
 		}
 		
 		AstLocation startLocation;
@@ -67,34 +85,35 @@ namespace Mi.NRefactory.CSharp
 			}
 		}
 		
-		protected int tokenLength;
 		public override AstLocation EndLocation {
 			get {
-				return new AstLocation (StartLocation.Line, StartLocation.Column + tokenLength);
+				return new AstLocation (StartLocation.Line, StartLocation.Column + (Name ?? "").Length + (IsVerbatim ? 1 : 0));
 			}
 		}
 		
-		public CSharpTokenNode (AstLocation location, int tokenLength)
+		private Identifier ()
 		{
+			this.name = string.Empty;
+		}
+		
+		public Identifier (string name, AstLocation location)
+		{
+			if (name == null)
+				throw new ArgumentNullException("name");
+			IsVerbatim = name.Length > 0 && name[0] == '@';
+			this.Name = IsVerbatim ? name.Substring (1) : name;
 			this.startLocation = location;
-			this.tokenLength = tokenLength;
 		}
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitCSharpTokenNode (this, data);
+			return visitor.VisitIdentifier (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			CSharpTokenNode o = other as CSharpTokenNode;
-			return o != null && !o.IsNull && !(o is CSharpModifierToken);
-		}
-		
-		public override string ToString ()
-		{
-			return string.Format ("[CSharpTokenNode: StartLocation={0}, EndLocation={1}, Role={2}]", StartLocation, EndLocation, Role);
+			Identifier o = other as Identifier;
+			return o != null && !o.IsNull && MatchString(this.Name, o.Name);
 		}
 	}
 }
-
