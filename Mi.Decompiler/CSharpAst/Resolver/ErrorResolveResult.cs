@@ -4,16 +4,19 @@
 using System;
 using Mi.NRefactory.TypeSystem;
 
-namespace Mi.NRefactory.CSharp.Resolver
+namespace Mi.CSharpAst.Resolver
 {
 	/// <summary>
-	/// The resolved expression refers to a type name.
+	/// Represents a resolve error.
 	/// </summary>
-	public class TypeResolveResult : ResolveResult
+	public class ErrorResolveResult : ResolveResult
 	{
-		public TypeResolveResult(IType type)
-			: base(type)
+		public ErrorResolveResult(IType type) : base(type)
 		{
+		}
+		
+		public override bool IsError {
+			get { return true; }
 		}
 	}
 }

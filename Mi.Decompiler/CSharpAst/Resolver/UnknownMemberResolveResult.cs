@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Mi.NRefactory.TypeSystem;
 
-namespace Mi.NRefactory.CSharp.Resolver
+namespace Mi.CSharpAst.Resolver
 {
 	/// <summary>
 	/// Represents an unknown member.

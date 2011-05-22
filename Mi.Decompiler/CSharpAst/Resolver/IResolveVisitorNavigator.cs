@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Mi.NRefactory.CSharp.Resolver
+namespace Mi.CSharpAst.Resolver
 {
 	/// <summary>
 	/// Allows controlling which nodes are resolved by the resolve visitor.
