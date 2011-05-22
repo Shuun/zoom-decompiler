@@ -12,7 +12,7 @@ using System.Text;
 using Mi.NRefactory.PatternMatching;
 using Mi.NRefactory.TypeSystem;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
 	/// <summary>
 	/// Outputs the AST.
@@ -2218,7 +2218,7 @@ namespace Mi.NRefactory.CSharp
 		#endregion
 		
 		#region Pattern Nodes
-		public object VisitPatternPlaceholder(AstNode placeholder, PatternMatching.Pattern pattern, object data)
+		public object VisitPatternPlaceholder(AstNode placeholder, Pattern pattern, object data)
 		{
 			StartNode(placeholder);
 			pattern.AcceptVisitor(this, data);
