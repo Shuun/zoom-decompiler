@@ -7,10 +7,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
-using Mi.NRefactory.CSharp.Resolver;
+using Mi.CSharpAst.Resolver;
 using Mi.NRefactory.TypeSystem;
 
-namespace Mi.NRefactory.CSharp.Analysis
+namespace Mi.CSharpAst.Analysis
 {
 	/// <summary>
 	/// Represents a node in the control flow graph of a C# method.
