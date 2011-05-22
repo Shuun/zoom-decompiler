@@ -1,10 +1,10 @@
-// 
-// ExternAliasDeclaration.cs
+﻿// 
+// Comment.cs
 //  
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
-// Copyright (c) 2011 Novell, Inc (http://www.novell.com)
+// Copyright (c) 2010 Novell, Inc (http://www.novell.com)
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,60 +24,81 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
-{
-	/// <summary>
-	/// extern alias <Identifier>;
-	/// </summary>
-	public class ExternAliasDeclaration : AstNode
-	{
-		public static readonly Role<CSharpTokenNode> AliasRole = new Role<CSharpTokenNode> ("Alias", CSharpTokenNode.Null);
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace Mi.CSharpAst
+{
+    using Mi.NRefactory.PatternMatching;
+
+    public enum CommentType
+    {
+		SingleLine,
+		MultiLine,
+		Documentation
+	}
+	
+	public class Comment : AstNode
+	{
 		public override NodeType NodeType {
 			get {
 				return NodeType.Unknown;
 			}
 		}
-
-		public CSharpTokenNode ExternToken {
-			get { return GetChildByRole (Roles.Keyword); }
+		
+		public CommentType CommentType {
+			get;
+			set;
 		}
-
-		public CSharpTokenNode AliasToken {
-			get { return GetChildByRole (AliasRole); }
+		
+		public bool StartsLine {
+			get;
+			set;
 		}
-
-		public string Name {
-			get {
-				return GetChildByRole (Roles.Identifier).Name;
-			}
-			set {
-				SetChildByRole (Roles.Identifier, new Identifier (value, AstLocation.Empty));
+		
+		public string Content {
+			get;
+			set;
+		}
+		
+		AstLocation startLocation;
+		public override AstLocation StartLocation {
+			get { 
+				return startLocation;
 			}
 		}
 		
-		public Identifier NameToken {
+		AstLocation endLocation;
+		public override AstLocation EndLocation {
 			get {
-				return GetChildByRole (Roles.Identifier);
-			}
-			set {
-				SetChildByRole (Roles.Identifier, value);
+				return endLocation;
 			}
 		}
-
-		public CSharpTokenNode SemicolonToken {
-			get { return GetChildByRole (Roles.Semicolon); }
+		
+		public Comment (string content, CommentType type = CommentType.SingleLine)
+		{
+			this.CommentType = type;
+			this.Content = content;
+		}
+		
+		public Comment (CommentType commentType, AstLocation startLocation, AstLocation endLocation)
+		{
+			this.CommentType = commentType;
+			this.startLocation = startLocation;
+			this.endLocation = endLocation;
 		}
 
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitExternAliasDeclaration (this, data);
+			return visitor.VisitComment (this, data);
 		}
-
-		protected internal override bool DoMatch (AstNode other, PatternMatching.Match match)
+		
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			var o = other as ExternAliasDeclaration;
-			return o != null && MatchString (this.Name, o.Name);
+			Comment o = other as Comment;
+			return o != null && this.CommentType == o.CommentType && MatchString(this.Content, o.Content);
 		}
 	}
 }
+

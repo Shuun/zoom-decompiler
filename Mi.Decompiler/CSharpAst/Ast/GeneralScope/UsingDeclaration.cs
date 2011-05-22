@@ -1,5 +1,5 @@
 ﻿// 
-// Attribute.cs
+// UsingDeclaration.cs
 //
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
@@ -24,39 +24,68 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// Attribute(Arguments)
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
+	/// using Import;
 	/// </summary>
-	public class Attribute : AstNode
+	public class UsingDeclaration : AstNode
 	{
+		public static readonly Role<AstType> ImportRole = new Role<AstType>("Import", AstType.Null);
+		
 		public override NodeType NodeType {
 			get {
 				return NodeType.Unknown;
 			}
 		}
-
-		public AstType Type {
-			get { return GetChildByRole (Roles.Type); }
-			set { SetChildByRole (Roles.Type, value); }
+		
+		public CSharpTokenNode UsingToken {
+			get { return GetChildByRole (Roles.Keyword); }
 		}
 		
-		public AstNodeCollection<Expression> Arguments {
-			get { return base.GetChildrenByRole (Roles.Argument); }
+		public AstType Import {
+			get { return GetChildByRole (ImportRole); }
+			set { SetChildByRole (ImportRole, value); }
 		}
-
+		
+		public string Namespace {
+			get { return this.Import.ToString(); }
+		}
+		
+		public CSharpTokenNode SemicolonToken {
+			get { return GetChildByRole (Roles.Semicolon); }
+		}
+		
+		public UsingDeclaration ()
+		{
+		}
+		
+		public UsingDeclaration (string nameSpace)
+		{
+			AddChild (new SimpleType (nameSpace), ImportRole);
+		}
+		
+		public UsingDeclaration (AstType import)
+		{
+			AddChild (import, ImportRole);
+		}
+		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitAttribute (this, data);
+			return visitor.VisitUsingDeclaration (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			Attribute o = other as Attribute;
-			return o != null && this.Type.DoMatch(o.Type, match) && this.Arguments.DoMatch(o.Arguments, match);
+			UsingDeclaration o = other as UsingDeclaration;
+			return o != null && this.Import.DoMatch(o.Import, match);
 		}
 	}
 }

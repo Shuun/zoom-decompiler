@@ -24,13 +24,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	/// <summary>
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
 	/// namespace Name { Members }
 	/// </summary>
 	public class NamespaceDeclaration : AstNode
@@ -114,7 +117,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitNamespaceDeclaration (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			NamespaceDeclaration o = other as NamespaceDeclaration;
 			return o != null && MatchString(this.Name, o.Name) && this.Members.DoMatch(o.Members, match);

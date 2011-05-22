@@ -1,10 +1,10 @@
 ﻿// 
-// Comment.cs
-//  
+// Attribute.cs
+//
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
-// Copyright (c) 2010 Novell, Inc (http://www.novell.com)
+// Copyright (c) 2009 Novell, Inc (http://www.novell.com)
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,74 +24,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	public enum CommentType {
-		SingleLine,
-		MultiLine,
-		Documentation
-	}
-	
-	public class Comment : AstNode
+    using Mi.NRefactory.PatternMatching;
+    
+    /// <summary>
+	/// Attribute(Arguments)
+	/// </summary>
+	public class Attribute : AstNode
 	{
 		public override NodeType NodeType {
 			get {
 				return NodeType.Unknown;
 			}
 		}
-		
-		public CommentType CommentType {
-			get;
-			set;
+
+		public AstType Type {
+			get { return GetChildByRole (Roles.Type); }
+			set { SetChildByRole (Roles.Type, value); }
 		}
 		
-		public bool StartsLine {
-			get;
-			set;
-		}
-		
-		public string Content {
-			get;
-			set;
-		}
-		
-		AstLocation startLocation;
-		public override AstLocation StartLocation {
-			get { 
-				return startLocation;
-			}
-		}
-		
-		AstLocation endLocation;
-		public override AstLocation EndLocation {
-			get {
-				return endLocation;
-			}
-		}
-		
-		public Comment (string content, CommentType type = CommentType.SingleLine)
-		{
-			this.CommentType = type;
-			this.Content = content;
-		}
-		
-		public Comment (CommentType commentType, AstLocation startLocation, AstLocation endLocation)
-		{
-			this.CommentType = commentType;
-			this.startLocation = startLocation;
-			this.endLocation = endLocation;
+		public AstNodeCollection<Expression> Arguments {
+			get { return base.GetChildrenByRole (Roles.Argument); }
 		}
 
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitComment (this, data);
+			return visitor.VisitAttribute (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			Comment o = other as Comment;
-			return o != null && this.CommentType == o.CommentType && MatchString(this.Content, o.Content);
+			Attribute o = other as Attribute;
+			return o != null && this.Type.DoMatch(o.Type, match) && this.Arguments.DoMatch(o.Arguments, match);
 		}
 	}
 }
-

@@ -1,10 +1,10 @@
-﻿// 
-// Constraint.cs
-//
+// 
+// ExternAliasDeclaration.cs
+//  
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
-// Copyright (c) 2010 Novell, Inc (http://www.novell.com)
+// Copyright (c) 2011 Novell, Inc (http://www.novell.com)
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,50 +24,66 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// where TypeParameter : BaseTypes
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
+	/// extern alias <Identifier>;
 	/// </summary>
-	/// <remarks>
-	/// new(), struct and class constraints are represented using a PrimitiveType "new", "struct" or "class"
-	/// </remarks>
-	public class Constraint : AstNode
+	public class ExternAliasDeclaration : AstNode
 	{
-		public readonly static Role<CSharpTokenNode> ColonRole = TypeDeclaration.ColonRole;
-		public readonly static Role<AstType> BaseTypeRole = TypeDeclaration.BaseTypeRole;
-		
+		public static readonly Role<CSharpTokenNode> AliasRole = new Role<CSharpTokenNode> ("Alias", CSharpTokenNode.Null);
+
 		public override NodeType NodeType {
 			get {
 				return NodeType.Unknown;
 			}
 		}
-		
-		public string TypeParameter {
+
+		public CSharpTokenNode ExternToken {
+			get { return GetChildByRole (Roles.Keyword); }
+		}
+
+		public CSharpTokenNode AliasToken {
+			get { return GetChildByRole (AliasRole); }
+		}
+
+		public string Name {
 			get {
 				return GetChildByRole (Roles.Identifier).Name;
 			}
 			set {
-				SetChildByRole(Roles.Identifier, new Identifier(value, AstLocation.Empty));
+				SetChildByRole (Roles.Identifier, new Identifier (value, AstLocation.Empty));
 			}
 		}
 		
-		public AstNodeCollection<AstType> BaseTypes {
-			get { return GetChildrenByRole (BaseTypeRole); }
+		public Identifier NameToken {
+			get {
+				return GetChildByRole (Roles.Identifier);
+			}
+			set {
+				SetChildByRole (Roles.Identifier, value);
+			}
 		}
-		
+
+		public CSharpTokenNode SemicolonToken {
+			get { return GetChildByRole (Roles.Semicolon); }
+		}
+
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitConstraint (this, data);
+			return visitor.VisitExternAliasDeclaration (this, data);
 		}
-		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+
+		protected internal override bool DoMatch (AstNode other, Match match)
 		{
-			Constraint o = other as Constraint;
-			return o != null && MatchString(this.TypeParameter, o.TypeParameter) && this.BaseTypes.DoMatch(o.BaseTypes, match);
+			var o = other as ExternAliasDeclaration;
+			return o != null && MatchString (this.Name, o.Name);
 		}
 	}
 }
-
