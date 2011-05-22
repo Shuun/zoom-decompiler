@@ -1,5 +1,5 @@
 ﻿// 
-// DestructorDeclaration.cs
+// MethodDeclaration.cs
 //
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
@@ -24,48 +24,59 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	public class DestructorDeclaration : AttributedNode
+    using Mi.NRefactory.PatternMatching;
+
+    public class MethodDeclaration : MemberDeclaration
 	{
-		public static readonly Role<CSharpTokenNode> TildeRole = new Role<CSharpTokenNode>("Tilde", CSharpTokenNode.Null);
-		
-		public CSharpTokenNode TildeToken {
-			get { return GetChildByRole (TildeRole); }
+		public AstNodeCollection<TypeParameterDeclaration> TypeParameters {
+			get { return GetChildrenByRole (Roles.TypeParameter); }
 		}
-		
-		/// <summary>
-		/// Gets/Sets the name of the class containing the destructor.
-		/// This property can be used to inform the output visitor about the class name when writing a destructor declaration
-		/// without writing the complete type declaration. It is ignored when the destructor has a type declaration as parent.
-		/// </summary>
-		public string Name { get; set; }
 		
 		public CSharpTokenNode LParToken {
 			get { return GetChildByRole (Roles.LPar); }
 		}
 		
+		public AstNodeCollection<ParameterDeclaration> Parameters {
+			get { return GetChildrenByRole (Roles.Parameter); }
+		}
+		
 		public CSharpTokenNode RParToken {
 			get { return GetChildByRole (Roles.RPar); }
 		}
+		
+		public AstNodeCollection<Constraint> Constraints {
+			get { return GetChildrenByRole (Roles.Constraint); }
+		}
+		
 		public BlockStatement Body {
 			get { return GetChildByRole (Roles.Body); }
 			set { SetChildByRole (Roles.Body, value); }
 		}
 		
-		public override NodeType NodeType {
-			get { return NodeType.Member; }
+		public bool IsExtensionMethod {
+			get {
+				ParameterDeclaration pd = (ParameterDeclaration)GetChildByRole (Roles.Parameter);
+				return pd != null && pd.ParameterModifier == ParameterModifier.This;
+			}
 		}
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitDestructorDeclaration (this, data);
+			return visitor.VisitMethodDeclaration (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			DestructorDeclaration o = other as DestructorDeclaration;
-			return o != null && this.MatchAttributesAndModifiers(o, match) && this.Body.DoMatch(o.Body, match);
+			MethodDeclaration o = other as MethodDeclaration;
+			return o != null && this.MatchMember(o, match) && this.TypeParameters.DoMatch(o.TypeParameters, match)
+				&& this.Parameters.DoMatch(o.Parameters, match) && this.Constraints.DoMatch(o.Constraints, match)
+				&& this.Body.DoMatch(o.Body, match);
 		}
 	}
 }

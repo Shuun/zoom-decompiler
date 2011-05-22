@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	public abstract class AttributedNode : AstNode
+    using Mi.NRefactory.PatternMatching;
+    
+    public abstract class AttributedNode : AstNode
 	{
 		public static readonly Role<AttributeSection> AttributeRole = new Role<AttributeSection>("Attribute");
 		public static readonly Role<CSharpModifierToken> ModifierRole = new Role<CSharpModifierToken>("Modifier");
@@ -58,7 +60,7 @@ namespace Mi.NRefactory.CSharp
 			}
 		}
 		
-		protected bool MatchAttributesAndModifiers(AttributedNode o, PatternMatching.Match match)
+		protected bool MatchAttributesAndModifiers(AttributedNode o, Match match)
 		{
 			return (this.Modifiers == Modifiers.Any || this.Modifiers == o.Modifiers) && this.Attributes.DoMatch(o.Attributes, match);
 		}

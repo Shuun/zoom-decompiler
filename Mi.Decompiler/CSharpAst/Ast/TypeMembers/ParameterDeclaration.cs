@@ -28,9 +28,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	public enum ParameterModifier {
+    using Mi.NRefactory.PatternMatching;
+
+    public enum ParameterModifier
+    {
 		None,
 		Ref,
 		Out,
@@ -82,7 +85,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitParameterDeclaration (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			ParameterDeclaration o = other as ParameterDeclaration;
 			return o != null && this.Attributes.DoMatch(o.Attributes, match) && this.ParameterModifier == o.ParameterModifier

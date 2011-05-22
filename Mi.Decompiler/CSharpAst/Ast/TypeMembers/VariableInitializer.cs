@@ -24,21 +24,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	public class VariableInitializer : AstNode
+    using Mi.NRefactory.PatternMatching;
+    
+    public class VariableInitializer : AstNode
 	{
 		#region PatternPlaceholder
-		public static implicit operator VariableInitializer(PatternMatching.Pattern pattern)
+		public static implicit operator VariableInitializer(Pattern pattern)
 		{
 			return pattern != null ? new PatternPlaceholder(pattern) : null;
 		}
 		
-		sealed class PatternPlaceholder : VariableInitializer, PatternMatching.INode
+		sealed class PatternPlaceholder : VariableInitializer, INode
 		{
-			readonly PatternMatching.Pattern child;
+			readonly Pattern child;
 			
-			public PatternPlaceholder(PatternMatching.Pattern child)
+			public PatternPlaceholder(Pattern child)
 			{
 				this.child = child;
 			}
@@ -52,12 +58,12 @@ namespace Mi.NRefactory.CSharp
 				return visitor.VisitPatternPlaceholder(this, child, data);
 			}
 			
-			protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+			protected internal override bool DoMatch(AstNode other, Match match)
 			{
 				return child.DoMatch(other, match);
 			}
 			
-			bool PatternMatching.INode.DoMatchCollection(Role role, PatternMatching.INode pos, PatternMatching.Match match, PatternMatching.BacktrackingInfo backtrackingInfo)
+			bool INode.DoMatchCollection(Role role, INode pos, Match match, BacktrackingInfo backtrackingInfo)
 			{
 				return child.DoMatchCollection(role, pos, match, backtrackingInfo);
 			}
@@ -103,7 +109,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitVariableInitializer (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			VariableInitializer o = other as VariableInitializer;
 			return o != null && MatchString(this.Name, o.Name) && this.Initializer.DoMatch(o.Initializer, match);

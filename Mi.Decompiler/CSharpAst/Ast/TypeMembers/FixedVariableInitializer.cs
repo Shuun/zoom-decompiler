@@ -1,10 +1,10 @@
 ﻿// 
-// EnumMemberDeclaration.cs
+// FixedFieldDeclaration.cs
 //
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
-// Copyright (c) 2010 Novell, Inc (http://www.novell.com)
+// Copyright (c) 2011 Novell, Inc (http://www.novell.com)
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,42 +23,67 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	public class EnumMemberDeclaration : AttributedNode
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
+	/// Name [ CountExpression ]
+	/// </summary>
+	public class FixedVariableInitializer : AstNode
 	{
-		public static readonly Role<Expression> InitializerRole = new Role<Expression>("Initializer", Expression.Null);
+		public override NodeType NodeType {
+			get {
+				return NodeType.Unknown;
+			}
+		}
 		
+		public FixedVariableInitializer()
+		{
+		}
+		
+		public FixedVariableInitializer (string name, Expression initializer = null)
+		{
+			this.Name = name;
+			this.CountExpression = initializer;
+		}
+
 		public string Name {
 			get {
 				return GetChildByRole (Roles.Identifier).Name;
 			}
 			set {
-				SetChildByRole (Roles.Identifier, new Identifier(value, AstLocation.Empty));
+				SetChildByRole (Roles.Identifier, new Identifier (value, AstLocation.Empty));
 			}
 		}
-		
-		public Expression Initializer {
-			get { return GetChildByRole (InitializerRole); }
-			set { SetChildByRole (InitializerRole, value); }
+
+		public CSharpTokenNode LBracketToken {
+			get { return GetChildByRole (Roles.LBracket); }
 		}
-		
-		public override NodeType NodeType {
-			get { return NodeType.Member; }
+
+		public Expression CountExpression {
+			get { return GetChildByRole (Roles.Expression); }
+			set { SetChildByRole (Roles.Expression, value); }
 		}
-		
+
+		public CSharpTokenNode RBracketToken {
+			get { return GetChildByRole (Roles.RBracket); }
+		}
+
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitEnumMemberDeclaration (this, data);
+			return visitor.VisitFixedVariableInitializer (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch (AstNode other, Match match)
 		{
-			EnumMemberDeclaration o = other as EnumMemberDeclaration;
-			return o != null && this.MatchAttributesAndModifiers(o, match)
-				&& MatchString(this.Name, o.Name) && this.Initializer.DoMatch(o.Initializer, match);
+			var o = other as FixedVariableInitializer;
+			return o != null && MatchString (this.Name, o.Name) && this.CountExpression.DoMatch (o.CountExpression, match);
 		}
 	}
 }

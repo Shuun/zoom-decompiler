@@ -24,9 +24,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	public abstract class MemberDeclaration : AttributedNode
+    using Mi.NRefactory.PatternMatching;
+    
+    public abstract class MemberDeclaration : AttributedNode
 	{
 		public static readonly Role<AstType> PrivateImplementationTypeRole = new Role<AstType>("PrivateImplementationType", AstType.Null);
 		
@@ -56,7 +62,7 @@ namespace Mi.NRefactory.CSharp
 			get { return NodeType.Member; }
 		}
 		
-		protected bool MatchMember(MemberDeclaration o, PatternMatching.Match match)
+		protected bool MatchMember(MemberDeclaration o, Match match)
 		{
 			return MatchAttributesAndModifiers(o, match) && this.ReturnType.DoMatch(o.ReturnType, match)
 				&& this.PrivateImplementationType.DoMatch(o.PrivateImplementationType, match) && MatchString(this.Name, o.Name);

@@ -24,12 +24,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	public class ConstructorDeclaration : AttributedNode
+    using Mi.NRefactory.PatternMatching;
+
+    public class ConstructorDeclaration : AttributedNode
 	{
 		public static readonly Role<ConstructorInitializer> InitializerRole = new Role<ConstructorInitializer>("Initializer", ConstructorInitializer.Null);
 		
@@ -71,7 +74,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitConstructorDeclaration (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			ConstructorDeclaration o = other as ConstructorDeclaration;
 			return o != null && this.MatchAttributesAndModifiers(o, match) && this.Parameters.DoMatch(o.Parameters, match)
@@ -106,7 +109,7 @@ namespace Mi.NRefactory.CSharp
 				return default (S);
 			}
 			
-			protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+			protected internal override bool DoMatch(AstNode other, Match match)
 			{
 				return other == null || other.IsNull;
 			}
@@ -140,7 +143,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitConstructorInitializer (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			ConstructorInitializer o = other as ConstructorInitializer;
 			return o != null && !o.IsNull && this.ConstructorInitializerType == o.ConstructorInitializerType && this.Arguments.DoMatch(o.Arguments, match);

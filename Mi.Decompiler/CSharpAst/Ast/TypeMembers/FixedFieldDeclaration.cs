@@ -1,10 +1,10 @@
 ﻿// 
-// PropertyDeclaration.cs
-//  
+// FixedFieldDeclaration.cs
+//
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
-// Copyright (c) 2010 Novell, Inc (http://www.novell.com)
+// Copyright (c) 2011 Novell, Inc (http://www.novell.com)
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,47 +25,45 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// get/set/add/remove
-	/// </summary>
-	public class Accessor : AttributedNode
+    using Mi.NRefactory.PatternMatching;
+    
+    public class FixedFieldDeclaration : AttributedNode
 	{
-		public static readonly new Accessor Null = new NullAccessor ();
-		sealed class NullAccessor : Accessor
-		{
-			public override bool IsNull {
-				get {
-					return true;
-				}
-			}
-			
-			public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
-			{
-				return default (S);
-			}
-		}
+		public static readonly Role<FixedVariableInitializer> VariableRole = new Role<FixedVariableInitializer> ("FixedVariable");
 		
 		public override NodeType NodeType {
-			get { return NodeType.Unknown; }
+			get { return NodeType.Member; }
 		}
 		
-		public BlockStatement Body {
-			get { return GetChildByRole (Roles.Body); }
-			set { SetChildByRole (Roles.Body, value); }
+		public CSharpTokenNode FixedToken {
+			get { return GetChildByRole (Roles.Keyword); }
+		}
+
+		public AstType ReturnType {
+			get { return GetChildByRole (Roles.Type); }
+			set { SetChildByRole (Roles.Type, value); }
 		}
 		
-		public override S AcceptVisitor<T, S>(IAstVisitor<T, S> visitor, T data)
+		public AstNodeCollection<FixedVariableInitializer> Variables {
+			get { return GetChildrenByRole (VariableRole); }
+		}
+
+		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitAccessor (this, data);
+			return visitor.VisitFixedFieldDeclaration (this, data);
 		}
-		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+
+		protected internal override bool DoMatch (AstNode other, Match match)
 		{
-			Accessor o = other as Accessor;
-			return o != null && !o.IsNull && this.MatchAttributesAndModifiers(o, match) && this.Body.DoMatch(o.Body, match);
+			var o = other as FixedFieldDeclaration;
+			return o != null && this.MatchAttributesAndModifiers (o, match)
+				&& this.ReturnType.DoMatch (o.ReturnType, match) && this.Variables.DoMatch (o.Variables, match);
 		}
 	}
 }
+

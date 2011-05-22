@@ -1,10 +1,10 @@
 ﻿// 
-// FieldDeclaration.cs
+// EnumMemberDeclaration.cs
 //
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
-// Copyright (c) 2009 Novell, Inc (http://www.novell.com)
+// Copyright (c) 2010 Novell, Inc (http://www.novell.com)
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,36 +24,47 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	public class FieldDeclaration : AttributedNode
+    using Mi.NRefactory.PatternMatching;
+    
+    public class EnumMemberDeclaration : AttributedNode
 	{
+		public static readonly Role<Expression> InitializerRole = new Role<Expression>("Initializer", Expression.Null);
+		
+		public string Name {
+			get {
+				return GetChildByRole (Roles.Identifier).Name;
+			}
+			set {
+				SetChildByRole (Roles.Identifier, new Identifier(value, AstLocation.Empty));
+			}
+		}
+		
+		public Expression Initializer {
+			get { return GetChildByRole (InitializerRole); }
+			set { SetChildByRole (InitializerRole, value); }
+		}
+		
 		public override NodeType NodeType {
 			get { return NodeType.Member; }
 		}
 		
-		public AstType ReturnType {
-			get { return GetChildByRole (Roles.Type); }
-			set { SetChildByRole(Roles.Type, value); }
-		}
-		
-		public AstNodeCollection<VariableInitializer> Variables {
-			get { return GetChildrenByRole (Roles.Variable); }
-		}
-		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitFieldDeclaration (this, data);
+			return visitor.VisitEnumMemberDeclaration (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			FieldDeclaration o = other as FieldDeclaration;
+			EnumMemberDeclaration o = other as EnumMemberDeclaration;
 			return o != null && this.MatchAttributesAndModifiers(o, match)
-				&& this.ReturnType.DoMatch(o.ReturnType, match) && this.Variables.DoMatch(o.Variables, match);
+				&& MatchString(this.Name, o.Name) && this.Initializer.DoMatch(o.Initializer, match);
 		}
 	}
 }
+
