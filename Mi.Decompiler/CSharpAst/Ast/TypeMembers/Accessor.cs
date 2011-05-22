@@ -1,10 +1,10 @@
 ﻿// 
 // PropertyDeclaration.cs
-//
+//  
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
-// Copyright (c) 2009 Novell, Inc (http://www.novell.com)
+// Copyright (c) 2010 Novell, Inc (http://www.novell.com)
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,41 +24,52 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	public class PropertyDeclaration : MemberDeclaration
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
+	/// get/set/add/remove
+	/// </summary>
+	public class Accessor : AttributedNode
 	{
-		public static readonly Role<Accessor> GetterRole = new Role<Accessor>("Getter", Accessor.Null);
-		public static readonly Role<Accessor> SetterRole = new Role<Accessor>("Setter", Accessor.Null);
-		
-		public CSharpTokenNode LBraceToken {
-			get { return GetChildByRole (Roles.LBrace); }
-		}
-		
-		public Accessor Getter {
-			get { return GetChildByRole(GetterRole); }
-			set { SetChildByRole(GetterRole, value); }
-		}
-		
-		public Accessor Setter {
-			get { return GetChildByRole(SetterRole); }
-			set { SetChildByRole(SetterRole, value); }
-		}
-		
-		public CSharpTokenNode RBraceToken {
-			get { return GetChildByRole (Roles.RBrace); }
-		}
-		
-		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
+		public static readonly new Accessor Null = new NullAccessor ();
+		sealed class NullAccessor : Accessor
 		{
-			return visitor.VisitPropertyDeclaration (this, data);
+			public override bool IsNull {
+				get {
+					return true;
+				}
+			}
+			
+			public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
+			{
+				return default (S);
+			}
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		public override NodeType NodeType {
+			get { return NodeType.Unknown; }
+		}
+		
+		public BlockStatement Body {
+			get { return GetChildByRole (Roles.Body); }
+			set { SetChildByRole (Roles.Body, value); }
+		}
+		
+		public override S AcceptVisitor<T, S>(IAstVisitor<T, S> visitor, T data)
 		{
-			PropertyDeclaration o = other as PropertyDeclaration;
-			return o != null && this.MatchMember(o, match)
-				&& this.Getter.DoMatch(o.Getter, match) && this.Setter.DoMatch(o.Setter, match);
+			return visitor.VisitAccessor (this, data);
+		}
+		
+		protected internal override bool DoMatch(AstNode other, Match match)
+		{
+			Accessor o = other as Accessor;
+			return o != null && !o.IsNull && this.MatchAttributesAndModifiers(o, match) && this.Body.DoMatch(o.Body, match);
 		}
 	}
 }

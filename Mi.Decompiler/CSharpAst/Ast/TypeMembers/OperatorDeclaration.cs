@@ -24,12 +24,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	public enum OperatorType 
+    using Mi.NRefactory.PatternMatching;
+
+    public enum OperatorType 
 	{
 		// Values must correspond to Mono.CSharp.Operator.OpType
 		// due to the casts used in OperatorDeclaration.
@@ -168,7 +171,7 @@ namespace Mi.NRefactory.CSharp
 			get { return GetName(this.OperatorType); }
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			OperatorDeclaration o = other as OperatorDeclaration;
 			return o != null && this.MatchAttributesAndModifiers(o, match) && this.OperatorType == o.OperatorType

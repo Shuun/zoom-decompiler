@@ -24,11 +24,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	public class EventDeclaration : AttributedNode
+    using Mi.NRefactory.PatternMatching;
+    
+    public class EventDeclaration : AttributedNode
 	{
 		public override NodeType NodeType {
 			get { return NodeType.Member; }
@@ -48,7 +52,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitEventDeclaration (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			EventDeclaration o = other as EventDeclaration;
 			return o != null && this.MatchAttributesAndModifiers(o, match)
@@ -84,7 +88,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitCustomEventDeclaration (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			CustomEventDeclaration o = other as CustomEventDeclaration;
 			return o != null && this.MatchMember(o, match)

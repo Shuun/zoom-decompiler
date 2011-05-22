@@ -1,5 +1,5 @@
 ﻿// 
-// IndexerDeclaration.cs
+// PropertyDeclaration.cs
 //
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
@@ -24,27 +24,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	public class IndexerDeclaration : MemberDeclaration
+    using Mi.NRefactory.PatternMatching;
+    
+    public class PropertyDeclaration : MemberDeclaration
 	{
-		public static readonly Role<Accessor> GetterRole = PropertyDeclaration.GetterRole;
-		public static readonly Role<Accessor> SetterRole = PropertyDeclaration.SetterRole;
-		
-		public CSharpTokenNode LBracketToken {
-			get { return GetChildByRole (Roles.LBracket); }
-		}
-		
-		public AstNodeCollection<ParameterDeclaration> Parameters {
-			get { return GetChildrenByRole (Roles.Parameter); }
-		}
-		
-		public CSharpTokenNode RBracketToken {
-			get { return GetChildByRole (Roles.RBracket); }
-		}
+		public static readonly Role<Accessor> GetterRole = new Role<Accessor>("Getter", Accessor.Null);
+		public static readonly Role<Accessor> SetterRole = new Role<Accessor>("Setter", Accessor.Null);
 		
 		public CSharpTokenNode LBraceToken {
 			get { return GetChildByRole (Roles.LBrace); }
@@ -66,13 +57,13 @@ namespace Mi.NRefactory.CSharp
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitIndexerDeclaration (this, data);
+			return visitor.VisitPropertyDeclaration (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			IndexerDeclaration o = other as IndexerDeclaration;
-			return o != null && this.MatchMember(o, match) && this.Parameters.DoMatch(o.Parameters, match)
+			PropertyDeclaration o = other as PropertyDeclaration;
+			return o != null && this.MatchMember(o, match)
 				&& this.Getter.DoMatch(o.Getter, match) && this.Setter.DoMatch(o.Setter, match);
 		}
 	}
