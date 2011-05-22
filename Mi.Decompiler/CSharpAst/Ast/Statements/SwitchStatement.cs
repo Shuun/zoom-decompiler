@@ -24,12 +24,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	/// <summary>
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
 	/// switch (Expression) { SwitchSections }
 	/// </summary>
 	public class SwitchStatement : Statement
@@ -70,7 +73,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitSwitchStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			SwitchStatement o = other as SwitchStatement;
 			return o != null && this.Expression.DoMatch(o.Expression, match) && this.SwitchSections.DoMatch(o.SwitchSections, match);
@@ -80,16 +83,16 @@ namespace Mi.NRefactory.CSharp
 	public class SwitchSection : AstNode
 	{
 		#region PatternPlaceholder
-		public static implicit operator SwitchSection(PatternMatching.Pattern pattern)
+		public static implicit operator SwitchSection(Pattern pattern)
 		{
 			return pattern != null ? new PatternPlaceholder(pattern) : null;
 		}
 		
-		sealed class PatternPlaceholder : SwitchSection, PatternMatching.INode
+		sealed class PatternPlaceholder : SwitchSection, INode
 		{
-			readonly PatternMatching.Pattern child;
+			readonly Pattern child;
 			
-			public PatternPlaceholder(PatternMatching.Pattern child)
+			public PatternPlaceholder(Pattern child)
 			{
 				this.child = child;
 			}
@@ -103,12 +106,12 @@ namespace Mi.NRefactory.CSharp
 				return visitor.VisitPatternPlaceholder(this, child, data);
 			}
 			
-			protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+			protected internal override bool DoMatch(AstNode other, Match match)
 			{
 				return child.DoMatch(other, match);
 			}
 			
-			bool PatternMatching.INode.DoMatchCollection(Role role, PatternMatching.INode pos, PatternMatching.Match match, PatternMatching.BacktrackingInfo backtrackingInfo)
+			bool INode.DoMatchCollection(Role role, INode pos, Match match, BacktrackingInfo backtrackingInfo)
 			{
 				return child.DoMatchCollection(role, pos, match, backtrackingInfo);
 			}
@@ -136,7 +139,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitSwitchSection (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			SwitchSection o = other as SwitchSection;
 			return o != null && this.CaseLabels.DoMatch(o.CaseLabels, match) && this.Statements.DoMatch(o.Statements, match);
@@ -161,7 +164,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitCaseLabel (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			CaseLabel o = other as CaseLabel;
 			return o != null && this.Expression.DoMatch(o.Expression, match);

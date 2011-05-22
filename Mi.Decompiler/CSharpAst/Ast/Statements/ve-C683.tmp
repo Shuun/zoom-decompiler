@@ -1,6 +1,6 @@
 ﻿// 
-// UnsafeStatement.cs
-//
+// ContinueStatement.cs
+//  
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
@@ -24,31 +24,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
 	/// <summary>
-	/// unsafe { Body }
+	/// continue;
 	/// </summary>
-	public class UnsafeStatement : Statement
+	public class ContinueStatement : Statement
 	{
-		public CSharpTokenNode UnsafeToken {
-			get { return GetChildByRole (Roles.Keyword); }
-		}
-		
-		public BlockStatement Body {
-			get { return GetChildByRole (Roles.Body); }
-			set { SetChildByRole (Roles.Body, value); }
+		public CSharpTokenNode SemicolonToken {
+			get { return GetChildByRole (Roles.Semicolon); }
 		}
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitUnsafeStatement (this, data);
+			return visitor.VisitContinueStatement (this, data);
 		}
 		
 		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
 		{
-			UnsafeStatement o = other as UnsafeStatement;
-			return o != null && this.Body.DoMatch(o.Body, match);
+			ContinueStatement o = other as ContinueStatement;
+			return o != null;
 		}
 	}
 }

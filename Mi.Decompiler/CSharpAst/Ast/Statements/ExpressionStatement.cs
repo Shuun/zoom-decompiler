@@ -24,9 +24,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	/// <summary>
+    using Mi.NRefactory.PatternMatching;
+    
+    /// <summary>
 	/// Expression;
 	/// </summary>
 	public class ExpressionStatement : Statement
@@ -54,7 +60,7 @@ namespace Mi.NRefactory.CSharp
 			this.Expression = expression;
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			ExpressionStatement o = other as ExpressionStatement;
 			return o != null && this.Expression.DoMatch(o.Expression, match);

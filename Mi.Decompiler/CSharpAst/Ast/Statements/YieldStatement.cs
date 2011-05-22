@@ -1,6 +1,6 @@
 ﻿// 
-// EmptyStatement.cs
-//  
+// YieldStatement.cs
+//
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
@@ -24,39 +24,48 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// ;
+    using Mi.NRefactory.PatternMatching;
+    
+    /// <summary>
+	/// yield return Expression;
 	/// </summary>
-	public class EmptyStatement : Statement
+	public class YieldStatement : Statement
 	{
-		public AstLocation Location {
-			get;
-			set;
+		public static readonly Role<CSharpTokenNode> YieldKeywordRole = new Role<CSharpTokenNode>("YieldKeyword", CSharpTokenNode.Null);
+		public static readonly Role<CSharpTokenNode> ReturnKeywordRole = new Role<CSharpTokenNode>("ReturnKeyword", CSharpTokenNode.Null);
+		
+		public CSharpTokenNode YieldToken {
+			get { return GetChildByRole (YieldKeywordRole); }
 		}
 		
-		public override AstLocation StartLocation {
-			get {
-				return Location;
-			}
+		public CSharpTokenNode ReturnToken {
+			get { return GetChildByRole (ReturnKeywordRole); }
 		}
 		
-		public override AstLocation EndLocation {
-			get {
-				return new AstLocation (Location.Line, Location.Column);
-			}
+		public Expression Expression {
+			get { return GetChildByRole (Roles.Expression); }
+			set { SetChildByRole (Roles.Expression, value); }
+		}
+		
+		public CSharpTokenNode SemicolonToken {
+			get { return GetChildByRole (Roles.Semicolon); }
 		}
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitEmptyStatement (this, data);
+			return visitor.VisitYieldStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			EmptyStatement o = other as EmptyStatement;
-			return o != null;
+			YieldStatement o = other as YieldStatement;
+			return o != null && this.Expression.DoMatch(o.Expression, match);
 		}
 	}
 }

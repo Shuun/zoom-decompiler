@@ -24,9 +24,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	/// <summary>
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
 	/// "goto Label;"
 	/// </summary>
 	public class GotoStatement : Statement
@@ -65,7 +71,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitGotoStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			GotoStatement o = other as GotoStatement;
 			return o != null && MatchString(this.Label, o.Label);
@@ -104,7 +110,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitGotoCaseStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			GotoCaseStatement o = other as GotoCaseStatement;
 			return o != null && this.LabelExpression.DoMatch(o.LabelExpression, match);
@@ -135,7 +141,7 @@ namespace Mi.NRefactory.CSharp
 			return visitor.VisitGotoDefaultStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			GotoDefaultStatement o = other as GotoDefaultStatement;
 			return o != null;

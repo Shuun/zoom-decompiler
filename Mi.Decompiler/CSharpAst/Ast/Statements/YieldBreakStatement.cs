@@ -1,10 +1,10 @@
 ﻿// 
-// UncheckedStatement.cs
-//  
+// YieldBreakStatement.cs
+//
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
-// Copyright (c) 2009 Novell, Inc (http://www.novell.com)
+// Copyright (c) 2011 Novell, Inc (http://www.novell.com)
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,40 +24,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// unchecked BodyBlock
+    using Mi.NRefactory.PatternMatching;
+    
+    /// <summary>
+	/// yield break;
 	/// </summary>
-	public class UncheckedStatement : Statement
+	public class YieldBreakStatement : Statement
 	{
-		public CSharpTokenNode UncheckedToken {
-			get { return GetChildByRole (Roles.Keyword); }
+		public static readonly Role<CSharpTokenNode> YieldKeywordRole = new Role<CSharpTokenNode>("YieldKeyword", CSharpTokenNode.Null);
+		public static readonly Role<CSharpTokenNode> BreakKeywordRole = new Role<CSharpTokenNode>("BreakKeyword", CSharpTokenNode.Null);
+		
+		public CSharpTokenNode YieldToken {
+			get { return GetChildByRole (YieldKeywordRole); }
 		}
 		
-		public BlockStatement Body {
-			get { return GetChildByRole (Roles.Body); }
-			set { SetChildByRole (Roles.Body, value); }
+		public CSharpTokenNode BreakToken {
+			get { return GetChildByRole (BreakKeywordRole); }
 		}
 		
-		public UncheckedStatement ()
-		{
-		}
-		
-		public UncheckedStatement (BlockStatement body)
-		{
-			AddChild (body, Roles.Body);
+		public CSharpTokenNode SemicolonToken {
+			get { return GetChildByRole (Roles.Semicolon); }
 		}
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitUncheckedStatement (this, data);
+			return visitor.VisitYieldBreakStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			UncheckedStatement o = other as UncheckedStatement;
-			return o != null && this.Body.DoMatch(o.Body, match);
+			YieldBreakStatement o = other as YieldBreakStatement;
+			return o != null;
 		}
 	}
 }

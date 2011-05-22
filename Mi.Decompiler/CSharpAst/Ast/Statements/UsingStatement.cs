@@ -1,6 +1,6 @@
 ﻿// 
-// CheckedStatement.cs
-//
+// UsingStatement.cs
+//  
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
@@ -24,40 +24,55 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// checked BodyBlock
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
+	/// using (ResourceAcquisition) EmbeddedStatement
 	/// </summary>
-	public class CheckedStatement : Statement
+	public class UsingStatement : Statement
 	{
-		public CSharpTokenNode CheckedToken {
+		public static readonly Role<AstNode> ResourceAcquisitionRole = new Role<AstNode>("ResourceAcquisition", AstNode.Null);
+		
+		public CSharpTokenNode UsingToken {
 			get { return GetChildByRole (Roles.Keyword); }
 		}
 		
-		public BlockStatement Body {
-			get { return GetChildByRole (Roles.Body); }
-			set { SetChildByRole (Roles.Body, value); }
+		public CSharpTokenNode LParToken {
+			get { return GetChildByRole (Roles.LPar); }
 		}
 		
-		public CheckedStatement ()
-		{
+		/// <summary>
+		/// Either a VariableDeclarationStatement, or an Expression.
+		/// </summary>
+		public AstNode ResourceAcquisition {
+			get { return GetChildByRole (ResourceAcquisitionRole); }
+			set { SetChildByRole (ResourceAcquisitionRole, value); }
 		}
 		
-		public CheckedStatement (BlockStatement body)
-		{
-			AddChild (body, Roles.Body);
+		public CSharpTokenNode RParToken {
+			get { return GetChildByRole (Roles.RPar); }
+		}
+		
+		public Statement EmbeddedStatement {
+			get { return GetChildByRole (Roles.EmbeddedStatement); }
+			set { SetChildByRole (Roles.EmbeddedStatement, value); }
 		}
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitCheckedStatement (this, data);
+			return visitor.VisitUsingStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			CheckedStatement o = other as CheckedStatement;
-			return o != null && this.Body.DoMatch(o.Body, match);
+			UsingStatement o = other as UsingStatement;
+			return o != null && this.ResourceAcquisition.DoMatch(o.ResourceAcquisition, match) && this.EmbeddedStatement.DoMatch(o.EmbeddedStatement, match);
 		}
 	}
 }

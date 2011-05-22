@@ -1,5 +1,5 @@
 ﻿// 
-// BreakStatement.cs
+// FixedStatement.cs
 //
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
@@ -24,26 +24,54 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// break;
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
+	/// fixed (Type Variables) EmbeddedStatement
 	/// </summary>
-	public class BreakStatement : Statement
+	public class FixedStatement : Statement
 	{
-		public CSharpTokenNode SemicolonToken {
-			get { return GetChildByRole (Roles.Semicolon); }
+		public CSharpTokenNode FixedToken {
+			get { return GetChildByRole (Roles.Keyword); }
+		}
+		
+		public CSharpTokenNode LParToken {
+			get { return GetChildByRole (Roles.LPar); }
+		}
+		
+		public AstType Type {
+			get { return GetChildByRole (Roles.Type); }
+			set { SetChildByRole (Roles.Type, value); }
+		}
+		
+		public AstNodeCollection<VariableInitializer> Variables {
+			get { return GetChildrenByRole (Roles.Variable); }
+		}
+		
+		public CSharpTokenNode RParToken {
+			get { return GetChildByRole (Roles.RPar); }
+		}
+		
+		public Statement EmbeddedStatement {
+			get { return GetChildByRole (Roles.EmbeddedStatement); }
+			set { SetChildByRole (Roles.EmbeddedStatement, value); }
 		}
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitBreakStatement (this, data);
+			return visitor.VisitFixedStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			BreakStatement o = other as BreakStatement;
-			return o != null;
+			FixedStatement o = other as FixedStatement;
+			return o != null && this.Type.DoMatch(o.Type, match) && this.Variables.DoMatch(o.Variables, match) && this.EmbeddedStatement.DoMatch(o.EmbeddedStatement, match);
 		}
 	}
 }

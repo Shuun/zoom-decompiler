@@ -1,6 +1,6 @@
 ﻿// 
-// UsingStatement.cs
-//  
+// ForeachStatement.cs
+//
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
@@ -24,16 +24,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// using (ResourceAcquisition) EmbeddedStatement
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
+	/// foreach (Type VariableName in InExpression) EmbeddedStatement
 	/// </summary>
-	public class UsingStatement : Statement
+	public class ForeachStatement : Statement
 	{
-		public static readonly Role<AstNode> ResourceAcquisitionRole = new Role<AstNode>("ResourceAcquisition", AstNode.Null);
-		
-		public CSharpTokenNode UsingToken {
+		public CSharpTokenNode ForeachToken {
 			get { return GetChildByRole (Roles.Keyword); }
 		}
 		
@@ -41,12 +45,27 @@ namespace Mi.NRefactory.CSharp
 			get { return GetChildByRole (Roles.LPar); }
 		}
 		
-		/// <summary>
-		/// Either a VariableDeclarationStatement, or an Expression.
-		/// </summary>
-		public AstNode ResourceAcquisition {
-			get { return GetChildByRole (ResourceAcquisitionRole); }
-			set { SetChildByRole (ResourceAcquisitionRole, value); }
+		public AstType VariableType {
+			get { return GetChildByRole (Roles.Type); }
+			set { SetChildByRole (Roles.Type, value); }
+		}
+		
+		public string VariableName {
+			get {
+				return GetChildByRole (Roles.Identifier).Name;
+			}
+			set {
+				SetChildByRole(Roles.Identifier, new Identifier(value, AstLocation.Empty));
+			}
+		}
+		
+		public CSharpTokenNode InToken {
+			get { return GetChildByRole (Roles.InKeyword); }
+		}
+		
+		public Expression InExpression {
+			get { return GetChildByRole (Roles.Expression); }
+			set { SetChildByRole (Roles.Expression, value); }
 		}
 		
 		public CSharpTokenNode RParToken {
@@ -60,13 +79,14 @@ namespace Mi.NRefactory.CSharp
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitUsingStatement (this, data);
+			return visitor.VisitForeachStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			UsingStatement o = other as UsingStatement;
-			return o != null && this.ResourceAcquisition.DoMatch(o.ResourceAcquisition, match) && this.EmbeddedStatement.DoMatch(o.EmbeddedStatement, match);
+			ForeachStatement o = other as ForeachStatement;
+			return o != null && this.VariableType.DoMatch(o.VariableType, match) && MatchString(this.VariableName, o.VariableName)
+				&& this.InExpression.DoMatch(o.InExpression, match) && this.EmbeddedStatement.DoMatch(o.EmbeddedStatement, match);
 		}
 	}
 }

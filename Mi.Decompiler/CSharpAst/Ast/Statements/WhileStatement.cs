@@ -1,6 +1,6 @@
 ﻿// 
-// ForeachStatement.cs
-//
+// WhileStatement.cs
+//  
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
@@ -24,42 +24,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// foreach (Type VariableName in InExpression) EmbeddedStatement
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
+	/// "while (Condition) EmbeddedStatement"
 	/// </summary>
-	public class ForeachStatement : Statement
+	public class WhileStatement : Statement
 	{
-		public CSharpTokenNode ForeachToken {
-			get { return GetChildByRole (Roles.Keyword); }
+		public static readonly Role<CSharpTokenNode> WhileKeywordRole = new Role<CSharpTokenNode>("WhileKeyword", CSharpTokenNode.Null);
+		
+		public CSharpTokenNode WhileToken {
+			get { return GetChildByRole (WhileKeywordRole); }
 		}
 		
 		public CSharpTokenNode LParToken {
 			get { return GetChildByRole (Roles.LPar); }
 		}
 		
-		public AstType VariableType {
-			get { return GetChildByRole (Roles.Type); }
-			set { SetChildByRole (Roles.Type, value); }
-		}
-		
-		public string VariableName {
-			get {
-				return GetChildByRole (Roles.Identifier).Name;
-			}
-			set {
-				SetChildByRole(Roles.Identifier, new Identifier(value, AstLocation.Empty));
-			}
-		}
-		
-		public CSharpTokenNode InToken {
-			get { return GetChildByRole (Roles.InKeyword); }
-		}
-		
-		public Expression InExpression {
-			get { return GetChildByRole (Roles.Expression); }
-			set { SetChildByRole (Roles.Expression, value); }
+		public Expression Condition {
+			get { return GetChildByRole (Roles.Condition); }
+			set { SetChildByRole (Roles.Condition, value); }
 		}
 		
 		public CSharpTokenNode RParToken {
@@ -73,14 +63,13 @@ namespace Mi.NRefactory.CSharp
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitForeachStatement (this, data);
+			return visitor.VisitWhileStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			ForeachStatement o = other as ForeachStatement;
-			return o != null && this.VariableType.DoMatch(o.VariableType, match) && MatchString(this.VariableName, o.VariableName)
-				&& this.InExpression.DoMatch(o.InExpression, match) && this.EmbeddedStatement.DoMatch(o.EmbeddedStatement, match);
+			WhileStatement o = other as WhileStatement;
+			return o != null && this.Condition.DoMatch(o.Condition, match) && this.EmbeddedStatement.DoMatch(o.EmbeddedStatement, match);
 		}
 	}
 }

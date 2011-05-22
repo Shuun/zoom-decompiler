@@ -1,6 +1,6 @@
 ﻿// 
-// VariableDeclarationStatement.cs
-//  
+// LabelStatement.cs
+//
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
@@ -24,52 +24,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	public class VariableDeclarationStatement : Statement
+    using Mi.NRefactory.PatternMatching;
+    
+    /// <summary>
+	/// Label:
+	/// </summary>
+	public class LabelStatement : Statement
 	{
-		public static readonly Role<CSharpModifierToken> ModifierRole = AttributedNode.ModifierRole;
-		
-		public VariableDeclarationStatement()
-		{
+		public string Label {
+			get {
+				return GetChildByRole (Roles.Identifier).Name;
+			}
+			set {
+				SetChildByRole(Roles.Identifier, new Identifier(value, AstLocation.Empty));
+			}
 		}
 		
-		public VariableDeclarationStatement(AstType type, string name, Expression initializer = null)
-		{
-			this.Type = type;
-			this.Variables.Add(new VariableInitializer(name, initializer));
-		}
-		
-		public Modifiers Modifiers {
-			get { return AttributedNode.GetModifiers(this); }
-			set { AttributedNode.SetModifiers(this, value); }
-		}
-		
-		public AstType Type {
-			get { return GetChildByRole (Roles.Type); }
-			set { SetChildByRole (Roles.Type, value); }
-		}
-		
-		public AstNodeCollection<VariableInitializer> Variables {
-			get { return GetChildrenByRole (Roles.Variable); }
-		}
-		
-		public CSharpTokenNode SemicolonToken {
-			get { return GetChildByRole (Roles.Semicolon); }
+		public CSharpTokenNode Colon {
+			get { return GetChildByRole (Roles.Colon); }
 		}
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitVariableDeclarationStatement (this, data);
+			return visitor.VisitLabelStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			VariableDeclarationStatement o = other as VariableDeclarationStatement;
-			return o != null && this.Modifiers == o.Modifiers && this.Type.DoMatch(o.Type, match) && this.Variables.DoMatch(o.Variables, match);
+			LabelStatement o = other as LabelStatement;
+			return o != null && MatchString(this.Label, o.Label);
 		}
 	}
 }

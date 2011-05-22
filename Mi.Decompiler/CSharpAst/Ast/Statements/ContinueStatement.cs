@@ -1,5 +1,5 @@
 ﻿// 
-// ThrowStatement.cs
+// ContinueStatement.cs
 //  
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
@@ -24,44 +24,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
+    using Mi.NRefactory.PatternMatching;
+
 	/// <summary>
-	/// throw Expression;
+	/// continue;
 	/// </summary>
-	public class ThrowStatement : Statement
+	public class ContinueStatement : Statement
 	{
-		public CSharpTokenNode ThrowToken {
-			get { return GetChildByRole (Roles.Keyword); }
-		}
-		
-		public Expression Expression {
-			get { return GetChildByRole (Roles.Expression); }
-			set { SetChildByRole (Roles.Expression, value); }
-		}
-		
 		public CSharpTokenNode SemicolonToken {
 			get { return GetChildByRole (Roles.Semicolon); }
 		}
 		
-		public ThrowStatement ()
-		{
-		}
-		
-		public ThrowStatement (Expression expression)
-		{
-			AddChild (expression, Roles.Expression);
-		}
-		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitThrowStatement (this, data);
+			return visitor.VisitContinueStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			ThrowStatement o = other as ThrowStatement;
-			return o != null && this.Expression.DoMatch(o.Expression, match);
+			ContinueStatement o = other as ContinueStatement;
+			return o != null;
 		}
 	}
 }

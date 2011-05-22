@@ -1,5 +1,5 @@
 ﻿// 
-// FixedStatement.cs
+// ForStatement.cs
 //
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
@@ -24,16 +24,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// fixed (Type Variables) EmbeddedStatement
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
+	/// for (Initializers; Condition; Iterators) EmbeddedStatement
 	/// </summary>
-	public class FixedStatement : Statement
+	public class ForStatement : Statement
 	{
-		public CSharpTokenNode FixedToken {
+		public readonly static Role<Statement> InitializerRole = new Role<Statement>("Initializer", Statement.Null);
+		public readonly static Role<Statement> IteratorRole = new Role<Statement>("Iterator", Statement.Null);
+		
+		public CSharpTokenNode ForToken {
 			get { return GetChildByRole (Roles.Keyword); }
 		}
 		
@@ -41,13 +48,22 @@ namespace Mi.NRefactory.CSharp
 			get { return GetChildByRole (Roles.LPar); }
 		}
 		
-		public AstType Type {
-			get { return GetChildByRole (Roles.Type); }
-			set { SetChildByRole (Roles.Type, value); }
+		/// <summary>
+		/// Gets the list of initializer statements.
+		/// Note: this contains multiple statements for "for (a = 2, b = 1; a > b; a--)", but contains
+		/// only a single statement for "for (int a = 2, b = 1; a > b; a--)" (a single VariableDeclarationStatement with two variables)
+		/// </summary>
+		public AstNodeCollection<Statement> Initializers {
+			get { return GetChildrenByRole (InitializerRole); }
 		}
 		
-		public AstNodeCollection<VariableInitializer> Variables {
-			get { return GetChildrenByRole (Roles.Variable); }
+		public Expression Condition {
+			get { return GetChildByRole (Roles.Condition); }
+			set { SetChildByRole (Roles.Condition, value); }
+		}
+		
+		public AstNodeCollection<Statement> Iterators {
+			get { return GetChildrenByRole (IteratorRole); }
 		}
 		
 		public CSharpTokenNode RParToken {
@@ -61,13 +77,14 @@ namespace Mi.NRefactory.CSharp
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitFixedStatement (this, data);
+			return visitor.VisitForStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			FixedStatement o = other as FixedStatement;
-			return o != null && this.Type.DoMatch(o.Type, match) && this.Variables.DoMatch(o.Variables, match) && this.EmbeddedStatement.DoMatch(o.EmbeddedStatement, match);
+			ForStatement o = other as ForStatement;
+			return o != null && this.Initializers.DoMatch(o.Initializers, match) && this.Condition.DoMatch(o.Condition, match)
+				&& this.Iterators.DoMatch(o.Iterators, match) && this.EmbeddedStatement.DoMatch(o.EmbeddedStatement, match);
 		}
 	}
 }
