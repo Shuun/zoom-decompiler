@@ -709,7 +709,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 			}
 			
 			IList<IAttribute> ITypeParameter.Attributes {
-				get { return EmptyList<IAttribute>.Instance; }
+                get { return Empty.ReadOnlyCollection<IAttribute>(); }
 			}
 			
 			EntityType ITypeParameter.OwnerType {
@@ -717,7 +717,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 			}
 			
 			IList<ITypeReference> ITypeParameter.Constraints {
-				get { return EmptyList<ITypeReference>.Instance; }
+                get { return Empty.ReadOnlyCollection<ITypeReference>(); }
 			}
 			
 			bool ITypeParameter.HasDefaultConstructorConstraint {
@@ -794,7 +794,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 			if (upperBounds.Count == 0 && lowerBounds.Count <= 1)
 				return lowerBounds;
 			if (nestingLevel > maxNestingLevel)
-				return EmptyList<IType>.Instance;
+                return Empty.ReadOnlyCollection<IType>();
 			
 			// Finds a type X so that "LB <: X <: UB"
 			Log("FindTypesInBound, LowerBounds=", lowerBounds);

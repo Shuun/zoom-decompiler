@@ -224,7 +224,7 @@ namespace Mi.NRefactory.CSharp.Resolver.ConstantValues
 		internal static IList<IType> ResolveTypes(CSharpResolver resolver, IList<ITypeReference> typeArguments)
 		{
 			if (typeArguments == null)
-				return EmptyList<IType>.Instance;
+				return Empty.ReadOnlyCollection<IType>();
 			IType[] types = new IType[typeArguments.Count];
 			for (int i = 0; i < types.Length; i++) {
 				types[i] = typeArguments[i].Resolve(resolver.Context);

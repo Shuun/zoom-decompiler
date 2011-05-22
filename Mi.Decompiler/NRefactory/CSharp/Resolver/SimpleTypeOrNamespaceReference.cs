@@ -23,7 +23,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 			if (identifier == null)
 				throw new ArgumentNullException("identifier");
 			this.identifier = identifier;
-			this.typeArguments = typeArguments ?? EmptyList<ITypeReference>.Instance;
+            this.typeArguments = typeArguments ?? Empty.ReadOnlyCollection<ITypeReference>();
 			this.parentTypeDefinition = parentTypeDefinition;
 			this.parentUsingScope = parentUsingScope;
 			this.isInUsingDeclaration = isInUsingDeclaration;

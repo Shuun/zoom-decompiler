@@ -21,27 +21,27 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		public override IEnumerable<IMethod> GetConstructors(ITypeResolveContext context, Predicate<IMethod> filter)
 		{
-			return EmptyList<IMethod>.Instance;
+            return Empty.ReadOnlyCollection<IMethod>();
 		}
 		
 		public override IEnumerable<IEvent> GetEvents(ITypeResolveContext context, Predicate<IEvent> filter)
 		{
-			return EmptyList<IEvent>.Instance;
+            return Empty.ReadOnlyCollection<IEvent>();
 		}
 		
 		public override IEnumerable<IField> GetFields(ITypeResolveContext context, Predicate<IField> filter)
 		{
-			return EmptyList<IField>.Instance;
+            return Empty.ReadOnlyCollection<IField>();
 		}
 		
 		public override IEnumerable<IMethod> GetMethods(ITypeResolveContext context, Predicate<IMethod> filter)
 		{
-			return EmptyList<IMethod>.Instance;
+            return Empty.ReadOnlyCollection<IMethod>();
 		}
 		
 		public override IEnumerable<IProperty> GetProperties(ITypeResolveContext context, Predicate<IProperty> filter)
 		{
-			return EmptyList<IProperty>.Instance;
+            return Empty.ReadOnlyCollection<IProperty>();
 		}
 	}
 }

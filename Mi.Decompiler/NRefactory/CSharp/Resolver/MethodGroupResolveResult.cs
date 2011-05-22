@@ -34,7 +34,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 			this.targetType = targetType;
 			this.methodName = methodName;
 			this.methods = new ReadOnlyCollection<IMethod>(methods);
-			this.typeArguments = typeArguments != null ? new ReadOnlyCollection<IType>(typeArguments) : EmptyList<IType>.Instance;
+            this.typeArguments = typeArguments != null ? new ReadOnlyCollection<IType>(typeArguments) : Empty.ReadOnlyCollection<IType>();
 		}
 		
 		public IType TargetType {

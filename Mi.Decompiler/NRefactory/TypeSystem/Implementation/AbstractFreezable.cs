@@ -66,7 +66,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		protected static IList<T> FreezeList<T>(IList<T> list) where T : IFreezable
 		{
 			if (list == null || list.Count == 0)
-				return EmptyList<T>.Instance;
+                return Empty.ReadOnlyCollection<T>();
 			list = new ReadOnlyCollection<T>(list.ToArray());
 			foreach (T item in list) {
 				item.Freeze();
@@ -77,7 +77,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		protected static IList<string> FreezeList(IList<string> list)
 		{
 			if (list == null || list.Count == 0)
-				return EmptyList<string>.Instance;
+                return Empty.ReadOnlyCollection<string>();
 			else
 				return new ReadOnlyCollection<string>(list.ToArray());
 		}
@@ -85,7 +85,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		protected static IList<ITypeReference> FreezeList(IList<ITypeReference> list)
 		{
 			if (list == null || list.Count == 0)
-				return EmptyList<ITypeReference>.Instance;
+                return Empty.ReadOnlyCollection<ITypeReference>();
 			else
 				return new ReadOnlyCollection<ITypeReference>(list.ToArray());
 		}

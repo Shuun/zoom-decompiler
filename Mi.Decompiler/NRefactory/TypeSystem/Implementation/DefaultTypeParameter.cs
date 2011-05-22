@@ -229,7 +229,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 				if (filter(m))
 					return new [] { m };
 			}
-			return EmptyList<IMethod>.Instance;
+            return Empty.ReadOnlyCollection<IMethod>();
 		}
 		
 		public IEnumerable<IMethod> GetMethods(ITypeResolveContext context, Predicate<IMethod> filter = null)
@@ -240,7 +240,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			if (objectType != null)
 				objectMethods = objectType.GetMethods(context, filter);
 			else
-				objectMethods = EmptyList<IMethod>.Instance;
+                objectMethods = Empty.ReadOnlyCollection<IMethod>();
 			
 			// don't return static methods (those cannot be called from type parameter)
 			return objectMethods.Where(m => !m.IsStatic);
@@ -248,22 +248,22 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		public IEnumerable<IProperty> GetProperties(ITypeResolveContext context, Predicate<IProperty> filter = null)
 		{
-			return EmptyList<IProperty>.Instance;
+            return Empty.ReadOnlyCollection<IProperty>();
 		}
 		
 		public IEnumerable<IField> GetFields(ITypeResolveContext context, Predicate<IField> filter = null)
 		{
-			return EmptyList<IField>.Instance;
+            return Empty.ReadOnlyCollection<IField>();
 		}
 		
 		public IEnumerable<IEvent> GetEvents(ITypeResolveContext context, Predicate<IEvent> filter = null)
 		{
-			return EmptyList<IEvent>.Instance;
+            return Empty.ReadOnlyCollection<IEvent>();
 		}
 		
 		IEnumerable<IType> IType.GetNestedTypes(ITypeResolveContext context, Predicate<ITypeDefinition> filter)
 		{
-			return EmptyList<IType>.Instance;
+            return Empty.ReadOnlyCollection<IType>();
 		}
 		
 		public IEnumerable<IType> GetBaseTypes(ITypeResolveContext context)
