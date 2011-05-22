@@ -1,6 +1,6 @@
 ﻿// 
-// FullTypeName.cs
-//
+// TokenNode.cs
+//  
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
@@ -23,57 +23,82 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	public class PrimitiveType : AstType
+    using Mi.NRefactory.PatternMatching;
+    
+    public class CSharpTokenNode : AstNode
 	{
-		public string Keyword { get; set; }
-		public AstLocation Location { get; set; }
-		
-		public PrimitiveType()
+		public static new readonly CSharpTokenNode Null = new NullCSharpTokenNode ();
+		class NullCSharpTokenNode : CSharpTokenNode
 		{
+			public override bool IsNull {
+				get {
+					return true;
+				}
+			}
+			
+			public NullCSharpTokenNode () : base (AstLocation.Empty, 0)
+			{
+			}
+			
+			public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
+			{
+				return default (S);
+			}
+			
+			protected internal override bool DoMatch(AstNode other, Match match)
+			{
+				return other == null || other.IsNull;
+			}
 		}
 		
-		public PrimitiveType(string keyword)
-		{
-			this.Keyword = keyword;
+		
+		public override NodeType NodeType {
+			get {
+				return NodeType.Token;
+			}
 		}
 		
-		public PrimitiveType(string keyword, AstLocation location)
-		{
-			this.Keyword = keyword;
-			this.Location = location;
-		}
-		
+		AstLocation startLocation;
 		public override AstLocation StartLocation {
 			get {
-				return Location;
+				return startLocation;
 			}
 		}
+		
+		protected int tokenLength;
 		public override AstLocation EndLocation {
 			get {
-				return new AstLocation (Location.Line, Location.Column + (Keyword != null ? Keyword.Length : 0));
+				return new AstLocation (StartLocation.Line, StartLocation.Column + tokenLength);
 			}
+		}
+		
+		public CSharpTokenNode (AstLocation location, int tokenLength)
+		{
+			this.startLocation = location;
+			this.tokenLength = tokenLength;
 		}
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitPrimitiveType (this, data);
+			return visitor.VisitCSharpTokenNode (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			PrimitiveType o = other as PrimitiveType;
-			return o != null && MatchString(this.Keyword, o.Keyword);
+			CSharpTokenNode o = other as CSharpTokenNode;
+			return o != null && !o.IsNull && !(o is CSharpModifierToken);
 		}
 		
-		public override string ToString()
+		public override string ToString ()
 		{
-			return Keyword ?? base.ToString();
+			return string.Format ("[CSharpTokenNode: StartLocation={0}, EndLocation={1}, Role={2}]", StartLocation, EndLocation, Role);
 		}
 	}
 }

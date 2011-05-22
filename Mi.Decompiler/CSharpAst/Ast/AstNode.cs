@@ -31,9 +31,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
-	public abstract class AstNode : PatternMatching.INode
+    using Mi.NRefactory.PatternMatching;
+    
+    public abstract class AstNode : INode
 	{
 		#region Null
 		public static readonly AstNode Null = new NullAstNode ();
@@ -57,7 +59,7 @@ namespace Mi.NRefactory.CSharp
 				return default (S);
 			}
 			
-			protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+			protected internal override bool DoMatch(AstNode other, Match match)
 			{
 				return other == null || other.IsNull;
 			}
@@ -65,16 +67,16 @@ namespace Mi.NRefactory.CSharp
 		#endregion
 		
 		#region PatternPlaceholder
-		public static implicit operator AstNode(PatternMatching.Pattern pattern)
+		public static implicit operator AstNode(Pattern pattern)
 		{
 			return pattern != null ? new PatternPlaceholder(pattern) : null;
 		}
 		
-		sealed class PatternPlaceholder : AstNode, PatternMatching.INode
+		sealed class PatternPlaceholder : AstNode, INode
 		{
-			readonly PatternMatching.Pattern child;
+			readonly Pattern child;
 			
-			public PatternPlaceholder(PatternMatching.Pattern child)
+			public PatternPlaceholder(Pattern child)
 			{
 				this.child = child;
 			}
@@ -88,12 +90,12 @@ namespace Mi.NRefactory.CSharp
 				return visitor.VisitPatternPlaceholder(this, child, data);
 			}
 			
-			protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+			protected internal override bool DoMatch(AstNode other, Match match)
 			{
 				return child.DoMatch(other, match);
 			}
 			
-			bool PatternMatching.INode.DoMatchCollection(Role role, PatternMatching.INode pos, PatternMatching.Match match, PatternMatching.BacktrackingInfo backtrackingInfo)
+			bool INode.DoMatchCollection(Role role, INode pos, Match match, BacktrackingInfo backtrackingInfo)
 			{
 				return child.DoMatchCollection(role, pos, match, backtrackingInfo);
 			}
@@ -188,7 +190,7 @@ namespace Mi.NRefactory.CSharp
 		/// </summary>
 		public IEnumerable<AstNode> Descendants {
 			get {
-				return Utils.TreeTraversal.PreOrder(this.Children, n => n.Children);
+				return Mi.NRefactory.Utils.TreeTraversal.PreOrder(this.Children, n => n.Children);
 			}
 		}
 		
@@ -197,7 +199,7 @@ namespace Mi.NRefactory.CSharp
 		/// </summary>
 		public IEnumerable<AstNode> DescendantsAndSelf {
 			get {
-				return Utils.TreeTraversal.PreOrder(this, n => n.Children);
+				return Mi.NRefactory.Utils.TreeTraversal.PreOrder(this, n => n.Children);
 			}
 		}
 		
@@ -601,26 +603,26 @@ namespace Mi.NRefactory.CSharp
 			return string.IsNullOrEmpty(name1) || name1 == name2;
 		}
 		
-		protected internal abstract bool DoMatch(AstNode other, PatternMatching.Match match);
+		protected internal abstract bool DoMatch(AstNode other, Match match);
 		
-		bool PatternMatching.INode.DoMatch(PatternMatching.INode other, PatternMatching.Match match)
+		bool INode.DoMatch(INode other, Match match)
 		{
 			AstNode o = other as AstNode;
 			// try matching if other is null, or if other is an AstNode
 			return (other == null || o != null) && DoMatch(o, match);
 		}
 		
-		bool PatternMatching.INode.DoMatchCollection(Role role, PatternMatching.INode pos, PatternMatching.Match match, PatternMatching.BacktrackingInfo backtrackingInfo)
+		bool INode.DoMatchCollection(Role role, INode pos, Match match, BacktrackingInfo backtrackingInfo)
 		{
 			AstNode o = pos as AstNode;
 			return (pos == null || o != null) && DoMatch (o, match);
 		}
 		
-		PatternMatching.INode PatternMatching.INode.NextSibling {
+		INode INode.NextSibling {
 			get { return nextSibling; }
 		}
 		
-		PatternMatching.INode PatternMatching.INode.FirstChild {
+		INode INode.FirstChild {
 			get { return firstChild; }
 		}
 		#endregion
@@ -666,21 +668,21 @@ namespace Mi.NRefactory.CSharp
 			public static readonly Role<AstNode> Root = RootRole;
 			
 			// some pre defined constants for common roles
-			public static readonly Role<Identifier> Identifier = new Role<Identifier>("Identifier", CSharp.Identifier.Null);
+			public static readonly Role<Identifier> Identifier = new Role<Identifier>("Identifier", CSharpAst.Identifier.Null);
 			
-			public static readonly Role<BlockStatement> Body = new Role<BlockStatement>("Body", CSharp.BlockStatement.Null);
+			public static readonly Role<BlockStatement> Body = new Role<BlockStatement>("Body", CSharpAst.BlockStatement.Null);
 			public static readonly Role<ParameterDeclaration> Parameter = new Role<ParameterDeclaration>("Parameter");
-			public static readonly Role<Expression> Argument = new Role<Expression>("Argument", CSharp.Expression.Null);
-			public static readonly Role<AstType> Type = new Role<AstType>("Type", CSharp.AstType.Null);
-			public static readonly Role<Expression> Expression = new Role<Expression>("Expression", CSharp.Expression.Null);
-			public static readonly Role<Expression> TargetExpression = new Role<Expression>("Target", CSharp.Expression.Null);
-			public readonly static Role<Expression> Condition = new Role<Expression>("Condition", CSharp.Expression.Null);
+			public static readonly Role<Expression> Argument = new Role<Expression>("Argument", CSharpAst.Expression.Null);
+			public static readonly Role<AstType> Type = new Role<AstType>("Type", CSharpAst.AstType.Null);
+			public static readonly Role<Expression> Expression = new Role<Expression>("Expression", CSharpAst.Expression.Null);
+			public static readonly Role<Expression> TargetExpression = new Role<Expression>("Target", CSharpAst.Expression.Null);
+			public readonly static Role<Expression> Condition = new Role<Expression>("Condition", CSharpAst.Expression.Null);
 			
 			public static readonly Role<TypeParameterDeclaration> TypeParameter = new Role<TypeParameterDeclaration>("TypeParameter");
-			public static readonly Role<AstType> TypeArgument = new Role<AstType>("TypeArgument", CSharp.AstType.Null);
+			public static readonly Role<AstType> TypeArgument = new Role<AstType>("TypeArgument", CSharpAst.AstType.Null);
 			public readonly static Role<Constraint> Constraint = new Role<Constraint>("Constraint");
 			public static readonly Role<VariableInitializer> Variable = new Role<VariableInitializer>("Variable");
-			public static readonly Role<Statement> EmbeddedStatement = new Role<Statement>("EmbeddedStatement", CSharp.Statement.Null);
+			public static readonly Role<Statement> EmbeddedStatement = new Role<Statement>("EmbeddedStatement", CSharpAst.Statement.Null);
 			
 			public static readonly Role<CSharpTokenNode> Keyword = new Role<CSharpTokenNode>("Keyword", CSharpTokenNode.Null);
 			public static readonly Role<CSharpTokenNode> InKeyword = new Role<CSharpTokenNode>("InKeyword", CSharpTokenNode.Null);
