@@ -7,11 +7,6 @@ using System.Linq;
 
 internal static class DotNet35Compat
 {
-	public static string StringJoin<T>(string separator, IEnumerable<T> elements)
-	{
-		return string.Join(separator, elements);
-	}
-	
 	public static IEnumerable<U> SafeCast<T, U>(this IEnumerable<T> elements) where T : class, U where U : class
 	{
 		#if DOTNET35
