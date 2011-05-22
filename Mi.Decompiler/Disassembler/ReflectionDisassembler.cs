@@ -96,6 +96,7 @@ namespace Mi.Decompiler.Disassembler
 			{ MethodImplAttributes.NoOptimization, "nooptimization" },
 			{ MethodImplAttributes.PreserveSig, "preservesig" },
 			{ MethodImplAttributes.InternalCall, "internalcall" },
+			{ MethodImplAttributes.ForwardRef, "forwardref" },
 		};
 		
 		public void DisassembleMethod(MethodDefinition method)
@@ -155,9 +156,11 @@ namespace Mi.Decompiler.Disassembler
 			
 			output.WriteLine();
 			output.Indent();
-			
-			if (method.HasThis)
+			if (method.ExplicitThis) {
+				output.Write("instance explicit ");			
+			} else if (method.HasThis) {
 				output.Write("instance ");
+			}
 			
 			//call convention
 			WriteEnum(method.CallingConvention & (MethodCallingConvention)0x1f, callingConvention);
@@ -1098,6 +1101,21 @@ namespace Mi.Decompiler.Disassembler
 		
 		public void WriteModuleHeader(ModuleDefinition module)
 		{
+			if (module.HasExportedTypes) {
+				foreach (ExportedType exportedType in module.ExportedTypes) {
+					output.Write(".class extern ");
+					if (exportedType.IsForwarder)
+						output.Write("forwarder ");
+					output.Write(exportedType.DeclaringType != null ? exportedType.Name : exportedType.FullName);
+					OpenBlock(false);
+					if (exportedType.DeclaringType != null)
+						output.WriteLine(".class extern {0}", DisassemblerHelpers.Escape(exportedType.DeclaringType.FullName));
+					else
+						output.WriteLine(".assembly extern {0}", DisassemblerHelpers.Escape(exportedType.Scope.Name));
+					CloseBlock();
+				}
+			}
+			
 			output.WriteLine(".module {0}", module.Name);
 			output.WriteLine("// MVID: {0}", module.Mvid.ToString("B").ToUpperInvariant());
 			// TODO: imagebase, file alignment, stackreserve, subsystem
