@@ -247,7 +247,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 			}
 			
 			IList<IExplicitInterfaceImplementation> IMember.InterfaceImplementations {
-				get { return EmptyList<IExplicitInterfaceImplementation>.Instance; }
+                get { return Empty.ReadOnlyCollection<IExplicitInterfaceImplementation>(); }
 			}
 			
 			bool IMember.IsVirtual {
@@ -275,7 +275,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 			}
 			
 			IList<IAttribute> IEntity.Attributes {
-				get { return EmptyList<IAttribute>.Instance; }
+                get { return Empty.ReadOnlyCollection<IAttribute>(); }
 			}
 			
 			string IEntity.Documentation {
@@ -1699,7 +1699,8 @@ namespace Mi.NRefactory.CSharp.Resolver
 			if (result is UnknownMemberResolveResult) {
 				var extensionMethods = GetExtensionMethods(target.Type, identifier, typeArguments.Count);
 				if (extensionMethods.Count > 0) {
-					return new MethodGroupResolveResult(target.Type, identifier, EmptyList<IMethod>.Instance, typeArguments) {
+                    return new MethodGroupResolveResult(target.Type, identifier, Empty.ReadOnlyCollection<IMethod>(), typeArguments)
+                    {
 						ExtensionMethods = extensionMethods
 					};
 				}
@@ -1839,7 +1840,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 			}
 			UnknownIdentifierResolveResult uirr = target as UnknownIdentifierResolveResult;
 			if (uirr != null && CurrentTypeDefinition != null) {
-				return new UnknownMethodResolveResult(CurrentTypeDefinition, uirr.Identifier, EmptyList<IType>.Instance, CreateParameters(arguments, argumentNames));
+                return new UnknownMethodResolveResult(CurrentTypeDefinition, uirr.Identifier, Empty.ReadOnlyCollection<IType>(), CreateParameters(arguments, argumentNames));
 			}
 			IMethod invokeMethod = target.Type.GetDelegateInvokeMethod();
 			if (invokeMethod != null) {

@@ -593,7 +593,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 		{
 			if (resolverEnabled) {
 				// TODO: type arguments?
-				return resolver.ResolveSimpleName(identifierExpression.Identifier, EmptyList<IType>.Instance,
+                return resolver.ResolveSimpleName(identifierExpression.Identifier, Empty.ReadOnlyCollection<IType>(),
 				                                  IsTargetOfInvocation(identifierExpression));
 			} else {
 				ScanChildren(identifierExpression);
@@ -656,7 +656,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 				List<AstType> typeArgumentNodes = memberReferenceExpression.TypeArguments.ToList();
 				// TODO: type arguments?
 				return resolver.ResolveMemberAccess(target, memberReferenceExpression.MemberName,
-				                                    EmptyList<IType>.Instance,
+                                                    Empty.ReadOnlyCollection<IType>(),
 				                                    IsTargetOfInvocation(memberReferenceExpression));
 			} else {
 				ScanChildren(memberReferenceExpression);

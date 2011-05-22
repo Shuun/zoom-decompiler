@@ -56,37 +56,37 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		public virtual IEnumerable<IType> GetBaseTypes(ITypeResolveContext context)
 		{
-			return EmptyList<IType>.Instance;
+            return Empty.ReadOnlyCollection<IType>();
 		}
 		
 		public virtual IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<ITypeDefinition> filter = null)
 		{
-			return EmptyList<IType>.Instance;
+            return Empty.ReadOnlyCollection<IType>();
 		}
 		
 		public virtual IEnumerable<IMethod> GetMethods(ITypeResolveContext context, Predicate<IMethod> filter = null)
 		{
-			return EmptyList<IMethod>.Instance;
+            return Empty.ReadOnlyCollection<IMethod>();
 		}
 		
 		public virtual IEnumerable<IMethod> GetConstructors(ITypeResolveContext context, Predicate<IMethod> filter = null)
 		{
-			return EmptyList<IMethod>.Instance;
+            return Empty.ReadOnlyCollection<IMethod>();
 		}
 		
 		public virtual IEnumerable<IProperty> GetProperties(ITypeResolveContext context, Predicate<IProperty> filter = null)
 		{
-			return EmptyList<IProperty>.Instance;
+            return Empty.ReadOnlyCollection<IProperty>();
 		}
 		
 		public virtual IEnumerable<IField> GetFields(ITypeResolveContext context, Predicate<IField> filter = null)
 		{
-			return EmptyList<IField>.Instance;
+            return Empty.ReadOnlyCollection<IField>();
 		}
 		
 		public virtual IEnumerable<IEvent> GetEvents(ITypeResolveContext context, Predicate<IEvent> filter = null)
 		{
-			return EmptyList<IEvent>.Instance;
+            return Empty.ReadOnlyCollection<IEvent>();
 		}
 		
 		public override bool Equals(object obj)

@@ -52,7 +52,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 				if (positionalArguments != null)
 					return new ReadOnlyCollection<IConstantValue>(positionalArguments);
 				else
-					return EmptyList<IConstantValue>.Instance;
+					return Empty.ReadOnlyCollection<IConstantValue>();
 			}
 			// we do have namedCtorArguments, which need to be re-ordered and appended to the positional arguments
 			List<IConstantValue> result = new List<IConstantValue>(this.positionalArguments);
@@ -81,7 +81,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 			if (namedArguments != null)
 				return new ReadOnlyCollection<KeyValuePair<string, IConstantValue>>(namedArguments);
 			else
-				return EmptyList<KeyValuePair<string, IConstantValue>>.Instance;
+                return Empty.ReadOnlyCollection<KeyValuePair<string, IConstantValue>>();
 		}
 	}
 	

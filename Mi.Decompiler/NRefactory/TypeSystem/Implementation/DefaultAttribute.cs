@@ -25,7 +25,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			positionalArguments = FreezeList(positionalArguments);
 			
 			if (namedArguments == null || namedArguments.Count == 0) {
-				namedArguments = EmptyList<KeyValuePair<string, IConstantValue>>.Instance;
+                namedArguments = Empty.ReadOnlyCollection<KeyValuePair<string, IConstantValue>>();
 			} else {
 				namedArguments = Array.AsReadOnly(namedArguments.ToArray());
 				foreach (var pair in namedArguments) {

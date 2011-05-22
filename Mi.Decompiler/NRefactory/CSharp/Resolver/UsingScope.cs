@@ -27,12 +27,12 @@ namespace Mi.NRefactory.CSharp.Resolver
 		protected override void FreezeInternal()
 		{
 			if (usings == null || usings.Count == 0)
-				usings = EmptyList<ITypeOrNamespaceReference>.Instance;
+                usings = Empty.ReadOnlyCollection<ITypeOrNamespaceReference>();
 			else
 				usings = Array.AsReadOnly(usings.ToArray());
 			
 			if (usingAliases == null || usingAliases.Count == 0)
-				usingAliases = EmptyList<KeyValuePair<string, ITypeOrNamespaceReference>>.Instance;
+                usingAliases = Empty.ReadOnlyCollection<KeyValuePair<string, ITypeOrNamespaceReference>>();
 			else
 				usingAliases = Array.AsReadOnly(usingAliases.ToArray());
 			

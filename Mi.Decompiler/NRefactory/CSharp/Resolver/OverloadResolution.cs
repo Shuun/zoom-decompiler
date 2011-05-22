@@ -543,7 +543,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 				if (bestCandidate != null && bestCandidate.InferredTypes != null)
 					return Array.AsReadOnly(bestCandidate.InferredTypes);
 				else
-					return EmptyList<IType>.Instance;
+                    return Empty.ReadOnlyCollection<IType>();
 			}
 		}
 	}
