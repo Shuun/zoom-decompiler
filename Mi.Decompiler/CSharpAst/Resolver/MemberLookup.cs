@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mi.NRefactory.TypeSystem;
 
-namespace Mi.NRefactory.CSharp.Resolver
+namespace Mi.CSharpAst.Resolver
 {
 	/// <summary>
 	/// Implementation of member lookup (C# 4.0 spec, §7.4).

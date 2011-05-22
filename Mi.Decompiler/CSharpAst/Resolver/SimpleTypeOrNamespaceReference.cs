@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Mi.NRefactory.TypeSystem;
 
-namespace Mi.NRefactory.CSharp.Resolver
+namespace Mi.CSharpAst.Resolver
 {
 	/// <summary>
 	/// Represents a simple C# name. (a single non-qualified identifier with an optional list of type arguments)

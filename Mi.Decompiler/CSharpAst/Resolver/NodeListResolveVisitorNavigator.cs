@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Mi.NRefactory.CSharp.Resolver
+namespace Mi.CSharpAst.Resolver
 {
 	/// <summary>
 	/// <see cref="IResolveVisitorNavigator"/> implementation that resolves a list of nodes.

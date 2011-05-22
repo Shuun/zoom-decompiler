@@ -11,7 +11,7 @@ using System.Threading;
 using Mi.NRefactory.TypeSystem;
 using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace Mi.NRefactory.CSharp.Resolver
+namespace Mi.CSharpAst.Resolver
 {
 	/// <summary>
 	/// Contains the main resolver logic.
@@ -1473,7 +1473,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 		
 		object CSharpPrimitiveCast(TypeCode targetType, object input)
 		{
-			return Utils.CSharpPrimitiveCast.Cast(targetType, input, this.CheckForOverflow);
+			return Mi.NRefactory.Utils.CSharpPrimitiveCast.Cast(targetType, input, this.CheckForOverflow);
 		}
 		
 		ResolveResult CheckErrorAndResolveCast(IType targetType, ResolveResult expression)
