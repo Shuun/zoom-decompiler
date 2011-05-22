@@ -167,13 +167,16 @@ namespace Mi.NRefactory.CSharp.Resolver
 			bool allowProtectedAccess = IsProtectedAccessAllowed(type);
 			
 			if (typeArgumentCount == 0) {
-				Predicate<IMember> memberFilter = delegate(IMember member) {
-					return !member.IsOverride && member.Name == name && IsAccessible(member, allowProtectedAccess);
-				};
-				members.AddRange(type.GetMethods(context, memberFilter.SafeCast<IMember, IMethod>()).SafeCast<IMethod, IMember>());
-				members.AddRange(type.GetProperties(context, memberFilter.SafeCast<IMember, IProperty>()).SafeCast<IProperty, IMember>());
-				members.AddRange(type.GetFields(context, memberFilter.SafeCast<IMember, IField>()).SafeCast<IField, IMember>());
-				members.AddRange(type.GetEvents(context, memberFilter.SafeCast<IMember, IEvent>()).SafeCast<IEvent, IMember>());
+				Predicate<IMember> memberFilter = member =>
+					!member.IsOverride 
+                    && member.Name == name 
+                    && IsAccessible(member, allowProtectedAccess);
+
+                members.AddRange(type.GetMethods(context, m => memberFilter(m)).Cast<IMember>());
+                members.AddRange(type.GetProperties(context, m => memberFilter(m)).Cast<IMember>());
+                members.AddRange(type.GetFields(context, m => memberFilter(m)).Cast<IMember>());
+                members.AddRange(type.GetEvents(context, m => memberFilter(m)).Cast<IMember>());
+
 				if (isInvocation)
 					members.RemoveAll(m => !IsInvocable(m, context));
 			} else {
@@ -183,7 +186,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 					return method.TypeParameters.Count == typeArgumentCount
 						&& !method.IsOverride && method.Name == name && IsAccessible(method, allowProtectedAccess);
 				};
-				members.AddRange(type.GetMethods(context, memberFilter).SafeCast<IMethod, IMember>());
+                members.AddRange(type.GetMethods(context, memberFilter).Cast<IMember>());
 			}
 			
 			// TODO: can't members also hide types?

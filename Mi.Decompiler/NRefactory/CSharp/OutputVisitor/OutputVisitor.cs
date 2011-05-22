@@ -198,13 +198,13 @@ namespace Mi.NRefactory.CSharp
         void WriteCommaSeparatedList<TAstNode>(IEnumerable<TAstNode> list)
             where TAstNode : AstNode
         {
-            WriteCommaSeparatedList(list.SafeCast<TAstNode, AstNode>());
+            WriteCommaSeparatedList(list.Cast<AstNode>());
         }
 
         void WriteCommaSeparatedListInParenthesis<TAstNode>(IEnumerable<TAstNode> list, bool spaceWithin)
             where TAstNode : AstNode
         {
-            WriteCommaSeparatedListInParenthesis(list.SafeCast<TAstNode, AstNode>(), spaceWithin);
+            WriteCommaSeparatedListInParenthesis(list.Cast<AstNode>(), spaceWithin);
         }
         #endif
 
@@ -213,7 +213,7 @@ namespace Mi.NRefactory.CSharp
 			WriteToken("[", AstNode.Roles.LBracket);
 			if (list.Any()) {
 				Space(spaceWithin);
-				WriteCommaSeparatedList(list.SafeCast<ParameterDeclaration, AstNode>());
+                WriteCommaSeparatedList(list.Cast<AstNode>());
 				Space(spaceWithin);
 			}
 			WriteToken("]", AstNode.Roles.RBracket);
@@ -224,7 +224,7 @@ namespace Mi.NRefactory.CSharp
 			WriteToken ("[", AstNode.Roles.LBracket);
 			if (list.Any ()) {
 				Space (policy.SpacesWithinBrackets);
-				WriteCommaSeparatedList (list.SafeCast<Expression, AstNode> ());
+                WriteCommaSeparatedList(list.Cast<AstNode>());
 				Space (policy.SpacesWithinBrackets);
 			}
 			WriteToken ("]", AstNode.Roles.RBracket);
@@ -392,7 +392,7 @@ namespace Mi.NRefactory.CSharp
 		{
 			if (typeParameters.Any()) {
 				WriteToken("<", AstNode.Roles.LChevron);
-				WriteCommaSeparatedList(typeParameters.SafeCast<TypeParameterDeclaration, AstNode>());
+                WriteCommaSeparatedList(typeParameters.Cast<AstNode>());
 				WriteToken(">", AstNode.Roles.RChevron);
 			}
 		}
@@ -1175,7 +1175,7 @@ namespace Mi.NRefactory.CSharp
 			StartNode(queryOrderClause);
 			WriteKeyword("orderby");
 			Space();
-			WriteCommaSeparatedList(queryOrderClause.Orderings.SafeCast<QueryOrdering, AstNode>());
+			WriteCommaSeparatedList(queryOrderClause.Orderings.Cast<AstNode>());
 			return EndNode(queryOrderClause);
 		}
 		
@@ -1239,7 +1239,7 @@ namespace Mi.NRefactory.CSharp
 				WriteToken(":", AttributeSection.Roles.Colon);
 				Space();
 			}
-			WriteCommaSeparatedList(attributeSection.Attributes.SafeCast<Attribute, AstNode>());
+			WriteCommaSeparatedList(attributeSection.Attributes.Cast<AstNode>());
 			WriteToken("]", AstNode.Roles.RBracket);
 			if (attributeSection.Parent is ParameterDeclaration || attributeSection.Parent is TypeParameterDeclaration)
 				Space();
@@ -1509,7 +1509,7 @@ namespace Mi.NRefactory.CSharp
 			LPar();
 			Space(policy.SpacesWithinForParentheses);
 			
-			WriteCommaSeparatedList(forStatement.Initializers.SafeCast<Statement, AstNode>());
+			WriteCommaSeparatedList(forStatement.Initializers.Cast<AstNode>());
 			Space (policy.SpaceBeforeForSemicolon);
 			WriteToken(";", AstNode.Roles.Semicolon);
 			Space (policy.SpaceAfterForSemicolon);
@@ -1519,7 +1519,7 @@ namespace Mi.NRefactory.CSharp
 			WriteToken(";", AstNode.Roles.Semicolon);
 			Space(policy.SpaceAfterForSemicolon);
 			
-			WriteCommaSeparatedList(forStatement.Iterators.SafeCast<Statement, AstNode>());
+			WriteCommaSeparatedList(forStatement.Iterators.Cast<AstNode>());
 			
 			Space(policy.SpacesWithinForParentheses);
 			RPar();

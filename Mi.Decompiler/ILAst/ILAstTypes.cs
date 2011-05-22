@@ -346,7 +346,7 @@ namespace Mi.Decompiler.ILAst
 		
 		public override IEnumerable<ILNode> GetChildren()
 		{
-			return Arguments.SafeCast<ILExpression, ILNode>();
+			return Arguments.Cast<ILNode>();
 		}
 		
 		public bool IsBranch()
