@@ -9,11 +9,7 @@ internal static class DotNet35Compat
 {
 	public static string StringJoin<T>(string separator, IEnumerable<T> elements)
 	{
-		#if DOTNET35
-		return string.Join(separator, elements.Select(e => e != null ? e.ToString() : null).ToArray());
-		#else
 		return string.Join(separator, elements);
-		#endif
 	}
 	
 	public static IEnumerable<U> SafeCast<T, U>(this IEnumerable<T> elements) where T : class, U where U : class

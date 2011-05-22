@@ -221,7 +221,7 @@ namespace Mi.Decompiler.Disassembler
 				ArrayType at = (ArrayType)type;
 				at.ElementType.WriteTo(writer, syntaxForElementTypes);
 				writer.Write('[');
-				writer.Write(DotNet35Compat.StringJoin(", ", at.Dimensions));
+				writer.Write(string.Join(", ", at.Dimensions));
 				writer.Write(']');
 			} else if (type is GenericParameter) {
 				writer.Write('!');

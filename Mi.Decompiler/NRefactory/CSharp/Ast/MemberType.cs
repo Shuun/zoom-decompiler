@@ -77,7 +77,7 @@ namespace Mi.NRefactory.CSharp
 			b.Append(this.MemberName);
 			if (this.TypeArguments.Any()) {
 				b.Append('<');
-				b.Append(DotNet35Compat.StringJoin(", ", this.TypeArguments));
+				b.Append(string.Join(", ", this.TypeArguments));
 				b.Append('>');
 			}
 			return b.ToString();

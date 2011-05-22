@@ -68,7 +68,7 @@ namespace Mi.NRefactory.CSharp.Resolver
 			if (typeArguments.Count == 0)
 				return identifier;
 			else
-				return identifier + "<" + DotNet35Compat.StringJoin(",", typeArguments) + ">";
+				return identifier + "<" + string.Join(",", typeArguments) + ">";
 		}
 	}
 }
