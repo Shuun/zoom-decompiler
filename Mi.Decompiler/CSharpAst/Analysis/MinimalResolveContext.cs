@@ -9,7 +9,7 @@ using System.Linq;
 using Mi.NRefactory.TypeSystem;
 using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace Mi.NRefactory.CSharp.Analysis
+namespace Mi.CSharpAst.Analysis
 {
 	/// <summary>
 	/// Resolve context represents the minimal mscorlib required for evaluating constants.
