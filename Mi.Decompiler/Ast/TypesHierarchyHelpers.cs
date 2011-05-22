@@ -353,7 +353,7 @@ namespace Mi.Decompiler.Ast
 		private static GenericContext<TypeDefinition> CreateGenericContext(TypeDefinition type)
 		{
 			return type.HasGenericParameters
-				? new GenericContext<TypeDefinition>(type, type.GenericParameters.SafeCast<GenericParameter,TypeReference>())
+				? new GenericContext<TypeDefinition>(type, type.GenericParameters.Cast<TypeReference>())
 				: new GenericContext<TypeDefinition>(type);
 		}
 

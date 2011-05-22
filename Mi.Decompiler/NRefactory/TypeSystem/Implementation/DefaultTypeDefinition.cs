@@ -155,10 +155,10 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		public IEnumerable<IMember> Members {
 			get {
-				return this.Fields.SafeCast<IField, IMember>()
-					.Concat(this.Properties.SafeCast<IProperty, IMember>())
-					.Concat(this.Methods.SafeCast<IMethod, IMember>())
-					.Concat(this.Events.SafeCast<IEvent, IMember>());
+				return this.Fields.Cast<IMember>()
+                    .Concat(this.Properties.Cast<IMember>())
+                    .Concat(this.Methods.Cast<IMember>())
+                    .Concat(this.Events.Cast<IMember>());
 			}
 		}
 		
