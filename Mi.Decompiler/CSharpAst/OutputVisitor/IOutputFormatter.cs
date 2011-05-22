@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Mi.NRefactory.CSharp
+namespace Mi.CSharpAst
 {
 	/// <summary>
 	/// Output formatter for the Output visitor.
@@ -33,7 +33,7 @@ namespace Mi.NRefactory.CSharp
 		
 		void OpenBrace(BraceStyle style);
 		void CloseBrace(BraceStyle style);
-		
+
 		void Indent();
 		void Unindent();
 		
