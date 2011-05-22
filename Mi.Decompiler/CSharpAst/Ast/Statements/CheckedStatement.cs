@@ -1,6 +1,6 @@
 ﻿// 
-// LockStatement.cs
-//  
+// CheckedStatement.cs
+//
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
@@ -24,44 +24,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// lock (Expression) EmbeddedStatement;
+    using Mi.NRefactory.PatternMatching;
+    
+    /// <summary>
+	/// checked BodyBlock
 	/// </summary>
-	public class LockStatement : Statement
+	public class CheckedStatement : Statement
 	{
-		public CSharpTokenNode LockToken {
+		public CSharpTokenNode CheckedToken {
 			get { return GetChildByRole (Roles.Keyword); }
 		}
 		
-		public CSharpTokenNode LParToken {
-			get { return GetChildByRole (Roles.LPar); }
+		public BlockStatement Body {
+			get { return GetChildByRole (Roles.Body); }
+			set { SetChildByRole (Roles.Body, value); }
 		}
 		
-		public Expression Expression {
-			get { return GetChildByRole (Roles.Expression); }
-			set { SetChildByRole (Roles.Expression, value); }
+		public CheckedStatement ()
+		{
 		}
 		
-		public CSharpTokenNode RParToken {
-			get { return GetChildByRole (Roles.RPar); }
-		}
-		
-		public Statement EmbeddedStatement {
-			get { return GetChildByRole (Roles.EmbeddedStatement); }
-			set { SetChildByRole (Roles.EmbeddedStatement, value); }
+		public CheckedStatement (BlockStatement body)
+		{
+			AddChild (body, Roles.Body);
 		}
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitLockStatement (this, data);
+			return visitor.VisitCheckedStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			LockStatement o = other as LockStatement;
-			return o != null && this.Expression.DoMatch(o.Expression, match) && this.EmbeddedStatement.DoMatch(o.EmbeddedStatement, match);
+			CheckedStatement o = other as CheckedStatement;
+			return o != null && this.Body.DoMatch(o.Body, match);
 		}
 	}
 }

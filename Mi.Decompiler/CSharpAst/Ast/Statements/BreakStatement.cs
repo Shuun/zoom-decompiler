@@ -1,6 +1,6 @@
 ﻿// 
-// ContinueStatement.cs
-//  
+// BreakStatement.cs
+//
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
@@ -24,12 +24,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// continue;
+    using Mi.NRefactory.PatternMatching;
+    
+    /// <summary>
+	/// break;
 	/// </summary>
-	public class ContinueStatement : Statement
+	public class BreakStatement : Statement
 	{
 		public CSharpTokenNode SemicolonToken {
 			get { return GetChildByRole (Roles.Semicolon); }
@@ -37,12 +43,12 @@ namespace Mi.NRefactory.CSharp
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitContinueStatement (this, data);
+			return visitor.VisitBreakStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			ContinueStatement o = other as ContinueStatement;
+			BreakStatement o = other as BreakStatement;
 			return o != null;
 		}
 	}

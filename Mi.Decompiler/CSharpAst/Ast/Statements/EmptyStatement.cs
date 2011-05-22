@@ -1,6 +1,6 @@
 ﻿// 
-// LabelStatement.cs
-//
+// EmptyStatement.cs
+//  
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
@@ -24,35 +24,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// Label:
+    using Mi.NRefactory.PatternMatching;
+    
+    /// <summary>
+	/// ;
 	/// </summary>
-	public class LabelStatement : Statement
+	public class EmptyStatement : Statement
 	{
-		public string Label {
+		public AstLocation Location {
+			get;
+			set;
+		}
+		
+		public override AstLocation StartLocation {
 			get {
-				return GetChildByRole (Roles.Identifier).Name;
-			}
-			set {
-				SetChildByRole(Roles.Identifier, new Identifier(value, AstLocation.Empty));
+				return Location;
 			}
 		}
 		
-		public CSharpTokenNode Colon {
-			get { return GetChildByRole (Roles.Colon); }
+		public override AstLocation EndLocation {
+			get {
+				return new AstLocation (Location.Line, Location.Column);
+			}
 		}
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitLabelStatement (this, data);
+			return visitor.VisitEmptyStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			LabelStatement o = other as LabelStatement;
-			return o != null && MatchString(this.Label, o.Label);
+			EmptyStatement o = other as EmptyStatement;
+			return o != null;
 		}
 	}
 }

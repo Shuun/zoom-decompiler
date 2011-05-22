@@ -1,10 +1,10 @@
 ﻿// 
-// DoWhileStatement.cs
+// LockStatement.cs
 //  
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
-// Copyright (c) 2011 Novell, Inc (http://www.novell.com)
+// Copyright (c) 2009 Novell, Inc (http://www.novell.com)
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,20 +22,36 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.using System;
+// THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// "do EmbeddedStatement while(Condition);"
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
+	/// lock (Expression) EmbeddedStatement;
 	/// </summary>
-	public class DoWhileStatement : Statement
+	public class LockStatement : Statement
 	{
-		public static readonly Role<CSharpTokenNode> DoKeywordRole = new Role<CSharpTokenNode>("DoKeyword", CSharpTokenNode.Null);
-		public static readonly Role<CSharpTokenNode> WhileKeywordRole = new Role<CSharpTokenNode>("WhileKeyword", CSharpTokenNode.Null);
+		public CSharpTokenNode LockToken {
+			get { return GetChildByRole (Roles.Keyword); }
+		}
 		
-		public CSharpTokenNode DoToken {
-			get { return GetChildByRole (DoKeywordRole); }
+		public CSharpTokenNode LParToken {
+			get { return GetChildByRole (Roles.LPar); }
+		}
+		
+		public Expression Expression {
+			get { return GetChildByRole (Roles.Expression); }
+			set { SetChildByRole (Roles.Expression, value); }
+		}
+		
+		public CSharpTokenNode RParToken {
+			get { return GetChildByRole (Roles.RPar); }
 		}
 		
 		public Statement EmbeddedStatement {
@@ -43,37 +59,15 @@ namespace Mi.NRefactory.CSharp
 			set { SetChildByRole (Roles.EmbeddedStatement, value); }
 		}
 		
-		public CSharpTokenNode WhileToken {
-			get { return GetChildByRole (WhileKeywordRole); }
-		}
-		
-		public CSharpTokenNode LParToken {
-			get { return GetChildByRole (Roles.LPar); }
-		}
-		
-		public Expression Condition {
-			get { return GetChildByRole (Roles.Condition); }
-			set { SetChildByRole (Roles.Condition, value); }
-		}
-		
-		public CSharpTokenNode RParToken {
-			get { return GetChildByRole (Roles.RPar); }
-		}
-		
-		public CSharpTokenNode SemicolonToken {
-			get { return GetChildByRole (Roles.Semicolon); }
-		}
-		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitDoWhileStatement (this, data);
+			return visitor.VisitLockStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			DoWhileStatement o = other as DoWhileStatement;
-			return o != null && this.EmbeddedStatement.DoMatch(o.EmbeddedStatement, match) && this.Condition.DoMatch(o.Condition, match);
+			LockStatement o = other as LockStatement;
+			return o != null && this.Expression.DoMatch(o.Expression, match) && this.EmbeddedStatement.DoMatch(o.EmbeddedStatement, match);
 		}
 	}
 }
-

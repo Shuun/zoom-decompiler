@@ -1,6 +1,6 @@
 ﻿// 
-// ReturnStatement.cs
-//  
+// UnsafeStatement.cs
+//
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
@@ -24,44 +24,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// return Expression;
+    using Mi.NRefactory.PatternMatching;
+    
+    /// <summary>
+	/// unsafe { Body }
 	/// </summary>
-	public class ReturnStatement : Statement
+	public class UnsafeStatement : Statement
 	{
-		public CSharpTokenNode ReturnToken {
+		public CSharpTokenNode UnsafeToken {
 			get { return GetChildByRole (Roles.Keyword); }
 		}
 		
-		public Expression Expression {
-			get { return GetChildByRole (Roles.Expression); }
-			set { SetChildByRole (Roles.Expression, value); }
-		}
-		
-		public CSharpTokenNode SemicolonToken {
-			get { return GetChildByRole (Roles.Semicolon); }
-		}
-		
-		public ReturnStatement ()
-		{
-		}
-		
-		public ReturnStatement (Expression returnExpression)
-		{
-			AddChild (returnExpression, Roles.Expression);
+		public BlockStatement Body {
+			get { return GetChildByRole (Roles.Body); }
+			set { SetChildByRole (Roles.Body, value); }
 		}
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
-			return visitor.VisitReturnStatement (this, data);
+			return visitor.VisitUnsafeStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
-			ReturnStatement o = other as ReturnStatement;
-			return o != null && this.Expression.DoMatch(o.Expression, match);
+			UnsafeStatement o = other as UnsafeStatement;
+			return o != null && this.Body.DoMatch(o.Body, match);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿// 
-// YieldStatement.cs
-//
+// ThrowStatement.cs
+//  
 // Author:
 //       Mike Krüger <mkrueger@novell.com>
 // 
@@ -24,22 +24,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Mi.NRefactory.CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Mi.CSharpAst
 {
-	/// <summary>
-	/// yield return Expression;
+    using Mi.NRefactory.PatternMatching;
+
+    /// <summary>
+	/// throw Expression;
 	/// </summary>
-	public class YieldStatement : Statement
+	public class ThrowStatement : Statement
 	{
-		public static readonly Role<CSharpTokenNode> YieldKeywordRole = new Role<CSharpTokenNode>("YieldKeyword", CSharpTokenNode.Null);
-		public static readonly Role<CSharpTokenNode> ReturnKeywordRole = new Role<CSharpTokenNode>("ReturnKeyword", CSharpTokenNode.Null);
-		
-		public CSharpTokenNode YieldToken {
-			get { return GetChildByRole (YieldKeywordRole); }
-		}
-		
-		public CSharpTokenNode ReturnToken {
-			get { return GetChildByRole (ReturnKeywordRole); }
+		public CSharpTokenNode ThrowToken {
+			get { return GetChildByRole (Roles.Keyword); }
 		}
 		
 		public Expression Expression {
@@ -51,14 +50,23 @@ namespace Mi.NRefactory.CSharp
 			get { return GetChildByRole (Roles.Semicolon); }
 		}
 		
-		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
+		public ThrowStatement ()
 		{
-			return visitor.VisitYieldStatement (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		public ThrowStatement (Expression expression)
 		{
-			YieldStatement o = other as YieldStatement;
+			AddChild (expression, Roles.Expression);
+		}
+		
+		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
+		{
+			return visitor.VisitThrowStatement (this, data);
+		}
+		
+		protected internal override bool DoMatch(AstNode other, Match match)
+		{
+			ThrowStatement o = other as ThrowStatement;
 			return o != null && this.Expression.DoMatch(o.Expression, match);
 		}
 	}
