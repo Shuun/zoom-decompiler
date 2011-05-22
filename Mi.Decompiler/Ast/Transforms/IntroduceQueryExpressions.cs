@@ -19,7 +19,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
-using Mi.NRefactory.CSharp;
+using Mi.CSharpAst;
 
 namespace Mi.Decompiler.Ast.Transforms
 {

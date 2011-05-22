@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Mi.NRefactory.CSharp;
+using Mi.CSharpAst;
 
 namespace Mi.NRefactory.PatternMatching
 {

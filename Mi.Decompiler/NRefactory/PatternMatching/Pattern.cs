@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using Mi.NRefactory.CSharp;
+using Mi.CSharpAst;
 
 namespace Mi.NRefactory.PatternMatching
 {
@@ -57,7 +57,7 @@ namespace Mi.NRefactory.PatternMatching
 			// TODO: what if this pattern contains a VB-AST?
 			// either remove ToString() here, or add some magic to figure out the correct output visitor
 			StringWriter w = new StringWriter();
-			AcceptVisitor(new CSharp.OutputVisitor(w, new CSharp.CSharpFormattingOptions()), null);
+			AcceptVisitor(new OutputVisitor(w, new CSharpFormattingOptions()), null);
 			return w.ToString();
 		}
 		

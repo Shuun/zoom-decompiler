@@ -2,7 +2,7 @@
 // This code is distributed under MIT X11 license (for details please see \doc\license.txt)
 
 using System;
-using Mi.NRefactory.CSharp;
+using Mi.CSharpAst;
 
 namespace Mi.NRefactory.PatternMatching
 {
@@ -38,18 +38,18 @@ namespace Mi.NRefactory.PatternMatching
 		{
 			if (pattern == null)
 				throw new ArgumentNullException("pattern");
-			Match match = PatternMatching.Match.CreateNew();
+			Match match = Mi.NRefactory.PatternMatching.Match.CreateNew();
 			if (pattern.DoMatch(other, match))
 				return match;
 			else
-				return default(PatternMatching.Match);
+				return default(Match);
 		}
 		
 		public static bool IsMatch(this INode pattern, INode other)
 		{
 			if (pattern == null)
 				throw new ArgumentNullException("pattern");
-			return pattern.DoMatch(other, PatternMatching.Match.CreateNew());
+			return pattern.DoMatch(other, Mi.NRefactory.PatternMatching.Match.CreateNew());
 		}
 	}
 }

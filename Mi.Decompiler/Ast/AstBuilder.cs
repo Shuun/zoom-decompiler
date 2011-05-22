@@ -11,14 +11,14 @@ using System.Threading;
 using Mi.Decompiler;
 using Mi.Decompiler.Ast.Transforms;
 using Mi.Decompiler.ILAst;
-using Mi.NRefactory.CSharp;
+using Mi.CSharpAst;
 using Mi.NRefactory.Utils;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 
 namespace Mi.Decompiler.Ast
 {
-	using Ast = Mi.NRefactory.CSharp;
+	using Ast = Mi.CSharpAst;
 	using ClassType = Mi.NRefactory.TypeSystem.ClassType;
 	using VarianceModifier = Mi.NRefactory.TypeSystem.VarianceModifier;
 	
@@ -129,7 +129,7 @@ namespace Mi.Decompiler.Ast
 					new AttributeSection {
 						AttributeTarget = "assembly",
 						Attributes = {
-							new NRefactory.CSharp.Attribute {
+							new CSharpAst.Attribute {
 								Type = new SimpleType("AssemblyVersion")
 									.WithAnnotation(new TypeReference(
 										"System.Reflection", "AssemblyVersionAttribute",
@@ -171,7 +171,7 @@ namespace Mi.Decompiler.Ast
 						new AttributeSection {
 							AttributeTarget = target,
 							Attributes = {
-								new NRefactory.CSharp.Attribute {
+								new CSharpAst.Attribute {
 									Type = new SimpleType("TypeForwardedTo")
 										.WithAnnotation(new TypeReference(
 											"System.Runtime.CompilerServices", "TypeForwardedToAttribute",
@@ -1314,7 +1314,7 @@ namespace Mi.Decompiler.Ast
 		static void ConvertCustomAttributes(AstNode attributedNode, ICustomAttributeProvider customAttributeProvider, string attributeTarget = null)
 		{
 			if (customAttributeProvider.HasCustomAttributes) {
-				var attributes = new List<Mi.NRefactory.CSharp.Attribute>();
+				var attributes = new List<Mi.CSharpAst.Attribute>();
 				foreach (var customAttribute in customAttributeProvider.CustomAttributes) {
 					if (customAttribute.AttributeType.Name == "ExtensionAttribute" && customAttribute.AttributeType.Namespace == "System.Runtime.CompilerServices") {
 						// don't show the ExtensionAttribute (it's converted to the 'this' modifier)
@@ -1325,7 +1325,7 @@ namespace Mi.Decompiler.Ast
 						continue;
 					}
 					
-					var attribute = new Mi.NRefactory.CSharp.Attribute();
+					var attribute = new Mi.CSharpAst.Attribute();
 					attribute.AddAnnotation(customAttribute);
 					attribute.Type = ConvertType(customAttribute.AttributeType);
 					attributes.Add(attribute);
@@ -1384,10 +1384,10 @@ namespace Mi.Decompiler.Ast
 		{
 			if (!secDeclProvider.HasSecurityDeclarations)
 				return;
-			var attributes = new List<Mi.NRefactory.CSharp.Attribute>();
+			var attributes = new List<Mi.CSharpAst.Attribute>();
 			foreach (var secDecl in secDeclProvider.SecurityDeclarations) {
 				foreach (var secAttribute in secDecl.SecurityAttributes) {
-					var attribute = new Mi.NRefactory.CSharp.Attribute();
+					var attribute = new Mi.CSharpAst.Attribute();
 					attribute.AddAnnotation(secAttribute);
 					attribute.Type = ConvertType(secAttribute.AttributeType);
 					attributes.Add(attribute);

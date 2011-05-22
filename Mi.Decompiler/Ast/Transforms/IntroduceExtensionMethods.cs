@@ -18,7 +18,7 @@
 
 using System;
 using System.Linq;
-using Mi.NRefactory.CSharp;
+using Mi.CSharpAst;
 using Mi.Assemblies;
 
 namespace Mi.Decompiler.Ast.Transforms

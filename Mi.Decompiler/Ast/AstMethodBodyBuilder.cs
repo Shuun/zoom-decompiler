@@ -6,7 +6,7 @@ using System.Threading;
 
 using Mi.Decompiler.Ast.Transforms;
 using Mi.Decompiler.ILAst;
-using Mi.NRefactory.CSharp;
+using Mi.CSharpAst;
 using Mi.NRefactory.PatternMatching;
 using Mi.NRefactory.Utils;
 using Mi.Assemblies;
@@ -14,7 +14,7 @@ using Mi.Assemblies.Cil;
 
 namespace Mi.Decompiler.Ast
 {
-	using Ast = Mi.NRefactory.CSharp;
+	using Ast = Mi.CSharpAst;
 	using Cecil = Mi.Assemblies;
 	
 	public class AstMethodBodyBuilder
