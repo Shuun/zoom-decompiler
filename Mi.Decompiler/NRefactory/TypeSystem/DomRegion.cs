@@ -3,7 +3,7 @@
 
 using System;
 using System.Globalization;
-using Mi.CSharpAst;
+using Mi.CSharp;
 
 namespace Mi.NRefactory.TypeSystem
 {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Mi.CSharpAst
+namespace Mi.CSharp
 {
     using Mi.NRefactory.PatternMatching;
 

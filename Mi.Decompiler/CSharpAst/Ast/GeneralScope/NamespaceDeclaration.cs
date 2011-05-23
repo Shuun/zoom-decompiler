@@ -29,7 +29,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Mi.CSharpAst
+namespace Mi.CSharp
 {
     using Mi.NRefactory.PatternMatching;
 

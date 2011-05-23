@@ -4,12 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mi.CSharpAst.Analysis;
+using Mi.CSharp.Analysis;
 using Mi.NRefactory.TypeSystem;
 using Mi.NRefactory.TypeSystem.Implementation;
 using Mi.NRefactory.Utils;
 
-namespace Mi.CSharpAst.Resolver.ConstantValues
+namespace Mi.CSharp.Resolver.ConstantValues
 {
 	// Contains representations for constant C# expressions.
 	// We use these instead of storing the full AST to reduce the memory usage.

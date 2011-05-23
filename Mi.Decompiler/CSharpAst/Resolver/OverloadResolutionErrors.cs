@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Mi.CSharpAst.Resolver
+namespace Mi.CSharp.Resolver
 {
 	[Flags]
 	public enum OverloadResolutionErrors

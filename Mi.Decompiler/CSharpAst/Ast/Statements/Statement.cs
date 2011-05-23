@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
-namespace Mi.CSharpAst
+namespace Mi.CSharp
 {
     using Mi.NRefactory.PatternMatching;
     

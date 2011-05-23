@@ -17,7 +17,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
-using Mi.CSharpAst;
+using Mi.CSharp;
 using Mi.NRefactory.PatternMatching;
 using Mi.Assemblies;
 

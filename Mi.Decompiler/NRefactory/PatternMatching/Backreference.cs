@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Mi.NRefactory.PatternMatching
 {
-    using Mi.CSharpAst;
+    using Mi.CSharp;
     
     /// <summary>
 	/// Matches the last entry in the specified named group.
