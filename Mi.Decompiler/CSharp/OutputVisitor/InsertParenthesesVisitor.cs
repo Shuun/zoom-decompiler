@@ -2,6 +2,8 @@
 // This code is distributed under MIT X11 license (for details please see \doc\license.txt)
 
 using System;
+using Mi.CSharp.Ast;
+using Mi.CSharp.Ast.Expressions;
 
 namespace Mi.CSharp
 {

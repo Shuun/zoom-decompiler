@@ -31,9 +31,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
-namespace Mi.CSharp
+namespace Mi.CSharp.Ast
 {
     using Mi.NRefactory.PatternMatching;
+    using Mi.CSharp.Ast.Expressions;
+    using Mi.CSharp.Ast.Statements;
     
     public abstract class AstNode : INode
 	{
@@ -668,21 +670,21 @@ namespace Mi.CSharp
 			public static readonly Role<AstNode> Root = RootRole;
 			
 			// some pre defined constants for common roles
-			public static readonly Role<Identifier> Identifier = new Role<Identifier>("Identifier", CSharp.Identifier.Null);
+			public static readonly Role<Identifier> Identifier = new Role<Identifier>("Identifier", Mi.CSharp.Ast.Identifier.Null);
 			
-			public static readonly Role<BlockStatement> Body = new Role<BlockStatement>("Body", CSharp.BlockStatement.Null);
+			public static readonly Role<BlockStatement> Body = new Role<BlockStatement>("Body", BlockStatement.Null);
 			public static readonly Role<ParameterDeclaration> Parameter = new Role<ParameterDeclaration>("Parameter");
-			public static readonly Role<Expression> Argument = new Role<Expression>("Argument", CSharp.Expression.Null);
-			public static readonly Role<AstType> Type = new Role<AstType>("Type", CSharp.AstType.Null);
-			public static readonly Role<Expression> Expression = new Role<Expression>("Expression", CSharp.Expression.Null);
-			public static readonly Role<Expression> TargetExpression = new Role<Expression>("Target", CSharp.Expression.Null);
-			public readonly static Role<Expression> Condition = new Role<Expression>("Condition", CSharp.Expression.Null);
+			public static readonly Role<Expression> Argument = new Role<Expression>("Argument", Mi.CSharp.Ast.Expressions.Expression.Null);
+			public static readonly Role<AstType> Type = new Role<AstType>("Type", Mi.CSharp.Ast.AstType.Null);
+            public static readonly Role<Expression> Expression = new Role<Expression>("Expression", Mi.CSharp.Ast.Expressions.Expression.Null);
+            public static readonly Role<Expression> TargetExpression = new Role<Expression>("Target", Mi.CSharp.Ast.Expressions.Expression.Null);
+            public readonly static Role<Expression> Condition = new Role<Expression>("Condition", Mi.CSharp.Ast.Expressions.Expression.Null);
 			
 			public static readonly Role<TypeParameterDeclaration> TypeParameter = new Role<TypeParameterDeclaration>("TypeParameter");
-			public static readonly Role<AstType> TypeArgument = new Role<AstType>("TypeArgument", CSharp.AstType.Null);
+			public static readonly Role<AstType> TypeArgument = new Role<AstType>("TypeArgument", Mi.CSharp.Ast.AstType.Null);
 			public readonly static Role<Constraint> Constraint = new Role<Constraint>("Constraint");
 			public static readonly Role<VariableInitializer> Variable = new Role<VariableInitializer>("Variable");
-			public static readonly Role<Statement> EmbeddedStatement = new Role<Statement>("EmbeddedStatement", CSharp.Statement.Null);
+			public static readonly Role<Statement> EmbeddedStatement = new Role<Statement>("EmbeddedStatement", Mi.CSharp.Ast.Statements.Statement.Null);
 			
 			public static readonly Role<CSharpTokenNode> Keyword = new Role<CSharpTokenNode>("Keyword", CSharpTokenNode.Null);
 			public static readonly Role<CSharpTokenNode> InKeyword = new Role<CSharpTokenNode>("InKeyword", CSharpTokenNode.Null);

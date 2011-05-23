@@ -23,6 +23,8 @@ using Mi.NRefactory.PatternMatching;
 using Mi.Assemblies;
 using Ast = Mi.CSharp;
 using Mi.CSharp;
+using Mi.CSharp.Ast;
+using Mi.CSharp.Ast.Expressions;
 
 namespace Mi.Decompiler.Ast.Transforms
 {

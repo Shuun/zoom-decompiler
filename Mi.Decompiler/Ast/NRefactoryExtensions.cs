@@ -4,6 +4,9 @@
 using System;
 using Mi.CSharp;
 using Mi.NRefactory.PatternMatching;
+using Mi.CSharp.Ast;
+using Mi.CSharp.Ast.Expressions;
+using Mi.CSharp.Ast.Statements;
 
 namespace Mi.Decompiler.Ast
 {
@@ -40,7 +43,7 @@ namespace Mi.Decompiler.Ast
 			return new NamedNode(patternGroupName, node);
 		}
 		
-		public static void AddNamedArgument(this CSharp.Attribute attribute, string name, Expression argument)
+		public static void AddNamedArgument(this Mi.CSharp.Ast.Attribute attribute, string name, Expression argument)
 		{
 			attribute.Arguments.Add(new AssignmentExpression(new IdentifierExpression(name), argument));
 		}

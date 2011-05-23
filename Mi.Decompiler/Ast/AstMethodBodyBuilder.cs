@@ -16,6 +16,8 @@ namespace Mi.Decompiler.Ast
 {
 	using Ast = Mi.CSharp;
 	using Cecil = Mi.Assemblies;
+    using Mi.CSharp.Ast.Statements;
+    using Mi.CSharp.Ast;
 	
 	public class AstMethodBodyBuilder
 	{

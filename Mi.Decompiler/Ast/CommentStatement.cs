@@ -5,6 +5,8 @@ using System;
 using System.Linq;
 using Mi.CSharp;
 using Mi.NRefactory.PatternMatching;
+using Mi.CSharp.Ast;
+using Mi.CSharp.Ast.Statements;
 
 namespace Mi.Decompiler.Ast
 {

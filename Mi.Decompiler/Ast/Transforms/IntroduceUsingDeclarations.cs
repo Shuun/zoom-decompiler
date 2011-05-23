@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mi.CSharp;
 using Mi.Assemblies;
+using Mi.CSharp.Ast;
 
 namespace Mi.Decompiler.Ast.Transforms
 {
