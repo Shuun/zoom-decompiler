@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Mi.CSharp.Ast;
 
 namespace Mi.CSharp.Resolver
 {

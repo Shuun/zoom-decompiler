@@ -18,6 +18,8 @@
 
 using System;
 using Mi.CSharp;
+using Mi.CSharp.Ast;
+using Mi.CSharp.Ast.Expressions;
 
 namespace Mi.Decompiler.Ast.Transforms
 {

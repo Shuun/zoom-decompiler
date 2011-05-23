@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using Mi.NRefactory.TypeSystem;
 using Mi.NRefactory.TypeSystem.Implementation;
+using Mi.CSharp.Ast;
 
 namespace Mi.CSharp.Resolver
 {

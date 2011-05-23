@@ -30,7 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.CSharp
+namespace Mi.CSharp.Ast
 {
 	public struct AstLocation : IComparable<AstLocation>, IEquatable<AstLocation>
 	{

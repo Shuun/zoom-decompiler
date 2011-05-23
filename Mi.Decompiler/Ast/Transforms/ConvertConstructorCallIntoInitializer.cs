@@ -22,6 +22,7 @@ using System.Linq;
 using Mi.CSharp;
 using Mi.NRefactory.PatternMatching;
 using Mi.Assemblies;
+using Mi.CSharp.Ast;
 
 namespace Mi.Decompiler.Ast.Transforms
 {

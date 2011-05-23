@@ -9,6 +9,7 @@ using Mi.Decompiler;
 using Mi.Decompiler.ILAst;
 using Mi.CSharp;
 using Mi.Assemblies;
+using Mi.CSharp.Ast;
 
 namespace Mi.Decompiler.Ast
 {

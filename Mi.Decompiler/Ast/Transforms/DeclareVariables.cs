@@ -23,6 +23,9 @@ using System.Linq;
 using System.Threading;
 using Mi.CSharp;
 using Mi.CSharp.Analysis;
+using Mi.CSharp.Ast;
+using Mi.CSharp.Ast.Expressions;
+using Mi.CSharp.Ast.Statements;
 
 namespace Mi.Decompiler.Ast.Transforms
 {

@@ -26,7 +26,7 @@
 
 using System;
 
-namespace Mi.CSharp
+namespace Mi.CSharp.Ast
 {
 	public enum NodeType
 	{

@@ -20,6 +20,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Mi.CSharp;
+using Mi.CSharp.Ast;
 
 namespace Mi.Decompiler.Ast.Transforms
 {

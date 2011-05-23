@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Mi.CSharp
+namespace Mi.CSharp.Ast
 {
 	// For compatibility with old nrefactory - same flags.
 	[Flags]

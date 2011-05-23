@@ -11,6 +11,7 @@ using System.Text;
 
 using Mi.NRefactory.PatternMatching;
 using Mi.NRefactory.TypeSystem;
+using Mi.CSharp.Ast;
 
 namespace Mi.CSharp
 {
