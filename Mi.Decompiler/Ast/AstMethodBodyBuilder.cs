@@ -18,6 +18,7 @@ namespace Mi.Decompiler.Ast
 	using Cecil = Mi.Assemblies;
     using Mi.CSharp.Ast.Statements;
     using Mi.CSharp.Ast;
+    using Mi.CSharp.Ast.Expressions;
 	
 	public class AstMethodBodyBuilder
 	{
@@ -100,7 +101,7 @@ namespace Mi.Decompiler.Ast
 			}
 			
 			context.CancellationToken.ThrowIfCancellationRequested();
-			Ast.BlockStatement astBlock = TransformBlock(ilMethod);
+			BlockStatement astBlock = TransformBlock(ilMethod);
 			CommentStatement.ReplaceAll(astBlock); // convert CommentStatements to Comments
 			
 			Statement insertionPoint = astBlock.Statements.FirstOrDefault();
@@ -121,9 +122,9 @@ namespace Mi.Decompiler.Ast
 			return astBlock;
 		}
 		
-		Ast.BlockStatement TransformBlock(ILBlock block)
+		BlockStatement TransformBlock(ILBlock block)
 		{
-			Ast.BlockStatement astBlock = new BlockStatement();
+			BlockStatement astBlock = new BlockStatement();
 			if (block != null) {
 				foreach(ILNode node in block.GetChildren()) {
 					astBlock.AddRange(TransformNode(node));
@@ -135,16 +136,16 @@ namespace Mi.Decompiler.Ast
 		IEnumerable<Statement> TransformNode(ILNode node)
 		{
 			if (node is ILLabel) {
-				yield return new Ast.LabelStatement { Label = ((ILLabel)node).Name };
+				yield return new LabelStatement { Label = ((ILLabel)node).Name };
 			} else if (node is ILExpression) {
 				List<ILRange> ilRanges = ILRange.OrderAndJoint(node.GetSelfAndChildrenRecursive<ILExpression>().SelectMany(e => e.ILRanges));
 				AstNode codeExpr = TransformExpression((ILExpression)node);
 				if (codeExpr != null) {
 					codeExpr = codeExpr.WithAnnotation(ilRanges);
-					if (codeExpr is Ast.Expression) {
-						yield return new Ast.ExpressionStatement { Expression = (Ast.Expression)codeExpr };
-					} else if (codeExpr is Ast.Statement) {
-						yield return (Ast.Statement)codeExpr;
+					if (codeExpr is Expression) {
+						yield return new ExpressionStatement { Expression = (Expression)codeExpr };
+					} else if (codeExpr is Statement) {
+						yield return (Statement)codeExpr;
 					} else {
 						throw new Exception();
 					}
@@ -159,7 +160,7 @@ namespace Mi.Decompiler.Ast
 			} else if (node is ILCondition) {
 				ILCondition conditionalNode = (ILCondition)node;
 				bool hasFalseBlock = conditionalNode.FalseBlock.EntryGoto != null || conditionalNode.FalseBlock.Body.Count > 0;
-				yield return new Ast.IfElseStatement {
+				yield return new IfElseStatement {
 					Condition = (Expression)TransformExpression(conditionalNode.Condition),
 					TrueStatement = TransformBlock(conditionalNode.TrueBlock),
 					FalseStatement = hasFalseBlock ? TransformBlock(conditionalNode.FalseBlock) : null
@@ -180,16 +181,16 @@ namespace Mi.Decompiler.Ast
 				yield return switchStmt;
 			} else if (node is ILTryCatchBlock) {
 				ILTryCatchBlock tryCatchNode = ((ILTryCatchBlock)node);
-				var tryCatchStmt = new Ast.TryCatchStatement();
+				var tryCatchStmt = new TryCatchStatement();
 				tryCatchStmt.TryBlock = TransformBlock(tryCatchNode.TryBlock);
 				foreach (var catchClause in tryCatchNode.CatchBlocks) {
 					if (catchClause.ExceptionVariable == null
 					    && (catchClause.ExceptionType == null || catchClause.ExceptionType.MetadataType == MetadataType.Object))
 					{
-						tryCatchStmt.CatchClauses.Add(new Ast.CatchClause { Body = TransformBlock(catchClause) });
+						tryCatchStmt.CatchClauses.Add(new CatchClause { Body = TransformBlock(catchClause) });
 					} else {
 						tryCatchStmt.CatchClauses.Add(
-							new Ast.CatchClause {
+							new CatchClause {
 								Type = AstBuilder.ConvertType(catchClause.ExceptionType),
 								VariableName = catchClause.ExceptionVariable == null ? null : catchClause.ExceptionVariable.Name,
 								Body = TransformBlock(catchClause)
@@ -254,11 +255,11 @@ namespace Mi.Decompiler.Ast
 
 			List<Ast.Expression> args = new List<Expression>();
 			foreach(ILExpression arg in byteCode.Arguments) {
-				args.Add((Ast.Expression)TransformExpression(arg));
+				args.Add((Expression)TransformExpression(arg));
 			}
-			Ast.Expression arg1 = args.Count >= 1 ? args[0] : null;
-			Ast.Expression arg2 = args.Count >= 2 ? args[1] : null;
-			Ast.Expression arg3 = args.Count >= 3 ? args[2] : null;
+			Expression arg1 = args.Count >= 1 ? args[0] : null;
+            Expression arg2 = args.Count >= 2 ? args[1] : null;
+            Expression arg3 = args.Count >= 3 ? args[2] : null;
 			
 			switch (byteCode.Code) {
 					#region Arithmetic
@@ -270,17 +271,17 @@ namespace Mi.Decompiler.Ast
 						if (byteCode.InferredType is PointerType) {
 							if (byteCode.Arguments[0].ExpectedType is PointerType) {
 								arg2 = DivideBySize(arg2, ((PointerType)byteCode.InferredType).ElementType);
-								boe = new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Add, arg2);
+								boe = new BinaryOperatorExpression(arg1, BinaryOperatorType.Add, arg2);
 								boe.AddAnnotation(IntroduceUnsafeModifier.PointerArithmeticAnnotation);
 							} else if (byteCode.Arguments[1].ExpectedType is PointerType) {
 								arg1 = DivideBySize(arg1, ((PointerType)byteCode.InferredType).ElementType);
-								boe = new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Add, arg2);
+								boe = new BinaryOperatorExpression(arg1, BinaryOperatorType.Add, arg2);
 								boe.AddAnnotation(IntroduceUnsafeModifier.PointerArithmeticAnnotation);
 							} else {
-								boe = new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Add, arg2);
+								boe = new BinaryOperatorExpression(arg1, BinaryOperatorType.Add, arg2);
 							}
 						} else {
-							boe = new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Add, arg2);
+							boe = new BinaryOperatorExpression(arg1, BinaryOperatorType.Add, arg2);
 						}
 						boe.AddAnnotation(byteCode.Code == ILCode.Add ? AddCheckedBlocks.UncheckedAnnotation : AddCheckedBlocks.CheckedAnnotation);
 						return boe;
@@ -293,39 +294,39 @@ namespace Mi.Decompiler.Ast
 						if (byteCode.InferredType is PointerType) {
 							if (byteCode.Arguments[0].ExpectedType is PointerType) {
 								arg2 = DivideBySize(arg2, ((PointerType)byteCode.InferredType).ElementType);
-								boe = new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Subtract, arg2);
+								boe = new BinaryOperatorExpression(arg1, BinaryOperatorType.Subtract, arg2);
 								boe.WithAnnotation(IntroduceUnsafeModifier.PointerArithmeticAnnotation);
 							} else {
-								boe = new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Subtract, arg2);
+								boe = new BinaryOperatorExpression(arg1, BinaryOperatorType.Subtract, arg2);
 							}
 						} else {
-							boe = new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Subtract, arg2);
+							boe = new BinaryOperatorExpression(arg1, BinaryOperatorType.Subtract, arg2);
 						}
 						boe.AddAnnotation(byteCode.Code == ILCode.Sub ? AddCheckedBlocks.UncheckedAnnotation : AddCheckedBlocks.CheckedAnnotation);
 						return boe;
 					}
-					case ILCode.Div:        return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Divide, arg2);
-					case ILCode.Div_Un:     return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Divide, arg2);
-					case ILCode.Mul:        return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Multiply, arg2).WithAnnotation(AddCheckedBlocks.UncheckedAnnotation);
-					case ILCode.Mul_Ovf:    return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Multiply, arg2).WithAnnotation(AddCheckedBlocks.CheckedAnnotation);
-					case ILCode.Mul_Ovf_Un: return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Multiply, arg2).WithAnnotation(AddCheckedBlocks.CheckedAnnotation);
-					case ILCode.Rem:        return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Modulus, arg2);
-					case ILCode.Rem_Un:     return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Modulus, arg2);
-					case ILCode.And:        return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.BitwiseAnd, arg2);
-					case ILCode.Or:         return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.BitwiseOr, arg2);
-					case ILCode.Xor:        return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.ExclusiveOr, arg2);
-					case ILCode.Shl:        return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.ShiftLeft, arg2);
-					case ILCode.Shr:        return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.ShiftRight, arg2);
-					case ILCode.Shr_Un:     return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.ShiftRight, arg2);
-					case ILCode.Neg:        return new Ast.UnaryOperatorExpression(UnaryOperatorType.Minus, arg1).WithAnnotation(AddCheckedBlocks.UncheckedAnnotation);
-					case ILCode.Not:        return new Ast.UnaryOperatorExpression(UnaryOperatorType.BitNot, arg1);
+					case ILCode.Div:        return new BinaryOperatorExpression(arg1, BinaryOperatorType.Divide, arg2);
+					case ILCode.Div_Un:     return new BinaryOperatorExpression(arg1, BinaryOperatorType.Divide, arg2);
+					case ILCode.Mul:        return new BinaryOperatorExpression(arg1, BinaryOperatorType.Multiply, arg2).WithAnnotation(AddCheckedBlocks.UncheckedAnnotation);
+					case ILCode.Mul_Ovf:    return new BinaryOperatorExpression(arg1, BinaryOperatorType.Multiply, arg2).WithAnnotation(AddCheckedBlocks.CheckedAnnotation);
+					case ILCode.Mul_Ovf_Un: return new BinaryOperatorExpression(arg1, BinaryOperatorType.Multiply, arg2).WithAnnotation(AddCheckedBlocks.CheckedAnnotation);
+					case ILCode.Rem:        return new BinaryOperatorExpression(arg1, BinaryOperatorType.Modulus, arg2);
+					case ILCode.Rem_Un:     return new BinaryOperatorExpression(arg1, BinaryOperatorType.Modulus, arg2);
+					case ILCode.And:        return new BinaryOperatorExpression(arg1, BinaryOperatorType.BitwiseAnd, arg2);
+					case ILCode.Or:         return new BinaryOperatorExpression(arg1, BinaryOperatorType.BitwiseOr, arg2);
+					case ILCode.Xor:        return new BinaryOperatorExpression(arg1, BinaryOperatorType.ExclusiveOr, arg2);
+					case ILCode.Shl:        return new BinaryOperatorExpression(arg1, BinaryOperatorType.ShiftLeft, arg2);
+					case ILCode.Shr:        return new BinaryOperatorExpression(arg1, BinaryOperatorType.ShiftRight, arg2);
+					case ILCode.Shr_Un:     return new BinaryOperatorExpression(arg1, BinaryOperatorType.ShiftRight, arg2);
+					case ILCode.Neg:        return new UnaryOperatorExpression(UnaryOperatorType.Minus, arg1).WithAnnotation(AddCheckedBlocks.UncheckedAnnotation);
+					case ILCode.Not:        return new UnaryOperatorExpression(UnaryOperatorType.BitNot, arg1);
 				case ILCode.PostIncrement:
 				case ILCode.PostIncrement_Ovf:
 				case ILCode.PostIncrement_Ovf_Un:
 					{
 						if (arg1 is DirectionExpression)
 							arg1 = ((DirectionExpression)arg1).Expression.Detach();
-						var uoe = new Ast.UnaryOperatorExpression(
+						var uoe = new UnaryOperatorExpression(
 							(int)byteCode.Operand > 0 ? UnaryOperatorType.PostIncrement : UnaryOperatorType.PostDecrement, arg1);
 						uoe.AddAnnotation((byteCode.Code == ILCode.PostIncrement) ? AddCheckedBlocks.UncheckedAnnotation : AddCheckedBlocks.CheckedAnnotation);
 						return uoe;
@@ -334,7 +335,7 @@ namespace Mi.Decompiler.Ast
 					#region Arrays
 				case ILCode.Newarr:
 					case ILCode.InitArray: {
-						var ace = new Ast.ArrayCreateExpression();
+						var ace = new ArrayCreateExpression();
 						ace.Type = operandAsTypeRef;
 						ComposedType ct = operandAsTypeRef as ComposedType;
 						if (ct != null) {
@@ -374,12 +375,12 @@ namespace Mi.Decompiler.Ast
 				case ILCode.Stelem_R8:
 				case ILCode.Stelem_Ref:
 				case ILCode.Stelem_Any:
-					return new Ast.AssignmentExpression(arg1.Indexer(arg2), arg3);
+					return new AssignmentExpression(arg1.Indexer(arg2), arg3);
 				case ILCode.CompoundAssignment:
 					{
 						CastExpression cast = arg1 as CastExpression;
 						BinaryOperatorExpression boe = (BinaryOperatorExpression)(cast != null ? cast.Expression : arg1);
-						var assignment = new Ast.AssignmentExpression {
+						var assignment = new AssignmentExpression {
 							Left = boe.Left.Detach(),
 							Operator = ReplaceMethodCallsWithOperators.GetAssignmentOperatorForBinaryOperator(boe.Operator),
 							Right = boe.Right.Detach()
@@ -396,37 +397,37 @@ namespace Mi.Decompiler.Ast
 					}
 					#endregion
 					#region Comparison
-					case ILCode.Ceq: return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.Equality, arg2);
-					case ILCode.Cgt: return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.GreaterThan, arg2);
+					case ILCode.Ceq: return new BinaryOperatorExpression(arg1, BinaryOperatorType.Equality, arg2);
+					case ILCode.Cgt: return new BinaryOperatorExpression(arg1, BinaryOperatorType.GreaterThan, arg2);
 					case ILCode.Cgt_Un: {
 						// can also mean Inequality, when used with object references
 						TypeReference arg1Type = byteCode.Arguments[0].InferredType;
 						if (arg1Type != null && !arg1Type.IsValueType)
-							return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.InEquality, arg2);
+							return new BinaryOperatorExpression(arg1, BinaryOperatorType.InEquality, arg2);
 						else
-							return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.GreaterThan, arg2);
+							return new BinaryOperatorExpression(arg1, BinaryOperatorType.GreaterThan, arg2);
 					}
-					case ILCode.Clt:    return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.LessThan, arg2);
-					case ILCode.Clt_Un: return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.LessThan, arg2);
+					case ILCode.Clt:    return new BinaryOperatorExpression(arg1, BinaryOperatorType.LessThan, arg2);
+					case ILCode.Clt_Un: return new BinaryOperatorExpression(arg1, BinaryOperatorType.LessThan, arg2);
 					#endregion
 					#region Logical
-					case ILCode.LogicNot:   return new Ast.UnaryOperatorExpression(UnaryOperatorType.Not, arg1);
-					case ILCode.LogicAnd:   return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.ConditionalAnd, arg2);
-					case ILCode.LogicOr:    return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.ConditionalOr, arg2);
-					case ILCode.TernaryOp:  return new Ast.ConditionalExpression() { Condition = arg1, TrueExpression = arg2, FalseExpression = arg3 };
-					case ILCode.NullCoalescing: 	return new Ast.BinaryOperatorExpression(arg1, BinaryOperatorType.NullCoalescing, arg2);
+					case ILCode.LogicNot:   return new UnaryOperatorExpression(UnaryOperatorType.Not, arg1);
+					case ILCode.LogicAnd:   return new BinaryOperatorExpression(arg1, BinaryOperatorType.ConditionalAnd, arg2);
+					case ILCode.LogicOr:    return new BinaryOperatorExpression(arg1, BinaryOperatorType.ConditionalOr, arg2);
+					case ILCode.TernaryOp:  return new ConditionalExpression() { Condition = arg1, TrueExpression = arg2, FalseExpression = arg3 };
+					case ILCode.NullCoalescing: 	return new BinaryOperatorExpression(arg1, BinaryOperatorType.NullCoalescing, arg2);
 					#endregion
 					#region Branch
-					case ILCode.Br:         return new Ast.GotoStatement(((ILLabel)byteCode.Operand).Name);
+					case ILCode.Br:         return new GotoStatement(((ILLabel)byteCode.Operand).Name);
 				case ILCode.Brtrue:
-					return new Ast.IfElseStatement() {
+					return new IfElseStatement() {
 						Condition = arg1,
 						TrueStatement = new BlockStatement() {
-							new Ast.GotoStatement(((ILLabel)byteCode.Operand).Name)
+							new GotoStatement(((ILLabel)byteCode.Operand).Name)
 						}
 					};
-					case ILCode.LoopOrSwitchBreak: return new Ast.BreakStatement();
-					case ILCode.LoopContinue:      return new Ast.ContinueStatement();
+					case ILCode.LoopOrSwitchBreak: return new BreakStatement();
+					case ILCode.LoopContinue:      return new ContinueStatement();
 					#endregion
 					#region Conversions
 				case ILCode.Conv_I1:
@@ -520,7 +521,7 @@ namespace Mi.Decompiler.Ast
 					return TransformCall(true, byteCode,  args);
 					case ILCode.Ldftn: {
 						Cecil.MethodReference cecilMethod = ((MethodReference)operand);
-						var expr = new Ast.IdentifierExpression(cecilMethod.Name);
+						var expr = new IdentifierExpression(cecilMethod.Name);
 						expr.TypeArguments.AddRange(ConvertTypeArguments(cecilMethod));
 						expr.AddAnnotation(cecilMethod);
 						return new IdentifierExpression("ldftn").Invoke(expr)
@@ -528,7 +529,7 @@ namespace Mi.Decompiler.Ast
 					}
 					case ILCode.Ldvirtftn: {
 						Cecil.MethodReference cecilMethod = ((MethodReference)operand);
-						var expr = new Ast.IdentifierExpression(cecilMethod.Name);
+						var expr = new IdentifierExpression(cecilMethod.Name);
 						expr.TypeArguments.AddRange(ConvertTypeArguments(cecilMethod));
 						expr.AddAnnotation(cecilMethod);
 						return new IdentifierExpression("ldvirtftn").Invoke(expr)
@@ -554,7 +555,7 @@ namespace Mi.Decompiler.Ast
 				case ILCode.Ldc_R4:
 				case ILCode.Ldc_R8:
 				case ILCode.Ldc_Decimal:
-					return new Ast.PrimitiveExpression(operand);
+					return new PrimitiveExpression(operand);
 				case ILCode.Ldfld:
 					if (arg1 is DirectionExpression)
 						arg1 = ((DirectionExpression)arg1).Expression.Detach();
@@ -587,7 +588,7 @@ namespace Mi.Decompiler.Ast
 						if (v.IsParameter && v.OriginalParameter.Index < 0)
 							expr = new ThisReferenceExpression();
 						else
-							expr = new Ast.IdentifierExpression(((ILVariable)operand).Name).WithAnnotation(operand);
+							expr = new IdentifierExpression(((ILVariable)operand).Name).WithAnnotation(operand);
 						return v.IsParameter && v.Type is ByReferenceType ? MakeRef(expr) : expr;
 					}
 					case ILCode.Ldloca: {
@@ -596,10 +597,10 @@ namespace Mi.Decompiler.Ast
 							return MakeRef(new ThisReferenceExpression());
 						if (!v.IsParameter)
 							localVariablesToDefine.Add((ILVariable)operand);
-						return MakeRef(new Ast.IdentifierExpression(((ILVariable)operand).Name).WithAnnotation(operand));
+						return MakeRef(new IdentifierExpression(((ILVariable)operand).Name).WithAnnotation(operand));
 					}
-					case ILCode.Ldnull: return new Ast.NullReferenceExpression();
-					case ILCode.Ldstr:  return new Ast.PrimitiveExpression(operand);
+					case ILCode.Ldnull: return new NullReferenceExpression();
+					case ILCode.Ldstr:  return new PrimitiveExpression(operand);
 				case ILCode.Ldtoken:
 					if (operand is Cecil.TypeReference) {
 						return AstBuilder.CreateTypeOfExpression((TypeReference)operand).Member("TypeHandle");
@@ -649,7 +650,7 @@ namespace Mi.Decompiler.Ast
 						if (declaringType is ArrayType) {
 							ComposedType ct = AstBuilder.ConvertType((ArrayType)declaringType) as ComposedType;
 							if (ct != null && ct.ArraySpecifiers.Count >= 1) {
-								var ace = new Ast.ArrayCreateExpression();
+								var ace = new ArrayCreateExpression();
 								ct.ArraySpecifiers.First().Remove();
 								ct.ArraySpecifiers.MoveTo(ace.AdditionalArraySpecifiers);
 								ace.Type = ct;
@@ -657,7 +658,7 @@ namespace Mi.Decompiler.Ast
 								return ace;
 							}
 						}
-						var oce = new Ast.ObjectCreateExpression();
+						var oce = new ObjectCreateExpression();
 						if (declaringType.IsAnonymousType()) {
 							MethodDefinition ctor = ((MethodReference)operand).Resolve();
 							if (methodDef != null) {
@@ -682,27 +683,27 @@ namespace Mi.Decompiler.Ast
 					case ILCode.Readonly: return InlineAssembly(byteCode, args);
 				case ILCode.Ret:
 					if (methodDef.ReturnType.FullName != "System.Void") {
-						return new Ast.ReturnStatement { Expression = arg1 };
+						return new ReturnStatement { Expression = arg1 };
 					} else {
-						return new Ast.ReturnStatement();
+						return new ReturnStatement();
 					}
-					case ILCode.Rethrow: return new Ast.ThrowStatement();
-					case ILCode.Sizeof:  return new Ast.SizeOfExpression { Type = operandAsTypeRef };
+					case ILCode.Rethrow: return new ThrowStatement();
+					case ILCode.Sizeof:  return new SizeOfExpression { Type = operandAsTypeRef };
 					case ILCode.Stloc: {
 						ILVariable locVar = (ILVariable)operand;
 						if (!locVar.IsParameter)
 							localVariablesToDefine.Add(locVar);
-						return new Ast.AssignmentExpression(new Ast.IdentifierExpression(locVar.Name).WithAnnotation(locVar), arg1);
+						return new AssignmentExpression(new IdentifierExpression(locVar.Name).WithAnnotation(locVar), arg1);
 					}
 					case ILCode.Switch: return InlineAssembly(byteCode, args);
 					case ILCode.Tail: return InlineAssembly(byteCode, args);
-					case ILCode.Throw: return new Ast.ThrowStatement { Expression = arg1 };
+					case ILCode.Throw: return new ThrowStatement { Expression = arg1 };
 					case ILCode.Unaligned: return InlineAssembly(byteCode, args);
 					case ILCode.Volatile: return InlineAssembly(byteCode, args);
 				case ILCode.YieldBreak:
-					return new Ast.YieldBreakStatement();
+					return new YieldBreakStatement();
 				case ILCode.YieldReturn:
-					return new Ast.YieldStatement { Expression = arg1 };
+					return new YieldStatement { Expression = arg1 };
 				case ILCode.InitObject:
 				case ILCode.InitCollection:
 					{
@@ -836,12 +837,12 @@ namespace Mi.Decompiler.Ast
 			return new DefaultValueExpression { Type = AstBuilder.ConvertType(type) };
 		}
 		
-		AstNode TransformCall(bool isVirtual, ILExpression byteCode, List<Ast.Expression> args)
+		AstNode TransformCall(bool isVirtual, ILExpression byteCode, List<Expression> args)
 		{
 			Cecil.MethodReference cecilMethod = (MethodReference)byteCode.Operand;
 			Cecil.MethodDefinition cecilMethodDef = cecilMethod.Resolve();
-			Ast.Expression target;
-			List<Ast.Expression> methodArgs = new List<Ast.Expression>(args);
+            Expression target;
+			var methodArgs = new List<Expression>(args);
 			if (cecilMethod.HasThis) {
 				target = methodArgs[0];
 				methodArgs.RemoveAt(0);
@@ -904,7 +905,7 @@ namespace Mi.Decompiler.Ast
 				} else if (cecilMethodDef.IsSetter && methodArgs.Count == 1) {
 					foreach (var prop in cecilMethodDef.DeclaringType.Properties) {
 						if (prop.SetMethod == cecilMethodDef)
-							return new Ast.AssignmentExpression(target.Member(prop.Name).WithAnnotation(prop), methodArgs[0]);
+							return new AssignmentExpression(target.Member(prop.Name).WithAnnotation(prop), methodArgs[0]);
 					}
 				} else if (cecilMethodDef.IsSetter && methodArgs.Count > 1) {
 					PropertyDefinition indexer = GetIndexer(cecilMethodDef);
@@ -916,7 +917,7 @@ namespace Mi.Decompiler.Ast
 				} else if (cecilMethodDef.IsAddOn && methodArgs.Count == 1) {
 					foreach (var ev in cecilMethodDef.DeclaringType.Events) {
 						if (ev.AddMethod == cecilMethodDef) {
-							return new Ast.AssignmentExpression {
+							return new AssignmentExpression {
 								Left = target.Member(ev.Name).WithAnnotation(ev),
 								Operator = AssignmentOperatorType.Add,
 								Right = methodArgs[0]
@@ -926,7 +927,7 @@ namespace Mi.Decompiler.Ast
 				} else if (cecilMethodDef.IsRemoveOn && methodArgs.Count == 1) {
 					foreach (var ev in cecilMethodDef.DeclaringType.Events) {
 						if (ev.RemoveMethod == cecilMethodDef) {
-							return new Ast.AssignmentExpression {
+							return new AssignmentExpression {
 								Left = target.Member(ev.Name).WithAnnotation(ev),
 								Operator = AssignmentOperatorType.Subtract,
 								Right = methodArgs[0]
@@ -1045,12 +1046,12 @@ namespace Mi.Decompiler.Ast
 			return g.GenericArguments.Select(t => AstBuilder.ConvertType(t));
 		}
 		
-		static Ast.DirectionExpression MakeRef(Ast.Expression expr)
+		static DirectionExpression MakeRef(Expression expr)
 		{
 			return new DirectionExpression { Expression = expr, FieldDirection = FieldDirection.Ref };
 		}
-		
-		Ast.Expression Convert(Ast.Expression expr, Cecil.TypeReference actualType, Cecil.TypeReference reqType)
+
+        Expression Convert(Expression expr, Cecil.TypeReference actualType, Cecil.TypeReference reqType)
 		{
 			if (actualType == null || reqType == null || TypeAnalysis.IsSameType(actualType, reqType)) {
 				return expr;
