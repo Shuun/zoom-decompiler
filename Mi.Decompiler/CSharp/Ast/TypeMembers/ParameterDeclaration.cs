@@ -31,6 +31,7 @@ using System.Linq;
 namespace Mi.CSharp.Ast
 {
     using Mi.NRefactory.PatternMatching;
+    using Mi.CSharp.Ast.Expressions;
 
     public enum ParameterModifier
     {

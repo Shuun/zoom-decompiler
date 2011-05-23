@@ -11,6 +11,7 @@ using Mi.CSharp.Resolver;
 using Mi.NRefactory.TypeSystem;
 using Mi.CSharp.Ast;
 using Mi.CSharp.Ast.Statements;
+using Mi.CSharp.Ast.Expressions;
 
 namespace Mi.CSharp.Analysis
 {

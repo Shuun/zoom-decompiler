@@ -22,6 +22,7 @@ namespace Mi.Decompiler.Ast
 	using ClassType = Mi.NRefactory.TypeSystem.ClassType;
 	using VarianceModifier = Mi.NRefactory.TypeSystem.VarianceModifier;
     using Mi.CSharp.Ast;
+    using Mi.CSharp.Ast.Expressions;
 	
 	[Flags]
 	public enum ConvertTypeOptions

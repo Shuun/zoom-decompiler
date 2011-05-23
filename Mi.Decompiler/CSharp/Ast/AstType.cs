@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace Mi.CSharp.Ast
 {
     using Mi.NRefactory.PatternMatching;
+    using Mi.CSharp.Ast.Expressions;
 
 	/// <summary>
 	/// A type reference in the C# AST.

@@ -7,6 +7,7 @@ namespace Mi.CSharp.Ast
 {
     using Mi.NRefactory.PatternMatching;
     using Mi.CSharp.Ast.Expressions;
+    using Mi.CSharp.Ast.Statements;
     
     /// <summary>
 	/// AST visitor.

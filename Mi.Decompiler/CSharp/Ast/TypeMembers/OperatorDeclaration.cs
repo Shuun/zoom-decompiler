@@ -31,6 +31,7 @@ using System.Linq;
 namespace Mi.CSharp.Ast
 {
     using Mi.NRefactory.PatternMatching;
+    using Mi.CSharp.Ast.Statements;
 
     public enum OperatorType 
 	{

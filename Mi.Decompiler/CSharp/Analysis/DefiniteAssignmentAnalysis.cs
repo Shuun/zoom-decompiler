@@ -10,6 +10,8 @@ using Mi.CSharp.Resolver;
 using Mi.NRefactory.TypeSystem;
 using Mi.NRefactory.Utils;
 using Mi.CSharp.Ast.Statements;
+using Mi.CSharp.Ast.Expressions;
+using Mi.CSharp.Ast;
 
 namespace Mi.CSharp.Analysis
 {

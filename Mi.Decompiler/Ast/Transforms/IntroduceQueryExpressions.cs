@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.Linq;
 using Mi.CSharp;
 using Mi.CSharp.Ast;
+using Mi.CSharp.Ast.Expressions;
 
 namespace Mi.Decompiler.Ast.Transforms
 {

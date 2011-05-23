@@ -20,6 +20,8 @@ using System;
 using System.Linq;
 using Mi.Decompiler.ILAst;
 using Mi.CSharp;
+using Mi.CSharp.Ast.Expressions;
+using Mi.CSharp.Ast.Statements;
 
 namespace Mi.Decompiler.Ast.Transforms
 {

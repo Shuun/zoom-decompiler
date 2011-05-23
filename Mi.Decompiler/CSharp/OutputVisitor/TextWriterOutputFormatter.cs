@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using Mi.CSharp.Ast;
 
 namespace Mi.CSharp
 {
