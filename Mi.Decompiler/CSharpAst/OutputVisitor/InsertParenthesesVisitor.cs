@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Mi.CSharpAst
+namespace Mi.CSharp
 {
 	/// <summary>
 	/// Inserts the parentheses into the AST that are needed to ensure the AST can be printed correctly.

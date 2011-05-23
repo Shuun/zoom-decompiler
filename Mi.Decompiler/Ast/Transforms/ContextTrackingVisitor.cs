@@ -18,7 +18,7 @@
 
 using System;
 using System.Diagnostics;
-using Mi.CSharpAst;
+using Mi.CSharp;
 using Mi.Assemblies;
 
 namespace Mi.Decompiler.Ast.Transforms

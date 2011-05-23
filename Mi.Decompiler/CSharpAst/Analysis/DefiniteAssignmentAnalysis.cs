@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Mi.CSharpAst.Resolver;
+using Mi.CSharp.Resolver;
 using Mi.NRefactory.TypeSystem;
 using Mi.NRefactory.Utils;
 
-namespace Mi.CSharpAst.Analysis
+namespace Mi.CSharp.Analysis
 {
 	/// <summary>
 	/// Represents the definite assignment status of a variable at a specific location.

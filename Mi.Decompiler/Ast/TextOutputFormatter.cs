@@ -7,7 +7,7 @@ using System.Linq;
 
 using Mi.Decompiler;
 using Mi.Decompiler.ILAst;
-using Mi.CSharpAst;
+using Mi.CSharp;
 using Mi.Assemblies;
 
 namespace Mi.Decompiler.Ast

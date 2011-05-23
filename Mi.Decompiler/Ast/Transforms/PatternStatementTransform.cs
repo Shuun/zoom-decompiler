@@ -22,8 +22,8 @@ using System.Diagnostics;
 using System.Linq;
 
 using Mi.Decompiler.ILAst;
-using Mi.CSharpAst;
-using Mi.CSharpAst.Analysis;
+using Mi.CSharp;
+using Mi.CSharp.Analysis;
 using Mi.NRefactory.PatternMatching;
 using Mi.Assemblies;
 

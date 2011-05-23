@@ -17,7 +17,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
-using Mi.CSharpAst;
+using Mi.CSharp;
 
 namespace Mi.Decompiler.Ast.Transforms
 {

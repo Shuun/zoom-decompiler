@@ -6,7 +6,7 @@ using Mi.NRefactory.TypeSystem;
 using Mi.NRefactory.TypeSystem.Implementation;
 using Mi.NRefactory.Utils;
 
-namespace Mi.CSharpAst.Resolver
+namespace Mi.CSharp.Resolver
 {
 	/// <summary>
 	/// Converts a type by replacing all type definitions with the equivalent definitions in the new context.

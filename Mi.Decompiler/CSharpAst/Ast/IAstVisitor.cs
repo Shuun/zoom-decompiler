@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Mi.CSharpAst
+namespace Mi.CSharp
 {
     using Mi.NRefactory.PatternMatching;
     

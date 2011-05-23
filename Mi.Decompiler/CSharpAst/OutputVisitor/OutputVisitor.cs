@@ -12,7 +12,7 @@ using System.Text;
 using Mi.NRefactory.PatternMatching;
 using Mi.NRefactory.TypeSystem;
 
-namespace Mi.CSharpAst
+namespace Mi.CSharp
 {
 	/// <summary>
 	/// Outputs the AST.

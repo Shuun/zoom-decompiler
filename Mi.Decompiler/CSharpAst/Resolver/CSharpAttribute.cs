@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 using Mi.NRefactory.TypeSystem;
 using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace Mi.CSharpAst.Resolver
+namespace Mi.CSharp.Resolver
 {
 	public sealed class CSharpAttribute : Immutable, IAttribute
 	{

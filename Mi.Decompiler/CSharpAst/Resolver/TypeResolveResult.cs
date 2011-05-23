@@ -4,7 +4,7 @@
 using System;
 using Mi.NRefactory.TypeSystem;
 
-namespace Mi.CSharpAst.Resolver
+namespace Mi.CSharp.Resolver
 {
 	/// <summary>
 	/// The resolved expression refers to a type name.

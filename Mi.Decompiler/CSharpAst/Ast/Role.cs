@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Mi.CSharpAst
+namespace Mi.CSharp
 {
 	/// <summary>
 	/// Represents the role a node plays within its parent.

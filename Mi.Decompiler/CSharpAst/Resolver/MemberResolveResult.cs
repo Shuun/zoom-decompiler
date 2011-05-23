@@ -4,7 +4,7 @@
 using System;
 using Mi.NRefactory.TypeSystem;
 
-namespace Mi.CSharpAst.Resolver
+namespace Mi.CSharp.Resolver
 {
 	/// <summary>
 	/// Represents the result of a member invocation.

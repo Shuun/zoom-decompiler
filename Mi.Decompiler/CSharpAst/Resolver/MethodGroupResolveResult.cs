@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 using Mi.NRefactory.TypeSystem;
 
-namespace Mi.CSharpAst.Resolver
+namespace Mi.CSharp.Resolver
 {
 	/// <summary>
 	/// Represents a group of methods.

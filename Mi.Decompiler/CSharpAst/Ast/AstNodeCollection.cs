@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using Mi.NRefactory.PatternMatching;
 
-namespace Mi.CSharpAst
+namespace Mi.CSharp
 {
 	/// <summary>
 	/// Represents the children of an AstNode that have a specific role.

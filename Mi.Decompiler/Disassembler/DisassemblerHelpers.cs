@@ -208,7 +208,7 @@ namespace Mi.Decompiler.Disassembler
 			if (IsValidIdentifier(identifier) && !ilKeywords.Contains(identifier))
 				return identifier;
 			else
-				return "'" + CSharpAst.OutputVisitor.ConvertString(identifier).Replace("'", "\\'") + "'";
+				return "'" + CSharp.OutputVisitor.ConvertString(identifier).Replace("'", "\\'") + "'";
 		}
 		
 		public static void WriteTo(this TypeReference type, ITextOutput writer, ILNameSyntax syntax = ILNameSyntax.Signature)
@@ -335,7 +335,7 @@ namespace Mi.Decompiler.Disassembler
 			
 			string s = operand as string;
 			if (s != null) {
-				writer.Write("\"" + CSharpAst.OutputVisitor.ConvertString(s) + "\"");
+				writer.Write("\"" + CSharp.OutputVisitor.ConvertString(s) + "\"");
 			} else if (operand is char) {
 				writer.Write(((int)(char)operand).ToString());
 			} else if (operand is float) {

@@ -4,7 +4,7 @@
 using System;
 using Mi.NRefactory.TypeSystem;
 
-namespace Mi.CSharpAst.Resolver
+namespace Mi.CSharp.Resolver
 {
 	/// <summary>
 	/// Represents the resolve result of an 'ref x' or 'out x' expression.

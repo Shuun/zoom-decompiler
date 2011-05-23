@@ -120,10 +120,10 @@ namespace Mi.Decompiler.Disassembler
 				output.Write("pinvokeimpl");
 				if (method.HasPInvokeInfo) {
 					PInvokeInfo info = method.PInvokeInfo;
-					output.Write("(\"" + CSharpAst.OutputVisitor.ConvertString(info.Module.Name) + "\"");
+					output.Write("(\"" + CSharp.OutputVisitor.ConvertString(info.Module.Name) + "\"");
 					
 					if (!string.IsNullOrEmpty(info.EntryPoint) && info.EntryPoint != method.Name)
-						output.Write(" as \"" + CSharpAst.OutputVisitor.ConvertString(info.EntryPoint) + "\"");
+						output.Write(" as \"" + CSharp.OutputVisitor.ConvertString(info.EntryPoint) + "\"");
 					
 					if (info.IsNoMangle)
 						output.Write(" nomangle");
@@ -555,10 +555,10 @@ namespace Mi.Decompiler.Disassembler
 					if (cmi == null)
 						goto default;
 					output.Write("custom(\"{0}\", \"{1}\"",
-					             CSharpAst.OutputVisitor.ConvertString(cmi.ManagedType.FullName),
-					             CSharpAst.OutputVisitor.ConvertString(cmi.Cookie));
+					             CSharp.OutputVisitor.ConvertString(cmi.ManagedType.FullName),
+					             CSharp.OutputVisitor.ConvertString(cmi.Cookie));
 					if (cmi.Guid != Guid.Empty || !string.IsNullOrEmpty(cmi.UnmanagedType)) {
-						output.Write(", \"{0}\", \"{1}\"", cmi.Guid.ToString(), CSharpAst.OutputVisitor.ConvertString(cmi.UnmanagedType));
+						output.Write(", \"{0}\", \"{1}\"", cmi.Guid.ToString(), CSharp.OutputVisitor.ConvertString(cmi.UnmanagedType));
 					}
 					output.Write(')');
 					break;

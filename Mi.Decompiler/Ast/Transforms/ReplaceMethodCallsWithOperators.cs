@@ -21,8 +21,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Mi.NRefactory.PatternMatching;
 using Mi.Assemblies;
-using Ast = Mi.CSharpAst;
-using Mi.CSharpAst;
+using Ast = Mi.CSharp;
+using Mi.CSharp;
 
 namespace Mi.Decompiler.Ast.Transforms
 {

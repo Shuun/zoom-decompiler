@@ -224,6 +224,10 @@ namespace Mi.Scope
 
             public void Write(string text)
             {
+                if(!string.IsNullOrWhiteSpace(text)
+                    && char.IsLetter(text.First()))
+                    text.GetHashCode();
+
                 CheckCompleteLine();
 
                 this.blocks.Last().Inlines.Add(

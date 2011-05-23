@@ -8,7 +8,7 @@ using System.Linq;
 using Mi.NRefactory.TypeSystem;
 using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace Mi.CSharpAst.Resolver
+namespace Mi.CSharp.Resolver
 {
 	public enum TypeInferenceAlgorithm
 	{

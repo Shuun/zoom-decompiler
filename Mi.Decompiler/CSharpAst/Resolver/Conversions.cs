@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Mi.NRefactory.TypeSystem;
 
-namespace Mi.CSharpAst.Resolver
+namespace Mi.CSharp.Resolver
 {
 	/// <summary>
 	/// Contains logic that determines whether an implicit conversion exists between two types.

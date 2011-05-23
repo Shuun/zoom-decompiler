@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Mi.NRefactory.TypeSystem;
 
-namespace Mi.CSharpAst.Resolver
+namespace Mi.CSharp.Resolver
 {
 	/// <summary>
 	/// Reference to a qualified type or namespace name.

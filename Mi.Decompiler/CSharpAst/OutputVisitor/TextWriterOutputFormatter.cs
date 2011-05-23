@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 
-namespace Mi.CSharpAst
+namespace Mi.CSharp
 {
 	/// <summary>
 	/// Writes C# code into a TextWriter.
