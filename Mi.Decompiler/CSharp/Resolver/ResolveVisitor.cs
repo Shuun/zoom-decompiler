@@ -10,6 +10,7 @@ using Mi.NRefactory.TypeSystem;
 using Mi.NRefactory.TypeSystem.Implementation;
 using Mi.CSharp.Ast;
 using Mi.CSharp.Ast.Expressions;
+using Mi.CSharp.Ast.Statements;
 
 namespace Mi.CSharp.Resolver
 {
@@ -1154,7 +1155,7 @@ namespace Mi.CSharp.Resolver
 		#endregion
 		
 		#region Attributes
-		public override ResolveResult VisitAttribute(Attribute attribute, object data)
+		public override ResolveResult VisitAttribute(Ast.Attribute attribute, object data)
 		{
 			throw new NotImplementedException();
 		}

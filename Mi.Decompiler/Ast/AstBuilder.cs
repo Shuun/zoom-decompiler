@@ -23,6 +23,7 @@ namespace Mi.Decompiler.Ast
 	using VarianceModifier = Mi.NRefactory.TypeSystem.VarianceModifier;
     using Mi.CSharp.Ast;
     using Mi.CSharp.Ast.Expressions;
+    using Mi.CSharp.Ast.Statements;
 	
 	[Flags]
 	public enum ConvertTypeOptions
@@ -131,7 +132,7 @@ namespace Mi.Decompiler.Ast
 					new AttributeSection {
 						AttributeTarget = "assembly",
 						Attributes = {
-							new CSharp.Attribute {
+							new Attribute {
 								Type = new SimpleType("AssemblyVersion")
 									.WithAnnotation(new TypeReference(
 										"System.Reflection", "AssemblyVersionAttribute",
@@ -173,7 +174,7 @@ namespace Mi.Decompiler.Ast
 						new AttributeSection {
 							AttributeTarget = target,
 							Attributes = {
-								new CSharp.Attribute {
+								new Attribute {
 									Type = new SimpleType("TypeForwardedTo")
 										.WithAnnotation(new TypeReference(
 											"System.Runtime.CompilerServices", "TypeForwardedToAttribute",
@@ -323,7 +324,7 @@ namespace Mi.Decompiler.Ast
 				if (astType.Members.OfType<IndexerDeclaration>().Any(idx => idx.PrivateImplementationType.IsNull)) {
 					// Remove the [DefaultMember] attribute if the class contains indexers
 					foreach (AttributeSection section in astType.Attributes) {
-						foreach (Ast.Attribute attr in section.Attributes) {
+						foreach (CSharp.Ast.Attribute attr in section.Attributes) {
 							TypeReference tr = attr.Type.Annotation<TypeReference>();
 							if (tr != null && tr.Name == "DefaultMemberAttribute" && tr.Namespace == "System.Reflection") {
 								attr.Remove();
@@ -1132,7 +1133,7 @@ namespace Mi.Decompiler.Ast
 			#region DllImportAttribute
 			if (methodDefinition.HasPInvokeInfo) {
 				PInvokeInfo info = methodDefinition.PInvokeInfo;
-				Ast.Attribute dllImport = CreateNonCustomAttribute(typeof(DllImportAttribute));
+				CSharp.Ast.Attribute dllImport = CreateNonCustomAttribute(typeof(DllImportAttribute));
 				dllImport.Arguments.Add(new PrimitiveExpression(info.Module.Name));
 				
 				if (info.IsBestFitDisabled)
@@ -1210,7 +1211,7 @@ namespace Mi.Decompiler.Ast
 			
 			#region MethodImplAttribute
 			if (implAttributes != 0) {
-				Ast.Attribute methodImpl = CreateNonCustomAttribute(typeof(MethodImplAttribute));
+				CSharp.Ast.Attribute methodImpl = CreateNonCustomAttribute(typeof(MethodImplAttribute));
 				TypeReference methodImplOptions = new TypeReference(
 					"System.Runtime.CompilerServices", "MethodImplOptions",
 					methodDefinition.Module, methodDefinition.Module.TypeSystem.Corlib);
@@ -1237,7 +1238,7 @@ namespace Mi.Decompiler.Ast
 			
 			#region FieldOffsetAttribute
 			if (fieldDefinition.HasLayoutInfo) {
-				Ast.Attribute fieldOffset = CreateNonCustomAttribute(typeof(FieldOffsetAttribute), fieldDefinition.Module);
+				CSharp.Ast.Attribute fieldOffset = CreateNonCustomAttribute(typeof(FieldOffsetAttribute), fieldDefinition.Module);
 				fieldOffset.Arguments.Add(new PrimitiveExpression(fieldDefinition.Offset));
 				attributedNode.Attributes.Add(new AttributeSection(fieldOffset) { AttributeTarget = attributeTarget });
 			}
@@ -1245,7 +1246,7 @@ namespace Mi.Decompiler.Ast
 			
 			#region NonSerializedAttribute
 			if (fieldDefinition.IsNotSerialized) {
-				Ast.Attribute nonSerialized = CreateNonCustomAttribute(typeof(NonSerializedAttribute), fieldDefinition.Module);
+				CSharp.Ast.Attribute nonSerialized = CreateNonCustomAttribute(typeof(NonSerializedAttribute), fieldDefinition.Module);
 				attributedNode.Attributes.Add(new AttributeSection(nonSerialized) { AttributeTarget = attributeTarget });
 			}
 			#endregion
@@ -1256,10 +1257,10 @@ namespace Mi.Decompiler.Ast
 		}
 		
 		#region MarshalAsAttribute (ConvertMarshalInfo)
-		static Ast.Attribute ConvertMarshalInfo(IMarshalInfoProvider marshalInfoProvider, ModuleDefinition module)
+		static CSharp.Ast.Attribute ConvertMarshalInfo(IMarshalInfoProvider marshalInfoProvider, ModuleDefinition module)
 		{
 			MarshalInfo marshalInfo = marshalInfoProvider.MarshalInfo;
-			Ast.Attribute attr = CreateNonCustomAttribute(typeof(MarshalAsAttribute), module);
+			CSharp.Ast.Attribute attr = CreateNonCustomAttribute(typeof(MarshalAsAttribute), module);
 			var unmanagedType = new TypeReference("System.Runtime.InteropServices", "UnmanagedType", module, module.TypeSystem.Corlib);
 			attr.Arguments.Add(MakePrimitive((int)marshalInfo.NativeType, unmanagedType));
 			
@@ -1297,15 +1298,15 @@ namespace Mi.Decompiler.Ast
 		}
 		#endregion
 		
-		Ast.Attribute CreateNonCustomAttribute(Type attributeType)
+		CSharp.Ast.Attribute CreateNonCustomAttribute(Type attributeType)
 		{
 			return CreateNonCustomAttribute(attributeType, context.CurrentType != null ? context.CurrentType.Module : null);
 		}
 		
-		static Ast.Attribute CreateNonCustomAttribute(Type attributeType, ModuleDefinition module)
+		static CSharp.Ast.Attribute CreateNonCustomAttribute(Type attributeType, ModuleDefinition module)
 		{
 			Debug.Assert(attributeType.Name.EndsWith("Attribute", StringComparison.Ordinal));
-			Ast.Attribute attr = new Ast.Attribute();
+			CSharp.Ast.Attribute attr = new CSharp.Ast.Attribute();
 			attr.Type = new SimpleType(attributeType.Name.Substring(0, attributeType.Name.Length - "Attribute".Length));
 			if (module != null) {
 				attr.Type.AddAnnotation(new TypeReference(attributeType.Namespace, attributeType.Name, module, module.TypeSystem.Corlib));
@@ -1316,7 +1317,7 @@ namespace Mi.Decompiler.Ast
 		static void ConvertCustomAttributes(AstNode attributedNode, ICustomAttributeProvider customAttributeProvider, string attributeTarget = null)
 		{
 			if (customAttributeProvider.HasCustomAttributes) {
-				var attributes = new List<Mi.CSharp.Attribute>();
+				var attributes = new List<Attribute>();
 				foreach (var customAttribute in customAttributeProvider.CustomAttributes) {
 					if (customAttribute.AttributeType.Name == "ExtensionAttribute" && customAttribute.AttributeType.Namespace == "System.Runtime.CompilerServices") {
 						// don't show the ExtensionAttribute (it's converted to the 'this' modifier)
@@ -1327,7 +1328,7 @@ namespace Mi.Decompiler.Ast
 						continue;
 					}
 					
-					var attribute = new Mi.CSharp.Attribute();
+					var attribute = new Mi.CSharp.Ast.Attribute();
 					attribute.AddAnnotation(customAttribute);
 					attribute.Type = ConvertType(customAttribute.AttributeType);
 					attributes.Add(attribute);
@@ -1386,10 +1387,10 @@ namespace Mi.Decompiler.Ast
 		{
 			if (!secDeclProvider.HasSecurityDeclarations)
 				return;
-			var attributes = new List<Mi.CSharp.Attribute>();
+			var attributes = new List<Mi.CSharp.Ast.Attribute>();
 			foreach (var secDecl in secDeclProvider.SecurityDeclarations) {
 				foreach (var secAttribute in secDecl.SecurityAttributes) {
-					var attribute = new Mi.CSharp.Attribute();
+					var attribute = new Mi.CSharp.Ast.Attribute();
 					attribute.AddAnnotation(secAttribute);
 					attribute.Type = ConvertType(secAttribute.AttributeType);
 					attributes.Add(attribute);
@@ -1471,11 +1472,11 @@ namespace Mi.Decompiler.Ast
 		internal static Expression MakePrimitive(long val, TypeReference type)
 		{
 			if (TypeAnalysis.IsBoolean(type) && val == 0)
-				return new Ast.PrimitiveExpression(false);
+				return new PrimitiveExpression(false);
 			else if (TypeAnalysis.IsBoolean(type) && val == 1)
-				return new Ast.PrimitiveExpression(true);
+				return new PrimitiveExpression(true);
 			else if (val == 0 && type is PointerType)
-				return new Ast.NullReferenceExpression();
+				return new NullReferenceExpression();
 			if (type != null)
 			{ // cannot rely on type.IsValueType, it's not set for typerefs (but is set for typespecs)
 				TypeDefinition enumDefinition = type.Resolve();
@@ -1540,13 +1541,13 @@ namespace Mi.Decompiler.Ast
 							return new UnaryOperatorExpression(UnaryOperatorType.BitNot, negatedExpr);
 						}
 					}
-					return new Ast.PrimitiveExpression(CSharpPrimitiveCast.Cast(enumBaseTypeCode, val, false)).CastTo(ConvertType(enumDefinition));
+					return new PrimitiveExpression(CSharpPrimitiveCast.Cast(enumBaseTypeCode, val, false)).CastTo(ConvertType(enumDefinition));
 				}
 			}
 			TypeCode code = TypeAnalysis.GetTypeCode(type);
 			if (code == TypeCode.Object || code == TypeCode.Empty)
 				code = TypeCode.Int32;
-			return new Ast.PrimitiveExpression(CSharpPrimitiveCast.Cast(code, val, false));
+			return new PrimitiveExpression(CSharpPrimitiveCast.Cast(code, val, false));
 		}
 
 		static bool IsFlagsEnum(TypeDefinition type)

@@ -8,6 +8,8 @@ using System.Linq;
 namespace Mi.NRefactory.PatternMatching
 {
     using Mi.CSharp;
+    using Mi.CSharp.Ast.Expressions;
+    using Mi.CSharp.Ast;
     
     /// <summary>
 	/// Matches the last entry in the specified named group.

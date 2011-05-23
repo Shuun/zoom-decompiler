@@ -1223,7 +1223,7 @@ namespace Mi.CSharp
 		#endregion
 		
 		#region GeneralScope
-		public object VisitAttribute(Attribute attribute, object data)
+		public object VisitAttribute(Ast.Attribute attribute, object data)
 		{
 			StartNode(attribute);
 			attribute.Type.AcceptVisitor(this, data);
