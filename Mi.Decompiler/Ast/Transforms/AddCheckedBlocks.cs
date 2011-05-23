@@ -22,6 +22,7 @@ using Mi.Decompiler.ILAst;
 using Mi.CSharp;
 using Mi.CSharp.Ast.Expressions;
 using Mi.CSharp.Ast.Statements;
+using Mi.CSharp.Ast;
 
 namespace Mi.Decompiler.Ast.Transforms
 {
