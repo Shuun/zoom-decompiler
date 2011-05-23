@@ -93,6 +93,19 @@
     </Compile>
     <Compile Include="AssemblyList.cs" />
     <Compile Include="AssemblyListManager.cs" />
+    <Compile Include="AvalonEdit\IconBarManager.cs" />
+    <Compile Include="AvalonEdit\IconBarMargin.cs" />
+    <Compile Include="AvalonEdit\IconMarginActionsProvider.cs" />
+    <Compile Include="AvalonEdit\TextMarkerService.cs" />
+    <Compile Include="AvalonEdit\TextEditorWeakEventManager.cs" />
+    <Compile Include="AvalonEdit\ITextMarker.cs" />
+    <Compile Include="Bookmarks\BookmarkBase.cs" />
+    <Compile Include="Bookmarks\BookmarkEventHandler.cs" />
+    <Compile Include="Bookmarks\BookmarkManager.cs" />
+    <Compile Include="Bookmarks\Commands.cs" />
+    <Compile Include="Bookmarks\MemberBookmark.cs" />
+    <Compile Include="Bookmarks\IBookmark.cs" />
+    <Compile Include="Bookmarks\MarkerBookmark.cs" />
     <Compile Include="CommandLineArguments.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="ConnectMethodDecompiler.cs" />
@@ -310,6 +323,10 @@
       <Project>{DDE2A481-8271-4EAC-A330-8FA6A38D13D1}</Project>
       <Name>ICSharpCode.TreeView</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AvalonEdit" />
+    <Folder Include="Bookmarks" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
