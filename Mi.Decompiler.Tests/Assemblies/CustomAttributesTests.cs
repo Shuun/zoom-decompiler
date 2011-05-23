@@ -243,7 +243,7 @@ namespace Mi.Assemblies.Tests {
 
 			argument = attribute.Fields.Where (a => a.Name == "Pan").First ().Argument;
 
-			AssertCustomAttributeArgument ("(Object:(System.Security.AccessControl.AceFlags:4))", argument);
+			AssertCustomAttributeArgument ("(Object:(Class:4))", argument);
 		}
 
 		[TestMethod]

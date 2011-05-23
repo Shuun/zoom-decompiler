@@ -139,12 +139,6 @@
   <data name="CheckedUnchecked_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\bin\Debug\CheckedUnchecked.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
-  <data name="CustomAttributes" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>SampleInput\CustomAttributes\bin\Debug\S_CustomAttributes.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
-  </data>
-  <data name="CustomAttributes_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>SampleInput\CustomAttributes\bin\Debug\S_CustomAttributes.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
-  </data>
   <data name="DelegateConstruction" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\bin\Debug\DelegateConstruction.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
@@ -489,5 +483,11 @@
   </data>
   <data name="varargs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Assemblies\Resources\assemblies\varargs.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="CustomAttributes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\CustomAttributes.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="CustomAttributes_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\Assemblies\bin\Debug\CustomAttributes.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
 </root>
