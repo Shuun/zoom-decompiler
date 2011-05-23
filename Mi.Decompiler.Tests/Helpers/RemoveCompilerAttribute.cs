@@ -5,12 +5,13 @@ using System.Text;
 
 using Mi.Decompiler.Ast.Transforms;
 using Mi.CSharp;
+using Mi.CSharp.Ast;
 
 namespace Mi.Decompiler.Tests.Helpers
 {
 	class RemoveCompilerAttribute : DepthFirstAstVisitor<object, object>, IAstTransform
 	{
-		public override object VisitAttribute(CSharp.Attribute attribute, object data)
+		public override object VisitAttribute(CSharp.Ast.Attribute attribute, object data)
 		{
 			var section = (AttributeSection)attribute.Parent;
 			SimpleType type = attribute.Type as SimpleType;
