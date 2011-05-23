@@ -31,6 +31,7 @@ using System.Linq;
 namespace Mi.CSharp.Ast.Expressions
 {
     using Mi.NRefactory.PatternMatching;
+    using Mi.CSharp.Ast.Statements;
 
     /// <summary>
 	/// delegate(Parameters) {Body}

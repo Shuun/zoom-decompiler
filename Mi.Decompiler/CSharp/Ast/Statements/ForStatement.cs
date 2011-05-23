@@ -31,6 +31,7 @@ using System.Linq;
 namespace Mi.CSharp.Ast.Statements
 {
     using Mi.NRefactory.PatternMatching;
+    using Mi.CSharp.Ast.Expressions;
 
     /// <summary>
 	/// for (Initializers; Condition; Iterators) EmbeddedStatement

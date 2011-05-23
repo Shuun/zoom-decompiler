@@ -31,6 +31,8 @@ using System.Linq;
 namespace Mi.CSharp.Ast
 {
     using Mi.NRefactory.PatternMatching;
+    using Mi.CSharp.Ast.Statements;
+    using Mi.CSharp.Ast.Expressions;
 
     public class ConstructorDeclaration : AttributedNode
 	{

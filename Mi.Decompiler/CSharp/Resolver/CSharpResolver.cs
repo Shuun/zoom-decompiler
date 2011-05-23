@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using Mi.NRefactory.TypeSystem;
 using Mi.NRefactory.TypeSystem.Implementation;
+using Mi.CSharp.Ast.Expressions;
 
 namespace Mi.CSharp.Resolver
 {

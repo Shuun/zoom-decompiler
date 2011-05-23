@@ -8,6 +8,7 @@ using Mi.CSharp.Analysis;
 using Mi.NRefactory.TypeSystem;
 using Mi.NRefactory.TypeSystem.Implementation;
 using Mi.NRefactory.Utils;
+using Mi.CSharp.Ast.Expressions;
 
 namespace Mi.CSharp.Resolver.ConstantValues
 {
