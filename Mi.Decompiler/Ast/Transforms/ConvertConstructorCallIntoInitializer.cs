@@ -24,6 +24,7 @@ using Mi.NRefactory.PatternMatching;
 using Mi.Assemblies;
 using Mi.CSharp.Ast;
 using Mi.CSharp.Ast.Statements;
+using Mi.CSharp.Ast.Expressions;
 
 namespace Mi.Decompiler.Ast.Transforms
 {

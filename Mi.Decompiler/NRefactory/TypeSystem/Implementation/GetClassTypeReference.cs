@@ -4,6 +4,7 @@
 using System;
 using Mi.CSharp;
 using Mi.NRefactory.Utils;
+using Mi.CSharp.Ast;
 
 namespace Mi.NRefactory.TypeSystem.Implementation
 {

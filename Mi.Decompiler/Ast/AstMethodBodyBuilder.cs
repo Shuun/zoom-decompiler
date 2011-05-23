@@ -253,7 +253,7 @@ namespace Mi.Decompiler.Ast
 			object operand = byteCode.Operand;
 			AstType operandAsTypeRef = AstBuilder.ConvertType(operand as Cecil.TypeReference);
 
-			List<Ast.Expression> args = new List<Expression>();
+			var args = new List<Expression>();
 			foreach(ILExpression arg in byteCode.Arguments) {
 				args.Add((Expression)TransformExpression(arg));
 			}
@@ -997,7 +997,7 @@ namespace Mi.Decompiler.Ast
 			#endif
 		}
 		
-		static Expression InlineAssembly(ILExpression byteCode, List<Ast.Expression> args)
+		static Expression InlineAssembly(ILExpression byteCode, List<Expression> args)
 		{
 			#if DEBUG
             int n;
