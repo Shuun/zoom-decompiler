@@ -37,7 +37,7 @@ namespace Mi.Decompiler.Tests
             }
         }
 
-		static string RemoveIgnorableLines(IEnumerable<string> lines)
+		public static string RemoveIgnorableLines(IEnumerable<string> lines)
 		{
 			return CodeSampleFileParser.ConcatLines(lines.Where(l => !CodeSampleFileParser.IsCommentOrBlank(l)));
 		}
