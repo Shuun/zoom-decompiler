@@ -225,6 +225,20 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
+        internal static byte[] CustomShortCircuitOperators {
+            get {
+                object obj = ResourceManager.GetObject("CustomShortCircuitOperators", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] CustomShortCircuitOperators_pdb {
+            get {
+                object obj = ResourceManager.GetObject("CustomShortCircuitOperators_pdb", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] decsec_att {
             get {
                 object obj = ResourceManager.GetObject("decsec_att", resourceCulture);
@@ -992,9 +1006,38 @@ namespace Mi.Decompiler.Tests {
             }
         }
         
-        internal static byte[] pinvoke {
+        internal static byte[] PInvoke {
             get {
-                object obj = ResourceManager.GetObject("pinvoke", resourceCulture);
+                object obj = ResourceManager.GetObject("PInvoke", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to // Copyright (c) 2011 AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditio [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string PInvoke_cs {
+            get {
+                return ResourceManager.GetString("PInvoke_cs", resourceCulture);
+            }
+        }
+        
+        internal static byte[] pinvoke_exe {
+            get {
+                object obj = ResourceManager.GetObject("pinvoke_exe", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] PInvoke_pdb {
+            get {
+                object obj = ResourceManager.GetObject("PInvoke_pdb", resourceCulture);
                 return ((byte[])(obj));
             }
         }

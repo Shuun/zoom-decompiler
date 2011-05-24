@@ -186,6 +186,7 @@
     <None Include="SampleInput\UnsafeCode.cs" />
     <None Include="SampleInput\ValueTypes.cs" />
     <None Include="SampleInput\YieldReturn.cs" />
+    <None Include="SampleInput\PInvoke.cs" />
     <Compile Include="TestRunner.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -325,6 +326,10 @@
     <None Include="Assemblies\Resources\assemblies\boxedoptarg.dll" />
     <None Include="Assemblies\Resources\assemblies\catch.exe" />
     <None Include="Properties\OutOfBrowserSettings.xml" />
+    <None Include="SampleInput\bin\Debug\PInvoke.dll" />
+    <None Include="SampleInput\bin\Debug\PInvoke.pdb" />
+    <None Include="SampleInput\bin\Debug\CustomShortCircuitOperators.dll" />
+    <None Include="SampleInput\bin\Debug\CustomShortCircuitOperators.pdb" />
     <Content Include="StackTests\StackTests.exe" />
   </ItemGroup>
   <ItemGroup>

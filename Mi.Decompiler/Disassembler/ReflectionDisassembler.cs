@@ -339,7 +339,7 @@ namespace Mi.Decompiler.Disassembler
 			output.Write(" = ");
 			if (na.Argument.Value is string) {
 				// secdecls use special syntax for strings
-				output.Write("string('{0}')", NRefactory.CSharp.OutputVisitor.ConvertString((string)na.Argument.Value).Replace("'", "\'"));
+				output.Write("string('{0}')", CSharp.OutputVisitor.ConvertString((string)na.Argument.Value).Replace("'", "\'"));
 			} else {
 				WriteConstant(na.Argument.Value);
 			}
