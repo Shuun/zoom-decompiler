@@ -472,7 +472,7 @@
   <data name="noblob" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Assemblies\Resources\assemblies\noblob.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
-  <data name="pinvoke" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="pinvoke_exe" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Assemblies\Resources\assemblies\pinvoke.exe;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
   <data name="switch_dll" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -489,5 +489,20 @@
   </data>
   <data name="CustomAttributes_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SampleInput\Assemblies\bin\Debug\CustomAttributes.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="CustomShortCircuitOperators" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\bin\Debug\CustomShortCircuitOperators.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="CustomShortCircuitOperators_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\bin\Debug\CustomShortCircuitOperators.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="PInvoke" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\bin\Debug\PInvoke.dll;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
+  </data>
+  <data name="PInvoke_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\PInvoke.cs;System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e;utf-8</value>
+  </data>
+  <data name="PInvoke_pdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SampleInput\bin\Debug\PInvoke.pdb;System.Byte[], mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
   </data>
 </root>

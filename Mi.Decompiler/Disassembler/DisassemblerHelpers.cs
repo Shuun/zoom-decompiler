@@ -217,7 +217,7 @@ namespace Mi.Decompiler.Disassembler
 		
 		public static string Escape(string identifier)
 		{
-			if (IsValidIdentifier(identifier) && !ilKeywords.Contains(identifier)) {
+			if (IsValidIdentifier(identifier) && !ilKeywords.Contains(identifier))
 				return identifier;
 			else
 				return "'" + CSharp.OutputVisitor.ConvertString(identifier).Replace("'", "\\'") + "'";

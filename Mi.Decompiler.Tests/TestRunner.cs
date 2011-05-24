@@ -2,15 +2,12 @@
 // This code is distributed under MIT X11 license (for details please see \doc\license.txt)
 
 using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using DiffLib;
+using System.IO;
+using Mi.Assemblies;
 using Mi.Decompiler.Ast;
 using Mi.Decompiler.Tests.Helpers;
-using Mi.Assemblies;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Mi.Decompiler.Tests
@@ -52,7 +49,7 @@ namespace Mi.Decompiler.Tests
 			TestFile(@"Generics");
 		}
 		
-		[Test]
+		[TestMethod]
 		public void IncrementDecrement()
 		{
 			TestFile(@"IncrementDecrement");
