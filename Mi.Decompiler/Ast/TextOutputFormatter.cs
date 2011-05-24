@@ -51,7 +51,7 @@ namespace Mi.Decompiler.Ast
 		
 		public void WriteKeyword(string keyword)
 		{
-			output.Write(keyword);
+			output.WriteKeyword(keyword);
 		}
 		
 		public void WriteToken(string token)
@@ -147,7 +147,8 @@ namespace Mi.Decompiler.Ast
 						MemberMapping mapping = n.Annotation<MemberMapping>();
 
 						// add all ranges
-						foreach (var range in ranges) {
+						foreach (var range in ranges) 
+                        {
 							mapping.MemberCodeMappings.Add(new SourceCodeMapping {
 							                               	ILInstructionOffset = range,
 							                               	SourceCodeLine = output.CurrentLine,
