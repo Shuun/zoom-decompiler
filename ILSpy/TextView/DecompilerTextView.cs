@@ -35,12 +35,15 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Xml;
+
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using ICSharpCode.AvalonEdit.Rendering;
 using ICSharpCode.Decompiler;
+using ICSharpCode.ILSpy.AvalonEdit;
+using ICSharpCode.ILSpy.Bookmarks;
 using ICSharpCode.ILSpy.TreeNodes;
 using ICSharpCode.ILSpy.XmlDoc;
 using ICSharpCode.NRefactory.Documentation;
@@ -66,6 +69,10 @@ namespace ICSharpCode.ILSpy.TextView
 		DefinitionLookup definitionLookup;
 		CancellationTokenSource currentCancellationTokenSource;
 		
+		readonly IconBarManager manager;
+		readonly IconBarMargin iconMargin;		
+		readonly TextMarkerService textMarkerService;
+		
 		#region Constructor
 		public DecompilerTextView()
 		{
@@ -90,6 +97,19 @@ namespace ICSharpCode.ILSpy.TextView
 			textEditor.SetBinding(TextEditor.FontFamilyProperty, new Binding { Source = DisplaySettingsPanel.CurrentDisplaySettings, Path = new PropertyPath("SelectedFont") });
 			textEditor.SetBinding(TextEditor.FontSizeProperty, new Binding { Source = DisplaySettingsPanel.CurrentDisplaySettings, Path = new PropertyPath("SelectedFontSize") });
 			textEditor.SetBinding(TextEditor.ShowLineNumbersProperty, new Binding { Source = DisplaySettingsPanel.CurrentDisplaySettings, Path = new PropertyPath("ShowLineNumbers") });
+			
+			// add marker service & margin
+			iconMargin = new IconBarMargin((manager = new IconBarManager()));
+			textMarkerService = new TextMarkerService();
+			textMarkerService.CodeEditor = textEditor;
+			textEditor.TextArea.TextView.BackgroundRenderers.Add(textMarkerService);
+			textEditor.TextArea.TextView.LineTransformers.Add(textMarkerService);
+			
+			textEditor.TextArea.LeftMargins.Insert(0, iconMargin);
+			textEditor.TextArea.TextView.VisualLinesChanged += delegate { iconMargin.InvalidateVisual(); };
+			
+			// Bookmarks context menu
+			IconMarginActionsProvider.Add(iconMargin);
 		}
 		#endregion
 		
@@ -355,12 +375,14 @@ namespace ICSharpCode.ILSpy.TextView
 							output.WriteLine(ex.ToString());
 						}
 						ShowOutput(output);
+					} finally {
+						iconMargin.InvalidateVisual();
 					}
 					decompiledNodes = context.TreeNodes;
 				});
 		}
 		
-		static Task<AvalonEditTextOutput> DecompileAsync(DecompilationContext context, int outputLengthLimit)
+		Task<AvalonEditTextOutput> DecompileAsync(DecompilationContext context, int outputLengthLimit)
 		{
 			Debug.WriteLine("Start decompilation of {0} tree nodes", context.TreeNodes.Length);
 			
@@ -405,15 +427,30 @@ namespace ICSharpCode.ILSpy.TextView
 			return tcs.Task;
 		}
 		
-		static void DecompileNodes(DecompilationContext context, ITextOutput textOutput)
+		void DecompileNodes(DecompilationContext context, ITextOutput textOutput)
 		{
 			var nodes = context.TreeNodes;
+			context.Language.DecompileFinished += Language_DecompileFinished;
 			for (int i = 0; i < nodes.Length; i++) {
 				if (i > 0)
 					textOutput.WriteLine();
 				
 				context.Options.CancellationToken.ThrowIfCancellationRequested();
 				nodes[i].Decompile(context.Language, textOutput, context.Options);
+			}
+			context.Language.DecompileFinished -= Language_DecompileFinished;
+		}
+		
+		void Language_DecompileFinished(object sender, DecompileEventArgs e)
+		{
+			if (e != null) {
+				manager.UpdateClassMemberBookmarks(e.AstNodes);
+				if (iconMargin.DecompiledMembers == null) {
+					iconMargin.DecompiledMembers = new List<MemberReference>();
+				}
+				iconMargin.DecompiledMembers.AddRange(e.DecompiledMemberReferences.Values.AsEnumerable());
+			} else {
+				manager.UpdateClassMemberBookmarks(null);
 			}
 		}
 		#endregion
