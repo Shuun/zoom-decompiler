@@ -16,7 +16,12 @@ namespace Mi.Decompiler.Tests.Helpers
 			var section = (AttributeSection)attribute.Parent;
 			SimpleType type = attribute.Type as SimpleType;
 			if (section.AttributeTarget == "assembly" &&
-				(type.Identifier == "CompilationRelaxations" || type.Identifier == "RuntimeCompatibility" || type.Identifier == "SecurityPermission" || type.Identifier == "AssemblyVersion"))
+				(type.Identifier == "CompilationRelaxations" 
+                || type.Identifier == "RuntimeCompatibility" 
+                || type.Identifier == "SecurityPermission" 
+                || type.Identifier == "AssemblyVersion"
+                || type.Identifier == "TargetFramework"
+                || type.Identifier == "Debuggable"))
 			{
 				attribute.Remove();
 				if (section.Attributes.Count == 0)

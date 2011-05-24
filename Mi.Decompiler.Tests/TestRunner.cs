@@ -132,6 +132,7 @@ namespace Mi.Decompiler.Tests
 			new Helpers.RemoveCompilerAttribute().Run(decompiler.CompilationUnit);
 			StringWriter output = new StringWriter();
 			decompiler.GenerateCode(new PlainTextOutput(output));
+
 			CodeAssert.AreEqual(code, output.ToString());
 		}
 	}
