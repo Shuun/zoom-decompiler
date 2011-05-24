@@ -52,7 +52,7 @@ namespace Mi.Decompiler.Tests
 			TestFile(@"Generics");
 		}
 		
-		[TestMethod]
+		[Test]
 		public void IncrementDecrement()
 		{
 			TestFile(@"IncrementDecrement");

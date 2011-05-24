@@ -140,6 +140,10 @@ namespace Mi.Decompiler.ILAst
 			{
 				output.Write("catch ");
 				output.WriteReference(ExceptionType.FullName, ExceptionType);
+				if (ExceptionVariable != null) {
+					output.Write(' ');
+					output.Write(ExceptionVariable.Name);
+				}
 				output.WriteLine(" {");
 				output.Indent();
 				base.WriteTo(output);

@@ -115,6 +115,7 @@ namespace Mi.Decompiler.Disassembler
 			//emit flags
 			WriteEnum(method.Attributes & MethodAttributes.MemberAccessMask, methodVisibility);
 			WriteFlags(method.Attributes & ~MethodAttributes.MemberAccessMask, methodAttributeFlags);
+			if(method.IsCompilerControlled) output.Write("privatescope ");
 			
 			if ((method.Attributes & MethodAttributes.PInvokeImpl) == MethodAttributes.PInvokeImpl) {
 				output.Write("pinvokeimpl");
@@ -172,7 +173,13 @@ namespace Mi.Decompiler.Disassembler
 			if (method.MethodReturnType.HasMarshalInfo) {
 				WriteMarshalInfo(method.MethodReturnType.MarshalInfo);
 			}
-			output.Write(DisassemblerHelpers.Escape(method.Name));
+			
+			if (method.IsCompilerControlled) {
+				output.Write(DisassemblerHelpers.Escape(method.Name + "$PST" + method.MetadataToken.ToInt32().ToString("X8")));
+			} else {
+				output.Write(DisassemblerHelpers.Escape(method.Name));
+			}
+			
 			WriteTypeParameters(output, method);
 			
 			//( params )
@@ -330,7 +337,12 @@ namespace Mi.Decompiler.Disassembler
 			output.Write(' ');
 			output.Write(DisassemblerHelpers.Escape(na.Name));
 			output.Write(" = ");
-			WriteConstant(na.Argument.Value);
+			if (na.Argument.Value is string) {
+				// secdecls use special syntax for strings
+				output.Write("string('{0}')", NRefactory.CSharp.OutputVisitor.ConvertString((string)na.Argument.Value).Replace("'", "\'"));
+			} else {
+				WriteConstant(na.Argument.Value);
+			}
 		}
 		
 		string GetAssemblyQualifiedName(TypeReference type)

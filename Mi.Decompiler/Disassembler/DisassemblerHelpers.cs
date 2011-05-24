@@ -38,7 +38,7 @@ namespace Mi.Decompiler.Disassembler
 		/// </summary>
 		TypeName,
 		/// <summary>
-		/// Name (even for built-in types)
+		/// Name (but built-in types use keyword syntax)
 		/// </summary>
 		ShortTypeName
 	}
@@ -122,7 +122,12 @@ namespace Mi.Decompiler.Disassembler
 				method.DeclaringType.WriteTo(writer, ILNameSyntax.TypeName);
 				writer.Write("::");
 			}
-			writer.WriteReference(Escape(method.Name), method);
+			MethodDefinition md = method as MethodDefinition;
+			if (md != null && md.IsCompilerControlled) {
+				writer.WriteReference(Escape(method.Name + "$PST" + method.MetadataToken.ToInt32().ToString("X8")), method);
+			} else {
+				writer.WriteReference(Escape(method.Name), method);
+			}
 			GenericInstanceMethod gim = method as GenericInstanceMethod;
 			if (gim != null) {
 				writer.Write('<');
@@ -151,14 +156,21 @@ namespace Mi.Decompiler.Disassembler
 			writer.WriteReference(Escape(field.Name), field);
 		}
 		
+		static bool IsValidIdentifierCharacter(char c)
+		{
+			return c == '_' || c == '$' || c == '@' || c == '?' || c == '`';
+		}
+		
 		static bool IsValidIdentifier(string identifier)
 		{
 			if (string.IsNullOrEmpty(identifier))
 				return false;
-			if (!(char.IsLetter(identifier[0]) || identifier[0] == '_' || identifier[0] == '.'))
-				return false;
+			if (!(char.IsLetter(identifier[0]) || IsValidIdentifierCharacter(identifier[0]))) {
+				// As a special case, .ctor and .cctor are valid despite starting with a dot
+				return identifier == ".ctor" || identifier == ".cctor";
+			}
 			for (int i = 1; i < identifier.Length; i++) {
-				if (!(char.IsLetterOrDigit(identifier[i]) || identifier[i] == '_' || identifier[i] == '.' || identifier[i] == '`'))
+				if (!(char.IsLetterOrDigit(identifier[i]) || IsValidIdentifierCharacter(identifier[i]) || identifier[i] == '.'))
 					return false;
 			}
 			return true;
@@ -191,7 +203,7 @@ namespace Mi.Decompiler.Disassembler
 			"vararg", "variant", "vector", "virtual", "void", "wchar", "winapi", "with", "wrapper",
 			
 			// These are not listed as keywords in spec, but ILAsm treats them as such
-			"property", "type", "flags", "callconv"
+			"property", "type", "flags", "callconv", "strict"
 		);
 		
 		static HashSet<string> BuildKeywordList(params string[] keywords)
@@ -205,7 +217,7 @@ namespace Mi.Decompiler.Disassembler
 		
 		public static string Escape(string identifier)
 		{
-			if (IsValidIdentifier(identifier) && !ilKeywords.Contains(identifier))
+			if (IsValidIdentifier(identifier) && !ilKeywords.Contains(identifier)) {
 				return identifier;
 			else
 				return "'" + CSharp.OutputVisitor.ConvertString(identifier).Replace("'", "\\'") + "'";
@@ -260,7 +272,10 @@ namespace Mi.Decompiler.Disassembler
 			} else {
 				string name = PrimitiveTypeName(type.FullName);
 				if (syntax == ILNameSyntax.ShortTypeName) {
-					writer.WriteReference(Escape(type.Name), type);
+					if (name != null)
+						writer.Write(name);
+					else
+						writer.WriteReference(Escape(type.Name), type);
 				} else if ((syntax == ILNameSyntax.Signature || syntax == ILNameSyntax.SignatureNoNamedTypeParameters) && name != null) {
 					writer.Write(name);
 				} else {

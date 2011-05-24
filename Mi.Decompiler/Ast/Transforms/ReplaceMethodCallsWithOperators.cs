@@ -53,7 +53,7 @@ namespace Mi.Decompiler.Ast.Transforms
 			var arguments = invocationExpression.Arguments.ToArray();
 			
 			// Reduce "String.Concat(a, b)" to "a + b"
-			if (methodRef != null && methodRef.Name == "Concat" && methodRef.DeclaringType.FullName == "System.String" && arguments.Length >= 2)
+			if (methodRef.Name == "Concat" && methodRef.DeclaringType.FullName == "System.String" && arguments.Length >= 2)
 			{
 				invocationExpression.Arguments.Clear(); // detach arguments from invocationExpression
 				Expression expr = arguments[0];
@@ -100,7 +100,10 @@ namespace Mi.Decompiler.Ast.Transforms
 				return null;
 			}
 			if (methodRef.Name == "op_Implicit" && arguments.Length == 1) {
-				arguments[0].Remove(); // detach argument
+				invocationExpression.ReplaceWith(arguments[0]);
+				return null;
+			}
+			if (methodRef.Name == "op_True" && arguments.Length == 1 && invocationExpression.Role == AstNode.Roles.Condition) {
 				invocationExpression.ReplaceWith(arguments[0]);
 				return null;
 			}
