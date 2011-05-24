@@ -27,6 +27,9 @@ namespace Mi.Decompiler
 		
 		void Indent();
 		void Unindent();
+
+        void WriteKeyword(string keyword);
+
 		void Write(char ch);
 		void Write(string text);
 		void WriteLine();

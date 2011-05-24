@@ -67,13 +67,18 @@ namespace Mi.Decompiler
 				}
 			}
 		}
+
+        public void WriteKeyword(string keyword)
+        {
+            this.Write(keyword);
+        }
 		
 		public void Write(char ch)
 		{
 			WriteIndent();
 			writer.Write(ch);
 		}
-		
+
 		public void Write(string text)
 		{
 			WriteIndent();
