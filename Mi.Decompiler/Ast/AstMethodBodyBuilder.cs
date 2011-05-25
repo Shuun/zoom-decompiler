@@ -75,8 +75,6 @@ namespace Mi.Decompiler.Ast
 				} else {
 					try {
 						return builder.CreateMethodBody(parameters, localVariables);
-					} catch (OperationCanceledException) {
-						throw;
 					} catch (Exception ex) {
 						throw new Mi.Decompiler.DecompilerException(methodDef, ex);
 					}
