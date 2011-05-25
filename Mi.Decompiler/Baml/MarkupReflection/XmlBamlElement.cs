@@ -7,11 +7,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 
-namespace Ricciolo.StylesExplorer.MarkupReflection
+namespace Mi.Decompiler.Baml.MarkupReflection
 {
 	internal class XmlBamlElement : XmlBamlNode
 	{
-		private ArrayList _arguments = new ArrayList();
 		private XmlNamespaceCollection _namespaces = new XmlNamespaceCollection();
 		private TypeDeclaration _typeDeclaration;
 		private KeysResourcesCollection _keysResources = new KeysResourcesCollection();

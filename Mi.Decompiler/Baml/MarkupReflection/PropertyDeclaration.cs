@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ricciolo.StylesExplorer.MarkupReflection
+namespace Mi.Decompiler.Baml.MarkupReflection
 {
 	internal class PropertyDeclaration
 	{

@@ -5,14 +5,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Ricciolo.StylesExplorer.MarkupReflection
+namespace Mi.Decompiler.Baml.MarkupReflection
 {
 	public class KnownInfo
 	{
 		internal TypeDeclaration[] KnownTypeTable = null;
 		internal PropertyDeclaration[] KnownPropertyTable = null;
 		internal static String[] KnownAssemblyTable = null;
-		internal Hashtable KnownResourceTable = new Hashtable();
+		internal Dictionary<int, ResourceName> KnownResourceTable = new Dictionary<int,ResourceName>();
 
 		#region Initialize
 

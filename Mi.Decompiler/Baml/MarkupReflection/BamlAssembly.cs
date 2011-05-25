@@ -10,9 +10,9 @@ using System.Reflection;
 using System.Resources;
 using System.Text;
 
-namespace Ricciolo.StylesExplorer.MarkupReflection
+namespace Mi.Decompiler.Baml.MarkupReflection
 {
-	public class BamlAssembly : MarshalByRefObject
+	public class BamlAssembly
 	{
 		private readonly string _filePath;
 		private Assembly _assembly;

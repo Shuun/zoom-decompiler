@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Ricciolo.StylesExplorer.MarkupReflection
+namespace Mi.Decompiler.Baml.MarkupReflection
 {
 	internal class XmlNamespace
 	{
