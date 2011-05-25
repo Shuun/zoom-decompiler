@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Ricciolo.StylesExplorer.MarkupReflection
+namespace Mi.Decompiler.Baml.MarkupReflection
 {
 	/// <summary>
 	/// Rappresenta la mappatura tra namespace XML e namespace CLR con relativo assembly

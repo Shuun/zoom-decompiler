@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 
-namespace Ricciolo.StylesExplorer.MarkupReflection
+namespace Mi.Decompiler.Baml.MarkupReflection
 {
 	internal class XmlBamlNode
 	{

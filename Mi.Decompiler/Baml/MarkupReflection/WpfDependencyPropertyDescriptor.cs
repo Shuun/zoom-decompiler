@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace Ricciolo.StylesExplorer.MarkupReflection
+namespace Mi.Decompiler.Baml.MarkupReflection
 {
-	public class WpfDependencyPropertyDescriptor : MarshalByRefObject, IDependencyPropertyDescriptor
+	public class WpfDependencyPropertyDescriptor : IDependencyPropertyDescriptor
 	{
 		private readonly DependencyPropertyDescriptor _propertyDescriptor;
 

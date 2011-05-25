@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ricciolo.StylesExplorer.MarkupReflection
+namespace Mi.Decompiler.Baml.MarkupReflection
 {
-	public class DotNetType : MarshalByRefObject, IType
+	public class DotNetType : IType
 	{
 		private readonly string _assemblyQualifiedName;
 		private Type _type;

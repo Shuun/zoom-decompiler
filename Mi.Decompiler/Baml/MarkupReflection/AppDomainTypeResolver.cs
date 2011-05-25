@@ -13,11 +13,11 @@ using System.Threading;
 using System.Security.Permissions;
 using System.Security;
 
-namespace Ricciolo.StylesExplorer.MarkupReflection
+namespace Mi.Decompiler.Baml.MarkupReflection
 {
 	public delegate void AssemblyResolveEventHandler(object s, AssemblyResolveEventArgs e);
 
-	public class AppDomainTypeResolver : MarshalByRefObject, ITypeResolver
+	public class AppDomainTypeResolver : ITypeResolver
 	{
 		private readonly AppDomain _domain;
 		private string baseDir;

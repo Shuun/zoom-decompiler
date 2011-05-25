@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Ricciolo.StylesExplorer.MarkupReflection
+namespace Mi.Decompiler.Baml.MarkupReflection
 {
 	internal class BamlBinaryReader : BinaryReader
 	{

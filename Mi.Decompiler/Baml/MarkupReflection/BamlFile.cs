@@ -10,12 +10,12 @@ using System.Resources;
 using System.Text;
 using System.Windows;
 
-namespace Ricciolo.StylesExplorer.MarkupReflection
+namespace Mi.Decompiler.Baml.MarkupReflection
 {
 	/// <summary>
 	/// Rappresenta un singole file Baml all'interno di un assembly
 	/// </summary>
-	public class BamlFile : Component
+	public class BamlFile
 	{
 		private Uri _uri;
 		private readonly Stream _stream;

@@ -13,7 +13,7 @@ using System.Text;
 using System.Xml;
 using System.Windows.Media;
 
-namespace Ricciolo.StylesExplorer.MarkupReflection
+namespace Mi.Decompiler.Baml.MarkupReflection
 {
 	public class XmlBamlReader : XmlReader, IXmlNamespaceResolver
 	{

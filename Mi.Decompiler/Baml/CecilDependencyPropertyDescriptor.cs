@@ -4,9 +4,9 @@
 using System;
 using System.Linq;
 using Mi.Assemblies;
-using Ricciolo.StylesExplorer.MarkupReflection;
+using Mi.Decompiler.Baml.MarkupReflection;
 
-namespace Mi.BamlDecompiler
+namespace Mi.Decompiler.Baml
 {
 	public class CecilDependencyPropertyDescriptor : IDependencyPropertyDescriptor
 	{

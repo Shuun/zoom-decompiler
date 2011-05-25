@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Ricciolo.StylesExplorer.MarkupReflection
+namespace Mi.Decompiler.Baml.MarkupReflection
 {
 	internal class TypeDeclaration
 	{
