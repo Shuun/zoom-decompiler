@@ -29,6 +29,7 @@ namespace Mi.Decompiler
 		void Unindent();
 
         void WriteKeyword(string keyword);
+        void WriteIdentifier(string identifier);
 
 		void Write(char ch);
 		void Write(string text);

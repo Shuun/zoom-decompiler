@@ -51,7 +51,7 @@ namespace Mi.Decompiler.Ast
 			if (memberRef != null)
 				output.WriteReference(identifier, memberRef);
 			else
-				output.Write(identifier);
+				output.WriteIdentifier(identifier);
 		}
 
 		MemberReference GetCurrentMemberReference()
