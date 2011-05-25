@@ -471,7 +471,7 @@ namespace Mi.NRefactory.TypeSystem
 			attribute.NamedArguments.Add(new KeyValuePair<string, IConstantValue>(name, value));
 		}
 		
-		static readonly DefaultAttribute serializableAttribute = new DefaultAttribute(typeof(SerializableAttribute).ToTypeReference(), null);
+		static readonly DefaultAttribute serializableAttribute = new DefaultAttribute(new GetClassTypeReference("System.SerializableAttribute", 0), null);
 		static readonly ITypeReference structLayoutAttributeTypeRef = typeof(StructLayoutAttribute).ToTypeReference();
 		static readonly ITypeReference layoutKindTypeRef = typeof(LayoutKind).ToTypeReference();
 		static readonly ITypeReference charSetTypeRef = typeof(CharSet).ToTypeReference();
@@ -534,7 +534,7 @@ namespace Mi.NRefactory.TypeSystem
 		}
 		
 		static readonly ITypeReference fieldOffsetAttributeTypeRef = typeof(FieldOffsetAttribute).ToTypeReference();
-		static readonly DefaultAttribute nonSerializedAttribute = new DefaultAttribute(new GetClassTypeReference("NonSerializedAttribute", 0), null);
+		static readonly DefaultAttribute nonSerializedAttribute = new DefaultAttribute(new GetClassTypeReference("System.NonSerializedAttribute", 0), null);
 		
 		void AddAttributes(FieldDefinition fieldDefinition, IEntity targetEntity)
 		{

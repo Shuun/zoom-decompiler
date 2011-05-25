@@ -1102,7 +1102,7 @@ namespace Mi.Decompiler.Ast
 			// Handle the non-custom attributes:
 			#region SerializableAttribute
 			if (typeDefinition.IsSerializable)
-				attributedNode.Attributes.Add(new AttributeSection(CreateNonCustomAttribute(typeof(SerializableAttribute))));
+				attributedNode.Attributes.Add(new AttributeSection(CreateNonCustomAttribute("SerializableAttribute", "System")));
 			#endregion
 			
 			#region StructLayoutAttribute
@@ -1321,8 +1321,13 @@ namespace Mi.Decompiler.Ast
 		#endregion
 		
 		CSharp.Ast.Attribute CreateNonCustomAttribute(Type attributeType)
+        {
+            return CreateNonCustomAttribute(attributeType.Name, attributeType.Namespace);
+        }
+
+        CSharp.Ast.Attribute CreateNonCustomAttribute(string attributeTypeName, string attributeTypeNamespace)
 		{
-			return CreateNonCustomAttribute(attributeType, context.CurrentType != null ? context.CurrentType.Module : null);
+			return CreateNonCustomAttribute(attributeTypeName, attributeTypeNamespace, context.CurrentType != null ? context.CurrentType.Module : null);
 		}
 		
 		static CSharp.Ast.Attribute CreateNonCustomAttribute(Type attributeType, ModuleDefinition module)
