@@ -3,11 +3,11 @@
 
 using System;
 using System.Linq;
-using ICSharpCode.ILSpy;
-using Mono.Cecil;
+using Mi.ILSpy;
+using Mi.Assemblies;
 using Ricciolo.StylesExplorer.MarkupReflection;
 
-namespace ILSpy.BamlDecompiler
+namespace Mi.BamlDecompiler
 {
 	public class CecilType : IType
 	{

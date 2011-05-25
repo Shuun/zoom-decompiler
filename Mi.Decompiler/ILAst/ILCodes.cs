@@ -24,7 +24,7 @@ namespace Mi.Decompiler.ILAst
 {
 	public enum ILCode
 	{
-		// For convenience, the start is exactly identical to Mono.Cecil.Cil.Code
+		// For convenience, the start is exactly identical to Mi.Assemblies.Cil.Code
 		// Instructions that should not be used are prepended by __
 		Nop,
 		Break,

@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 #endregion
 
-[assembly: AssemblyTitle("ICSharpCode.Decompiler")]
+[assembly: AssemblyTitle("Mi.Decompiler")]
 [assembly: AssemblyDescription("IL decompiler engine")]
 [assembly: AssemblyCompany("ic#code")]
 [assembly: AssemblyProduct("ILSpy")]
