@@ -124,6 +124,81 @@
     <Compile Include="Ast\Transforms\TransformationPipeline.cs" />
     <Compile Include="Ast\Transforms\PatternStatementTransform.cs" />
     <Compile Include="Ast\TypesHierarchyHelpers.cs" />
+    <Compile Include="Baml\CecilDependencyPropertyDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\CecilType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\CecilTypeResolver.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\AppDomainTypeResolver.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\BamlAssembly.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\BamlBinaryReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\BamlFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\BamlRecordType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\DotNetType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\IDependencyPropertyDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\IType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\ITypeResolver.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\KnownInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\PropertyDeclaration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\ResourceName.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\TypeDeclaration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\WpfDependencyPropertyDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\XmlBamlElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\XmlBamlNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\XmlBamlProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\XmlBamlPropertyElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\XmlBamlReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\XmlBamlText.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\XmlNamespace.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Baml\Ricciolo.StylesExplorer.MarkupReflection\XmlPIMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CecilExtensions.cs" />
     <Compile Include="CodeMappings.cs" />
     <Compile Include="CollectionExtensions.cs" />
