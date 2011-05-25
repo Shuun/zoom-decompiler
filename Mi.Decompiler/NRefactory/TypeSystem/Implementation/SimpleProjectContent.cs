@@ -26,7 +26,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		// If you wanted to derive from this: use delegation, not inheritance.
 		
 		readonly TypeStorage types = new TypeStorage();
-		readonly ReaderWriterLockSlim readerWriterLock = new ReaderWriterLockSlim();
 		
 		#region AssemblyAttributes
 		readonly List<IAttribute> assemblyAttributes = new List<IAttribute>(); // mutable assembly attribute storage
@@ -92,8 +91,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		                                 ICollection<IAttribute> oldAssemblyAttributes = null,
 		                                 ICollection<IAttribute> newAssemblyAttributes = null)
 		{
-			readerWriterLock.EnterWriteLock();
-			try {
 				if (oldTypes != null) {
 					foreach (var element in oldTypes) {
 						RemoveType(element);
@@ -105,64 +102,36 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 					}
 				}
 				AddRemoveAssemblyAttributes(oldAssemblyAttributes, newAssemblyAttributes);
-			} finally {
-				readerWriterLock.ExitWriteLock();
-			}
 		}
 		#endregion
 		
 		#region IProjectContent implementation
 		public ITypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer)
 		{
-			readerWriterLock.EnterReadLock();
-			try {
-				return types.GetClass(nameSpace, name, typeParameterCount, nameComparer);
-			} finally {
-				readerWriterLock.ExitReadLock();
-			}
+			return types.GetClass(nameSpace, name, typeParameterCount, nameComparer);
 		}
 		
 		public IEnumerable<ITypeDefinition> GetClasses()
 		{
-			readerWriterLock.EnterReadLock();
-			try {
-				// make a copy with ToArray() for thread-safe access
-				return types.GetClasses().ToArray();
-			} finally {
-				readerWriterLock.ExitReadLock();
-			}
+			// make a copy with ToArray() for thread-safe access
+			return types.GetClasses().ToArray();
 		}
 		
 		public IEnumerable<ITypeDefinition> GetClasses(string nameSpace, StringComparer nameComparer)
 		{
-			readerWriterLock.EnterReadLock();
-			try {
-				// make a copy with ToArray() for thread-safe access
-				return types.GetClasses(nameSpace, nameComparer).ToArray();
-			} finally {
-				readerWriterLock.ExitReadLock();
-			}
+			// make a copy with ToArray() for thread-safe access
+			return types.GetClasses(nameSpace, nameComparer).ToArray();
 		}
 		
 		public IEnumerable<string> GetNamespaces()
 		{
-			readerWriterLock.EnterReadLock();
-			try {
-				// make a copy with ToArray() for thread-safe access
-				return types.GetNamespaces().ToArray();
-			} finally {
-				readerWriterLock.ExitReadLock();
-			}
+			// make a copy with ToArray() for thread-safe access
+			return types.GetNamespaces().ToArray();
 		}
 		
 		public string GetNamespace(string nameSpace, StringComparer nameComparer)
 		{
-			readerWriterLock.EnterReadLock();
-			try {
-				return types.GetNamespace(nameSpace, nameComparer);
-			} finally {
-				readerWriterLock.ExitReadLock();
-			}
+			return types.GetNamespace(nameSpace, nameComparer);
 		}
 		#endregion
 		
@@ -174,33 +143,25 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		public ISynchronizedTypeResolveContext Synchronize()
 		{
 			// don't acquire the lock on OutOfMemoryException etc.
-			ISynchronizedTypeResolveContext sync = new ReadWriteSynchronizedTypeResolveContext(types, readerWriterLock);
-			readerWriterLock.EnterReadLock();
+			ISynchronizedTypeResolveContext sync = new ReadWriteSynchronizedTypeResolveContext(types);
 			return sync;
 		}
 		
 		sealed class ReadWriteSynchronizedTypeResolveContext : ProxyTypeResolveContext, ISynchronizedTypeResolveContext
 		{
-			ReaderWriterLockSlim readerWriterLock;
-			
-			public ReadWriteSynchronizedTypeResolveContext(ITypeResolveContext target, ReaderWriterLockSlim readerWriterLock)
+			public ReadWriteSynchronizedTypeResolveContext(ITypeResolveContext target)
 				: base(target)
 			{
-				this.readerWriterLock = readerWriterLock;
 			}
 			
 			public void Dispose()
 			{
-				if (readerWriterLock != null) {
-					readerWriterLock.ExitReadLock();
-					readerWriterLock = null;
-				}
 			}
 			
 			public override ISynchronizedTypeResolveContext Synchronize()
 			{
 				// nested Synchronize() calls don't need any locking
-				return new ReadWriteSynchronizedTypeResolveContext(target, null);
+				return new ReadWriteSynchronizedTypeResolveContext(target);
 			}
 		}
 		#endregion
