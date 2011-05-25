@@ -127,9 +127,6 @@
     <Compile Include="CecilExtensions.cs" />
     <Compile Include="CodeMappings.cs" />
     <Compile Include="CollectionExtensions.cs" />
-    <Compile Include="Compatibility\ReaderWriterLockSlim.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CSharp\Analysis\ControlFlow.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -808,7 +805,9 @@
     <None Include="Assemblies\Microsoft.Cci.Pdb\LICENSE" />
     <None Include="Properties\AssemblyInfo.template.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Compatibility\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ProjectExtensions>
     <VisualStudio>
