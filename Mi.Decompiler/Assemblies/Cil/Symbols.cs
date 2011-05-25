@@ -188,7 +188,7 @@ namespace Mi.Assemblies.Cil {
 			var cecil_name = new System.Reflection.AssemblyName(typeof (SymbolProvider).Assembly.FullName);
 
 			var name = new SR.AssemblyName {
-				Name = "Mono.Cecil." + symbol_kind,
+				Name = "Mi.Assemblies." + symbol_kind,
 				Version = cecil_name.Version,
 			};
 
@@ -238,7 +238,7 @@ namespace Mi.Assemblies.Cil {
 
 		static string GetProviderTypeName (string name)
 		{
-			return "Mono.Cecil." + symbol_kind + "." + symbol_kind + name;
+			return "Mi.Assemblies." + symbol_kind + "." + symbol_kind + name;
 		}
 
 #if !READ_ONLY
