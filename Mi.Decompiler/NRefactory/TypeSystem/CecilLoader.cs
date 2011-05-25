@@ -534,7 +534,7 @@ namespace Mi.NRefactory.TypeSystem
 		}
 		
 		static readonly ITypeReference fieldOffsetAttributeTypeRef = typeof(FieldOffsetAttribute).ToTypeReference();
-		static readonly DefaultAttribute nonSerializedAttribute = new DefaultAttribute(typeof(NonSerializedAttribute).ToTypeReference(), null);
+		static readonly DefaultAttribute nonSerializedAttribute = new DefaultAttribute(new GetClassTypeReference("NonSerializedAttribute", 0), null);
 		
 		void AddAttributes(FieldDefinition fieldDefinition, IEntity targetEntity)
 		{

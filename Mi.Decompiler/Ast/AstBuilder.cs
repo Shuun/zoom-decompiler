@@ -1268,7 +1268,7 @@ namespace Mi.Decompiler.Ast
 			
 			#region NonSerializedAttribute
 			if (fieldDefinition.IsNotSerialized) {
-				CSharp.Ast.Attribute nonSerialized = CreateNonCustomAttribute(typeof(NonSerializedAttribute), fieldDefinition.Module);
+				CSharp.Ast.Attribute nonSerialized = CreateNonCustomAttribute("NonSerializedAttribute", "System", fieldDefinition.Module);
 				attributedNode.Attributes.Add(new AttributeSection(nonSerialized) { AttributeTarget = attributeTarget });
 			}
 			#endregion
@@ -1326,12 +1326,17 @@ namespace Mi.Decompiler.Ast
 		}
 		
 		static CSharp.Ast.Attribute CreateNonCustomAttribute(Type attributeType, ModuleDefinition module)
+        {
+            return CreateNonCustomAttribute(attributeType.Name, attributeType.Namespace, module);        
+        }
+
+        static CSharp.Ast.Attribute CreateNonCustomAttribute(string attributeTypeName, string attributeTypeNamespace, ModuleDefinition module)
 		{
-			Debug.Assert(attributeType.Name.EndsWith("Attribute", StringComparison.Ordinal));
+			Debug.Assert(attributeTypeName.EndsWith("Attribute", StringComparison.Ordinal));
 			CSharp.Ast.Attribute attr = new CSharp.Ast.Attribute();
-			attr.Type = new SimpleType(attributeType.Name.Substring(0, attributeType.Name.Length - "Attribute".Length));
+			attr.Type = new SimpleType(attributeTypeName.Substring(0, attributeTypeName.Length - "Attribute".Length));
 			if (module != null) {
-				attr.Type.AddAnnotation(new TypeReference(attributeType.Namespace, attributeType.Name, module, module.TypeSystem.Corlib));
+				attr.Type.AddAnnotation(new TypeReference(attributeTypeNamespace, attributeTypeName, module, module.TypeSystem.Corlib));
 			}
 			return attr;
 		}
