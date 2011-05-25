@@ -30,13 +30,13 @@ namespace Mi.Decompiler.FlowAnalysis
 	/// </summary>
 	public class ControlStructureDetector
 	{
-		public static ControlStructure DetectStructure(ControlFlowGraph g, IEnumerable<ExceptionHandler> exceptionHandlers, CancellationToken cancellationToken)
+		public static ControlStructure DetectStructure(ControlFlowGraph g, IEnumerable<ExceptionHandler> exceptionHandlers, Action verifyProgress)
 		{
 			ControlStructure root = new ControlStructure(new HashSet<ControlFlowNode>(g.Nodes), g.EntryPoint, ControlStructureType.Root);
 			// First build a structure tree out of the exception table
 			DetectExceptionHandling(root, g, exceptionHandlers);
 			// Then run the loop detection.
-			DetectLoops(g, root, cancellationToken);
+			DetectLoops(g, root, verifyProgress);
 			return root;
 		}
 		
@@ -116,15 +116,15 @@ namespace Mi.Decompiler.FlowAnalysis
 		// But maybe we should get rid of this complex stuff and instead treat every backward jump as a loop?
 		// That should still work with the IL produced by compilers, and has the advantage that the detected loop bodies are consecutive IL regions.
 		
-		static void DetectLoops(ControlFlowGraph g, ControlStructure current, CancellationToken cancellationToken)
+		static void DetectLoops(ControlFlowGraph g, ControlStructure current, Action verifyProgress)
 		{
 			if (!current.EntryPoint.IsReachable)
 				return;
 			g.ResetVisited();
-			cancellationToken.ThrowIfCancellationRequested();
+			verifyProgress();
 			FindLoops(current, current.EntryPoint);
 			foreach (ControlStructure loop in current.Children)
-				DetectLoops(g, loop, cancellationToken);
+				DetectLoops(g, loop, verifyProgress);
 		}
 		
 		static void FindLoops(ControlStructure current, ControlFlowNode node)

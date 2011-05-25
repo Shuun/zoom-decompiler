@@ -26,10 +26,10 @@ using Mi.Assemblies;
 
 namespace Mi.Decompiler
 {
-	public class DecompilerContext
+	public sealed class DecompilerContext
 	{
 		public ModuleDefinition CurrentModule;
-		public CancellationToken CancellationToken;
+        public readonly Action VerifyProgress = () => { };
 		public TypeDefinition CurrentType;
 		public MethodDefinition CurrentMethod;
 		public DecompilerSettings Settings = new DecompilerSettings();
