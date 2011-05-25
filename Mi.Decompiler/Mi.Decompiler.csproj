@@ -133,9 +133,6 @@
     <Compile Include="Baml\CecilTypeResolver.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Baml\MarkupReflection\AppDomainTypeResolver.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Baml\MarkupReflection\BamlAssembly.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -170,9 +167,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Baml\MarkupReflection\TypeDeclaration.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Baml\MarkupReflection\WpfDependencyPropertyDescriptor.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Baml\MarkupReflection\XmlBamlElement.cs">

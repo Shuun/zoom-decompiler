@@ -144,49 +144,17 @@ namespace Mi.Decompiler.Baml.MarkupReflection
 
 	internal class KeysResource
 	{
-		private KeysTable _keys = new KeysTable();
-		private ArrayList _staticResources = new ArrayList();
+		private Dictionary<long,string> _keys = new Dictionary<long,string>();
+		private List<object> _staticResources = new List<object>();
 
-		public KeysTable Keys
+		public Dictionary<long, string> Keys
 		{
 			get { return _keys; }
 		}
 
-		public ArrayList StaticResources
+		public List<object> StaticResources
 		{
 			get { return _staticResources; }
-		}
-	}
-
-	internal class KeysTable
-	{
-		private Hashtable table = new Hashtable();
-
-		public String this[long position]
-		{
-			get
-			{
-				return (string)this.table[position];
-			}
-			set
-			{
-				this.table[position] = value;
-			}
-		}
-
-		public int Count
-		{
-			get { return this.table.Count; }
-		}
-
-		public void Remove(long position)
-		{
-			this.table.Remove(position);
-		}
-
-		public bool HasKey(long position)
-		{
-			return this.table.ContainsKey(position);
 		}
 	}
 }
