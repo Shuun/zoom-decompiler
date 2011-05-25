@@ -55,7 +55,7 @@ namespace Mi.Decompiler.Ast.Transforms
 				return;
 			
 			foreach (var transform in CreatePipeline(context)) {
-				context.CancellationToken.ThrowIfCancellationRequested();
+				context.VerifyProgress();
 				if (abortCondition != null && abortCondition(transform))
 					return;
 				transform.Run(node);

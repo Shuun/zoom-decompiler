@@ -127,9 +127,6 @@
     <Compile Include="CecilExtensions.cs" />
     <Compile Include="CodeMappings.cs" />
     <Compile Include="CollectionExtensions.cs" />
-    <Compile Include="Compatibility\CancellationToken.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Compatibility\NonSerializedAttribute.cs" />
     <Compile Include="Compatibility\OperationCanceledException.cs" />
     <Compile Include="Compatibility\ReaderWriterLockSlim.cs">

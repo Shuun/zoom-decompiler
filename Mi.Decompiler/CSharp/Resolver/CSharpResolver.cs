@@ -25,7 +25,7 @@ namespace Mi.CSharp.Resolver
 		static readonly ResolveResult NullResult = new ResolveResult(SharedTypes.Null);
 		
 		readonly ITypeResolveContext context;
-		internal readonly CancellationToken cancellationToken;
+		internal readonly Action verifyProgress;
 		
 		#region Constructor
 		public CSharpResolver(ITypeResolveContext context)
@@ -35,12 +35,12 @@ namespace Mi.CSharp.Resolver
 			this.context = context;
 		}
 		
-		public CSharpResolver(ITypeResolveContext context, CancellationToken cancellationToken)
+		public CSharpResolver(ITypeResolveContext context, Action verifyProgress)
 		{
 			if (context == null)
 				throw new ArgumentNullException("context");
 			this.context = context;
-			this.cancellationToken = cancellationToken;
+			this.verifyProgress = verifyProgress;
 		}
 		#endregion
 		
@@ -347,7 +347,7 @@ namespace Mi.CSharp.Resolver
 		#region ResolveUnaryOperator method
 		public ResolveResult ResolveUnaryOperator(UnaryOperatorType op, ResolveResult expression)
 		{
-			cancellationToken.ThrowIfCancellationRequested();
+			verifyProgress();
 			
 			if (expression.Type == SharedTypes.Dynamic)
 				return DynamicResult;
@@ -598,7 +598,7 @@ namespace Mi.CSharp.Resolver
 		#region ResolveBinaryOperator method
 		public ResolveResult ResolveBinaryOperator(BinaryOperatorType op, ResolveResult lhs, ResolveResult rhs)
 		{
-			cancellationToken.ThrowIfCancellationRequested();
+			verifyProgress();
 			
 			if (lhs.Type == SharedTypes.Dynamic || rhs.Type == SharedTypes.Dynamic)
 				return DynamicResult;
@@ -1443,7 +1443,7 @@ namespace Mi.CSharp.Resolver
 		#region ResolveCast
 		public ResolveResult ResolveCast(IType targetType, ResolveResult expression)
 		{
-			cancellationToken.ThrowIfCancellationRequested();
+			verifyProgress();
 			
 			// C# 4.0 spec: §7.7.6 Cast expressions
 			if (expression.IsCompileTimeConstant) {
@@ -1542,7 +1542,7 @@ namespace Mi.CSharp.Resolver
 		{
 			// C# 4.0 spec: §3.8 Namespace and type names; §7.6.2 Simple Names
 			
-			cancellationToken.ThrowIfCancellationRequested();
+			verifyProgress();
 			
 			int k = typeArguments.Count;
 			
@@ -1678,7 +1678,7 @@ namespace Mi.CSharp.Resolver
 		{
 			// C# 4.0 spec: §7.6.4
 			
-			cancellationToken.ThrowIfCancellationRequested();
+			verifyProgress();
 			
 			NamespaceResolveResult nrr = target as NamespaceResolveResult;
 			if (nrr != null) {
@@ -1776,7 +1776,7 @@ namespace Mi.CSharp.Resolver
 		{
 			// C# 4.0 spec: §7.6.5
 			
-			cancellationToken.ThrowIfCancellationRequested();
+			verifyProgress();
 			
 			if (target.Type == SharedTypes.Dynamic)
 				return DynamicResult;
@@ -1936,7 +1936,7 @@ namespace Mi.CSharp.Resolver
 		#region ResolveIndexer
 		public ResolveResult ResolveIndexer(ResolveResult target, ResolveResult[] arguments, string[] argumentNames = null)
 		{
-			cancellationToken.ThrowIfCancellationRequested();
+			verifyProgress();
 			
 			if (target.Type == SharedTypes.Dynamic)
 				return DynamicResult;
@@ -1961,7 +1961,7 @@ namespace Mi.CSharp.Resolver
 		#region ResolveObjectCreation
 		public ResolveResult ResolveObjectCreation(IType type, ResolveResult[] arguments, string[] argumentNames = null)
 		{
-			cancellationToken.ThrowIfCancellationRequested();
+			verifyProgress();
 			
 			OverloadResolution or = new OverloadResolution(context, arguments, argumentNames, new IType[0]);
 			MemberLookup lookup = CreateMemberLookup();
@@ -2050,7 +2050,7 @@ namespace Mi.CSharp.Resolver
 		{
 			// C# 4.0 spec §7.14: Conditional operator
 			
-			cancellationToken.ThrowIfCancellationRequested();
+			verifyProgress();
 			
 			Conversions c = new Conversions(context);
 			bool isValid;

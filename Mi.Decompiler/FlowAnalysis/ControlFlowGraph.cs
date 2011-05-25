@@ -102,7 +102,7 @@ namespace Mi.Decompiler.FlowAnalysis
 		/// <summary>
 		/// Computes the dominator tree.
 		/// </summary>
-		public void ComputeDominance(CancellationToken cancellationToken = default(CancellationToken))
+		public void ComputeDominance(Action verifyProgress = default(Action))
 		{
 			// A Simple, Fast Dominance Algorithm
 			// Keith D. Cooper, Timothy J. Harvey and Ken Kennedy
@@ -113,7 +113,7 @@ namespace Mi.Decompiler.FlowAnalysis
 				changed = false;
 				ResetVisited();
 				
-				cancellationToken.ThrowIfCancellationRequested();
+				verifyProgress();
 				
 				// for all nodes b except the entry point
 				EntryPoint.TraversePreOrder(

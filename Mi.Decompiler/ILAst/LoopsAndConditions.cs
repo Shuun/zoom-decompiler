@@ -45,7 +45,7 @@ namespace Mi.Decompiler.ILAst
 			if (block.Body.Count > 0) {
 				ControlFlowGraph graph;
 				graph = BuildGraph(block.Body, (ILLabel)block.EntryGoto.Operand);
-				graph.ComputeDominance(context.CancellationToken);
+				graph.ComputeDominance(context.VerifyProgress);
 				graph.ComputeDominanceFrontier();
 				block.Body = FindLoops(new HashSet<ControlFlowNode>(graph.Nodes.Skip(3)), graph.EntryPoint, false);
 			}
@@ -56,7 +56,7 @@ namespace Mi.Decompiler.ILAst
 			if (block.Body.Count > 0) {
 				ControlFlowGraph graph;
 				graph = BuildGraph(block.Body, (ILLabel)block.EntryGoto.Operand);
-				graph.ComputeDominance(context.CancellationToken);
+				graph.ComputeDominance(context.VerifyProgress);
 				graph.ComputeDominanceFrontier();
 				block.Body = FindConditions(new HashSet<ControlFlowNode>(graph.Nodes.Skip(3)), graph.EntryPoint);
 			}

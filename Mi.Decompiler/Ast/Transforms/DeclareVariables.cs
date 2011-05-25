@@ -43,12 +43,12 @@ namespace Mi.Decompiler.Ast.Transforms
 			public Statement InsertionPoint;
 		}
 		
-		readonly CancellationToken cancellationToken;
+		readonly Action verifyProgress;
 		List<VariableToDeclare> variablesToDeclare = new List<VariableToDeclare>();
 		
 		public DeclareVariables(DecompilerContext context)
 		{
-			this.cancellationToken = context.CancellationToken;
+			this.verifyProgress = context.VerifyProgress;
 		}
 		
 		public void Run(AstNode node)
@@ -100,7 +100,7 @@ namespace Mi.Decompiler.Ast.Transforms
 					}
 					if (daa == null) {
 						// If possible, reuse the DefiniteAssignmentAnalysis that was created for the parent block
-						daa = new DefiniteAssignmentAnalysis(block, cancellationToken);
+						daa = new DefiniteAssignmentAnalysis(block, verifyProgress);
 					}
 					foreach (VariableDeclarationStatement varDecl in variables) {
 						string variableName = varDecl.Variables.Single().Name;

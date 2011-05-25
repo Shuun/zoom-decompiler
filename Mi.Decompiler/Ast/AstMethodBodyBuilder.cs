@@ -94,15 +94,15 @@ namespace Mi.Decompiler.Ast
 			if (localVariables == null)
 				throw new ArgumentException("localVariables must be instantiated");
 			
-			context.CancellationToken.ThrowIfCancellationRequested();
+			context.VerifyProgress();
 			ILBlock ilMethod = new ILBlock();
 			ILAstBuilder astBuilder = new ILAstBuilder();
 			ilMethod.Body = astBuilder.Build(methodDef, true);
 			
-			context.CancellationToken.ThrowIfCancellationRequested();
+			context.VerifyProgress();
 			ILAstOptimizer bodyGraph = new ILAstOptimizer();
 			bodyGraph.Optimize(context, ilMethod);
-			context.CancellationToken.ThrowIfCancellationRequested();
+			context.VerifyProgress();
 			
 			var allVariables = ilMethod.GetSelfAndChildrenRecursive<ILExpression>().Select(e => e.Operand as ILVariable)
 				.Where(v => v != null && !v.IsParameter).Distinct();
@@ -118,7 +118,7 @@ namespace Mi.Decompiler.Ast
 				}
 			}
 			
-			context.CancellationToken.ThrowIfCancellationRequested();
+			context.VerifyProgress();
 			BlockStatement astBlock = TransformBlock(ilMethod);
 			CommentStatement.ReplaceAll(astBlock); // convert CommentStatements to Comments
 			

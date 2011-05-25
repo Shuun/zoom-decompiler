@@ -36,15 +36,15 @@ namespace Mi.Decompiler.Disassembler
 	{
 		readonly ITextOutput output;
 		readonly bool detectControlStructure;
-		readonly CancellationToken cancellationToken;
+		readonly Action verifyProgress;
 		
-		public MethodBodyDisassembler(ITextOutput output, bool detectControlStructure, CancellationToken cancellationToken)
+		public MethodBodyDisassembler(ITextOutput output, bool detectControlStructure, Action verifyProgress)
 		{
 			if (output == null)
 				throw new ArgumentNullException("output");
 			this.output = output;
 			this.detectControlStructure = detectControlStructure;
-			this.cancellationToken = cancellationToken;
+			this.verifyProgress = verifyProgress;
 		}
 		
 		public void Disassemble(MethodBody body, MemberMapping methodMapping)

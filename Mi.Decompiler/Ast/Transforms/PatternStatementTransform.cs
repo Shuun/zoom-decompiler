@@ -262,7 +262,7 @@ namespace Mi.Decompiler.Ast.Transforms
 		{
 			Debug.Assert(targetStatement.Ancestors.Contains(varDecl.Parent));
 			BlockStatement block = (BlockStatement)varDecl.Parent;
-			DefiniteAssignmentAnalysis daa = new DefiniteAssignmentAnalysis(block, context.CancellationToken);
+			DefiniteAssignmentAnalysis daa = new DefiniteAssignmentAnalysis(block, context.VerifyProgress);
 			daa.SetAnalyzedRange(targetStatement, block, startInclusive: false);
 			daa.Analyze(varDecl.Variables.Single().Name);
 			return daa.UnassignedVariableUses.Count == 0;
@@ -284,7 +284,7 @@ namespace Mi.Decompiler.Ast.Transforms
 			List<BlockStatement> blocks = targetStatement.Ancestors.TakeWhile(block => block != varDecl.Parent).OfType<BlockStatement>().ToList();
 			blocks.Add((BlockStatement)varDecl.Parent); // also handle the varDecl.Parent block itself
 			blocks.Reverse(); // go from parent blocks to child blocks
-			DefiniteAssignmentAnalysis daa = new DefiniteAssignmentAnalysis(blocks[0], context.CancellationToken);
+			DefiniteAssignmentAnalysis daa = new DefiniteAssignmentAnalysis(blocks[0], context.VerifyProgress);
 			declarationPoint = null;
 			foreach (BlockStatement block in blocks) {
 				if (!DeclareVariables.FindDeclarationPoint(daa, varDecl, block, out declarationPoint)) {

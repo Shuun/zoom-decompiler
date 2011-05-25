@@ -35,17 +35,17 @@ namespace Mi.Decompiler.Disassembler
 	public sealed class ReflectionDisassembler : ICodeMappings
 	{
 		ITextOutput output;
-		CancellationToken cancellationToken;
+		Action verifyProgress;
 		bool isInType; // whether we are currently disassembling a whole type (-> defaultCollapsed for foldings)
 		MethodBodyDisassembler methodBodyDisassembler;
 		
-		public ReflectionDisassembler(ITextOutput output, bool detectControlStructure, CancellationToken cancellationToken)
+		public ReflectionDisassembler(ITextOutput output, bool detectControlStructure, Action verifyProgress)
 		{
 			if (output == null)
 				throw new ArgumentNullException("output");
 			this.output = output;
-			this.cancellationToken = cancellationToken;
-			this.methodBodyDisassembler = new MethodBodyDisassembler(output, detectControlStructure, cancellationToken);
+			this.verifyProgress = verifyProgress;
+			this.methodBodyDisassembler = new MethodBodyDisassembler(output, detectControlStructure, verifyProgress);
 		}
 		
 		#region Disassemble Method
@@ -861,7 +861,7 @@ namespace Mi.Decompiler.Disassembler
 			if (type.HasNestedTypes) {
 				output.WriteLine("// Nested Types");
 				foreach (var nestedType in type.NestedTypes) {
-					cancellationToken.ThrowIfCancellationRequested();
+					verifyProgress();
 					DisassembleType(nestedType);
 					output.WriteLine();
 				}
@@ -870,7 +870,7 @@ namespace Mi.Decompiler.Disassembler
 			if (type.HasFields) {
 				output.WriteLine("// Fields");
 				foreach (var field in type.Fields) {
-					cancellationToken.ThrowIfCancellationRequested();
+					verifyProgress();
 					DisassembleField(field);
 				}
 				output.WriteLine();
@@ -878,7 +878,7 @@ namespace Mi.Decompiler.Disassembler
 			if (type.HasMethods) {
 				output.WriteLine("// Methods");
 				foreach (var m in type.Methods) {
-					cancellationToken.ThrowIfCancellationRequested();
+					verifyProgress();
 					DisassembleMethod(m);
 					output.WriteLine();
 				}
@@ -886,7 +886,7 @@ namespace Mi.Decompiler.Disassembler
 			if (type.HasEvents) {
 				output.WriteLine("// Events");
 				foreach (var ev in type.Events) {
-					cancellationToken.ThrowIfCancellationRequested();
+					verifyProgress();
 					DisassembleEvent(ev);
 					output.WriteLine();
 				}
@@ -895,7 +895,7 @@ namespace Mi.Decompiler.Disassembler
 			if (type.HasProperties) {
 				output.WriteLine("// Properties");
 				foreach (var prop in type.Properties) {
-					cancellationToken.ThrowIfCancellationRequested();
+					verifyProgress();
 					DisassembleProperty(prop);
 				}
 				output.WriteLine();
@@ -1057,7 +1057,7 @@ namespace Mi.Decompiler.Disassembler
 			bool oldIsInType = isInType;
 			isInType = true;
 			foreach (TypeDefinition td in types) {
-				cancellationToken.ThrowIfCancellationRequested();
+				verifyProgress();
 				DisassembleType(td);
 				output.WriteLine();
 			}

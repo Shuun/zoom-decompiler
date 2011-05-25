@@ -146,10 +146,10 @@ namespace Mi.CSharp.Analysis
 		Dictionary<string, ControlFlowNode> labels;
 		List<ControlFlowNode> gotoStatements;
 		
-		public IList<ControlFlowNode> BuildControlFlowGraph(Statement statement, ITypeResolveContext context, CancellationToken cancellationToken = default(CancellationToken))
+		public IList<ControlFlowNode> BuildControlFlowGraph(Statement statement, ITypeResolveContext context, Action verifyProgress = default(Action))
 		{
 			return BuildControlFlowGraph(statement, new ResolveVisitor(
-				new CSharpResolver(context, cancellationToken),
+				new CSharpResolver(context, verifyProgress),
 				ConstantModeResolveVisitorNavigator.Skip));
 		}
 		
@@ -290,7 +290,7 @@ namespace Mi.CSharp.Analysis
 		{
 			if (c1 == null || c2 == null)
 				return false;
-			CSharpResolver r = new CSharpResolver(resolveVisitor.TypeResolveContext, resolveVisitor.CancellationToken);
+			CSharpResolver r = new CSharpResolver(resolveVisitor.TypeResolveContext, resolveVisitor.Action);
 			ResolveResult c = r.ResolveBinaryOperator(BinaryOperatorType.Equality, c1, c2);
 			return c.IsCompileTimeConstant && (c.ConstantValue as bool?) == true;
 		}

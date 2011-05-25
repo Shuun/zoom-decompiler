@@ -83,10 +83,10 @@ namespace Mi.CSharp.Resolver
 		}
 		
 		/// <summary>
-		/// Gets the CancellationToken used by this ResolveVisitor.
+		/// Gets the Action used by this ResolveVisitor.
 		/// </summary>
-		public CancellationToken CancellationToken {
-			get { return resolver.cancellationToken; }
+		public Action Action {
+			get { return resolver.verifyProgress; }
 		}
 		
 		#region Scan / Resolve
@@ -133,7 +133,7 @@ namespace Mi.CSharp.Resolver
 				mode = ResolveVisitorNavigationMode.Resolve;
 			ResolveResult result;
 			if (!cache.TryGetValue(node, out result)) {
-				resolver.cancellationToken.ThrowIfCancellationRequested();
+				resolver.verifyProgress();
 				result = cache[node] = node.AcceptVisitor(this, null) ?? errorResult;
 			}
 			if (wasScan)

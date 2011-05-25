@@ -73,7 +73,7 @@ namespace Mi.CSharp.Analysis
 		readonly Dictionary<Statement, DefiniteAssignmentNode> endNodeDict = new Dictionary<Statement, DefiniteAssignmentNode>();
 		readonly Dictionary<Statement, DefiniteAssignmentNode> conditionNodeDict = new Dictionary<Statement, DefiniteAssignmentNode>();
 		readonly ResolveVisitor resolveVisitor;
-		readonly CancellationToken cancellationToken;
+		readonly Action verifyProgress;
 		Dictionary<ControlFlowEdge, DefiniteAssignmentStatus> edgeStatus = new Dictionary<ControlFlowEdge, DefiniteAssignmentStatus>();
 		
 		string variableName;
@@ -82,13 +82,13 @@ namespace Mi.CSharp.Analysis
 		
 		Queue<DefiniteAssignmentNode> nodesWithModifiedInput = new Queue<DefiniteAssignmentNode>();
 		
-		public DefiniteAssignmentAnalysis(Statement rootStatement, CancellationToken cancellationToken = default(CancellationToken))
-			: this(rootStatement, null, cancellationToken)
+		public DefiniteAssignmentAnalysis(Statement rootStatement, Action verifyProgress = default(Action))
+			: this(rootStatement, null, verifyProgress)
 		{
 		}
 		
-		public DefiniteAssignmentAnalysis(Statement rootStatement, ITypeResolveContext context, CancellationToken cancellationToken = default(CancellationToken))
-			: this(rootStatement, new ResolveVisitor(new CSharpResolver(context ?? MinimalResolveContext.Instance, cancellationToken),
+		public DefiniteAssignmentAnalysis(Statement rootStatement, ITypeResolveContext context, Action verifyProgress = default(Action))
+			: this(rootStatement, new ResolveVisitor(new CSharpResolver(context ?? MinimalResolveContext.Instance, verifyProgress),
 			                                         ConstantModeResolveVisitorNavigator.Skip))
 		{
 		}
@@ -100,7 +100,7 @@ namespace Mi.CSharp.Analysis
 			if (resolveVisitor == null)
 				throw new ArgumentNullException("resolveVisitor");
 			this.resolveVisitor = resolveVisitor;
-			this.cancellationToken = resolveVisitor.CancellationToken;
+			this.verifyProgress = resolveVisitor.Action;
 			visitor.analysis = this;
 			if (resolveVisitor.TypeResolveContext is MinimalResolveContext) {
 				cfgBuilder.EvaluateOnlyPrimitiveConstants = true;
