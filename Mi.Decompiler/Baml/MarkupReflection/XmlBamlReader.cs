@@ -21,10 +21,10 @@ namespace Mi.Decompiler.Baml.MarkupReflection
 		#region Variables
 
 		private BamlBinaryReader reader;
-		private Hashtable assemblyTable = new Hashtable();
-		private Hashtable stringTable = new Hashtable();
-		private Hashtable typeTable = new Hashtable();
-		private Hashtable propertyTable = new Hashtable();
+		private Dictionary<short, string> assemblyTable = new Dictionary<short,string>();
+		private Dictionary<short, string> stringTable = new Dictionary<short,string>();
+		private Dictionary<short, TypeDeclaration> typeTable = new Dictionary<short,TypeDeclaration>();
+		private Dictionary<short, PropertyDeclaration> propertyTable = new Dictionary<short, PropertyDeclaration>();
 
 		private readonly ITypeResolver _resolver;
 
@@ -57,7 +57,7 @@ namespace Mi.Decompiler.Baml.MarkupReflection
 
 		#endregion
 
-		public XmlBamlReader(Stream stream) : this (stream, AppDomainTypeResolver.GetIntoNewAppDomain(Environment.CurrentDirectory))
+		public XmlBamlReader(Stream stream) : this (stream, new CecilTypeResolver(null))
 		{
 			
 		}
@@ -653,10 +653,10 @@ namespace Mi.Decompiler.Baml.MarkupReflection
 			switch (serializerTypeId)
 			{
 				case 0x2e8:
-					value = new BrushConverter().ConvertToString(SolidColorBrush.DeserializeFrom(reader));
+					value = SolidColorBrush.DeserializeFrom(reader).ToString();
 					break;
 				case 0x2e9:
-					value = new Int32CollectionConverter().ConvertToString(DeserializeInt32CollectionFrom(reader));
+					value = string.Join(",", DeserializeInt32CollectionFrom(reader));
 					break;
 				case 0x89:
 
@@ -744,14 +744,14 @@ namespace Mi.Decompiler.Baml.MarkupReflection
 			}
 		}
 
-		private static Int32Collection DeserializeInt32CollectionFrom(BinaryReader reader)
+		private static List<int> DeserializeInt32CollectionFrom(BinaryReader reader)
 		{
 			IntegerCollectionType type = (IntegerCollectionType)reader.ReadByte();
 			int capacity = reader.ReadInt32();
 			if (capacity < 0)
 				throw new ArgumentException();
 
-			Int32Collection ints = new Int32Collection(capacity);
+			var ints = new List<int>(capacity);
 			switch (type)
 			{
 				case IntegerCollectionType.Byte:
@@ -1184,7 +1184,7 @@ namespace Mi.Decompiler.Baml.MarkupReflection
 				// Calcolo la posizione dell'elemento rispetto al padre
 				long position = element.Position - parentElement.Position;
 				KeysResource keysResource = (keysResources.Count > 0) ? keysResources.Peek().First : null;
-				if (keysResource != null && keysResource.Keys.HasKey(position))
+				if (keysResource != null && keysResource.Keys.ContainsKey(position))
 				{
 					string key = keysResource.Keys[position];
 					// Rimuovo la chiave perché è stata usata
