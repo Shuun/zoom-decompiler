@@ -130,7 +130,6 @@
     <Compile Include="Compatibility\ReaderWriterLockSlim.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Compatibility\SerializableAttribute.cs" />
     <Compile Include="CSharp\Analysis\ControlFlow.cs">
       <SubType>Code</SubType>
     </Compile>
