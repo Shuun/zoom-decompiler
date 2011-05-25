@@ -208,7 +208,8 @@ namespace Mi.Scope
 
         private sealed class RichTextOutput : ITextOutput
         {
-            readonly Brush KeywordBrush = new SolidColorBrush(Colors.Blue);
+            readonly Brush KeywordBrush = new SolidColorBrush(Colors.DarkGray);
+            readonly Brush IdentifierBrush = new SolidColorBrush(Colors.Blue);
 
             readonly List<Paragraph> blocks = new List<Paragraph>();
             int indentCount = 0;
@@ -230,6 +231,14 @@ namespace Mi.Scope
 
                 this.blocks.Last().Inlines.Add(
                     new Run { Text = text, Foreground = KeywordBrush });
+            }
+
+            public void WriteIdentifier(string text)
+            {
+                CheckCompleteLine();
+
+                this.blocks.Last().Inlines.Add(
+                    new Run { Text = text, Foreground = IdentifierBrush, FontWeight = FontWeights.Bold });
             }
 
             public void Write(string text)

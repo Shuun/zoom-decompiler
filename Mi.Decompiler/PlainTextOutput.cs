@@ -72,6 +72,11 @@ namespace Mi.Decompiler
         {
             this.Write(keyword);
         }
+
+        public void WriteIdentifier(string identifier)
+        {
+            this.Write(identifier);
+        }
 		
 		public void Write(char ch)
 		{
