@@ -10,22 +10,17 @@ namespace Mi.NRefactory.TypeSystem
 {
 	public struct DomRegion : IEquatable<DomRegion>
 	{
-		readonly string fileName;
 		readonly int beginLine;
 		readonly int endLine;
 		readonly int beginColumn;
 		readonly int endColumn;
 		
-		public readonly static DomRegion Empty = new DomRegion(null, -1, -1);
+		public readonly static DomRegion Empty = new DomRegion(-1, -1);
 		
 		public bool IsEmpty {
 			get {
 				return BeginLine <= 0;
 			}
-		}
-		
-		public string FileName {
-			get { return fileName; }
 		}
 		
 		public int BeginLine {
@@ -60,18 +55,16 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public DomRegion(string fileName, int beginLine, int beginColumn, int endLine, int endColumn)
+		public DomRegion(int beginLine, int beginColumn, int endLine, int endColumn)
 		{
-			this.fileName = fileName;
 			this.beginLine   = beginLine;
 			this.beginColumn = beginColumn;
 			this.endLine     = endLine;
 			this.endColumn   = endColumn;
 		}
 		
-		public DomRegion(string fileName, int beginLine, int beginColumn)
+		public DomRegion(int beginLine, int beginColumn)
 		{
-			this.fileName = fileName;
 			this.beginLine   = beginLine;
 			this.beginColumn = beginColumn;
 			this.endLine = -1;
@@ -102,7 +95,7 @@ namespace Mi.NRefactory.TypeSystem
 			return string.Format(
 				CultureInfo.InvariantCulture,
 				"[DomRegion FileName={0}, BeginLine={1}, EndLine={2}, BeginColumn={3}, EndColumn={4}]",
-				fileName, beginLine, endLine, beginColumn, endColumn);
+				beginLine, endLine, beginColumn, endColumn);
 		}
 		
 		public override bool Equals(object obj)
@@ -113,7 +106,7 @@ namespace Mi.NRefactory.TypeSystem
 		public override int GetHashCode()
 		{
 			unchecked {
-				int hashCode = fileName != null ? fileName.GetHashCode() : 0;
+				int hashCode = 0;
 				hashCode ^= BeginColumn + 1100009 * BeginLine + 1200007 * BeginColumn + 1300021 * EndColumn;
 				return hashCode;
 			}
@@ -122,8 +115,7 @@ namespace Mi.NRefactory.TypeSystem
 		public bool Equals(DomRegion other)
 		{
 			return BeginLine == other.BeginLine && BeginColumn == other.BeginColumn
-				&& EndLine == other.EndLine && EndColumn == other.EndColumn
-				&& fileName == other.fileName;
+				&& EndLine == other.EndLine && EndColumn == other.EndColumn;
 		}
 		
 		public static bool operator ==(DomRegion left, DomRegion right)
