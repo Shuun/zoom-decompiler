@@ -746,7 +746,7 @@
     <Compile Include="NRefactory\TypeSystem\Implementation\CompositeTypeResolveContext.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\DefaultAccessor.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\DefaultAttribute.cs" />
-    <Compile Include="NRefactory\TypeSystem\DefaultEvent.cs" />
+    <Compile Include="NRefactory\TypeSystem\Event.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\DefaultExplicitInterfaceImplementation.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\DefaultField.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\DefaultMethod.cs" />
