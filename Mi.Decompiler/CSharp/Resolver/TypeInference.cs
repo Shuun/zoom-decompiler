@@ -118,7 +118,7 @@ namespace Mi.CSharp.Resolver
 		/// Infers type arguments for the <paramref name="typeParameters"/> occurring in the <paramref name="targetType"/>
 		/// so that the resulting type (after substition) satisfies the given bounds.
 		/// </summary>
-		public IType[] InferTypeArgumentsFromBounds(IList<ITypeParameter> typeParameters, IType targetType, IList<IType> lowerBounds, IList<IType> upperBounds, out bool success)
+		public IType[] InferTypeArgumentsFromBounds(IList<TypeParameter> typeParameters, IType targetType, IList<IType> lowerBounds, IList<IType> upperBounds, out bool success)
 		{
 			if (typeParameters == null)
 				throw new ArgumentNullException("typeParameters");
@@ -190,7 +190,7 @@ namespace Mi.CSharp.Resolver
 				this.Occurs = new bool[tp.Length];
 			}
 			
-			public override IType VisitTypeParameter(ITypeParameter type)
+			public override IType VisitTypeParameter(TypeParameter type)
 			{
 				int index = type.Index;
 				if (index < tp.Length && tp[index].TypeParameter == type)
@@ -480,7 +480,7 @@ namespace Mi.CSharp.Resolver
 		
 		TP GetTPForType(IType v)
 		{
-			ITypeParameter p = v as ITypeParameter;
+			TypeParameter p = v as TypeParameter;
 			if (p != null) {
 				int index = p.Index;
 				if (index < typeParameters.Length && typeParameters[index].TypeParameter == p)
@@ -536,7 +536,7 @@ namespace Mi.CSharp.Resolver
 						IType Vi = pV.TypeArguments[i];
 						if (Ui.IsReferenceType == true) {
 							// look for variance
-							ITypeParameter Xi = pV.GetDefinition().TypeParameters[i];
+							TypeParameter Xi = pV.GetDefinition().TypeParameters[i];
 							switch (Xi.Variance) {
 								case VarianceModifier.Covariant:
 									MakeLowerBoundInference(Ui, Vi);
@@ -619,7 +619,7 @@ namespace Mi.CSharp.Resolver
 						IType Vi = uniqueBaseType.TypeArguments[i];
 						if (Ui.IsReferenceType == true) {
 							// look for variance
-							ITypeParameter Xi = pU.GetDefinition().TypeParameters[i];
+							TypeParameter Xi = pU.GetDefinition().TypeParameters[i];
 							switch (Xi.Variance) {
 								case VarianceModifier.Covariant:
 									MakeUpperBoundInference(Ui, Vi);
@@ -821,10 +821,10 @@ namespace Mi.CSharp.Resolver
 			candidateTypes.Clear();
 			
 			// Now try the improved algorithm
-			List<ITypeDefinition> candidateTypeDefinitions;
+			List<TypeDefinition> candidateTypeDefinitions;
 			if (lowerBounds.Count > 0) {
 				// Find candidates by using the lower bounds:
-				var hashSet = new HashSet<ITypeDefinition>(lowerBounds[0].GetAllBaseTypeDefinitions(context));
+				var hashSet = new HashSet<TypeDefinition>(lowerBounds[0].GetAllBaseTypeDefinitions(context));
 				for (int i = 1; i < lowerBounds.Count; i++) {
 					hashSet.IntersectWith(lowerBounds[i].GetAllBaseTypeDefinitions(context));
 				}
@@ -836,13 +836,13 @@ namespace Mi.CSharp.Resolver
 			
 			// Now filter out candidates that violate the upper bounds:
 			foreach (IType ub in upperBounds) {
-				ITypeDefinition ubDef = ub.GetDefinition();
+				TypeDefinition ubDef = ub.GetDefinition();
 				if (ubDef != null) {
 					candidateTypeDefinitions.RemoveAll(c => !c.IsDerivedFrom(ubDef, context));
 				}
 			}
 			
-			foreach (ITypeDefinition candidateDef in candidateTypeDefinitions) {
+			foreach (TypeDefinition candidateDef in candidateTypeDefinitions) {
 				// determine the type parameters for the candidate:
 				IType candidate;
 				if (candidateDef.TypeParameterCount == 0) {

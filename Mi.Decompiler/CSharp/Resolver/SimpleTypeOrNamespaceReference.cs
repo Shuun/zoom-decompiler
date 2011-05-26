@@ -12,13 +12,13 @@ namespace Mi.CSharp.Resolver
 	/// </summary>
 	public sealed class SimpleTypeOrNamespaceReference : ITypeOrNamespaceReference
 	{
-		readonly ITypeDefinition parentTypeDefinition;
+		readonly TypeDefinition parentTypeDefinition;
 		readonly UsingScope parentUsingScope;
 		readonly string identifier;
 		readonly IList<ITypeReference> typeArguments;
 		readonly bool isInUsingDeclaration;
 		
-		public SimpleTypeOrNamespaceReference(string identifier, IList<ITypeReference> typeArguments, ITypeDefinition parentTypeDefinition, UsingScope parentUsingScope, bool isInUsingDeclaration = false)
+		public SimpleTypeOrNamespaceReference(string identifier, IList<ITypeReference> typeArguments, TypeDefinition parentTypeDefinition, UsingScope parentUsingScope, bool isInUsingDeclaration = false)
 		{
 			if (identifier == null)
 				throw new ArgumentNullException("identifier");

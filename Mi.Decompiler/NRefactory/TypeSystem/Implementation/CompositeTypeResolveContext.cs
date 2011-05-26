@@ -52,10 +52,10 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		}
 		
 		/// <inheritdoc/>
-		public ITypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer)
+		public TypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer)
 		{
 			foreach (ITypeResolveContext context in children) {
-				ITypeDefinition d = context.GetClass(nameSpace, name, typeParameterCount, nameComparer);
+				TypeDefinition d = context.GetClass(nameSpace, name, typeParameterCount, nameComparer);
 				if (d != null)
 					return d;
 			}
@@ -63,13 +63,13 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		}
 		
 		/// <inheritdoc/>
-		public IEnumerable<ITypeDefinition> GetClasses()
+		public IEnumerable<TypeDefinition> GetClasses()
 		{
 			return children.SelectMany(c => c.GetClasses());
 		}
 		
 		/// <inheritdoc/>
-		public IEnumerable<ITypeDefinition> GetClasses(string nameSpace, StringComparer nameComparer)
+		public IEnumerable<TypeDefinition> GetClasses(string nameSpace, StringComparer nameComparer)
 		{
 			return children.SelectMany(c => c.GetClasses(nameSpace, nameComparer));
 		}

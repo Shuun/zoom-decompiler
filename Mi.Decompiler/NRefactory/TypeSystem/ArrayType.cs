@@ -56,25 +56,25 @@ namespace Mi.NRefactory.TypeSystem
 			if (t != SharedTypes.UnknownType)
 				baseTypes.Add(t);
 			if (dimensions == 1) { // single-dimensional arrays implement IList<T>
-				ITypeDefinition def = listInterface.Resolve(context) as ITypeDefinition;
+				TypeDefinition def = listInterface.Resolve(context) as TypeDefinition;
 				if (def != null)
 					baseTypes.Add(new ParameterizedType(def, new[] { elementType }));
 			}
 			return baseTypes;
 		}
 		
-		public override IEnumerable<IMethod> GetMethods(ITypeResolveContext context, Predicate<IMethod> filter = null)
+		public override IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter = null)
 		{
 			return systemArray.Resolve(context).GetMethods(context, filter);
 		}
 		
 		static readonly Parameter indexerParam = new Parameter(KnownTypeReference.Int32, string.Empty);
 		
-		public override IEnumerable<IProperty> GetProperties(ITypeResolveContext context, Predicate<IProperty> filter = null)
+		public override IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)
 		{
-			ITypeDefinition arrayDef = systemArray.Resolve(context) as ITypeDefinition;
+			TypeDefinition arrayDef = systemArray.Resolve(context) as TypeDefinition;
 			if (arrayDef != null) {
-				foreach (IProperty p in arrayDef.GetProperties(context, filter)) {
+				foreach (Property p in arrayDef.GetProperties(context, filter)) {
 					yield return p;
 				}
 				Property indexer = new Property(arrayDef, "Items") {

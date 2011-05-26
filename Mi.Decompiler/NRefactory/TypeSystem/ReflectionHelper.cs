@@ -28,7 +28,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// Retrieves a class.
 		/// </summary>
 		/// <returns>Returns the class; or null if it is not found.</returns>
-		public static ITypeDefinition GetClass(this ITypeResolveContext context, Type type)
+		public static TypeDefinition GetClass(this ITypeResolveContext context, Type type)
 		{
 			if (type == null)
 				return null;
@@ -39,12 +39,12 @@ namespace Mi.NRefactory.TypeSystem
 			if (type.IsGenericParameter)
 				return null;
 			if (type.DeclaringType != null) {
-				ITypeDefinition declaringType = GetClass(context, type.DeclaringType);
+				TypeDefinition declaringType = GetClass(context, type.DeclaringType);
 				if (declaringType != null) {
 					int typeParameterCount;
 					string name = SplitTypeParameterCountFromReflectionName(type.Name, out typeParameterCount);
 					typeParameterCount += declaringType.TypeParameterCount;
-					foreach (ITypeDefinition innerClass in declaringType.InnerClasses) {
+					foreach (TypeDefinition innerClass in declaringType.InnerClasses) {
 						if (innerClass.Name == name && innerClass.TypeParameterCount == typeParameterCount) {
 							return innerClass;
 						}
@@ -86,7 +86,7 @@ namespace Mi.NRefactory.TypeSystem
 				return new ByReferenceTypeReference(ToTypeReference(type.GetElementType(), entity));
 			} else if (type.IsGenericParameter) {
 				if (type.DeclaringMethod != null) {
-					IMethod method = entity as IMethod;
+					Method method = entity as Method;
 					if (method != null) {
 						if (type.GenericParameterPosition < method.TypeParameters.Count) {
 							return method.TypeParameters[type.GenericParameterPosition];
@@ -94,7 +94,7 @@ namespace Mi.NRefactory.TypeSystem
 					}
 					return SharedTypes.UnknownType;
 				} else {
-					ITypeDefinition c = (entity as ITypeDefinition) ?? (entity != null ? entity.DeclaringTypeDefinition : null);
+					TypeDefinition c = (entity as TypeDefinition) ?? (entity != null ? entity.DeclaringTypeDefinition : null);
 					if (c != null && type.GenericParameterPosition < c.TypeParameters.Count) {
 						if (c.TypeParameters[type.GenericParameterPosition].Name == type.Name) {
 							return c.TypeParameters[type.GenericParameterPosition];
@@ -214,7 +214,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// </summary>
 		public static TypeCode GetTypeCode(IType type)
 		{
-			ITypeDefinition def = type as ITypeDefinition;
+			TypeDefinition def = type as TypeDefinition;
 			TypeCode typeCode;
 			if (def != null && def.TypeParameterCount == 0 && def.Namespace == "System" && typeNameToCodeDict.TryGetValue(def.Name, out typeCode))
 				return typeCode;
@@ -272,7 +272,7 @@ namespace Mi.NRefactory.TypeSystem
 					// method type parameter reference
 					pos++;
 					int index = ReadTypeParameterCount(reflectionTypeName, ref pos);
-					IMethod method = entity as IMethod;
+					Method method = entity as Method;
 					if (method != null && index >= 0 && index < method.TypeParameters.Count)
 						return method.TypeParameters[index];
 					else
@@ -280,7 +280,7 @@ namespace Mi.NRefactory.TypeSystem
 				} else {
 					// class type parameter reference
 					int index = ReadTypeParameterCount(reflectionTypeName, ref pos);
-					ITypeDefinition c = (entity as ITypeDefinition) ?? (entity != null ? entity.DeclaringTypeDefinition : null);
+					TypeDefinition c = (entity as TypeDefinition) ?? (entity != null ? entity.DeclaringTypeDefinition : null);
 					if (c != null && index >= 0 && index < c.TypeParameters.Count)
 						return c.TypeParameters[index];
 					else

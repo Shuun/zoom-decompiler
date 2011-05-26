@@ -9,7 +9,7 @@ namespace Mi.NRefactory.TypeSystem
 	/// <summary>
 	/// Default implementation for IExplicitInterfaceImplementation.
 	/// </summary>
-	public sealed class ExplicitInterfaceImplementation : Immutable, IExplicitInterfaceImplementation, ISupportsInterning
+	public sealed class ExplicitInterfaceImplementation : Immutable, ISupportsInterning
 	{
 		public ITypeReference InterfaceType { get; private set; }
 		public string MemberName { get; private set; }

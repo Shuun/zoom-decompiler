@@ -13,7 +13,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		readonly IMember memberDefinition;
 		IType declaringType;
 		
-		public SpecializedField(IField f) : base(f)
+		public SpecializedField(Field f) : base(f)
 		{
 			this.memberDefinition = f.MemberDefinition;
 			this.declaringType = f.DeclaringType;

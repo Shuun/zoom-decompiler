@@ -26,7 +26,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// Gets the underlying type definition.
 		/// Can return null for types which do not have a type definition (for example arrays, pointers, type parameters)
 		/// </summary>
-		ITypeDefinition GetDefinition();
+		TypeDefinition GetDefinition();
 		
 		/// <summary>
 		/// Gets the parent type, if this is a nested type.
@@ -62,29 +62,29 @@ namespace Mi.NRefactory.TypeSystem
 		/// <summary>
 		/// Gets inner classes (including inherited inner classes).
 		/// </summary>
-		IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<ITypeDefinition> filter = null);
+		IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter = null);
 		
 		/// <summary>
 		/// Gets all methods that can be called on this return type.
 		/// </summary>
 		/// <remarks>The list does not include constructors.</remarks>
-		IEnumerable<IMethod> GetMethods(ITypeResolveContext context, Predicate<IMethod> filter = null);
+		IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter = null);
 		
 		/// <summary>
 		/// Gets all instance constructors for this type.
 		/// </summary>
 		/// <remarks>This list does not include constructors in base classes or static constructors.</remarks>
-		IEnumerable<IMethod> GetConstructors(ITypeResolveContext context, Predicate<IMethod> filter = null);
+		IEnumerable<Method> GetConstructors(ITypeResolveContext context, Predicate<Method> filter = null);
 		
 		/// <summary>
 		/// Gets all properties that can be called on this return type.
 		/// </summary>
-		IEnumerable<IProperty> GetProperties(ITypeResolveContext context, Predicate<IProperty> filter = null);
+		IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null);
 		
 		/// <summary>
 		/// Gets all fields that can be called on this return type.
 		/// </summary>
-		IEnumerable<IField> GetFields(ITypeResolveContext context, Predicate<IField> filter = null);
+		IEnumerable<Field> GetFields(ITypeResolveContext context, Predicate<Field> filter = null);
 		
 		/// <summary>
 		/// Gets all events that can be called on this return type.

@@ -25,19 +25,19 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		}
 		
 		/// <inheritdoc/>
-		public virtual ITypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer)
+		public virtual TypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer)
 		{
 			return target.GetClass(nameSpace, name, typeParameterCount, nameComparer);
 		}
 		
 		/// <inheritdoc/>
-		public virtual IEnumerable<ITypeDefinition> GetClasses()
+		public virtual IEnumerable<TypeDefinition> GetClasses()
 		{
 			return target.GetClasses();
 		}
 		
 		/// <inheritdoc/>
-		public virtual IEnumerable<ITypeDefinition> GetClasses(string nameSpace, StringComparer nameComparer)
+		public virtual IEnumerable<TypeDefinition> GetClasses(string nameSpace, StringComparer nameComparer)
 		{
 			return target.GetClasses(nameSpace, nameComparer);
 		}

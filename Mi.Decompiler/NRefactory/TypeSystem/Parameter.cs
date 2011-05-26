@@ -12,7 +12,7 @@ namespace Mi.NRefactory.TypeSystem
 	/// <summary>
 	/// Default implementation for IParameter.
 	/// </summary>
-	public sealed class Parameter : AbstractFreezable, IParameter, ISupportsInterning
+    public sealed class Parameter : AbstractFreezable, IVariable, ISupportsInterning
 	{
 		string name = string.Empty;
 		ITypeReference type = SharedTypes.UnknownType;
@@ -34,7 +34,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// <summary>
 		/// Copy constructor
 		/// </summary>
-		public Parameter(IParameter p)
+		public Parameter(Parameter p)
 		{
 			this.name = p.Name;
 			this.type = p.Type;

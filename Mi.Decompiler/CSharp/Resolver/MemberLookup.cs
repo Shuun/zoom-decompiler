@@ -23,7 +23,7 @@ namespace Mi.CSharp.Resolver
 			if (member == null)
 				throw new ArgumentNullException("member");
 			// C# 4.0 spec, §7.4 member lookup
-			if (member is Event || member is IMethod)
+			if (member is Event || member is Method)
 				return true;
 			if (member.ReturnType == SharedTypes.Dynamic)
 				return true;
@@ -32,10 +32,10 @@ namespace Mi.CSharp.Resolver
 		#endregion
 		
 		ITypeResolveContext context;
-		ITypeDefinition currentTypeDefinition;
+		TypeDefinition currentTypeDefinition;
 		ITypeResolveContext currentProject;
 		
-		public MemberLookup(ITypeResolveContext context, ITypeDefinition currentTypeDefinition, ITypeResolveContext currentProject)
+		public MemberLookup(ITypeResolveContext context, TypeDefinition currentTypeDefinition, ITypeResolveContext currentProject)
 		{
 			if (context == null)
 				throw new ArgumentNullException("context");
@@ -47,7 +47,7 @@ namespace Mi.CSharp.Resolver
 		#region IsAccessible
 		public bool IsProtectedAccessAllowed(IType targetType)
 		{
-			ITypeDefinition typeDef = targetType.GetDefinition();
+			TypeDefinition typeDef = targetType.GetDefinition();
 			return typeDef != null && typeDef.IsDerivedFrom(currentTypeDefinition, context);
 		}
 		
@@ -89,7 +89,7 @@ namespace Mi.CSharp.Resolver
 			return declaringProject != null && currentProject != null && declaringProject.InternalsVisibleTo(currentProject, context);
 		}
 		
-		bool IsProtectedAccessible(ITypeDefinition declaringType)
+		bool IsProtectedAccessible(TypeDefinition declaringType)
 		{
 			if (declaringType == currentTypeDefinition)
 				return true;
@@ -102,7 +102,7 @@ namespace Mi.CSharp.Resolver
 		public ResolveResult LookupType(IType declaringType, string name, IList<IType> typeArguments)
 		{
 			int typeArgumentCount = typeArguments.Count;
-			Predicate<ITypeDefinition> typeFilter = delegate (ITypeDefinition d) {
+			Predicate<TypeDefinition> typeFilter = delegate (TypeDefinition d) {
 				return d.TypeParameterCount == typeArgumentCount && d.Name == name && IsAccessible(d, true);
 			};
 			List<IType> types = declaringType.GetNestedTypes(context, typeFilter).ToList();
@@ -116,14 +116,14 @@ namespace Mi.CSharp.Resolver
 		void RemoveTypesHiddenByOtherTypes(List<IType> types)
 		{
 			for (int i = types.Count - 1; i >= 0; i--) {
-				ITypeDefinition d = GetDeclaringTypeDef(types[i]);
+				TypeDefinition d = GetDeclaringTypeDef(types[i]);
 				if (d == null)
 					continue;
 				// nested loop depends on the fact that the members of more derived classes appear later in the list
 				for (int j = i + 1; j < types.Count; j++) {
 					if (types[i].TypeParameterCount != types[j].TypeParameterCount)
 						continue;
-					ITypeDefinition s = GetDeclaringTypeDef(types[j]);
+					TypeDefinition s = GetDeclaringTypeDef(types[j]);
 					if (s != null && s != d && s.IsDerivedFrom(d, context)) {
 						// types[j] hides types[i]
 						types.RemoveAt(i);
@@ -137,7 +137,7 @@ namespace Mi.CSharp.Resolver
 		{
 			if (typeArguments.Count > 0) {
 				// parameterize the type if necessary
-				ITypeDefinition returnedTypeDef = returnedType as ITypeDefinition;
+				TypeDefinition returnedTypeDef = returnedType as TypeDefinition;
 				if (returnedTypeDef != null)
 					returnedType = new ParameterizedType(returnedTypeDef, typeArguments);
 			}
@@ -158,7 +158,7 @@ namespace Mi.CSharp.Resolver
 			List<IMember> members = new List<IMember>();
 			if (!isInvocation) {
 				// Consider nested types only if it's not an invocation. The type parameter count must match in this case.
-				Predicate<ITypeDefinition> typeFilter = delegate (ITypeDefinition d) {
+				Predicate<TypeDefinition> typeFilter = delegate (TypeDefinition d) {
 					return d.TypeParameterCount == typeArgumentCount && d.Name == name && IsAccessible(d, true);
 				};
 				types.AddRange(type.GetNestedTypes(context, typeFilter));
@@ -182,7 +182,7 @@ namespace Mi.CSharp.Resolver
 			} else {
 				// No need to check for isInvocation/isInvocable here:
 				// we filter out all non-methods
-				Predicate<IMethod> memberFilter = delegate(IMethod method) {
+				Predicate<Method> memberFilter = delegate(Method method) {
 					return method.TypeParameters.Count == typeArgumentCount
 						&& !method.IsOverride && method.Name == name && IsAccessible(method, allowProtectedAccess);
 				};
@@ -194,22 +194,22 @@ namespace Mi.CSharp.Resolver
 			RemoveTypesHiddenByOtherTypes(types);
 			// remove members hidden by types
 			for (int i = 0; i < types.Count; i++) {
-				ITypeDefinition d = GetDeclaringTypeDef(types[i]);
+				TypeDefinition d = GetDeclaringTypeDef(types[i]);
 				if (d != null)
 					members.RemoveAll(m => d.IsDerivedFrom(m.DeclaringTypeDefinition, context));
 			}
 			// remove members hidden by other members
 			for (int i = members.Count - 1; i >= 0; i--) {
-				ITypeDefinition d = members[i].DeclaringTypeDefinition;
-				IMethod mi = members[i] as IMethod;
+				TypeDefinition d = members[i].DeclaringTypeDefinition;
+				Method mi = members[i] as Method;
 				// nested loop depends on the fact that the members of more derived classes appear later in the list
 				for (int j = i + 1; j < members.Count; j++) {
 					if (mi != null) {
-						IMethod mj = members[j] as IMethod;
+						Method mj = members[j] as Method;
 						if (mj != null && !ParameterListComparer.Instance.Equals(mi, mj))
 							continue;
 					}
-					ITypeDefinition s = members[j].DeclaringTypeDefinition;
+					TypeDefinition s = members[j].DeclaringTypeDefinition;
 					if (s != null && s != d && s.IsDerivedFrom(d, context)) {
 						// members[j] hides members[i]
 						members.RemoveAt(i);
@@ -218,20 +218,20 @@ namespace Mi.CSharp.Resolver
 				}
 			}
 			// remove interface members hidden by class members
-			if (type is ITypeParameter) {
+			if (type is TypeParameter) {
 				// this can happen only with type parameters
 				for (int i = members.Count - 1; i >= 0; i--) {
-					ITypeDefinition d = members[i].DeclaringTypeDefinition;
+					TypeDefinition d = members[i].DeclaringTypeDefinition;
 					if (d.ClassType != ClassType.Interface)
 						continue;
-					IMethod mi = members[i] as IMethod;
+					Method mi = members[i] as Method;
 					for (int j = 0; j < members.Count; j++) {
 						if (mi != null) {
-							IMethod mj = members[j] as IMethod;
+							Method mj = members[j] as Method;
 							if (mj != null && !ParameterListComparer.Instance.Equals(mi, mj))
 								continue;
 						}
-						ITypeDefinition s = members[j].DeclaringTypeDefinition;
+						TypeDefinition s = members[j].DeclaringTypeDefinition;
 						if (s != null && IsNonInterfaceType(s)) {
 							// members[j] hides members[i]
 							members.RemoveAt(i);
@@ -247,21 +247,21 @@ namespace Mi.CSharp.Resolver
 			}
 			if (members.Count == 0)
 				return new UnknownMemberResolveResult(type, name, typeArguments);
-			IMember firstNonMethod = members.FirstOrDefault(m => !(m is IMethod));
+			IMember firstNonMethod = members.FirstOrDefault(m => !(m is Method));
 			if (members.Count == 1 && firstNonMethod != null)
 				return new MemberResolveResult(firstNonMethod, context);
 			if (firstNonMethod == null)
-				return new MethodGroupResolveResult(type, name, members.Select(m => (IMethod)m).ToList(), typeArguments);
+				return new MethodGroupResolveResult(type, name, members.Select(m => (Method)m).ToList(), typeArguments);
 			return new AmbiguousMemberResultResult(firstNonMethod, firstNonMethod.ReturnType.Resolve(context));
 		}
 
-		static bool IsNonInterfaceType(ITypeDefinition def)
+		static bool IsNonInterfaceType(TypeDefinition def)
 		{
 			// return type if def is neither an interface nor System.Object
 			return def.ClassType != ClassType.Interface && !(def.Name == "Object" && def.Namespace == "System" && def.TypeParameterCount == 0);
 		}
 		
-		static ITypeDefinition GetDeclaringTypeDef(IType type)
+		static TypeDefinition GetDeclaringTypeDef(IType type)
 		{
 			IType declType = type.DeclaringType;
 			return declType != null ? declType.GetDefinition() : null;

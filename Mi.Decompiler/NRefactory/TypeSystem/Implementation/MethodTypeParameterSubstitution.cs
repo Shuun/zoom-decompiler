@@ -18,7 +18,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			this.typeArguments = typeArguments;
 		}
 		
-		public override IType VisitTypeParameter(ITypeParameter type)
+		public override IType VisitTypeParameter(TypeParameter type)
 		{
 			int index = type.Index;
 			if (type.OwnerType == EntityType.Method) {

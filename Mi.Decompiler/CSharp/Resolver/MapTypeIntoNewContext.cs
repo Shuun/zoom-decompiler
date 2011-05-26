@@ -22,12 +22,12 @@ namespace Mi.CSharp.Resolver
 			this.context = context;
 		}
 		
-		public override IType VisitTypeDefinition(ITypeDefinition type)
+		public override IType VisitTypeDefinition(TypeDefinition type)
 		{
 			if (type.DeclaringTypeDefinition != null) {
-				ITypeDefinition decl = type.DeclaringTypeDefinition.AcceptVisitor(this) as ITypeDefinition;
+				TypeDefinition decl = type.DeclaringTypeDefinition.AcceptVisitor(this) as TypeDefinition;
 				if (decl != null) {
-					foreach (ITypeDefinition c in decl.InnerClasses) {
+					foreach (TypeDefinition c in decl.InnerClasses) {
 						if (c.Name == type.Name && c.TypeParameterCount == type.TypeParameterCount)
 							return c;
 					}
@@ -38,7 +38,7 @@ namespace Mi.CSharp.Resolver
 			}
 		}
 		
-		public override IType VisitTypeParameter(ITypeParameter type)
+		public override IType VisitTypeParameter(TypeParameter type)
 		{
 			// TODO: how to map type parameters?
 			// It might have constraints, and those constraints might be mutually recursive.

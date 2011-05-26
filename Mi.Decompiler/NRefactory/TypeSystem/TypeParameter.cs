@@ -11,9 +11,9 @@ using Mi.NRefactory.TypeSystem.Implementation;
 namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
-	/// Default implementation of <see cref="ITypeParameter"/>.
+	/// Default implementation of <see cref="TypeParameter"/>.
 	/// </summary>
-	public sealed class TypeParameter : AbstractFreezable, ITypeParameter, ISupportsInterning
+    public sealed class TypeParameter : AbstractFreezable, IType, ISupportsInterning, ITypeParameter
 	{
 		string name;
 		int index;
@@ -97,7 +97,7 @@ namespace Mi.NRefactory.TypeSystem
 			get { return null; }
 		}
 		
-		ITypeDefinition IType.GetDefinition()
+		TypeDefinition IType.GetDefinition()
 		{
 			return null;
 		}
@@ -233,38 +233,38 @@ namespace Mi.NRefactory.TypeSystem
 			return c;
 		}
 		
-		public IEnumerable<IMethod> GetConstructors(ITypeResolveContext context, Predicate<IMethod> filter = null)
+		public IEnumerable<Method> GetConstructors(ITypeResolveContext context, Predicate<Method> filter = null)
 		{
 			if (HasDefaultConstructorConstraint || HasValueTypeConstraint) {
 				Method m = Method.CreateDefaultConstructor(GetDummyClassForTypeParameter());
 				if (filter(m))
 					return new [] { m };
 			}
-            return Empty.ReadOnlyCollection<IMethod>();
+            return Empty.ReadOnlyCollection<Method>();
 		}
 		
-		public IEnumerable<IMethod> GetMethods(ITypeResolveContext context, Predicate<IMethod> filter = null)
+		public IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter = null)
 		{
 			// TODO: get methods from constraints
 			IType objectType = context.GetClass("System", "Object", 0, StringComparer.Ordinal);
-			IEnumerable<IMethod> objectMethods;
+			IEnumerable<Method> objectMethods;
 			if (objectType != null)
 				objectMethods = objectType.GetMethods(context, filter);
 			else
-                objectMethods = Empty.ReadOnlyCollection<IMethod>();
+                objectMethods = Empty.ReadOnlyCollection<Method>();
 			
 			// don't return static methods (those cannot be called from type parameter)
 			return objectMethods.Where(m => !m.IsStatic);
 		}
 		
-		public IEnumerable<IProperty> GetProperties(ITypeResolveContext context, Predicate<IProperty> filter = null)
+		public IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)
 		{
-            return Empty.ReadOnlyCollection<IProperty>();
+            return Empty.ReadOnlyCollection<Property>();
 		}
 		
-		public IEnumerable<IField> GetFields(ITypeResolveContext context, Predicate<IField> filter = null)
+		public IEnumerable<Field> GetFields(ITypeResolveContext context, Predicate<Field> filter = null)
 		{
-            return Empty.ReadOnlyCollection<IField>();
+            return Empty.ReadOnlyCollection<Field>();
 		}
 		
 		public IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)
@@ -272,7 +272,7 @@ namespace Mi.NRefactory.TypeSystem
             return Empty.ReadOnlyCollection<Event>();
 		}
 		
-		IEnumerable<IType> IType.GetNestedTypes(ITypeResolveContext context, Predicate<ITypeDefinition> filter)
+		IEnumerable<IType> IType.GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter)
 		{
             return Empty.ReadOnlyCollection<IType>();
 		}

@@ -19,9 +19,9 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			this.IsSealed = true;
 		}
 		
-		public override IEnumerable<IMethod> GetConstructors(ITypeResolveContext context, Predicate<IMethod> filter)
+		public override IEnumerable<Method> GetConstructors(ITypeResolveContext context, Predicate<Method> filter)
 		{
-            return Empty.ReadOnlyCollection<IMethod>();
+            return Empty.ReadOnlyCollection<Method>();
 		}
 		
 		public override IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter)
@@ -29,19 +29,19 @@ namespace Mi.NRefactory.TypeSystem.Implementation
             return Empty.ReadOnlyCollection<Event>();
 		}
 		
-		public override IEnumerable<IField> GetFields(ITypeResolveContext context, Predicate<IField> filter)
+		public override IEnumerable<Field> GetFields(ITypeResolveContext context, Predicate<Field> filter)
 		{
-            return Empty.ReadOnlyCollection<IField>();
+            return Empty.ReadOnlyCollection<Field>();
 		}
 		
-		public override IEnumerable<IMethod> GetMethods(ITypeResolveContext context, Predicate<IMethod> filter)
+		public override IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter)
 		{
-            return Empty.ReadOnlyCollection<IMethod>();
+            return Empty.ReadOnlyCollection<Method>();
 		}
 		
-		public override IEnumerable<IProperty> GetProperties(ITypeResolveContext context, Predicate<IProperty> filter)
+		public override IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter)
 		{
-            return Empty.ReadOnlyCollection<IProperty>();
+            return Empty.ReadOnlyCollection<Property>();
 		}
 	}
 }

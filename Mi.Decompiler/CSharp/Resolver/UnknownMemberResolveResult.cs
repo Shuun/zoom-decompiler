@@ -57,15 +57,15 @@ namespace Mi.CSharp.Resolver
 	/// </summary>
 	public class UnknownMethodResolveResult : UnknownMemberResolveResult
 	{
-		readonly ReadOnlyCollection<IParameter> parameters;
+		readonly ReadOnlyCollection<Parameter> parameters;
 		
-		public UnknownMethodResolveResult(IType targetType, string methodName, IEnumerable<IType> typeArguments, IEnumerable<IParameter> parameters) 
+		public UnknownMethodResolveResult(IType targetType, string methodName, IEnumerable<IType> typeArguments, IEnumerable<Parameter> parameters) 
 			: base(targetType, methodName, typeArguments)
 		{
-			this.parameters = new ReadOnlyCollection<IParameter>(parameters.ToArray());
+			this.parameters = new ReadOnlyCollection<Parameter>(parameters.ToArray());
 		}
 		
-		public ReadOnlyCollection<IParameter> Parameters {
+		public ReadOnlyCollection<Parameter> Parameters {
 			get { return parameters; }
 		}
 	}

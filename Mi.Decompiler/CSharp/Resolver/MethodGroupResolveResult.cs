@@ -14,7 +14,7 @@ namespace Mi.CSharp.Resolver
 	/// </summary>
 	public class MethodGroupResolveResult : ResolveResult
 	{
-		readonly ReadOnlyCollection<IMethod> methods;
+		readonly ReadOnlyCollection<Method> methods;
 		readonly ReadOnlyCollection<IType> typeArguments;
 		readonly IType targetType;
 		readonly string methodName;
@@ -23,9 +23,9 @@ namespace Mi.CSharp.Resolver
 		/// List of extension methods, used to avoid re-calculating it in ResolveInvocation() when it was already
 		/// calculated by ResolveMemberAccess().
 		/// </summary>
-		internal List<List<IMethod>> ExtensionMethods;
+		internal List<List<Method>> ExtensionMethods;
 		
-		public MethodGroupResolveResult(IType targetType, string methodName, IList<IMethod> methods, IList<IType> typeArguments) : base(SharedTypes.UnknownType)
+		public MethodGroupResolveResult(IType targetType, string methodName, IList<Method> methods, IList<IType> typeArguments) : base(SharedTypes.UnknownType)
 		{
 			if (targetType == null)
 				throw new ArgumentNullException("targetType");
@@ -33,7 +33,7 @@ namespace Mi.CSharp.Resolver
 				throw new ArgumentNullException("methods");
 			this.targetType = targetType;
 			this.methodName = methodName;
-			this.methods = new ReadOnlyCollection<IMethod>(methods);
+			this.methods = new ReadOnlyCollection<Method>(methods);
             this.typeArguments = typeArguments != null ? new ReadOnlyCollection<IType>(typeArguments) : Empty.ReadOnlyCollection<IType>();
 		}
 		
@@ -45,7 +45,7 @@ namespace Mi.CSharp.Resolver
 			get { return methodName; }
 		}
 		
-		public ReadOnlyCollection<IMethod> Methods {
+		public ReadOnlyCollection<Method> Methods {
 			get { return methods; }
 		}
 		

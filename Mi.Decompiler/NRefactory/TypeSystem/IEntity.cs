@@ -29,7 +29,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// For members, this is the class that contains the member.
 		/// For nested classes, this is the outer class. For top-level entities, this property returns null.
 		/// </summary>
-		ITypeDefinition DeclaringTypeDefinition { get; }
+		TypeDefinition DeclaringTypeDefinition { get; }
 		
 		IList<IAttribute> Attributes { get; }
 		

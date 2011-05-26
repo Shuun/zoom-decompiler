@@ -32,7 +32,7 @@ namespace Mi.NRefactory.TypeSystem
 				this.typeArguments = typeArguments;
 			}
 			
-			public override IType VisitTypeParameter(ITypeParameter type)
+			public override IType VisitTypeParameter(TypeParameter type)
 			{
 				int index = type.Index;
 				if (type.OwnerType == EntityType.TypeDefinition) {
@@ -46,10 +46,10 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		readonly ITypeDefinition genericType;
+		readonly TypeDefinition genericType;
 		readonly IType[] typeArguments;
 		
-		public ParameterizedType(ITypeDefinition genericType, IEnumerable<IType> typeArguments)
+		public ParameterizedType(TypeDefinition genericType, IEnumerable<IType> typeArguments)
 		{
 			if (genericType == null)
 				throw new ArgumentNullException("genericType");
@@ -71,7 +71,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// Fast internal version of the constructor. (no safety checks)
 		/// Keeps the array that was passed and assumes it won't be modified.
 		/// </summary>
-		internal ParameterizedType(ITypeDefinition genericType, IType[] typeArguments)
+		internal ParameterizedType(TypeDefinition genericType, IType[] typeArguments)
 		{
 			Debug.Assert(genericType.TypeParameterCount == typeArguments.Length);
 			this.genericType = genericType;
@@ -84,7 +84,7 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public IType DeclaringType {
 			get {
-				ITypeDefinition declaringTypeDef = genericType.DeclaringTypeDefinition;
+				TypeDefinition declaringTypeDef = genericType.DeclaringTypeDefinition;
 				if (declaringTypeDef != null && declaringTypeDef.TypeParameterCount > 0) {
 					IType[] newTypeArgs = new IType[declaringTypeDef.TypeParameterCount];
 					Array.Copy(this.typeArguments, 0, newTypeArgs, 0, newTypeArgs.Length);
@@ -137,7 +137,7 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public ITypeDefinition GetDefinition()
+		public TypeDefinition GetDefinition()
 		{
 			return genericType;
 		}
@@ -162,7 +162,7 @@ namespace Mi.NRefactory.TypeSystem
 			return genericType.GetBaseTypes(context).Select(t => t.AcceptVisitor(substitution));
 		}
 		
-		public IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<ITypeDefinition> filter = null)
+		public IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter = null)
 		{
 			/*
 			class Base<T> {
@@ -178,7 +178,7 @@ namespace Mi.NRefactory.TypeSystem
 			Substitution substitution = new Substitution(typeArguments);
 			List<IType> types = genericType.GetNestedTypes(context, filter).ToList();
 			for (int i = 0; i < types.Count; i++) {
-				ITypeDefinition def = types[i] as ITypeDefinition;
+				TypeDefinition def = types[i] as TypeDefinition;
 				if (def != null && def.TypeParameterCount > 0) {
 					// (partially) parameterize the nested type definition
 					IType[] newTypeArgs = new IType[def.TypeParameterCount];
@@ -196,10 +196,10 @@ namespace Mi.NRefactory.TypeSystem
 			return types;
 		}
 		
-		public IEnumerable<IMethod> GetMethods(ITypeResolveContext context, Predicate<IMethod> filter = null)
+		public IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter = null)
 		{
 			Substitution substitution = new Substitution(typeArguments);
-			List<IMethod> methods = genericType.GetMethods(context, filter).ToList();
+			List<Method> methods = genericType.GetMethods(context, filter).ToList();
 			for (int i = 0; i < methods.Count; i++) {
 				SpecializedMethod m = new SpecializedMethod(methods[i]);
 				m.SetDeclaringType(this);
@@ -209,10 +209,10 @@ namespace Mi.NRefactory.TypeSystem
 			return methods;
 		}
 		
-		public IEnumerable<IMethod> GetConstructors(ITypeResolveContext context, Predicate<IMethod> filter = null)
+		public IEnumerable<Method> GetConstructors(ITypeResolveContext context, Predicate<Method> filter = null)
 		{
 			Substitution substitution = new Substitution(typeArguments);
-			List<IMethod> methods = genericType.GetConstructors(context, filter).ToList();
+			List<Method> methods = genericType.GetConstructors(context, filter).ToList();
 			for (int i = 0; i < methods.Count; i++) {
 				SpecializedMethod m = new SpecializedMethod(methods[i]);
 				m.SetDeclaringType(this);
@@ -222,10 +222,10 @@ namespace Mi.NRefactory.TypeSystem
 			return methods;
 		}
 		
-		public IEnumerable<IProperty> GetProperties(ITypeResolveContext context, Predicate<IProperty> filter = null)
+		public IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)
 		{
 			Substitution substitution = new Substitution(typeArguments);
-			List<IProperty> properties = genericType.GetProperties(context, filter).ToList();
+			List<Property> properties = genericType.GetProperties(context, filter).ToList();
 			for (int i = 0; i < properties.Count; i++) {
 				SpecializedProperty p = new SpecializedProperty(properties[i]);
 				p.SetDeclaringType(this);
@@ -235,10 +235,10 @@ namespace Mi.NRefactory.TypeSystem
 			return properties;
 		}
 		
-		public IEnumerable<IField> GetFields(ITypeResolveContext context, Predicate<IField> filter = null)
+		public IEnumerable<Field> GetFields(ITypeResolveContext context, Predicate<Field> filter = null)
 		{
 			Substitution substitution = new Substitution(typeArguments);
-			List<IField> fields = genericType.GetFields(context, filter).ToList();
+			List<Field> fields = genericType.GetFields(context, filter).ToList();
 			for (int i = 0; i < fields.Count; i++) {
 				SpecializedField f = new SpecializedField(fields[i]);
 				f.SetDeclaringType(this);
@@ -298,7 +298,7 @@ namespace Mi.NRefactory.TypeSystem
 		public IType VisitChildren(TypeVisitor visitor)
 		{
 			IType g = genericType.AcceptVisitor(visitor);
-			ITypeDefinition def = g as ITypeDefinition;
+			TypeDefinition def = g as TypeDefinition;
 			if (def == null)
 				return g;
 			// Keep ta == null as long as no elements changed, allocate the array only if necessary.
@@ -340,12 +340,12 @@ namespace Mi.NRefactory.TypeSystem
 			ITypeReference[] typeArgs = typeArguments.ToArray();
 			if (typeArgs.Length == 0) {
 				return genericType;
-			} else if (genericType is ITypeDefinition && typeArgs.All(t => t is IType)) {
+			} else if (genericType is TypeDefinition && typeArgs.All(t => t is IType)) {
 				IType[] ta = new IType[typeArgs.Length];
 				for (int i = 0; i < ta.Length; i++) {
 					ta[i] = (IType)typeArgs[i];
 				}
-				return new ParameterizedType((ITypeDefinition)genericType, ta);
+				return new ParameterizedType((TypeDefinition)genericType, ta);
 			} else {
 				return new ParameterizedTypeReference(genericType, typeArgs);
 			}
@@ -380,7 +380,7 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public IType Resolve(ITypeResolveContext context)
 		{
-			ITypeDefinition baseTypeDef = genericType.Resolve(context).GetDefinition();
+			TypeDefinition baseTypeDef = genericType.Resolve(context).GetDefinition();
 			if (baseTypeDef == null)
 				return SharedTypes.UnknownType;
 			int tpc = baseTypeDef.TypeParameterCount;

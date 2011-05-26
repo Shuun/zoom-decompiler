@@ -19,9 +19,9 @@ namespace Mi.CSharp.Resolver.ConstantValues
 	{
 		ConstantExpression expression;
 		UsingScope parentUsingScope;
-		ITypeDefinition parentTypeDefinition;
+		TypeDefinition parentTypeDefinition;
 		
-		public CSharpConstantValue(ConstantExpression expression, UsingScope parentUsingScope, ITypeDefinition parentTypeDefinition)
+		public CSharpConstantValue(ConstantExpression expression, UsingScope parentUsingScope, TypeDefinition parentTypeDefinition)
 		{
 			if (expression == null)
 				throw new ArgumentNullException("expression");

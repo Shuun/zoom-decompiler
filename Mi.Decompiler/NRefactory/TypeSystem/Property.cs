@@ -8,12 +8,12 @@ using Mi.NRefactory.TypeSystem.Implementation;
 namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
-	/// Default implementation of <see cref="IProperty"/>.
+	/// Default implementation of <see cref="Property"/>.
 	/// </summary>
-	public class Property : AbstractMember, IProperty
+    public class Property : AbstractMember, IParameterizedMember
 	{
-		IAccessor getter, setter;
-		IList<IParameter> parameters;
+		Accessor getter, setter;
+		IList<Parameter> parameters;
 		
 		protected override void FreezeInternal()
 		{
@@ -23,12 +23,12 @@ namespace Mi.NRefactory.TypeSystem
 			base.FreezeInternal();
 		}
 		
-		public Property(ITypeDefinition declaringTypeDefinition, string name)
+		public Property(TypeDefinition declaringTypeDefinition, string name)
 			: base(declaringTypeDefinition, name, EntityType.Property)
 		{
 		}
 		
-		protected Property(IProperty p) : base(p)
+		protected Property(Property p) : base(p)
 		{
 			this.getter = p.Getter;
 			this.setter = p.Setter;
@@ -49,10 +49,10 @@ namespace Mi.NRefactory.TypeSystem
 			get { return this.EntityType == EntityType.Indexer; }
 		}
 		
-		public IList<IParameter> Parameters {
+		public IList<Parameter> Parameters {
 			get {
 				if (parameters == null)
-					parameters = new List<IParameter>();
+					parameters = new List<Parameter>();
 				return parameters;
 			}
 		}
@@ -65,7 +65,7 @@ namespace Mi.NRefactory.TypeSystem
 			get { return setter != null; }
 		}
 		
-		public IAccessor Getter{
+		public Accessor Getter{
 			get { return getter; }
 			set {
 				CheckBeforeMutation();
@@ -73,7 +73,7 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public IAccessor Setter {
+		public Accessor Setter {
 			get { return setter; }
 			set {
 				CheckBeforeMutation();

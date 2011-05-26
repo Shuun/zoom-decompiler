@@ -11,7 +11,7 @@ namespace Mi.NRefactory.TypeSystem
 	/// </summary>
 	public class Event : AbstractMember
 	{
-		IAccessor addAccessor, removeAccessor, invokeAccessor;
+		Accessor addAccessor, removeAccessor, invokeAccessor;
 		
 		protected override void FreezeInternal()
 		{
@@ -21,7 +21,7 @@ namespace Mi.NRefactory.TypeSystem
 			if (invokeAccessor != null) invokeAccessor.Freeze();
 		}
 		
-		public Event(ITypeDefinition declaringTypeDefinition, string name)
+		public Event(TypeDefinition declaringTypeDefinition, string name)
 			: base(declaringTypeDefinition, name, EntityType.Event)
 		{
 		}
@@ -49,7 +49,7 @@ namespace Mi.NRefactory.TypeSystem
 			get { return invokeAccessor != null; }
 		}
 		
-		public IAccessor AddAccessor{
+		public Accessor AddAccessor{
 			get { return addAccessor; }
 			set {
 				CheckBeforeMutation();
@@ -57,7 +57,7 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public IAccessor RemoveAccessor {
+		public Accessor RemoveAccessor {
 			get { return removeAccessor; }
 			set {
 				CheckBeforeMutation();
@@ -65,7 +65,7 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public IAccessor InvokeAccessor {
+		public Accessor InvokeAccessor {
 			get { return invokeAccessor; }
 			set {
 				CheckBeforeMutation();

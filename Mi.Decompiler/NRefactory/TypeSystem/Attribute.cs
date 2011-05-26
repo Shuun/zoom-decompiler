@@ -11,7 +11,7 @@ using Mi.NRefactory.TypeSystem.Implementation;
 namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
-	/// Default implementation of <see cref="IAttribute"/>.
+	/// Default implementation of <see cref="Attribute"/>.
 	/// </summary>
 	public sealed class Attribute : AbstractFreezable, IAttribute, ISupportsInterning
 	{
@@ -87,7 +87,7 @@ namespace Mi.NRefactory.TypeSystem
 			return this.NamedArguments;
 		}
 		
-		public IMethod ResolveConstructor(ITypeResolveContext context)
+		public Method ResolveConstructor(ITypeResolveContext context)
 		{
 			IType[] parameterTypes = null;
 			if (constructorParameterTypes != null && constructorParameterTypes.Length > 0) {
@@ -96,8 +96,8 @@ namespace Mi.NRefactory.TypeSystem
 					parameterTypes[i] = constructorParameterTypes[i].Resolve(context);
 				}
 			}
-			IMethod bestMatch = null;
-			foreach (IMethod ctor in attributeType.Resolve(context).GetConstructors(context)) {
+			Method bestMatch = null;
+			foreach (Method ctor in attributeType.Resolve(context).GetConstructors(context)) {
 				if (ctor.IsStatic)
 					continue;
 				if (parameterTypes == null) {

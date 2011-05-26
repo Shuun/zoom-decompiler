@@ -40,7 +40,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// Resolves the constructor method used for this attribute invocation.
 		/// Returns null if the constructor cannot be found.
 		/// </summary>
-		IMethod ResolveConstructor(ITypeResolveContext context);
+		Method ResolveConstructor(ITypeResolveContext context);
 	}
 	
 	#if WITH_CONTRACTS
