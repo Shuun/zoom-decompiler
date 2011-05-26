@@ -15,7 +15,7 @@ namespace Mi.CSharp.Resolver
 	/// </summary>
 	public class UsingScope : AbstractFreezable
 	{
-		readonly IProjectContent projectContent;
+		readonly ITypeResolveContext projectContent;
 		readonly UsingScope parent;
 		DomRegion region;
 		string namespaceName = "";
@@ -51,7 +51,7 @@ namespace Mi.CSharp.Resolver
 		/// <summary>
 		/// Creates a new root using scope.
 		/// </summary>
-		public UsingScope(IProjectContent projectContent)
+		public UsingScope(ITypeResolveContext projectContent)
 		{
 			if (projectContent == null)
 				throw new ArgumentNullException("projectContent");
@@ -78,7 +78,7 @@ namespace Mi.CSharp.Resolver
 			get { return parent; }
 		}
 		
-		public IProjectContent ProjectContent {
+		public ITypeResolveContext ProjectContent {
 			get { return projectContent; }
 		}
 		

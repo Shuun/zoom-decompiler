@@ -11,7 +11,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 	/// </summary>
 	public class VoidTypeDefinition : DefaultTypeDefinition
 	{
-		public VoidTypeDefinition(IProjectContent projectContent)
+		public VoidTypeDefinition(ITypeResolveContext projectContent)
 			: base(projectContent, "System", "Void")
 		{
 			this.ClassType = ClassType.Struct;

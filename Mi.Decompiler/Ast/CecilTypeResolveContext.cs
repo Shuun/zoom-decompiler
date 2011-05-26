@@ -27,7 +27,7 @@ namespace Mi.Decompiler.Ast
 	/// <summary>
 	/// ITypeResolveContext implementation that lazily loads types from Cecil.
 	/// </summary>
-	public class CecilTypeResolveContext :  IProjectContent
+	public class CecilTypeResolveContext :  ITypeResolveContext
 	{
 		readonly ModuleDefinition module;
 		readonly string[] namespaces;

@@ -197,7 +197,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// <summary>
 		/// Gets whether the internals of this project are visible to the other project
 		/// </summary>
-		public static bool InternalsVisibleTo(this IProjectContent projectContent, IProjectContent other, ITypeResolveContext context)
+		public static bool InternalsVisibleTo(this ITypeResolveContext projectContent, ITypeResolveContext other, ITypeResolveContext context)
 		{
 			if (projectContent == other)
 				return true;

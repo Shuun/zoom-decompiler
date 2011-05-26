@@ -14,7 +14,7 @@ namespace Mi.CSharp.Analysis
 	/// <summary>
 	/// Resolve context represents the minimal mscorlib required for evaluating constants.
 	/// </summary>
-	sealed class MinimalResolveContext : IProjectContent
+	sealed class MinimalResolveContext : ITypeResolveContext
 	{
 		static readonly Lazy<MinimalResolveContext> instance = new Lazy<MinimalResolveContext>(() => new MinimalResolveContext());
 		

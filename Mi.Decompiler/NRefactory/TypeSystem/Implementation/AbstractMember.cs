@@ -251,7 +251,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			}
 		}
 		
-		public IProjectContent ProjectContent {
+		public ITypeResolveContext ProjectContent {
 			get { return declaringTypeDefinition.ProjectContent; }
 		}
 		

@@ -13,7 +13,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 {
 	public class DefaultTypeDefinition : AbstractFreezable, ITypeDefinition
 	{
-		readonly IProjectContent projectContent;
+		readonly ITypeResolveContext projectContent;
 		readonly ITypeDefinition declaringTypeDefinition;
 		
 		string ns;
@@ -72,7 +72,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			this.ns = declaringTypeDefinition.Namespace;
 		}
 		
-		public DefaultTypeDefinition(IProjectContent projectContent, string ns, string name)
+		public DefaultTypeDefinition(ITypeResolveContext projectContent, string ns, string name)
 		{
 			if (projectContent == null)
 				throw new ArgumentNullException("projectContent");
@@ -336,7 +336,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			}
 		}
 		
-		public IProjectContent ProjectContent {
+		public ITypeResolveContext ProjectContent {
 			get { return projectContent; }
 		}
 		

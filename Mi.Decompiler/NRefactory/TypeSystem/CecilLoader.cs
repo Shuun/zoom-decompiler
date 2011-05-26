@@ -14,7 +14,7 @@ using Mi.Assemblies;
 namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
-	/// Allows loading an IProjectContent from an already compiled assembly.
+	/// Allows loading an ITypeResolveContext from an already compiled assembly.
 	/// </summary>
 	/// <remarks>Instance methods are not thread-safe; you need to create multiple instances of CecilLoader
 	/// if you want to load multiple project contents in parallel.</remarks>
@@ -49,8 +49,8 @@ namespace Mi.NRefactory.TypeSystem
 		/// <summary>
 		/// Loads the assembly definition into a project content.
 		/// </summary>
-		/// <returns>IProjectContent that represents the assembly</returns>
-		public IProjectContent LoadAssembly(AssemblyDefinition assemblyDefinition)
+		/// <returns>ITypeResolveContext that represents the assembly</returns>
+		public ITypeResolveContext LoadAssembly(AssemblyDefinition assemblyDefinition)
 		{
 			if (assemblyDefinition == null)
 				throw new ArgumentNullException("assemblyDefinition");
@@ -102,7 +102,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// <param name="typeDefinition">The Cecil TypeDefinition.</param>
 		/// <param name="projectContent">The project content used as parent for the new type.</param>
 		/// <returns>ITypeDefinition representing the Cecil type.</returns>
-		public ITypeDefinition LoadType(TypeDefinition typeDefinition, IProjectContent projectContent)
+		public ITypeDefinition LoadType(TypeDefinition typeDefinition, ITypeResolveContext projectContent)
 		{
 			if (typeDefinition == null)
 				throw new ArgumentNullException("typeDefinition");
@@ -114,8 +114,8 @@ namespace Mi.NRefactory.TypeSystem
 		}
 		#endregion
 		
-		#region IProjectContent implementation
-		sealed class CecilProjectContent : ProxyTypeResolveContext, IProjectContent, IDocumentationProvider
+		#region ITypeResolveContext implementation
+		sealed class CecilProjectContent : ProxyTypeResolveContext, ITypeResolveContext, IDocumentationProvider
 		{
 			readonly string assemblyName;
 			readonly IList<IAttribute> assemblyAttributes;
@@ -156,7 +156,7 @@ namespace Mi.NRefactory.TypeSystem
 		#endregion
 		
 		#region Load Assembly From Disk
-		public IProjectContent LoadAssemblyFile(string fileName)
+		public ITypeResolveContext LoadAssemblyFile(string fileName)
 		{
 			if (fileName == null)
 				throw new ArgumentNullException("fileName");
@@ -649,7 +649,7 @@ namespace Mi.NRefactory.TypeSystem
 		{
 			TypeDefinition typeDefinition;
 			
-			public CecilTypeDefinition(IProjectContent pc, TypeDefinition typeDefinition)
+			public CecilTypeDefinition(ITypeResolveContext pc, TypeDefinition typeDefinition)
 				: base(pc, typeDefinition.Namespace, ReflectionHelper.SplitTypeParameterCountFromReflectionName(typeDefinition.Name))
 			{
 				this.typeDefinition = typeDefinition;

@@ -181,7 +181,7 @@ namespace Mi.NRefactory.TypeSystem
 			get { return false; }
 		}
 		
-		IProjectContent IEntity.ProjectContent {
+		ITypeResolveContext IEntity.ProjectContent {
 			get { return null; }
 		}
 		
