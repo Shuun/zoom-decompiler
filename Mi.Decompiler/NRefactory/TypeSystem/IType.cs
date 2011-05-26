@@ -89,7 +89,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// <summary>
 		/// Gets all events that can be called on this return type.
 		/// </summary>
-		IEnumerable<IEvent> GetEvents(ITypeResolveContext context, Predicate<IEvent> filter = null);
+		IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null);
 	}
 	
 	#if WITH_CONTRACTS

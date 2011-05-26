@@ -23,7 +23,7 @@ namespace Mi.CSharp.Resolver
 			if (member == null)
 				throw new ArgumentNullException("member");
 			// C# 4.0 spec, §7.4 member lookup
-			if (member is IEvent || member is IMethod)
+			if (member is Event || member is IMethod)
 				return true;
 			if (member.ReturnType == SharedTypes.Dynamic)
 				return true;

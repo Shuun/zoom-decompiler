@@ -1128,7 +1128,7 @@ namespace Mi.NRefactory.TypeSystem
 		#endregion
 		
 		#region Read Event
-		public IEvent ReadEvent(EventDefinition ev, ITypeDefinition parentType)
+		public Event ReadEvent(EventDefinition ev, ITypeDefinition parentType)
 		{
 			if (ev == null)
 				throw new ArgumentNullException("ev");

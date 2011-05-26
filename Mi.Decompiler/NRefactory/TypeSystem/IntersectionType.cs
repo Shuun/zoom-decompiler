@@ -97,7 +97,7 @@ namespace Mi.NRefactory.TypeSystem
 			return types;
 		}
 		
-		public override IEnumerable<IEvent> GetEvents(ITypeResolveContext context, Predicate<IEvent> filter)
+		public override IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter)
 		{
 			filter = FilterNonStatic(filter);
 			return types.SelectMany(t => t.GetEvents(context, filter));

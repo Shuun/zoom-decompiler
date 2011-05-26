@@ -13,7 +13,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		readonly IMember memberDefinition;
 		IType declaringType;
 		
-		public SpecializedEvent(IEvent e) : base(e)
+		public SpecializedEvent(Event e) : base(e)
 		{
 			this.memberDefinition = e.MemberDefinition;
 			this.declaringType = e.DeclaringType;

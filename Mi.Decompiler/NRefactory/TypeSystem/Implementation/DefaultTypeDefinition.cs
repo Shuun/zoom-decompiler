@@ -25,7 +25,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		IList<IField> fields;
 		IList<IMethod> methods;
 		IList<IProperty> properties;
-		IList<IEvent> events;
+		IList<Event> events;
 		IList<IAttribute> attributes;
 		
 		DomRegion region;
@@ -150,10 +150,10 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			}
 		}
 		
-		public IList<IEvent> Events {
+		public IList<Event> Events {
 			get {
 				if (events == null)
-					events = new List<IEvent>();
+					events = new List<Event>();
 				return events;
 			}
 		}
@@ -525,13 +525,13 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			return fields;
 		}
 		
-		public virtual IEnumerable<IEvent> GetEvents(ITypeResolveContext context, Predicate<IEvent> filter = null)
+		public virtual IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)
 		{
 			ITypeDefinition compound = GetCompoundClass();
 			if (compound != this)
 				return compound.GetEvents(context, filter);
 			
-			List<IEvent> events = new List<IEvent>();
+			List<Event> events = new List<Event>();
 			using (var busyLock = BusyManager.Enter(this)) {
 				if (busyLock.Success) {
 					int baseCount = 0;
