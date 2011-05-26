@@ -118,7 +118,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		public static DefaultMethod CreateDefaultConstructor(ITypeDefinition typeDefinition)
 		{
-			DomRegion region = new DomRegion(typeDefinition.Region.FileName, typeDefinition.Region.BeginLine, typeDefinition.Region.BeginColumn);
+			DomRegion region = new DomRegion(typeDefinition.Region.BeginLine, typeDefinition.Region.BeginColumn);
 			return new DefaultMethod(typeDefinition, ".ctor") {
 				EntityType = EntityType.Constructor,
 				Accessibility = typeDefinition.IsAbstract ? Accessibility.Protected : Accessibility.Public,
