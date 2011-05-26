@@ -71,20 +71,6 @@ namespace Mi.NRefactory.TypeSystem
 		string GetNamespace(string nameSpace, StringComparer nameComparer);
 		
 		/// <summary>
-		/// Returns a <see cref="ISynchronizedTypeResolveContext"/> that
-		/// represents the same context as this instance, but cannot be modified
-		/// by other threads.
-		/// The ISynchronizedTypeResolveContext must be disposed from the same thread
-		/// that called this method when it is no longer used.
-		/// </summary>
-		/// <remarks>
-		/// A simple implementation might enter a ReaderWriterLock when the synchronized context
-		/// is created, and releases the lock when Dispose() is called.
-		/// However, implementations based on immutable data structures are also possible.
-		/// </remarks>
-		ISynchronizedTypeResolveContext Synchronize();
-		
-		/// <summary>
 		/// Returns the cache manager associated with this resolve context,
 		/// or null if caching is not allowed.
 		/// Whenever the resolve context changes in some way, this property must return a new object to

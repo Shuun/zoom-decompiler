@@ -14,7 +14,7 @@ namespace Mi.CSharp.Analysis
 	/// <summary>
 	/// Resolve context represents the minimal mscorlib required for evaluating constants.
 	/// </summary>
-	sealed class MinimalResolveContext : IProjectContent, ISynchronizedTypeResolveContext
+	sealed class MinimalResolveContext : IProjectContent
 	{
 		static readonly Lazy<MinimalResolveContext> instance = new Lazy<MinimalResolveContext>(() => new MinimalResolveContext());
 		
@@ -100,17 +100,6 @@ namespace Mi.CSharp.Analysis
 				// We don't support caching
 				return null;
 			}
-		}
-		
-		ISynchronizedTypeResolveContext ITypeResolveContext.Synchronize()
-		{
-			// This class is immutable
-			return this;
-		}
-		
-		void IDisposable.Dispose()
-		{
-			// exit from Synchronize() block
 		}
 	}
 }

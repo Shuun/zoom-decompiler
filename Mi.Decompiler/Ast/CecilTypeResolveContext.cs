@@ -27,7 +27,7 @@ namespace Mi.Decompiler.Ast
 	/// <summary>
 	/// ITypeResolveContext implementation that lazily loads types from Cecil.
 	/// </summary>
-	public class CecilTypeResolveContext : ISynchronizedTypeResolveContext, IProjectContent
+	public class CecilTypeResolveContext :  IProjectContent
 	{
 		readonly ModuleDefinition module;
 		readonly string[] namespaces;
@@ -147,17 +147,6 @@ namespace Mi.Decompiler.Ast
 				// We don't support caching
 				return null;
 			}
-		}
-		
-		ISynchronizedTypeResolveContext ITypeResolveContext.Synchronize()
-		{
-			// This class is logically immutable
-			return this;
-		}
-		
-		void IDisposable.Dispose()
-		{
-			// exit from Synchronize() block
 		}
 	}
 }

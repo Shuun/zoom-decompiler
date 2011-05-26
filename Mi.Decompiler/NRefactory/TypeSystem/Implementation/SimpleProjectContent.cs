@@ -139,31 +139,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		public CacheManager CacheManager {
 			get { return null; }
 		}
-		
-		public ISynchronizedTypeResolveContext Synchronize()
-		{
-			// don't acquire the lock on OutOfMemoryException etc.
-			ISynchronizedTypeResolveContext sync = new ReadWriteSynchronizedTypeResolveContext(types);
-			return sync;
-		}
-		
-		sealed class ReadWriteSynchronizedTypeResolveContext : ProxyTypeResolveContext, ISynchronizedTypeResolveContext
-		{
-			public ReadWriteSynchronizedTypeResolveContext(ITypeResolveContext target)
-				: base(target)
-			{
-			}
-			
-			public void Dispose()
-			{
-			}
-			
-			public override ISynchronizedTypeResolveContext Synchronize()
-			{
-				// nested Synchronize() calls don't need any locking
-				return new ReadWriteSynchronizedTypeResolveContext(target);
-			}
-		}
 		#endregion
 	}
 }

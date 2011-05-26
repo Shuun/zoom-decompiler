@@ -775,7 +775,6 @@
     <Compile Include="NRefactory\TypeSystem\IProjectContent.cs" />
     <Compile Include="NRefactory\TypeSystem\IProperty.cs" />
     <Compile Include="NRefactory\TypeSystem\ISupportsInterning.cs" />
-    <Compile Include="NRefactory\TypeSystem\ISynchronizedTypeResolveContext.cs" />
     <Compile Include="NRefactory\TypeSystem\IType.cs" />
     <Compile Include="NRefactory\TypeSystem\ITypeDefinition.cs" />
     <Compile Include="NRefactory\TypeSystem\ITypeParameter.cs" />
