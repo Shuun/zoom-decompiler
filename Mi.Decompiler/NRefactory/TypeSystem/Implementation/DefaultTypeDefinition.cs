@@ -34,13 +34,18 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		// 1 byte per enum + 2 bytes for flags
 		ClassType classType;
 		Accessibility accessibility;
-		BitVector16 flags;
-		const ushort FlagSealed    = 0x0001;
-		const ushort FlagAbstract  = 0x0002;
-		const ushort FlagShadowing = 0x0004;
-		const ushort FlagSynthetic = 0x0008;
-		const ushort FlagAddDefaultConstructorIfRequired = 0x0010;
-		const ushort FlagHasExtensionMethods = 0x0020;
+		TypeDefinitionFlags flags;
+
+        [Flags]
+        private enum TypeDefinitionFlags
+        {
+		    Sealed    = 0x0001,
+		    Abstract  = 0x0002,
+		    Shadowing = 0x0004,
+		    Synthetic = 0x0008,
+		    AddDefaultConstructorIfRequired = 0x0010,
+		    HasExtensionMethods = 0x0020
+        }
 		
 		protected override void FreezeInternal()
 		{
@@ -282,42 +287,52 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		}
 		
 		public bool IsAbstract {
-			get { return flags[FlagAbstract]; }
+			get { return (flags & TypeDefinitionFlags.Abstract)!=0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagAbstract] = value;
+				flags = value ?
+                    flags | TypeDefinitionFlags.Abstract :
+                    flags & ~TypeDefinitionFlags.Abstract;
 			}
 		}
 		
 		public bool IsSealed {
-			get { return flags[FlagSealed]; }
+			get { return (flags & TypeDefinitionFlags.Sealed) !=0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagSealed] = value;
+                flags = value ?
+                    flags | TypeDefinitionFlags.Sealed :
+                    flags & ~TypeDefinitionFlags.Sealed;
 			}
 		}
 		
 		public bool IsShadowing {
-			get { return flags[FlagShadowing]; }
+            get { return (flags & TypeDefinitionFlags.Shadowing) != 0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagShadowing] = value;
+                flags = value ?
+                   flags | TypeDefinitionFlags.Shadowing :
+                   flags & ~TypeDefinitionFlags.Shadowing;
 			}
 		}
 		
 		public bool IsSynthetic {
-			get { return flags[FlagSynthetic]; }
+            get { return (flags & TypeDefinitionFlags.Synthetic) != 0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagSynthetic] = value;
+                flags = value ?
+                  flags | TypeDefinitionFlags.Synthetic :
+                  flags & ~TypeDefinitionFlags.Synthetic;
 			}
 		}
 		
 		public bool HasExtensionMethods {
-			get { return flags[FlagHasExtensionMethods]; }
+            get { return (flags & TypeDefinitionFlags.HasExtensionMethods) != 0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagHasExtensionMethods] = value;
+                flags = value ?
+                    flags | TypeDefinitionFlags.HasExtensionMethods :
+                    flags & ~TypeDefinitionFlags.HasExtensionMethods;
 			}
 		}
 		
@@ -578,10 +593,12 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		/// <remarks>This way of creating the default constructor is necessary because
 		/// we cannot create it directly in the IClass - we need to consider partial classes.</remarks>
 		public bool AddDefaultConstructorIfRequired {
-			get { return flags[FlagAddDefaultConstructorIfRequired]; }
+			get { return (flags & TypeDefinitionFlags.AddDefaultConstructorIfRequired)!=0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagAddDefaultConstructorIfRequired] = value;
+                flags = value ?
+                    flags | TypeDefinitionFlags.AddDefaultConstructorIfRequired :
+                    flags & ~TypeDefinitionFlags.AddDefaultConstructorIfRequired;
 			}
 		}
 		
