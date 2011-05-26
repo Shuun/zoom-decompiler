@@ -8,7 +8,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 	/// <summary>
 	/// Represents a specialized IEvent (e.g. after type substitution).
 	/// </summary>
-	public class SpecializedEvent : DefaultEvent
+	public class SpecializedEvent : Event
 	{
 		readonly IMember memberDefinition;
 		IType declaringType;

@@ -8,7 +8,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 	/// <summary>
 	/// Default implementation of <see cref="IEvent"/>.
 	/// </summary>
-	public class DefaultEvent : AbstractMember, IEvent
+	public class Event : AbstractMember, IEvent
 	{
 		IAccessor addAccessor, removeAccessor, invokeAccessor;
 		
@@ -20,7 +20,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			if (invokeAccessor != null) invokeAccessor.Freeze();
 		}
 		
-		public DefaultEvent(ITypeDefinition declaringTypeDefinition, string name)
+		public Event(ITypeDefinition declaringTypeDefinition, string name)
 			: base(declaringTypeDefinition, name, EntityType.Event)
 		{
 		}
@@ -28,7 +28,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		/// <summary>
 		/// Copy constructor
 		/// </summary>
-		protected DefaultEvent(IEvent ev)
+		protected Event(IEvent ev)
 			: base(ev)
 		{
 			this.addAccessor = ev.AddAccessor;
