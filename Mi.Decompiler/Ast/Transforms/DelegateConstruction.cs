@@ -30,7 +30,7 @@ using Mi.CSharp.Ast.Expressions;
 using Mi.CSharp.Ast;
 using Mi.CSharp.Ast.Statements;
 
-namespace Mi.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.AstServices.Transforms
 {
 	/// <summary>
 	/// Converts "new Action(obj, ldftn(func))" into "new Action(obj.func)".

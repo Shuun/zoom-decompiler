@@ -23,7 +23,7 @@ using Mi.NRefactory.PatternMatching;
 using Mi.CSharp.Ast;
 using Mi.CSharp.Ast.Statements;
 
-namespace Mi.Decompiler.Ast
+namespace Mi.Decompiler.AstServices
 {
 	/// <summary>
 	/// Allows storing comments inside IEnumerable{Statement}. Used in the AstMethodBuilder.

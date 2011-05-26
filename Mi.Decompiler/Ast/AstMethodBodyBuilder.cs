@@ -22,7 +22,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
-using Mi.Decompiler.Ast.Transforms;
+using Mi.Decompiler.AstServices.Transforms;
 using Mi.Decompiler.ILAst;
 using Mi.CSharp;
 using Mi.NRefactory.PatternMatching;
@@ -30,7 +30,7 @@ using Mi.NRefactory.Utils;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 
-namespace Mi.Decompiler.Ast
+namespace Mi.Decompiler.AstServices
 {
 	using Ast = Mi.CSharp;
 	using Cecil = Mi.Assemblies;

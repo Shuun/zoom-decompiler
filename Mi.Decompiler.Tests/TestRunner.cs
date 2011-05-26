@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using Mi.Assemblies;
-using Mi.Decompiler.Ast;
+using Mi.Decompiler.AstServices;
 using Mi.Decompiler.Tests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

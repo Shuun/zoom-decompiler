@@ -23,7 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using Mi.Decompiler.Ast;
+using Mi.Decompiler.AstServices;
 using Mi.Decompiler.Tests.Helpers;
 using Mi.Assemblies;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

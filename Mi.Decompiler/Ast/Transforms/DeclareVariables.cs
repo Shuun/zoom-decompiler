@@ -27,7 +27,7 @@ using Mi.CSharp.Ast;
 using Mi.CSharp.Ast.Expressions;
 using Mi.CSharp.Ast.Statements;
 
-namespace Mi.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.AstServices.Transforms
 {
 	/// <summary>
 	/// Moves variable declarations to improved positions.

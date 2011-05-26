@@ -28,7 +28,7 @@ using Mi.CSharp.Ast;
 using Mi.CSharp.Ast.Expressions;
 using Mi.CSharp.Ast.Statements;
 
-namespace Mi.Decompiler.Ast
+namespace Mi.Decompiler.AstServices
 {
 	public class TextOutputFormatter : IOutputFormatter
 	{
