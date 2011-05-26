@@ -733,7 +733,6 @@
     <Compile Include="NRefactory\TypeSystem\IConversions.cs" />
     <Compile Include="NRefactory\TypeSystem\IDocumentationProvider.cs" />
     <Compile Include="NRefactory\TypeSystem\IEntity.cs" />
-    <Compile Include="NRefactory\TypeSystem\IEvent.cs" />
     <Compile Include="NRefactory\TypeSystem\IExplicitInterfaceImplementation.cs" />
     <Compile Include="NRefactory\TypeSystem\IField.cs" />
     <Compile Include="NRefactory\TypeSystem\IFreezable.cs" />
