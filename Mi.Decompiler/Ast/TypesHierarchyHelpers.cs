@@ -23,7 +23,7 @@ using System.Linq;
 using System.Text;
 using Mi.Assemblies;
 
-namespace Mi.Decompiler.Ast
+namespace Mi.Decompiler.AstServices
 {
 	public static class TypesHierarchyHelpers
 	{

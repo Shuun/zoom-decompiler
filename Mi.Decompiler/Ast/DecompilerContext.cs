@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Mi.Decompiler.Ast;
+using Mi.Decompiler.AstServices;
 using Mi.NRefactory.TypeSystem;
 using Mi.NRefactory.TypeSystem.Implementation;
 using Mi.Assemblies;

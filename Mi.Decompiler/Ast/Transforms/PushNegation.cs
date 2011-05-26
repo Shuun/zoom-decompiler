@@ -24,7 +24,7 @@ using Mi.NRefactory.PatternMatching;
 using Mi.CSharp.Ast;
 using Mi.CSharp.Ast.Expressions;
 
-namespace Mi.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.AstServices.Transforms
 {
 	public class PushNegation: DepthFirstAstVisitor<object, object>, IAstTransform
 	{

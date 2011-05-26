@@ -21,7 +21,7 @@ using Mi.CSharp;
 using Mi.CSharp.Ast;
 using Mi.CSharp.Ast.Expressions;
 
-namespace Mi.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.AstServices.Transforms
 {
 	public class IntroduceUnsafeModifier : DepthFirstAstVisitor<object, bool>, IAstTransform
 	{

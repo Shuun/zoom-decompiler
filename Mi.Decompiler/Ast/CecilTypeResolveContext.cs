@@ -22,7 +22,7 @@ using System.Linq;
 using Mi.NRefactory.TypeSystem;
 using Mi.Assemblies;
 
-namespace Mi.Decompiler.Ast
+namespace Mi.Decompiler.AstServices
 {
 	/// <summary>
 	/// ITypeResolveContext implementation that lazily loads types from Cecil.

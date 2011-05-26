@@ -23,7 +23,7 @@ using Mi.Assemblies;
 using Mi.CSharp.Ast;
 using Mi.CSharp.Ast.Expressions;
 
-namespace Mi.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.AstServices.Transforms
 {
 	/// <summary>
 	/// Converts extension method calls into infix syntax.

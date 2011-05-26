@@ -22,7 +22,7 @@ using Mi.NRefactory.PatternMatching;
 using Mi.Assemblies;
 using Mi.CSharp.Ast;
 
-namespace Mi.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.AstServices.Transforms
 {
 	/// <summary>
 	/// Transforms decimal constant fields.

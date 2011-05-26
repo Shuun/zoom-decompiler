@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Mi.Decompiler;
-using Mi.Decompiler.Ast;
+using Mi.Decompiler.AstServices;
 using Mi.Assemblies;
 using System.IO;
 

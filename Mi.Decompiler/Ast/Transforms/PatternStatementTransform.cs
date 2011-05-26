@@ -30,7 +30,7 @@ using Mi.CSharp.Ast;
 using Mi.CSharp.Ast.Statements;
 using Mi.CSharp.Ast.Expressions;
 
-namespace Mi.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.AstServices.Transforms
 {
 	/// <summary>
 	/// Finds the expanded form of using statements using pattern matching and replaces it with a UsingStatement.

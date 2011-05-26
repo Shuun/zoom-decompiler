@@ -26,7 +26,7 @@ using Mi.CSharp.Ast;
 using Mi.CSharp.Ast.Statements;
 using Mi.CSharp.Ast.Expressions;
 
-namespace Mi.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.AstServices.Transforms
 {
 	/// <summary>
 	/// If the first element of a constructor is a chained constructor call, convert it into a constructor initializer.

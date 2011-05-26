@@ -24,7 +24,7 @@ using Mi.CSharp.Ast.Expressions;
 using Mi.CSharp.Ast.Statements;
 using Mi.CSharp.Ast;
 
-namespace Mi.Decompiler.Ast.Transforms
+namespace Mi.Decompiler.AstServices.Transforms
 {
 	/// <summary>
 	/// Add checked/unchecked blocks.

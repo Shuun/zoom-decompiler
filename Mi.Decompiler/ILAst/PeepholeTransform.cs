@@ -181,7 +181,7 @@ namespace Mi.Decompiler.ILAst
 			if (newObj.Arguments[1].Code != ILCode.Ldftn)
 				return;
 			MethodDefinition anonymousMethod = ((MethodReference)newObj.Arguments[1].Operand).ResolveWithinSameModule(); // method is defined in current assembly
-			if (!Ast.Transforms.DelegateConstruction.IsAnonymousMethod(context, anonymousMethod))
+			if (!AstServices.Transforms.DelegateConstruction.IsAnonymousMethod(context, anonymousMethod))
 				return;
 			
 			ILNode followingNode = block.Body.ElementAtOrDefault(i + 1);
@@ -231,7 +231,7 @@ namespace Mi.Decompiler.ILAst
 			if (newObj.Arguments[1].Code != ILCode.Ldftn)
 				return;
 			MethodDefinition anonymousMethod = ((MethodReference)newObj.Arguments[1].Operand).ResolveWithinSameModule(); // method is defined in current assembly
-			if (!Ast.Transforms.DelegateConstruction.IsAnonymousMethod(context, anonymousMethod))
+			if (!AstServices.Transforms.DelegateConstruction.IsAnonymousMethod(context, anonymousMethod))
 				return;
 			
 			ILNode followingNode = block.Body.ElementAtOrDefault(i + 1);

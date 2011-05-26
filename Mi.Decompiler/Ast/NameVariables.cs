@@ -23,7 +23,7 @@ using System.Linq;
 using Mi.Decompiler.ILAst;
 using Mi.Assemblies;
 
-namespace Mi.Decompiler.Ast
+namespace Mi.Decompiler.AstServices
 {
 	public class NameVariables
 	{

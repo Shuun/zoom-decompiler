@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Mi.Decompiler.Ast.Transforms;
+using Mi.Decompiler.AstServices.Transforms;
 using Mi.CSharp;
 using Mi.CSharp.Ast;
 
