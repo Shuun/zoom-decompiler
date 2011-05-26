@@ -805,9 +805,7 @@
     <None Include="Assemblies\Microsoft.Cci.Pdb\LICENSE" />
     <None Include="Properties\AssemblyInfo.template.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Compatibility\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ProjectExtensions>
     <VisualStudio>

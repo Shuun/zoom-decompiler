@@ -12,9 +12,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 	{
 		IConstantValue constantValue;
 		
-		const ushort FlagIsReadOnly = 0x1000;
-		const ushort FlagIsVolatile = 0x2000;
-		
 		protected override void FreezeInternal()
 		{
 			if (constantValue != null)
@@ -46,18 +43,22 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		}
 		
 		public bool IsReadOnly {
-			get { return flags[FlagIsReadOnly]; }
+			get { return (flags & MemberFlags.ReadOnly)!=0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagIsReadOnly] = value;
+				flags = value ?
+                    flags | MemberFlags.ReadOnly :
+                    flags & ~ MemberFlags.ReadOnly;
 			}
 		}
 		
 		public bool IsVolatile {
-			get { return flags[FlagIsVolatile]; }
+			get { return (flags & MemberFlags.Volatile)!=0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagIsVolatile] = value;
+				flags = value ?
+                    flags | MemberFlags.Volatile :
+                    flags & ~MemberFlags.Volatile;
 			}
 		}
 		

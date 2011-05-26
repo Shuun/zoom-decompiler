@@ -16,8 +16,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		IList<ITypeParameter> typeParameters;
 		IList<IParameter> parameters;
 		
-		const ushort FlagExtensionMethod = 0x1000;
-		
 		protected override void FreezeInternal()
 		{
 			returnTypeAttributes = FreezeList(returnTypeAttributes);
@@ -69,10 +67,12 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		}
 		
 		public bool IsExtensionMethod {
-			get { return flags[FlagExtensionMethod]; }
+			get { return (flags & MemberFlags.ExtensionMethod)!=0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagExtensionMethod] = value;
+				flags = value ?
+                    flags | MemberFlags.ExtensionMethod :
+                    flags & ~MemberFlags.ExtensionMethod;
 			}
 		}
 		
