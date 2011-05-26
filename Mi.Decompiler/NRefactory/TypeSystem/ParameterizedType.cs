@@ -248,10 +248,10 @@ namespace Mi.NRefactory.TypeSystem
 			return fields;
 		}
 		
-		public IEnumerable<IEvent> GetEvents(ITypeResolveContext context, Predicate<IEvent> filter = null)
+		public IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)
 		{
 			Substitution substitution = new Substitution(typeArguments);
-			List<IEvent> events = genericType.GetEvents(context, filter).ToList();
+			List<Event> events = genericType.GetEvents(context, filter).ToList();
 			for (int i = 0; i < events.Count; i++) {
 				SpecializedEvent e = new SpecializedEvent(events[i]);
 				e.SetDeclaringType(this);

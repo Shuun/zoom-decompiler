@@ -7,9 +7,9 @@ using Mi.NRefactory.TypeSystem.Implementation;
 namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
-	/// Default implementation of <see cref="IEvent"/>.
+	/// Default implementation of <see cref="Event"/>.
 	/// </summary>
-	public class Event : AbstractMember, IEvent
+	public class Event : AbstractMember
 	{
 		IAccessor addAccessor, removeAccessor, invokeAccessor;
 		
@@ -29,7 +29,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// <summary>
 		/// Copy constructor
 		/// </summary>
-		protected Event(IEvent ev)
+		protected Event(Event ev)
 			: base(ev)
 		{
 			this.addAccessor = ev.AddAccessor;
