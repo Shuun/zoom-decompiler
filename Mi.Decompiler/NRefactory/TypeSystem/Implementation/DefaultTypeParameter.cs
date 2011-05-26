@@ -24,11 +24,15 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		// Small fields: byte+byte+short
 		VarianceModifier variance;
 		EntityType ownerType;
-		BitVector16 flags;
-		
-		const ushort FlagReferenceTypeConstraint      = 0x0001;
-		const ushort FlagValueTypeConstraint          = 0x0002;
-		const ushort FlagDefaultConstructorConstraint = 0x0004;
+		ParameterConstraint flags;
+
+        [Flags]
+        private enum ParameterConstraint
+        {
+            ReferenceType = 1,
+            ValueType = 2,
+            DefaultConstructor = 4
+        }
 		
 		protected override void FreezeInternal()
 		{
@@ -73,10 +77,10 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		public bool? IsReferenceType {
 			get {
-				switch (flags.Data & (FlagReferenceTypeConstraint | FlagValueTypeConstraint)) {
-					case FlagReferenceTypeConstraint:
+				switch (flags & (ParameterConstraint.ReferenceType | ParameterConstraint.ValueType)) {
+					case ParameterConstraint.ReferenceType:
 						return true;
-					case FlagValueTypeConstraint:
+					case ParameterConstraint.ValueType:
 						return false;
 					default:
 						return null;
@@ -149,26 +153,32 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		}
 		
 		public bool HasDefaultConstructorConstraint {
-			get { return flags[FlagDefaultConstructorConstraint]; }
+			get { return (flags & ParameterConstraint.DefaultConstructor)!=0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagDefaultConstructorConstraint] = value;
+                flags = value ?
+                    flags | ParameterConstraint.DefaultConstructor :
+                    flags & ~ParameterConstraint.DefaultConstructor;
 			}
 		}
 		
 		public bool HasReferenceTypeConstraint {
-			get { return flags[FlagReferenceTypeConstraint]; }
+            get { return (flags & ParameterConstraint.ReferenceType) != 0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagReferenceTypeConstraint] = value;
+                flags = value ?
+                   flags | ParameterConstraint.ReferenceType :
+                   flags & ~ParameterConstraint.ReferenceType;
 			}
 		}
 		
 		public bool HasValueTypeConstraint {
-			get { return flags[FlagValueTypeConstraint]; }
+            get { return (flags & ParameterConstraint.ValueType) != 0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagValueTypeConstraint] = value;
+                flags = value ?
+                   flags | ParameterConstraint.ValueType :
+                   flags & ~ParameterConstraint.ValueType;
 			}
 		}
 		
@@ -293,7 +303,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 					hashCode += attributes.GetHashCode();
 				if (constraints != null)
 					hashCode += constraints.GetHashCode();
-				hashCode += 771 * flags.Data + 900103 * (int)variance;
+				hashCode += 771 * (int)flags + 900103 * (int)variance;
 				return hashCode;
 			}
 		}

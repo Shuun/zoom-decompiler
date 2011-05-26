@@ -791,9 +791,6 @@
     <Compile Include="NRefactory\TypeSystem\ReflectionNameParseException.cs" />
     <Compile Include="NRefactory\TypeSystem\SharedTypes.cs" />
     <Compile Include="NRefactory\TypeSystem\TypeVisitor.cs" />
-    <Compile Include="NRefactory\Utils\BitVector16.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="NRefactory\Utils\BusyManager.cs" />
     <Compile Include="NRefactory\Utils\CacheManager.cs" />
     <Compile Include="NRefactory\Utils\CSharpPrimitiveCast.cs" />
