@@ -55,12 +55,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		}
 		
 		/// <inheritdoc/>
-		public virtual ISynchronizedTypeResolveContext Synchronize()
-		{
-			return target.Synchronize();
-		}
-		
-		/// <inheritdoc/>
 		public virtual Utils.CacheManager CacheManager {
 			// Don't forward this by default; we don't know what derived classes are doing;
 			// it might not be cache-safe.

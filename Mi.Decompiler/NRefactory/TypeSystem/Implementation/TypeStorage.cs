@@ -216,15 +216,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		#endregion
 		
 		#region Synchronize
-		/// <summary>
-		/// TypeStorage is mutable and does not provide any means for synchronization, so this method
-		/// always throws a <see cref="NotSupportedException"/>.
-		/// </summary>
-		public ISynchronizedTypeResolveContext Synchronize()
-		{
-			throw new NotSupportedException();
-		}
-		
 		/// <inheritdoc/>
 		public CacheManager CacheManager {
 			// TypeStorage is mutable, so caching is a bad idea.

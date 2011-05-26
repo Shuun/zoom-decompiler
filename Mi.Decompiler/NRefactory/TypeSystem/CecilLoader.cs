@@ -115,7 +115,7 @@ namespace Mi.NRefactory.TypeSystem
 		#endregion
 		
 		#region IProjectContent implementation
-		sealed class CecilProjectContent : ProxyTypeResolveContext, IProjectContent, ISynchronizedTypeResolveContext, IDocumentationProvider
+		sealed class CecilProjectContent : ProxyTypeResolveContext, IProjectContent, IDocumentationProvider
 		{
 			readonly string assemblyName;
 			readonly IList<IAttribute> assemblyAttributes;
@@ -138,12 +138,6 @@ namespace Mi.NRefactory.TypeSystem
 			public override string ToString()
 			{
 				return "[CecilProjectContent " + assemblyName + "]";
-			}
-			
-			public override ISynchronizedTypeResolveContext Synchronize()
-			{
-				// CecilProjectContent is immutable, so we don't need to synchronize
-				return this;
 			}
 			
 			public void Dispose()
