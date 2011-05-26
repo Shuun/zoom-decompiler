@@ -72,7 +72,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// The assembly in which this entity is defined.
 		/// This property never returns null.
 		/// </summary>
-		IProjectContent ProjectContent { get; }
+		ITypeResolveContext ProjectContent { get; }
 		
 		//bool IsAccessible(IClass callingClass, bool isAccessThoughReferenceOfCurrentClass);
 	}
@@ -132,9 +132,9 @@ namespace Mi.NRefactory.TypeSystem
 			get { return false; }
 		}
 		
-		IProjectContent IEntity.ProjectContent {
+		ITypeResolveContext IEntity.ProjectContent {
 			get {
-				Contract.Ensures(Contract.Result<IProjectContent>() != null);
+				Contract.Ensures(Contract.Result<ITypeResolveContext>() != null);
 				return null;
 			}
 		}

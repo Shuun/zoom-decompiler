@@ -35,7 +35,7 @@ namespace Mi.Decompiler
 		public DecompilerSettings Settings = new DecompilerSettings();
 		
 //		public ITypeResolveContext TypeResolveContext;
-//		public IProjectContent ProjectContent;
+//		public ITypeResolveContext ProjectContent;
 		
 		public DecompilerContext(ModuleDefinition currentModule)
 		{

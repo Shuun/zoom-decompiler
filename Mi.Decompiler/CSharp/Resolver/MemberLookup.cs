@@ -33,9 +33,9 @@ namespace Mi.CSharp.Resolver
 		
 		ITypeResolveContext context;
 		ITypeDefinition currentTypeDefinition;
-		IProjectContent currentProject;
+		ITypeResolveContext currentProject;
 		
-		public MemberLookup(ITypeResolveContext context, ITypeDefinition currentTypeDefinition, IProjectContent currentProject)
+		public MemberLookup(ITypeResolveContext context, ITypeDefinition currentTypeDefinition, ITypeResolveContext currentProject)
 		{
 			if (context == null)
 				throw new ArgumentNullException("context");
@@ -84,7 +84,7 @@ namespace Mi.CSharp.Resolver
 			}
 		}
 		
-		bool IsInternalAccessible(IProjectContent declaringProject)
+		bool IsInternalAccessible(ITypeResolveContext declaringProject)
 		{
 			return declaringProject != null && currentProject != null && declaringProject.InternalsVisibleTo(currentProject, context);
 		}

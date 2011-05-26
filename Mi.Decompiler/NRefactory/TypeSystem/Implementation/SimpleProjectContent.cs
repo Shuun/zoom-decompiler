@@ -12,14 +12,14 @@ using Mi.NRefactory.Utils;
 namespace Mi.NRefactory.TypeSystem.Implementation
 {
 	/// <summary>
-	/// Simple <see cref="IProjectContent"/> implementation that stores the list of classes/namespaces.
+	/// Simple <see cref="ITypeResolveContext"/> implementation that stores the list of classes/namespaces.
 	/// Synchronization is implemented using a <see cref="ReaderWriterLockSlim"/>.
 	/// </summary>
 	/// <remarks>
-	/// Compared with <see cref="TypeStorage"/>, this class adds support for the IProjectContent interface,
+	/// Compared with <see cref="TypeStorage"/>, this class adds support for the ITypeResolveContext interface,
 	/// for partial classes, and for multi-threading.
 	/// </remarks>
-	public sealed class SimpleProjectContent : IProjectContent
+	public sealed class SimpleProjectContent : ITypeResolveContext
 	{
 		// This class is sealed by design:
 		// the synchronization story doesn't mix well with someone trying to extend this class.
@@ -105,7 +105,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		}
 		#endregion
 		
-		#region IProjectContent implementation
+		#region ITypeResolveContext implementation
 		public ITypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer)
 		{
 			return types.GetClass(nameSpace, name, typeParameterCount, nameComparer);

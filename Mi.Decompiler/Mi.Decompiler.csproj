@@ -772,7 +772,6 @@
     <Compile Include="NRefactory\TypeSystem\IntersectionType.cs" />
     <Compile Include="NRefactory\TypeSystem\IParameter.cs" />
     <Compile Include="NRefactory\TypeSystem\IParameterizedMember.cs" />
-    <Compile Include="NRefactory\TypeSystem\IProjectContent.cs" />
     <Compile Include="NRefactory\TypeSystem\IProperty.cs" />
     <Compile Include="NRefactory\TypeSystem\ISupportsInterning.cs" />
     <Compile Include="NRefactory\TypeSystem\IType.cs" />

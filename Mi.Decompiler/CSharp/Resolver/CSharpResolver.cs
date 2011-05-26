@@ -308,7 +308,7 @@ namespace Mi.CSharp.Resolver
 				get { return true; }
 			}
 			
-			IProjectContent IEntity.ProjectContent {
+			ITypeResolveContext IEntity.ProjectContent {
 				get { throw new NotSupportedException(); }
 			}
 			
