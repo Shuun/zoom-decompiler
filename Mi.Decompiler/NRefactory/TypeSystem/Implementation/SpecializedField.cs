@@ -8,7 +8,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 	/// <summary>
 	/// Represents a specialized IField (e.g. after type substitution).
 	/// </summary>
-	public class SpecializedField : DefaultField
+	public class SpecializedField : Field
 	{
 		readonly IMember memberDefinition;
 		IType declaringType;

@@ -8,7 +8,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 	/// <summary>
 	/// Represents a specialized IProperty (e.g. after type substitution).
 	/// </summary>
-	public class SpecializedProperty : DefaultProperty
+	public class SpecializedProperty : Property
 	{
 		readonly IMember memberDefinition;
 		IType declaringType;
@@ -63,7 +63,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			for (int i = 0; i < p.Count; i++) {
 				IType newType = p[i].Type.Resolve(context).AcceptVisitor(substitution);
 				if (newType != p[i].Type) {
-					p[i] = new DefaultParameter(p[i]) { Type = newType };
+					p[i] = new Parameter(p[i]) { Type = newType };
 				}
 			}
 		}

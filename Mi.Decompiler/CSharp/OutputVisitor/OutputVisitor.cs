@@ -1391,7 +1391,7 @@ namespace Mi.CSharp
 				style = policy.DestructorBraceStyle;
 			} else if (blockStatement.Parent is MethodDeclaration) {
 				style = policy.MethodBraceStyle;
-			} else if (blockStatement.Parent is Accessor) {
+			} else if (blockStatement.Parent is Mi.CSharp.Ast.Accessor) {
 				if (blockStatement.Parent.Role == PropertyDeclaration.GetterRole)
 					style = policy.PropertyGetBraceStyle;
 				else if (blockStatement.Parent.Role == PropertyDeclaration.SetterRole)
@@ -1795,7 +1795,7 @@ namespace Mi.CSharp
 		#endregion
 		
 		#region TypeMembers
-		public object VisitAccessor(Accessor accessor, object data)
+		public object VisitAccessor(Mi.CSharp.Ast.Accessor accessor, object data)
 		{
 			StartNode(accessor);
 			WriteAttributes(accessor.Attributes);

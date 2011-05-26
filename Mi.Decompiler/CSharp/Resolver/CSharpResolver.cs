@@ -200,10 +200,10 @@ namespace Mi.CSharp.Resolver
 			static OperatorMethod()
 			{
 				for (TypeCode i = TypeCode.Object; i <= TypeCode.String; i++) {
-					normalParameters[i - TypeCode.Object] = new DefaultParameter(i.ToTypeReference(), string.Empty);
+					normalParameters[i - TypeCode.Object] = new Parameter(i.ToTypeReference(), string.Empty);
 				}
 				for (TypeCode i = TypeCode.Boolean; i <= TypeCode.Decimal; i++) {
-					nullableParameters[i - TypeCode.Boolean] = new DefaultParameter(NullableType.Create(i.ToTypeReference()), string.Empty);
+					nullableParameters[i - TypeCode.Boolean] = new Parameter(NullableType.Create(i.ToTypeReference()), string.Empty);
 				}
 			}
 			
@@ -1881,7 +1881,7 @@ namespace Mi.CSharp.Resolver
 				// create the parameter:
 				ByReferenceResolveResult brrr = arguments[i] as ByReferenceResolveResult;
 				if (brrr != null) {
-					list.Add(new DefaultParameter(arguments[i].Type, argumentNames[i]) {
+					list.Add(new Parameter(arguments[i].Type, argumentNames[i]) {
 					         	IsRef = brrr.IsRef,
 					         	IsOut = brrr.IsOut
 					         });
@@ -1889,9 +1889,9 @@ namespace Mi.CSharp.Resolver
 					// argument might be a lambda or delegate type, so we have to try to guess the delegate type
 					IType type = arguments[i].Type;
 					if (type == SharedTypes.Null || type == SharedTypes.UnknownType) {
-						list.Add(new DefaultParameter(KnownTypeReference.Object, argumentNames[i]));
+						list.Add(new Parameter(KnownTypeReference.Object, argumentNames[i]));
 					} else {
-						list.Add(new DefaultParameter(type, argumentNames[i]));
+						list.Add(new Parameter(type, argumentNames[i]));
 					}
 				}
 			}

@@ -30,8 +30,8 @@ namespace Mi.CSharp.Analysis
 		private MinimalResolveContext()
 		{
 			List<ITypeDefinition> types = new List<ITypeDefinition>();
-			types.Add(systemObject = new DefaultTypeDefinition(this, "System", "Object"));
-			types.Add(systemValueType = new DefaultTypeDefinition(this, "System", "ValueType") { BaseTypes = { systemObject } });
+			types.Add(systemObject = new TypeDefinition(this, "System", "Object"));
+			types.Add(systemValueType = new TypeDefinition(this, "System", "ValueType") { BaseTypes = { systemObject } });
 			types.Add(CreateStruct("System", "Boolean"));
 			types.Add(CreateStruct("System", "SByte"));
 			types.Add(CreateStruct("System", "Byte"));
@@ -44,7 +44,7 @@ namespace Mi.CSharp.Analysis
 			types.Add(CreateStruct("System", "Single"));
 			types.Add(CreateStruct("System", "Double"));
 			types.Add(CreateStruct("System", "Decimal"));
-			types.Add(new DefaultTypeDefinition(this, "System", "String") { BaseTypes = { systemObject } });
+			types.Add(new TypeDefinition(this, "System", "String") { BaseTypes = { systemObject } });
 			foreach (ITypeDefinition type in types)
 				type.Freeze();
 			this.types = types.AsReadOnly();
@@ -52,7 +52,7 @@ namespace Mi.CSharp.Analysis
 		
 		ITypeDefinition CreateStruct(string nameSpace, string name)
 		{
-			return new DefaultTypeDefinition(this, nameSpace, name) {
+			return new TypeDefinition(this, nameSpace, name) {
 				ClassType = ClassType.Struct,
 				BaseTypes = { systemValueType }
 			};

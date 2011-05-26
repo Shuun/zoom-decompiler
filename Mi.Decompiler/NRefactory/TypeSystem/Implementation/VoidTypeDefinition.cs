@@ -9,7 +9,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 	/// <summary>
 	/// Special type definition for 'void'.
 	/// </summary>
-	public class VoidTypeDefinition : DefaultTypeDefinition
+	public class VoidTypeDefinition : TypeDefinition
 	{
 		public VoidTypeDefinition(ITypeResolveContext projectContent)
 			: base(projectContent, "System", "Void")

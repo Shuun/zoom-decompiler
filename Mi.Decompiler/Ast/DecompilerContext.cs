@@ -30,7 +30,7 @@ namespace Mi.Decompiler
 	{
 		public ModuleDefinition CurrentModule;
         public readonly Action VerifyProgress = () => { };
-		public TypeDefinition CurrentType;
+		public Mi.Assemblies.TypeDefinition CurrentType;
 		public MethodDefinition CurrentMethod;
 		public DecompilerSettings Settings = new DecompilerSettings();
 		

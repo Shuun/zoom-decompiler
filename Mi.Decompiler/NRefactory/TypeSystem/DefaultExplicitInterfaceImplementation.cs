@@ -2,18 +2,19 @@
 // This code is distributed under MIT X11 license (for details please see \doc\license.txt)
 
 using System;
+using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace Mi.NRefactory.TypeSystem.Implementation
+namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
 	/// Default implementation for IExplicitInterfaceImplementation.
 	/// </summary>
-	public sealed class DefaultExplicitInterfaceImplementation : Immutable, IExplicitInterfaceImplementation, ISupportsInterning
+	public sealed class ExplicitInterfaceImplementation : Immutable, IExplicitInterfaceImplementation, ISupportsInterning
 	{
 		public ITypeReference InterfaceType { get; private set; }
 		public string MemberName { get; private set; }
 		
-		public DefaultExplicitInterfaceImplementation(ITypeReference interfaceType, string memberName)
+		public ExplicitInterfaceImplementation(ITypeReference interfaceType, string memberName)
 		{
 			if (interfaceType == null)
 				throw new ArgumentNullException("interfaceType");
@@ -41,7 +42,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		bool ISupportsInterning.EqualsForInterning(ISupportsInterning other)
 		{
-			DefaultExplicitInterfaceImplementation o = other as DefaultExplicitInterfaceImplementation;
+			ExplicitInterfaceImplementation o = other as ExplicitInterfaceImplementation;
 			return InterfaceType == o.InterfaceType && MemberName == o.MemberName;
 		}
 	}

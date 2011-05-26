@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace Mi.NRefactory.TypeSystem.Implementation
+namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
 	/// Default implementation of <see cref="IAttribute"/>.
 	/// </summary>
-	public sealed class DefaultAttribute : AbstractFreezable, IAttribute, ISupportsInterning
+	public sealed class Attribute : AbstractFreezable, IAttribute, ISupportsInterning
 	{
 		ITypeReference attributeType;
 		readonly ITypeReference[] constructorParameterTypes;
@@ -36,7 +37,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			base.FreezeInternal();
 		}
 		
-		public DefaultAttribute(ITypeReference attributeType, IEnumerable<ITypeReference> constructorParameterTypes)
+		public Attribute(ITypeReference attributeType, IEnumerable<ITypeReference> constructorParameterTypes)
 		{
 			if (attributeType == null)
 				throw new ArgumentNullException("attributeType");
@@ -160,7 +161,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		bool ISupportsInterning.EqualsForInterning(ISupportsInterning other)
 		{
-			DefaultAttribute a = other as DefaultAttribute;
+			Attribute a = other as Attribute;
 			return a != null && attributeType == a.attributeType && positionalArguments == a.positionalArguments && namedArguments == a.namedArguments && region == a.region;
 		}
 	}
