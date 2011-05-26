@@ -1135,7 +1135,7 @@ namespace Mi.NRefactory.TypeSystem
 			if (parentType == null)
 				throw new ArgumentNullException("parentType");
 			
-			DefaultEvent e = new DefaultEvent(parentType, ev.Name);
+			Event e = new Event(parentType, ev.Name);
 			TranslateModifiers(ev.AddMethod, e);
 			e.ReturnType = ReadTypeReference(ev.EventType, typeAttributes: ev, entity: e);
 			
