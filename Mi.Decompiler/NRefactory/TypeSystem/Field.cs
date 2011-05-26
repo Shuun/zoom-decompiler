@@ -23,56 +23,46 @@ namespace Mi.NRefactory.TypeSystem
 		public Field(TypeDefinition declaringTypeDefinition, string name)
 			: base(declaringTypeDefinition, name, EntityType.Field)
 		{
+            throw new NotSupportedException();
 		}
 		
 		protected Field(Field f) : base(f)
 		{
-			this.constantValue = f.ConstantValue;
-			this.IsReadOnly = f.IsReadOnly;
-			this.IsVolatile = f.IsVolatile;
+            throw new NotSupportedException();
 		}
 		
 		public override void ApplyInterningProvider(IInterningProvider provider)
 		{
-			base.ApplyInterningProvider(provider);
-			if (provider != null)
-				constantValue = provider.Intern(constantValue);
+            throw new NotSupportedException();
 		}
 		
 		public bool IsConst {
-			get { return constantValue != null; }
+            get { throw new NotSupportedException(); }
 		}
 		
 		public bool IsReadOnly {
-			get { return (flags & MemberFlags.ReadOnly)!=0; }
+            get { throw new NotSupportedException(); }
 			set {
-				CheckBeforeMutation();
-				flags = value ?
-                    flags | MemberFlags.ReadOnly :
-                    flags & ~ MemberFlags.ReadOnly;
+                throw new NotSupportedException();
 			}
 		}
 		
 		public bool IsVolatile {
-			get { return (flags & MemberFlags.Volatile)!=0; }
+            get { throw new NotSupportedException(); }
 			set {
-				CheckBeforeMutation();
-				flags = value ?
-                    flags | MemberFlags.Volatile :
-                    flags & ~MemberFlags.Volatile;
+                throw new NotSupportedException();
 			}
 		}
 		
 		public IConstantValue ConstantValue {
-			get { return constantValue; }
+            get { throw new NotSupportedException(); }
 			set {
-				CheckBeforeMutation();
-				constantValue = value;
+                throw new NotSupportedException();
 			}
 		}
 		
 		ITypeReference IVariable.Type {
-			get { return this.ReturnType; }
+            get { throw new NotSupportedException(); }
 		}
 	}
 }
