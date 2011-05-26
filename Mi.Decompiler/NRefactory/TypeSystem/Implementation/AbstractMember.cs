@@ -28,14 +28,24 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		Accessibility accessibility;
 		EntityType entityType;
 		
-		protected BitVector16 flags;
-		const ushort FlagSealed    = 0x0001;
-		const ushort FlagAbstract  = 0x0002;
-		const ushort FlagShadowing = 0x0004;
-		const ushort FlagSynthetic = 0x0008;
-		const ushort FlagVirtual   = 0x0010;
-		const ushort FlagOverride  = 0x0020;
-		const ushort FlagStatic    = 0x0040;
+		protected MemberFlags flags;
+
+        [Flags]
+        protected enum MemberFlags
+        {
+		    Sealed    = 0x0001,
+		    Abstract  = 0x0002,
+		    Shadowing = 0x0004,
+		    Synthetic = 0x0008,
+		    Virtual   = 0x0010,
+		    Override  = 0x0020,
+		    Static    = 0x0040,
+
+            ReadOnly = 0x1000,
+		    Volatile = 0x2000,
+
+            ExtensionMethod = 0x1000
+        }
 		// Flags of form 0xY000 are reserved for use in derived classes (DefaultMethod etc.)
 		
 		protected override void FreezeInternal()
@@ -112,18 +122,22 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		}
 		
 		public bool IsVirtual {
-			get { return flags[FlagVirtual]; }
+			get { return (flags & MemberFlags.Virtual)!=0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagVirtual] = value;
+				flags = value ?
+                    flags | MemberFlags.Virtual :
+                    flags & ~MemberFlags.Virtual;
 			}
 		}
 		
 		public bool IsOverride {
-			get { return flags[FlagOverride]; }
+			get { return (flags & MemberFlags.Override)!=0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagOverride] = value;
+				flags = value ?
+                    flags | MemberFlags.Override :
+                    flags & ~MemberFlags.Override;
 			}
 		}
 		
@@ -188,42 +202,52 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		}
 		
 		public bool IsStatic {
-			get { return flags[FlagStatic]; }
+			get { return (flags & MemberFlags.Static)!=0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagStatic] = value;
+				flags = value ?
+                    flags | MemberFlags.Static :
+                    flags & ~MemberFlags.Static;
 			}
 		}
 		
 		public bool IsAbstract {
-			get { return flags[FlagAbstract]; }
+			get { return (flags & MemberFlags.Abstract) != 0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagAbstract] = value;
+				flags = value ?
+                    flags | MemberFlags.Abstract :
+                    flags & ~MemberFlags.Abstract;
 			}
 		}
 		
 		public bool IsSealed {
-			get { return flags[FlagSealed]; }
+			get { return (flags & MemberFlags.Sealed) != 0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagSealed] = value;
+				flags = value ?
+                    flags | MemberFlags.Sealed :
+                    flags & ~MemberFlags.Sealed;
 			}
 		}
 		
 		public bool IsShadowing {
-			get { return flags[FlagShadowing]; }
+			get { return (flags & MemberFlags.Shadowing)!=0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagShadowing] = value;
+				flags = value ?
+                    flags | MemberFlags.Shadowing :
+                    flags & ~MemberFlags.Shadowing;
 			}
 		}
 		
 		public bool IsSynthetic {
-			get { return flags[FlagSynthetic]; }
+			get { return (flags & MemberFlags.Synthetic)!=0; }
 			set {
 				CheckBeforeMutation();
-				flags[FlagSynthetic] = value;
+				flags = value ?
+                    flags | MemberFlags.Synthetic :
+                    flags & ~MemberFlags.Synthetic;
 			}
 		}
 		
