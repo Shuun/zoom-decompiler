@@ -3,13 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace Mi.NRefactory.TypeSystem.Implementation
+namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
 	/// Default implementation of <see cref="IProperty"/>.
 	/// </summary>
-	public class DefaultProperty : AbstractMember, IProperty
+	public class Property : AbstractMember, IProperty
 	{
 		IAccessor getter, setter;
 		IList<IParameter> parameters;
@@ -22,12 +23,12 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			base.FreezeInternal();
 		}
 		
-		public DefaultProperty(ITypeDefinition declaringTypeDefinition, string name)
+		public Property(ITypeDefinition declaringTypeDefinition, string name)
 			: base(declaringTypeDefinition, name, EntityType.Property)
 		{
 		}
 		
-		protected DefaultProperty(IProperty p) : base(p)
+		protected Property(IProperty p) : base(p)
 		{
 			this.getter = p.Getter;
 			this.setter = p.Setter;

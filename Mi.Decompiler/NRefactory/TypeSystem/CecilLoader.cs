@@ -69,8 +69,8 @@ namespace Mi.NRefactory.TypeSystem
 				
 				this.EarlyBindContext = CompositeTypeResolveContext.Combine(pc, this.EarlyBindContext);
 				List<CecilTypeDefinition> types = new List<CecilTypeDefinition>();
-				foreach (ModuleDefinition module in assemblyDefinition.Modules) {
-					foreach (TypeDefinition td in module.Types) {
+				foreach (var module in assemblyDefinition.Modules) {
+					foreach (var td in module.Types) {
 						if (this.IncludeInternalMembers || (td.Attributes & TypeAttributes.VisibilityMask) == TypeAttributes.Public) {
 							string name = td.FullName;
 							if (name.Length == 0 || name[0] == '<')
@@ -80,7 +80,7 @@ namespace Mi.NRefactory.TypeSystem
 								AddAttributes(td, c);
 								typeStorage.UpdateType(c);
 							} else {
-								CecilTypeDefinition c = new CecilTypeDefinition(pc, td);
+								var c = new CecilTypeDefinition(pc, td);
 								types.Add(c);
 								typeStorage.UpdateType(c);
 							}
@@ -102,7 +102,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// <param name="typeDefinition">The Cecil TypeDefinition.</param>
 		/// <param name="projectContent">The project content used as parent for the new type.</param>
 		/// <returns>ITypeDefinition representing the Cecil type.</returns>
-		public ITypeDefinition LoadType(TypeDefinition typeDefinition, ITypeResolveContext projectContent)
+		public ITypeDefinition LoadType(Mi.Assemblies.TypeDefinition typeDefinition, ITypeResolveContext projectContent)
 		{
 			if (typeDefinition == null)
 				throw new ArgumentNullException("typeDefinition");
@@ -322,10 +322,10 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		static readonly IAttribute inAttribute = new DefaultAttribute(typeof(InAttribute).ToTypeReference(), null);
-		static readonly IAttribute outAttribute = new DefaultAttribute(typeof(OutAttribute).ToTypeReference(), null);
+		static readonly IAttribute inAttribute = new Attribute(typeof(InAttribute).ToTypeReference(), null);
+		static readonly IAttribute outAttribute = new Attribute(typeof(OutAttribute).ToTypeReference(), null);
 		
-		void AddAttributes(ParameterDefinition parameter, DefaultParameter targetParameter)
+		void AddAttributes(ParameterDefinition parameter, Parameter targetParameter)
 		{
 			if (!targetParameter.IsOut) {
 				if (parameter.IsIn)
@@ -342,7 +342,7 @@ namespace Mi.NRefactory.TypeSystem
 		static readonly SimpleConstantValue trueValue = new SimpleConstantValue(KnownTypeReference.Boolean, true);
 		static readonly SimpleConstantValue falseValue = new SimpleConstantValue(KnownTypeReference.Boolean, true);
 		static readonly ITypeReference callingConventionTypeRef = typeof(CallingConvention).ToTypeReference();
-		static readonly IAttribute preserveSigAttribute = new DefaultAttribute(typeof(PreserveSigAttribute).ToTypeReference(), null);
+		static readonly IAttribute preserveSigAttribute = new Attribute(typeof(PreserveSigAttribute).ToTypeReference(), null);
 		static readonly ITypeReference methodImplAttributeTypeRef = typeof(MethodImplAttribute).ToTypeReference();
 		static readonly ITypeReference methodImplOptionsTypeRef = typeof(MethodImplOptions).ToTypeReference();
 		
@@ -364,7 +364,7 @@ namespace Mi.NRefactory.TypeSystem
 			#region DllImportAttribute
 			if (methodDefinition.HasPInvokeInfo) {
 				PInvokeInfo info = methodDefinition.PInvokeInfo;
-				DefaultAttribute dllImport = new DefaultAttribute(dllImportAttributeTypeRef, new[] { KnownTypeReference.String });
+				Attribute dllImport = new Attribute(dllImportAttributeTypeRef, new[] { KnownTypeReference.String });
 				dllImport.PositionalArguments.Add(new SimpleConstantValue(KnownTypeReference.String, info.Module.Name));
 				
 				if (info.IsBestFitDisabled)
@@ -443,7 +443,7 @@ namespace Mi.NRefactory.TypeSystem
 			
 			#region MethodImplAttribute
 			if (implAttributes != 0) {
-				DefaultAttribute methodImpl = new DefaultAttribute(methodImplAttributeTypeRef, new[] { methodImplOptionsTypeRef });
+				Attribute methodImpl = new Attribute(methodImplAttributeTypeRef, new[] { methodImplOptionsTypeRef });
 				methodImpl.PositionalArguments.Add(new SimpleConstantValue(methodImplOptionsTypeRef, (int)implAttributes));
 				attributes.Add(methodImpl);
 			}
@@ -460,17 +460,17 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		static void AddNamedArgument(DefaultAttribute attribute, string name, IConstantValue value)
+		static void AddNamedArgument(Attribute attribute, string name, IConstantValue value)
 		{
 			attribute.NamedArguments.Add(new KeyValuePair<string, IConstantValue>(name, value));
 		}
 		
-		static readonly DefaultAttribute serializableAttribute = new DefaultAttribute(new GetClassTypeReference("System.SerializableAttribute", 0), null);
+		static readonly Attribute serializableAttribute = new Attribute(new GetClassTypeReference("System.SerializableAttribute", 0), null);
 		static readonly ITypeReference structLayoutAttributeTypeRef = typeof(StructLayoutAttribute).ToTypeReference();
 		static readonly ITypeReference layoutKindTypeRef = typeof(LayoutKind).ToTypeReference();
 		static readonly ITypeReference charSetTypeRef = typeof(CharSet).ToTypeReference();
 		
-		void AddAttributes(TypeDefinition typeDefinition, ITypeDefinition targetEntity)
+		void AddAttributes(Mi.Assemblies.TypeDefinition typeDefinition, ITypeDefinition targetEntity)
 		{
 			#region SerializableAttribute
 			if (typeDefinition.IsSerializable)
@@ -501,7 +501,7 @@ namespace Mi.NRefactory.TypeSystem
 			}
 			LayoutKind defaultLayoutKind = (typeDefinition.IsValueType && !typeDefinition.IsEnum) ? LayoutKind.Sequential: LayoutKind.Auto;
 			if (layoutKind != defaultLayoutKind || charSet != CharSet.Ansi || typeDefinition.PackingSize > 0 || typeDefinition.ClassSize > 0) {
-				DefaultAttribute structLayout = new DefaultAttribute(structLayoutAttributeTypeRef, new[] { layoutKindTypeRef });
+				Attribute structLayout = new Attribute(structLayoutAttributeTypeRef, new[] { layoutKindTypeRef });
 				structLayout.PositionalArguments.Add(new SimpleConstantValue(layoutKindTypeRef, (int)layoutKind));
 				if (charSet != CharSet.Ansi) {
 					structLayout.NamedArguments.Add(new KeyValuePair<string, IConstantValue>(
@@ -528,13 +528,13 @@ namespace Mi.NRefactory.TypeSystem
 		}
 		
 		static readonly ITypeReference fieldOffsetAttributeTypeRef = typeof(FieldOffsetAttribute).ToTypeReference();
-		static readonly DefaultAttribute nonSerializedAttribute = new DefaultAttribute(new GetClassTypeReference("System.NonSerializedAttribute", 0), null);
+		static readonly Attribute nonSerializedAttribute = new Attribute(new GetClassTypeReference("System.NonSerializedAttribute", 0), null);
 		
 		void AddAttributes(FieldDefinition fieldDefinition, IEntity targetEntity)
 		{
 			#region FieldOffsetAttribute
 			if (fieldDefinition.HasLayoutInfo) {
-				DefaultAttribute fieldOffset = new DefaultAttribute(fieldOffsetAttributeTypeRef, new[] { KnownTypeReference.Int32 });
+				Attribute fieldOffset = new Attribute(fieldOffsetAttributeTypeRef, new[] { KnownTypeReference.Int32 });
 				fieldOffset.PositionalArguments.Add(new SimpleConstantValue(KnownTypeReference.Int32, fieldDefinition.Offset));
 				targetEntity.Attributes.Add(fieldOffset);
 			}
@@ -561,7 +561,7 @@ namespace Mi.NRefactory.TypeSystem
 		
 		static IAttribute ConvertMarshalInfo(MarshalInfo marshalInfo)
 		{
-			DefaultAttribute attr = new DefaultAttribute(marshalAsAttributeTypeRef, new[] { unmanagedTypeTypeRef });
+			Attribute attr = new Attribute(marshalAsAttributeTypeRef, new[] { unmanagedTypeTypeRef });
 			attr.PositionalArguments.Add(new SimpleConstantValue(unmanagedTypeTypeRef, (int)marshalInfo.NativeType));
 			// TODO: handle classes derived from MarshalInfo
 			return attr;
@@ -594,7 +594,7 @@ namespace Mi.NRefactory.TypeSystem
 					ctorParameters[i] = ReadTypeReference(ctor.Parameters[i].ParameterType);
 				}
 			}
-			DefaultAttribute a = new DefaultAttribute(ReadTypeReference(attribute.AttributeType), ctorParameters);
+			Attribute a = new Attribute(ReadTypeReference(attribute.AttributeType), ctorParameters);
 			try {
 				if (attribute.HasConstructorArguments) {
 					foreach (var arg in attribute.ConstructorArguments) {
@@ -645,18 +645,18 @@ namespace Mi.NRefactory.TypeSystem
 		#endregion
 		
 		#region Read Type Definition
-		sealed class CecilTypeDefinition : DefaultTypeDefinition
+		sealed class CecilTypeDefinition : TypeDefinition
 		{
-			TypeDefinition typeDefinition;
+			Mi.Assemblies.TypeDefinition typeDefinition;
 			
-			public CecilTypeDefinition(ITypeResolveContext pc, TypeDefinition typeDefinition)
+			public CecilTypeDefinition(ITypeResolveContext pc, Mi.Assemblies.TypeDefinition typeDefinition)
 				: base(pc, typeDefinition.Namespace, ReflectionHelper.SplitTypeParameterCountFromReflectionName(typeDefinition.Name))
 			{
 				this.typeDefinition = typeDefinition;
 				InitTypeParameters();
 			}
 			
-			public CecilTypeDefinition(CecilTypeDefinition parentType, string name, TypeDefinition typeDefinition)
+			public CecilTypeDefinition(CecilTypeDefinition parentType, string name, Mi.Assemblies.TypeDefinition typeDefinition)
 				: base(parentType, name)
 			{
 				this.typeDefinition = typeDefinition;
@@ -670,7 +670,7 @@ namespace Mi.NRefactory.TypeSystem
 				for (int i = 0; i < typeDefinition.GenericParameters.Count; i++) {
 					if (typeDefinition.GenericParameters[i].Position != i)
 						throw new InvalidOperationException("g.Position != i");
-					this.TypeParameters.Add(new DefaultTypeParameter(
+					this.TypeParameters.Add(new TypeParameter(
 						EntityType.TypeDefinition, i, typeDefinition.GenericParameters[i].Name));
 				}
 			}
@@ -681,7 +681,7 @@ namespace Mi.NRefactory.TypeSystem
 				
 				if (typeDefinition.HasGenericParameters) {
 					for (int i = 0; i < typeDefinition.GenericParameters.Count; i++) {
-						loader.AddConstraints(this, (DefaultTypeParameter)this.TypeParameters[i], typeDefinition.GenericParameters[i]);
+						loader.AddConstraints(this, (TypeParameter)this.TypeParameters[i], typeDefinition.GenericParameters[i]);
 					}
 				}
 				
@@ -721,7 +721,7 @@ namespace Mi.NRefactory.TypeSystem
 			{
 				if (!typeDefinition.HasNestedTypes)
 					return;
-				foreach (TypeDefinition nestedType in typeDefinition.NestedTypes) {
+				foreach (var nestedType in typeDefinition.NestedTypes) {
 					TypeAttributes visibility = nestedType.Attributes & TypeAttributes.VisibilityMask;
 					if (loader.IncludeInternalMembers
 					    || visibility == TypeAttributes.NestedPublic
@@ -745,7 +745,7 @@ namespace Mi.NRefactory.TypeSystem
 			
 			void InitModifiers()
 			{
-				TypeDefinition td = this.typeDefinition;
+				var td = this.typeDefinition;
 				// set classtype
 				if (td.IsInterface) {
 					this.ClassType = ClassType.Interface;
@@ -789,7 +789,7 @@ namespace Mi.NRefactory.TypeSystem
 				}
 			}
 			
-			static bool IsDelegate(TypeDefinition type)
+			static bool IsDelegate(Mi.Assemblies.TypeDefinition type)
 			{
 				if (type.BaseType == null)
 					return false;
@@ -798,7 +798,7 @@ namespace Mi.NRefactory.TypeSystem
 						|| type.BaseType.FullName == "System.MulticastDelegate";
 			}
 			
-			static bool IsModule(TypeDefinition type)
+			static bool IsModule(Mi.Assemblies.TypeDefinition type)
 			{
 				if (!type.HasCustomAttributes)
 					return false;
@@ -868,17 +868,17 @@ namespace Mi.NRefactory.TypeSystem
 		#region Read Method
 		public IMethod ReadMethod(MethodDefinition method, ITypeDefinition parentType, EntityType methodType = EntityType.Method)
 		{
-			DefaultMethod m = new DefaultMethod(parentType, method.Name);
+			Method m = new Method(parentType, method.Name);
 			m.EntityType = methodType;
 			if (method.HasGenericParameters) {
 				for (int i = 0; i < method.GenericParameters.Count; i++) {
 					if (method.GenericParameters[i].Position != i)
 						throw new InvalidOperationException("g.Position != i");
-					m.TypeParameters.Add(new DefaultTypeParameter(
+					m.TypeParameters.Add(new TypeParameter(
 						EntityType.Method, i, method.GenericParameters[i].Name));
 				}
 				for (int i = 0; i < method.GenericParameters.Count; i++) {
-					AddConstraints(m, (DefaultTypeParameter)m.TypeParameters[i], method.GenericParameters[i]);
+					AddConstraints(m, (TypeParameter)m.TypeParameters[i], method.GenericParameters[i]);
 				}
 			}
 			
@@ -977,7 +977,7 @@ namespace Mi.NRefactory.TypeSystem
 			if (parameter == null)
 				throw new ArgumentNullException("parameter");
 			var type = ReadTypeReference(parameter.ParameterType, typeAttributes: parameter, entity: parentMember);
-			DefaultParameter p = new DefaultParameter(type, parameter.Name);
+			Parameter p = new Parameter(type, parameter.Name);
 			
 			if (parameter.ParameterType is Mi.Assemblies.ByReferenceType) {
 				if (!parameter.IsIn && parameter.IsOut)
@@ -1021,7 +1021,7 @@ namespace Mi.NRefactory.TypeSystem
 			if (parentType == null)
 				throw new ArgumentNullException("parentType");
 			
-			DefaultField f = new DefaultField(parentType, field.Name);
+			Field f = new Field(parentType, field.Name);
 			f.Accessibility = GetAccessibility(field.Attributes);
 			f.IsReadOnly = field.IsInitOnly;
 			f.IsStatic = field.IsStatic;
@@ -1060,7 +1060,7 @@ namespace Mi.NRefactory.TypeSystem
 		#endregion
 		
 		#region Type Parameter Constraints
-		void AddConstraints(IEntity parentEntity, DefaultTypeParameter tp, GenericParameter g)
+		void AddConstraints(IEntity parentEntity, TypeParameter tp, GenericParameter g)
 		{
 			switch (g.Attributes & GenericParameterAttributes.VarianceMask) {
 				case GenericParameterAttributes.Contravariant:
@@ -1090,7 +1090,7 @@ namespace Mi.NRefactory.TypeSystem
 				throw new ArgumentNullException("property");
 			if (parentType == null)
 				throw new ArgumentNullException("parentType");
-			DefaultProperty p = new DefaultProperty(parentType, property.Name);
+			Property p = new Property(parentType, property.Name);
 			p.EntityType = propertyType;
 			TranslateModifiers(property.GetMethod ?? property.SetMethod, p);
 			p.ReturnType = ReadTypeReference(property.PropertyType, typeAttributes: property, entity: p);
@@ -1114,12 +1114,12 @@ namespace Mi.NRefactory.TypeSystem
 			if (accessorMethod != null && IsVisible(accessorMethod.Attributes)) {
 				Accessibility accessibility = GetAccessibility(accessorMethod.Attributes);
 				if (HasAnyAttributes(accessorMethod)) {
-					DefaultAccessor a = new DefaultAccessor();
+					Accessor a = new Accessor();
 					a.Accessibility = accessibility;
 					AddAttributes(accessorMethod, a.Attributes, a.ReturnTypeAttributes);
 					return a;
 				} else {
-					return DefaultAccessor.GetFromAccessibility(accessibility);
+					return Accessor.GetFromAccessibility(accessibility);
 				}
 			} else {
 				return null;

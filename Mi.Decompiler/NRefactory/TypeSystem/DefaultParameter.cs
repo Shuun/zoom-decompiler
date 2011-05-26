@@ -5,13 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Text;
+using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace Mi.NRefactory.TypeSystem.Implementation
+namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
 	/// Default implementation for IParameter.
 	/// </summary>
-	public sealed class DefaultParameter : AbstractFreezable, IParameter, ISupportsInterning
+	public sealed class Parameter : AbstractFreezable, IParameter, ISupportsInterning
 	{
 		string name = string.Empty;
 		ITypeReference type = SharedTypes.UnknownType;
@@ -20,7 +21,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		DomRegion region;
 		byte flags;
 		
-		public DefaultParameter(ITypeReference type, string name)
+		public Parameter(ITypeReference type, string name)
 		{
 			if (type == null)
 				throw new ArgumentNullException("type");
@@ -33,7 +34,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		/// <summary>
 		/// Copy constructor
 		/// </summary>
-		public DefaultParameter(IParameter p)
+		public Parameter(IParameter p)
 		{
 			this.name = p.Name;
 			this.type = p.Type;
@@ -152,7 +153,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		bool ISupportsInterning.EqualsForInterning(ISupportsInterning other)
 		{
-			DefaultParameter p = other as DefaultParameter;
+			Parameter p = other as Parameter;
 			return p != null && type == p.type && attributes == p.attributes
 				&& defaultValue == p.defaultValue && region == p.region && flags == p.flags;
 		}

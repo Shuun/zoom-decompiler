@@ -1277,7 +1277,7 @@ namespace Mi.CSharp.Resolver
 			return null;
 		}
 		
-		public override ResolveResult VisitAccessor(Accessor accessor, object data)
+		public override ResolveResult VisitAccessor(Mi.CSharp.Ast.Accessor accessor, object data)
 		{
 			ScanChildren(accessor);
 			return null;

@@ -4,13 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace Mi.NRefactory.TypeSystem.Implementation
+namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
 	/// Default implementation of <see cref="IMethod" /> interface.
 	/// </summary>
-	public class DefaultMethod : AbstractMember, IMethod
+	public class Method : AbstractMember, IMethod
 	{
 		IList<IAttribute> returnTypeAttributes;
 		IList<ITypeParameter> typeParameters;
@@ -24,7 +25,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			base.FreezeInternal();
 		}
 		
-		public DefaultMethod(ITypeDefinition declaringTypeDefinition, string name)
+		public Method(ITypeDefinition declaringTypeDefinition, string name)
 			: base(declaringTypeDefinition, name, EntityType.Method)
 		{
 		}
@@ -32,7 +33,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		/// <summary>
 		/// Copy constructor
 		/// </summary>
-		protected DefaultMethod(IMethod method) : base(method)
+		protected Method(IMethod method) : base(method)
 		{
 			returnTypeAttributes = CopyList(returnTypeAttributes);
 			typeParameters = CopyList(typeParameters);
@@ -116,10 +117,10 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			return b.ToString();
 		}
 		
-		public static DefaultMethod CreateDefaultConstructor(ITypeDefinition typeDefinition)
+		public static Method CreateDefaultConstructor(ITypeDefinition typeDefinition)
 		{
 			DomRegion region = new DomRegion(typeDefinition.Region.BeginLine, typeDefinition.Region.BeginColumn);
-			return new DefaultMethod(typeDefinition, ".ctor") {
+			return new Method(typeDefinition, ".ctor") {
 				EntityType = EntityType.Constructor,
 				Accessibility = typeDefinition.IsAbstract ? Accessibility.Protected : Accessibility.Public,
 				IsSynthetic = true,

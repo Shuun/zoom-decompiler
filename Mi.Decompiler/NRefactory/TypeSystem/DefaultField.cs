@@ -2,13 +2,14 @@
 // This code is distributed under MIT X11 license (for details please see \doc\license.txt)
 
 using System;
+using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace Mi.NRefactory.TypeSystem.Implementation
+namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
 	/// Default implementation of <see cref="IField"/>.
 	/// </summary>
-	public class DefaultField : AbstractMember, IField
+	public class Field : AbstractMember, IField
 	{
 		IConstantValue constantValue;
 		
@@ -19,12 +20,12 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			base.FreezeInternal();
 		}
 		
-		public DefaultField(ITypeDefinition declaringTypeDefinition, string name)
+		public Field(ITypeDefinition declaringTypeDefinition, string name)
 			: base(declaringTypeDefinition, name, EntityType.Field)
 		{
 		}
 		
-		protected DefaultField(IField f) : base(f)
+		protected Field(IField f) : base(f)
 		{
 			this.constantValue = f.ConstantValue;
 			this.IsReadOnly = f.IsReadOnly;

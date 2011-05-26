@@ -4,21 +4,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace Mi.NRefactory.TypeSystem.Implementation
+namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
 	/// Default implementation of <see cref="IAccessor"/>.
 	/// </summary>
-	public sealed class DefaultAccessor : AbstractFreezable, IAccessor, ISupportsInterning
+	public sealed class Accessor : AbstractFreezable, IAccessor, ISupportsInterning
 	{
-		static readonly DefaultAccessor[] defaultAccessors = CreateDefaultAccessors();
+		static readonly Accessor[] defaultAccessors = CreateDefaultAccessors();
 		
-		static DefaultAccessor[] CreateDefaultAccessors()
+		static Accessor[] CreateDefaultAccessors()
 		{
-			DefaultAccessor[] accessors = new DefaultAccessor[(int)Accessibility.ProtectedAndInternal + 1];
+			Accessor[] accessors = new Accessor[(int)Accessibility.ProtectedAndInternal + 1];
 			for (int i = 0; i < accessors.Length; i++) {
-				accessors[i] = new DefaultAccessor();
+				accessors[i] = new Accessor();
 				accessors[i].accessibility = (Accessibility)i;
 				accessors[i].Freeze();
 			}
@@ -34,7 +35,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			if (index >= 0 && index < defaultAccessors.Length) {
 				return defaultAccessors[index];
 			} else {
-				DefaultAccessor a = new DefaultAccessor();
+				Accessor a = new Accessor();
 				a.accessibility = accessibility;
 				a.Freeze();
 				return a;
@@ -99,7 +100,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		bool ISupportsInterning.EqualsForInterning(ISupportsInterning other)
 		{
-			DefaultAccessor a = other as DefaultAccessor;
+			Accessor a = other as Accessor;
 			return a != null && (attributes == a.attributes && returnTypeAttributes == a.returnTypeAttributes 
 			                     && accessibility == a.accessibility && region == a.region);
 		}

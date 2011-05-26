@@ -68,7 +68,7 @@ namespace Mi.NRefactory.TypeSystem
 			return systemArray.Resolve(context).GetMethods(context, filter);
 		}
 		
-		static readonly DefaultParameter indexerParam = new DefaultParameter(KnownTypeReference.Int32, string.Empty);
+		static readonly Parameter indexerParam = new Parameter(KnownTypeReference.Int32, string.Empty);
 		
 		public override IEnumerable<IProperty> GetProperties(ITypeResolveContext context, Predicate<IProperty> filter = null)
 		{
@@ -77,12 +77,12 @@ namespace Mi.NRefactory.TypeSystem
 				foreach (IProperty p in arrayDef.GetProperties(context, filter)) {
 					yield return p;
 				}
-				DefaultProperty indexer = new DefaultProperty(arrayDef, "Items") {
+				Property indexer = new Property(arrayDef, "Items") {
 					EntityType = EntityType.Indexer,
 					ReturnType = elementType,
 					Accessibility = Accessibility.Public,
-					Getter = DefaultAccessor.GetFromAccessibility(Accessibility.Public),
-					Setter = DefaultAccessor.GetFromAccessibility(Accessibility.Public),
+					Getter = Accessor.GetFromAccessibility(Accessibility.Public),
+					Setter = Accessor.GetFromAccessibility(Accessibility.Public),
 					IsSynthetic = true
 				};
 				for (int i = 0; i < dimensions; i++) {

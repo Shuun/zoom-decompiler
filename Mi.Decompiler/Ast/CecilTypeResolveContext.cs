@@ -32,7 +32,7 @@ namespace Mi.Decompiler.Ast
 		readonly ModuleDefinition module;
 		readonly string[] namespaces;
 		readonly CecilLoader loader;
-		Dictionary<TypeDefinition, WeakReference> dict = new Dictionary<TypeDefinition, WeakReference>();
+        Dictionary<Mi.Assemblies.TypeDefinition, WeakReference> resolvedCache = new Dictionary<Assemblies.TypeDefinition, WeakReference>();
 		int countUntilNextCleanup = 4;
 		
 		public CecilTypeResolveContext(ModuleDefinition module)
@@ -49,12 +49,12 @@ namespace Mi.Decompiler.Ast
 			this.AssemblyAttributes = assemblyAttributes.AsReadOnly();
 		}
 		
-		ITypeDefinition GetClass(TypeDefinition cecilType)
+		ITypeDefinition GetClass(Mi.Assemblies.TypeDefinition cecilType)
 		{
-			lock (dict) {
+			lock (resolvedCache) {
 				WeakReference wr;
 				ITypeDefinition type;
-				if (dict.TryGetValue(cecilType, out wr)) {
+				if (resolvedCache.TryGetValue(cecilType, out wr)) {
 					type = (ITypeDefinition)wr.Target;
 				} else {
 					wr = null;
@@ -67,7 +67,7 @@ namespace Mi.Decompiler.Ast
 					if (--countUntilNextCleanup <= 0)
 						CleanupDict();
 					wr = new WeakReference(type);
-					dict.Add(cecilType, wr);
+					resolvedCache.Add(cecilType, wr);
 				} else {
 					wr.Target = type;
 				}
@@ -77,16 +77,15 @@ namespace Mi.Decompiler.Ast
 		
 		void CleanupDict()
 		{
-			List<TypeDefinition> deletedKeys = new List<TypeDefinition>();
-			foreach (var pair in dict) {
-				if (!pair.Value.IsAlive) {
-					deletedKeys.Add(pair.Key);
-				}
+			var deletedKeys =
+                (from pair in resolvedCache
+                where !pair.Value.IsAlive
+                select pair.Key).ToList();
+
+            foreach (var key in deletedKeys) {
+				resolvedCache.Remove(key);
 			}
-			foreach (var key in deletedKeys) {
-				dict.Remove(key);
-			}
-			countUntilNextCleanup = dict.Count + 4;
+			countUntilNextCleanup = resolvedCache.Count + 4;
 		}
 		
 		public IList<IAttribute> AssemblyAttributes { get; private set; }
@@ -96,13 +95,13 @@ namespace Mi.Decompiler.Ast
 			if (typeParameterCount > 0)
 				name = name + "`" + typeParameterCount.ToString();
 			if (nameComparer == StringComparer.Ordinal) {
-				TypeDefinition cecilType = module.GetType(nameSpace, name);
+				var cecilType = module.GetType(nameSpace, name);
 				if (cecilType != null)
 					return GetClass(cecilType);
 				else
 					return null;
 			}
-			foreach (TypeDefinition cecilType in module.Types) {
+			foreach (var cecilType in module.Types) {
 				if (nameComparer.Equals(name, cecilType.Name)
 				    && nameComparer.Equals(nameSpace, cecilType.Namespace)
 				    && cecilType.GenericParameters.Count == typeParameterCount)
@@ -115,14 +114,14 @@ namespace Mi.Decompiler.Ast
 		
 		public IEnumerable<ITypeDefinition> GetClasses()
 		{
-			foreach (TypeDefinition cecilType in module.Types) {
+			foreach (var cecilType in module.Types) {
 				yield return GetClass(cecilType);
 			}
 		}
 		
 		public IEnumerable<ITypeDefinition> GetClasses(string nameSpace, StringComparer nameComparer)
 		{
-			foreach (TypeDefinition cecilType in module.Types) {
+			foreach (var cecilType in module.Types) {
 				if (nameComparer.Equals(nameSpace, cecilType.Namespace))
 					yield return GetClass(cecilType);
 			}

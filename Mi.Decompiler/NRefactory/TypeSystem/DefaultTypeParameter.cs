@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Mi.NRefactory.Utils;
+using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace Mi.NRefactory.TypeSystem.Implementation
+namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
 	/// Default implementation of <see cref="ITypeParameter"/>.
 	/// </summary>
-	public sealed class DefaultTypeParameter : AbstractFreezable, ITypeParameter, ISupportsInterning
+	public sealed class TypeParameter : AbstractFreezable, ITypeParameter, ISupportsInterning
 	{
 		string name;
 		int index;
@@ -41,7 +42,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			base.FreezeInternal();
 		}
 		
-		public DefaultTypeParameter(EntityType ownerType, int index, string name)
+		public TypeParameter(EntityType ownerType, int index, string name)
 		{
 			if (!(ownerType == EntityType.TypeDefinition || ownerType == EntityType.Method))
 				throw new ArgumentException("owner must be a type or a method", "ownerType");
@@ -120,7 +121,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		public bool Equals(IType other)
 		{
-			DefaultTypeParameter p = other as DefaultTypeParameter;
+			TypeParameter p = other as TypeParameter;
 			if (p == null)
 				return false;
 			return ownerType == p.ownerType && index == p.index;
@@ -218,9 +219,9 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		static readonly SimpleProjectContent dummyProjectContent = new SimpleProjectContent();
 		
-		DefaultTypeDefinition GetDummyClassForTypeParameter()
+		TypeDefinition GetDummyClassForTypeParameter()
 		{
-			DefaultTypeDefinition c = new DefaultTypeDefinition(dummyProjectContent, string.Empty, this.Name);
+			TypeDefinition c = new TypeDefinition(dummyProjectContent, string.Empty, this.Name);
 			c.Region = this.Region;
 			if (HasValueTypeConstraint) {
 				c.ClassType = ClassType.Struct;
@@ -235,7 +236,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		public IEnumerable<IMethod> GetConstructors(ITypeResolveContext context, Predicate<IMethod> filter = null)
 		{
 			if (HasDefaultConstructorConstraint || HasValueTypeConstraint) {
-				DefaultMethod m = DefaultMethod.CreateDefaultConstructor(GetDummyClassForTypeParameter());
+				Method m = Method.CreateDefaultConstructor(GetDummyClassForTypeParameter());
 				if (filter(m))
 					return new [] { m };
 			}
@@ -310,7 +311,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		bool ISupportsInterning.EqualsForInterning(ISupportsInterning other)
 		{
-			DefaultTypeParameter o = other as DefaultTypeParameter;
+			TypeParameter o = other as TypeParameter;
 			return o != null 
 				&& this.attributes == o.attributes
 				&& this.constraints == o.constraints

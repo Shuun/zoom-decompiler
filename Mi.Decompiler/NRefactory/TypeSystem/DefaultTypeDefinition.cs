@@ -8,10 +8,11 @@ using System.Globalization;
 using System.Linq;
 
 using Mi.NRefactory.Utils;
+using Mi.NRefactory.TypeSystem.Implementation;
 
-namespace Mi.NRefactory.TypeSystem.Implementation
+namespace Mi.NRefactory.TypeSystem
 {
-	public class DefaultTypeDefinition : AbstractFreezable, ITypeDefinition
+	public class TypeDefinition : AbstractFreezable, ITypeDefinition
 	{
 		readonly ITypeResolveContext projectContent;
 		readonly ITypeDefinition declaringTypeDefinition;
@@ -60,7 +61,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			base.FreezeInternal();
 		}
 		
-		public DefaultTypeDefinition(ITypeDefinition declaringTypeDefinition, string name)
+		public TypeDefinition(ITypeDefinition declaringTypeDefinition, string name)
 		{
 			if (declaringTypeDefinition == null)
 				throw new ArgumentNullException("declaringTypeDefinition");
@@ -72,7 +73,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			this.ns = declaringTypeDefinition.Namespace;
 		}
 		
-		public DefaultTypeDefinition(ITypeResolveContext projectContent, string ns, string name)
+		public TypeDefinition(ITypeResolveContext projectContent, string ns, string name)
 		{
 			if (projectContent == null)
 				throw new ArgumentNullException("projectContent");
@@ -467,7 +468,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 				if (this.ClassType == ClassType.Class && methods.Count == 0
 				    || this.ClassType == ClassType.Enum || this.ClassType == ClassType.Struct)
 				{
-					var m = DefaultMethod.CreateDefaultConstructor(this);
+					var m = Method.CreateDefaultConstructor(this);
 					if (filter == null || filter(m))
 						methods.Add(m);
 				}
