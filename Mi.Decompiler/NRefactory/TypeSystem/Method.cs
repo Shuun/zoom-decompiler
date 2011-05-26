@@ -9,13 +9,13 @@ using Mi.NRefactory.TypeSystem.Implementation;
 namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
-	/// Default implementation of <see cref="IMethod" /> interface.
+	/// Default implementation of <see cref="Method" /> interface.
 	/// </summary>
-	public class Method : AbstractMember, IMethod
+	public class Method : AbstractMember, IParameterizedMember
 	{
 		IList<IAttribute> returnTypeAttributes;
 		IList<ITypeParameter> typeParameters;
-		IList<IParameter> parameters;
+		IList<Parameter> parameters;
 		
 		protected override void FreezeInternal()
 		{
@@ -25,7 +25,7 @@ namespace Mi.NRefactory.TypeSystem
 			base.FreezeInternal();
 		}
 		
-		public Method(ITypeDefinition declaringTypeDefinition, string name)
+		public Method(TypeDefinition declaringTypeDefinition, string name)
 			: base(declaringTypeDefinition, name, EntityType.Method)
 		{
 		}
@@ -33,7 +33,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// <summary>
 		/// Copy constructor
 		/// </summary>
-		protected Method(IMethod method) : base(method)
+		protected Method(Method method) : base(method)
 		{
 			returnTypeAttributes = CopyList(returnTypeAttributes);
 			typeParameters = CopyList(typeParameters);
@@ -89,10 +89,10 @@ namespace Mi.NRefactory.TypeSystem
 			get { return this.EntityType == EntityType.Operator; }
 		}
 		
-		public IList<IParameter> Parameters {
+		public IList<Parameter> Parameters {
 			get {
 				if (parameters == null)
-					parameters = new List<IParameter>();
+					parameters = new List<Parameter>();
 				return parameters;
 			}
 		}
@@ -117,7 +117,7 @@ namespace Mi.NRefactory.TypeSystem
 			return b.ToString();
 		}
 		
-		public static Method CreateDefaultConstructor(ITypeDefinition typeDefinition)
+		public static Method CreateDefaultConstructor(TypeDefinition typeDefinition)
 		{
 			DomRegion region = new DomRegion(typeDefinition.Region.BeginLine, typeDefinition.Region.BeginColumn);
 			return new Method(typeDefinition, ".ctor") {

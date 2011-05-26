@@ -38,7 +38,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// <summary>
 		/// Gets the list of interfaces this member is implementing explicitly.
 		/// </summary>
-		IList<IExplicitInterfaceImplementation> InterfaceImplementations { get; }
+		IList<ExplicitInterfaceImplementation> InterfaceImplementations { get; }
 		
 		/// <summary>
 		/// Gets if the member is virtual. Is true only if the "virtual" modifier was used, but non-virtual

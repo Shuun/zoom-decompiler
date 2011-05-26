@@ -9,9 +9,9 @@ using Mi.NRefactory.TypeSystem.Implementation;
 namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
-	/// Default implementation of <see cref="IAccessor"/>.
+	/// Default implementation of <see cref="Accessor"/>.
 	/// </summary>
-	public sealed class Accessor : AbstractFreezable, IAccessor, ISupportsInterning
+	public sealed class Accessor : AbstractFreezable, ISupportsInterning
 	{
 		static readonly Accessor[] defaultAccessors = CreateDefaultAccessors();
 		
@@ -29,7 +29,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// <summary>
 		/// Gets the default accessor with the specified accessibility (and without attributes or region).
 		/// </summary>
-		public static IAccessor GetFromAccessibility(Accessibility accessibility)
+		public static Accessor GetFromAccessibility(Accessibility accessibility)
 		{
 			int index = (int)accessibility;
 			if (index >= 0 && index < defaultAccessors.Length) {

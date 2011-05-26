@@ -28,7 +28,7 @@ namespace Mi.CSharp.Resolver
 		}
 		
 		public bool IsParameter {
-			get { return variable is IParameter; }
+			get { return variable is Parameter; }
 		}
 		
 		public override bool IsCompileTimeConstant {

@@ -10,12 +10,12 @@ namespace Mi.NRefactory.TypeSystem
 	/// </summary>
 	public abstract class TypeVisitor
 	{
-		public virtual IType VisitTypeDefinition(ITypeDefinition type)
+		public virtual IType VisitTypeDefinition(TypeDefinition type)
 		{
 			return type.VisitChildren(this);
 		}
 		
-		public virtual IType VisitTypeParameter(ITypeParameter type)
+		public virtual IType VisitTypeParameter(TypeParameter type)
 		{
 			return type.VisitChildren(this);
 		}

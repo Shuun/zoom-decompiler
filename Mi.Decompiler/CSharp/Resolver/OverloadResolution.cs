@@ -38,11 +38,11 @@ namespace Mi.CSharp.Resolver
 			
 			public IType[] InferredTypes;
 			
-			public IList<IParameter> Parameters { get { return Member.Parameters; } }
+			public IList<Parameter> Parameters { get { return Member.Parameters; } }
 			
 			public bool IsGenericMethod {
 				get {
-					IMethod method = Member as IMethod;
+					Method method = Member as Method;
 					return method != null && method.TypeParameters.Count > 0;
 				}
 			}
@@ -196,7 +196,7 @@ namespace Mi.CSharp.Resolver
 		#region RunTypeInference
 		void RunTypeInference(Candidate candidate)
 		{
-			IMethod method = candidate.Member as IMethod;
+			Method method = candidate.Member as Method;
 			if (method == null || method.TypeParameters.Count == 0) {
 				if (explicitlyGivenTypeArguments != null) {
 					// method does not expect type arguments, but was given some
@@ -256,7 +256,7 @@ namespace Mi.CSharp.Resolver
 						// C# 4.0 spec: §4.4.4 Satisfying constraints
 						var typeParameters = newParameterizedType.GetDefinition().TypeParameters;
 						for (int i = 0; i < typeParameters.Count; i++) {
-							ITypeParameter tp = typeParameters[i];
+							TypeParameter tp = typeParameters[i];
 							IType typeArg = newParameterizedType.TypeArguments[i];
 							if (tp.HasReferenceTypeConstraint) {
 								if (typeArg.IsReferenceType != true)
@@ -269,7 +269,7 @@ namespace Mi.CSharp.Resolver
 									ConstraintsValid = false;
 							}
 							if (tp.HasDefaultConstructorConstraint) {
-								ITypeDefinition def = typeArg.GetDefinition();
+								TypeDefinition def = typeArg.GetDefinition();
 								if (def != null && def.IsAbstract)
 									ConstraintsValid = false;
 								ConstraintsValid &= typeArg.GetConstructors(
@@ -428,7 +428,7 @@ namespace Mi.CSharp.Resolver
 		/// </summary>
 		public interface ILiftedOperator : IParameterizedMember
 		{
-			IList<IParameter> NonLiftedParameters { get; }
+			IList<Parameter> NonLiftedParameters { get; }
 		}
 		
 		int MoreSpecificFormalParameters(Candidate c1, Candidate c2)
@@ -465,9 +465,9 @@ namespace Mi.CSharp.Resolver
 		
 		static int MoreSpecificFormalParameter(IType t1, IType t2)
 		{
-			if ((t1 is ITypeParameter) && !(t2 is ITypeParameter))
+			if ((t1 is TypeParameter) && !(t2 is TypeParameter))
 				return 2;
-			if ((t2 is ITypeParameter) && !(t1 is ITypeParameter))
+			if ((t2 is TypeParameter) && !(t1 is TypeParameter))
 				return 1;
 			
 			ParameterizedType p1 = t1 as ParameterizedType;

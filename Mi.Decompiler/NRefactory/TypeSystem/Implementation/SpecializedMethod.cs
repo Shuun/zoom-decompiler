@@ -13,7 +13,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		readonly IMember memberDefinition;
 		IType declaringType;
 		
-		public SpecializedMethod(IMethod m) : base(m)
+		public SpecializedMethod(Method m) : base(m)
 		{
 			this.memberDefinition = m.MemberDefinition;
 			this.declaringType = m.DeclaringType;

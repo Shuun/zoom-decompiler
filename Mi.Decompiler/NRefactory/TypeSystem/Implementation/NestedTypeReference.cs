@@ -37,7 +37,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		public IType Resolve(ITypeResolveContext context)
 		{
-			ITypeDefinition declaringType = declaringTypeRef.Resolve(context) as ITypeDefinition;
+			TypeDefinition declaringType = declaringTypeRef.Resolve(context) as TypeDefinition;
 			if (declaringType != null) {
 				int tpc = declaringType.TypeParameterCount;
 				foreach (IType type in declaringType.InnerClasses) {

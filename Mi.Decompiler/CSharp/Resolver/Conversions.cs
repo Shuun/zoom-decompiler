@@ -194,7 +194,7 @@ namespace Mi.CSharp.Resolver
 						|| ImplicitReferenceConversion(fromArray.ElementType, toPT.TypeArguments[0]);
 				}
 				// conversion from any array to System.Array and the interfaces it implements:
-				ITypeDefinition systemArray = context.GetClass("System", "Array", 0, StringComparer.Ordinal);
+				TypeDefinition systemArray = context.GetClass("System", "Array", 0, StringComparer.Ordinal);
 				return systemArray != null && (systemArray.Equals(toType) || ImplicitReferenceConversion(systemArray, toType));
 			}
 			
@@ -220,7 +220,7 @@ namespace Mi.CSharp.Resolver
 		
 		bool IdentityOrVarianceConversion(IType s, IType t)
 		{
-			ITypeDefinition def = s.GetDefinition();
+			TypeDefinition def = s.GetDefinition();
 			if (def != null && def.Equals(t.GetDefinition())) {
 				ParameterizedType ps = s as ParameterizedType;
 				ParameterizedType pt = t as ParameterizedType;
@@ -234,7 +234,7 @@ namespace Mi.CSharp.Resolver
 						IType ti = pt.TypeArguments[i];
 						if (IdentityConversion(si, ti))
 							continue;
-						ITypeParameter xi = def.TypeParameters[i];
+						TypeParameter xi = def.TypeParameters[i];
 						switch (xi.Variance) {
 							case VarianceModifier.Covariant:
 								if (!ImplicitReferenceConversion(si, ti))

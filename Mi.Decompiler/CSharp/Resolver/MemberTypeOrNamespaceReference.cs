@@ -13,12 +13,12 @@ namespace Mi.CSharp.Resolver
 	public sealed class MemberTypeOrNamespaceReference : ITypeOrNamespaceReference
 	{
 		readonly ITypeOrNamespaceReference target;
-		readonly ITypeDefinition parentTypeDefinition;
+		readonly TypeDefinition parentTypeDefinition;
 		readonly UsingScope parentUsingScope;
 		readonly string identifier;
 		readonly IList<ITypeReference> typeArguments;
 		
-		public MemberTypeOrNamespaceReference(ITypeOrNamespaceReference target, string identifier, IList<ITypeReference> typeArguments, ITypeDefinition parentTypeDefinition, UsingScope parentUsingScope)
+		public MemberTypeOrNamespaceReference(ITypeOrNamespaceReference target, string identifier, IList<ITypeReference> typeArguments, TypeDefinition parentTypeDefinition, UsingScope parentUsingScope)
 		{
 			if (target == null)
 				throw new ArgumentNullException("target");

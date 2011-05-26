@@ -191,11 +191,11 @@ namespace Mi.CSharp.Resolver
 		#region Track CurrentTypeDefinition
 		ResolveResult VisitTypeOrDelegate(AstNode typeDeclaration)
 		{
-			ITypeDefinition previousTypeDefinition = resolver.CurrentTypeDefinition;
+			TypeDefinition previousTypeDefinition = resolver.CurrentTypeDefinition;
 			try {
-				ITypeDefinition newTypeDefinition = null;
+				TypeDefinition newTypeDefinition = null;
 				if (resolver.CurrentTypeDefinition != null) {
-					foreach (ITypeDefinition innerClass in resolver.CurrentTypeDefinition.InnerClasses) {
+					foreach (TypeDefinition innerClass in resolver.CurrentTypeDefinition.InnerClasses) {
 						if (innerClass.Region.IsInside(typeDeclaration.StartLocation)) {
 							newTypeDefinition = innerClass;
 							break;
@@ -385,7 +385,7 @@ namespace Mi.CSharp.Resolver
 			if (resolverEnabled) {
 				IParameterizedMember pm = resolver.CurrentMember as IParameterizedMember;
 				if (pm != null) {
-					foreach (IParameter p in pm.Parameters) {
+					foreach (Parameter p in pm.Parameters) {
 						if (p.Name == parameterDeclaration.Name) {
 							return new LocalResolveResult(p, p.Type.Resolve(resolver.Context));
 						}
@@ -973,10 +973,10 @@ namespace Mi.CSharp.Resolver
 		
 		ITypeReference MakeTypeReference(AstType type)
 		{
-			return ConvertType(type, resolver.CurrentTypeDefinition, resolver.CurrentMember as IMethod, resolver.UsingScope, false);
+			return ConvertType(type, resolver.CurrentTypeDefinition, resolver.CurrentMember as Method, resolver.UsingScope, false);
 		}
 
-        static ITypeReference ConvertType(AstType type, ITypeDefinition parentTypeDefinition, IMethod parentMethodDefinition, UsingScope parentUsingScope, bool isInUsingDeclaration)
+        static ITypeReference ConvertType(AstType type, TypeDefinition parentTypeDefinition, Method parentMethodDefinition, UsingScope parentUsingScope, bool isInUsingDeclaration)
 		{
 			SimpleType s = type as SimpleType;
 			if (s != null) {
@@ -987,7 +987,7 @@ namespace Mi.CSharp.Resolver
 				if (typeArguments.Count == 0 && parentMethodDefinition != null) {
 					// SimpleTypeOrNamespaceReference doesn't support method type parameters,
 					// so we directly handle them here.
-					foreach (ITypeParameter tp in parentMethodDefinition.TypeParameters) {
+					foreach (TypeParameter tp in parentMethodDefinition.TypeParameters) {
 						if (tp.Name == s.Identifier)
 							return tp;
 					}
@@ -1129,7 +1129,7 @@ namespace Mi.CSharp.Resolver
 			IType GetElementType(IType result)
 			{
 				foreach (IType baseType in result.GetAllBaseTypes(storedContext.Context)) {
-					ITypeDefinition baseTypeDef = baseType.GetDefinition();
+					TypeDefinition baseTypeDef = baseType.GetDefinition();
 					if (baseTypeDef != null && baseTypeDef.Name == "IEnumerable") {
 						if (baseTypeDef.Namespace == "System.Collections.Generic" && baseTypeDef.TypeParameterCount == 1) {
 							ParameterizedType pt = baseType as ParameterizedType;

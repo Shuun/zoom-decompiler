@@ -12,20 +12,20 @@ using Mi.NRefactory.TypeSystem.Implementation;
 
 namespace Mi.NRefactory.TypeSystem
 {
-	public class TypeDefinition : AbstractFreezable, ITypeDefinition
+    public class TypeDefinition : AbstractFreezable, IType, IEntity
 	{
 		readonly ITypeResolveContext projectContent;
-		readonly ITypeDefinition declaringTypeDefinition;
+		readonly TypeDefinition declaringTypeDefinition;
 		
 		string ns;
 		string name;
 		
 		IList<ITypeReference> baseTypes;
-		IList<ITypeParameter> typeParameters;
-		IList<ITypeDefinition> innerClasses;
-		IList<IField> fields;
-		IList<IMethod> methods;
-		IList<IProperty> properties;
+		IList<TypeParameter> typeParameters;
+		IList<TypeDefinition> innerClasses;
+		IList<Field> fields;
+		IList<Method> methods;
+		IList<Property> properties;
 		IList<Event> events;
 		IList<IAttribute> attributes;
 		
@@ -61,7 +61,7 @@ namespace Mi.NRefactory.TypeSystem
 			base.FreezeInternal();
 		}
 		
-		public TypeDefinition(ITypeDefinition declaringTypeDefinition, string name)
+		public TypeDefinition(TypeDefinition declaringTypeDefinition, string name)
 		{
 			if (declaringTypeDefinition == null)
 				throw new ArgumentNullException("declaringTypeDefinition");
@@ -111,42 +111,42 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public IList<ITypeParameter> TypeParameters {
+		public IList<TypeParameter> TypeParameters {
 			get {
 				if (typeParameters == null)
-					typeParameters = new List<ITypeParameter>();
+					typeParameters = new List<TypeParameter>();
 				return typeParameters;
 			}
 		}
 		
-		public IList<ITypeDefinition> InnerClasses {
+		public IList<TypeDefinition> InnerClasses {
 			get {
 				if (innerClasses == null)
-					innerClasses = new List<ITypeDefinition>();
+					innerClasses = new List<TypeDefinition>();
 				return innerClasses;
 			}
 		}
 		
-		public IList<IField> Fields {
+		public IList<Field> Fields {
 			get {
 				if (fields == null)
-					fields = new List<IField>();
+					fields = new List<Field>();
 				return fields;
 			}
 		}
 		
-		public IList<IProperty> Properties {
+		public IList<Property> Properties {
 			get {
 				if (properties == null)
-					properties = new List<IProperty>();
+					properties = new List<Property>();
 				return properties;
 			}
 		}
 		
-		public IList<IMethod> Methods {
+		public IList<Method> Methods {
 			get {
 				if (methods == null)
-					methods = new List<IMethod>();
+					methods = new List<Method>();
 				return methods;
 			}
 		}
@@ -255,7 +255,7 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public ITypeDefinition DeclaringTypeDefinition {
+		public TypeDefinition DeclaringTypeDefinition {
 			get { return declaringTypeDefinition; }
 		}
 		
@@ -347,7 +347,7 @@ namespace Mi.NRefactory.TypeSystem
 			if (baseTypes != null && this.ClassType != ClassType.Enum) {
 				foreach (ITypeReference baseTypeRef in baseTypes) {
 					IType baseType = baseTypeRef.Resolve(context);
-					ITypeDefinition baseTypeDef = baseType.GetDefinition();
+					TypeDefinition baseTypeDef = baseType.GetDefinition();
 					if (baseTypeDef == null || baseTypeDef.ClassType != ClassType.Interface)
 						hasNonInterface = true;
 					yield return baseType;
@@ -375,14 +375,14 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public virtual ITypeDefinition GetCompoundClass()
+		public virtual TypeDefinition GetCompoundClass()
 		{
 			return this;
 		}
 		
-		public virtual IList<ITypeDefinition> GetParts()
+		public virtual IList<TypeDefinition> GetParts()
 		{
-			return new ITypeDefinition[] { this };
+			return new TypeDefinition[] { this };
 		}
 		
 		public IType GetElementType()
@@ -390,7 +390,7 @@ namespace Mi.NRefactory.TypeSystem
 			throw new InvalidOperationException();
 		}
 		
-		public ITypeDefinition GetDefinition()
+		public TypeDefinition GetDefinition()
 		{
 			return this;
 		}
@@ -402,9 +402,9 @@ namespace Mi.NRefactory.TypeSystem
 			return this;
 		}
 		
-		public virtual IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<ITypeDefinition> filter = null)
+		public virtual IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter = null)
 		{
-			ITypeDefinition compound = GetCompoundClass();
+			TypeDefinition compound = GetCompoundClass();
 			if (compound != this)
 				return compound.GetNestedTypes(context, filter);
 			
@@ -413,14 +413,14 @@ namespace Mi.NRefactory.TypeSystem
 				if (busyLock.Success) {
 					foreach (var baseTypeRef in this.BaseTypes) {
 						IType baseType = baseTypeRef.Resolve(context);
-						ITypeDefinition baseTypeDef = baseType.GetDefinition();
+						TypeDefinition baseTypeDef = baseType.GetDefinition();
 						if (baseTypeDef != null && baseTypeDef.ClassType != ClassType.Interface) {
 							// get nested types from baseType (not baseTypeDef) so that generics work correctly
 							nestedTypes.AddRange(baseType.GetNestedTypes(context, filter));
 							break; // there is at most 1 non-interface base
 						}
 					}
-					foreach (ITypeDefinition innerClass in this.InnerClasses) {
+					foreach (TypeDefinition innerClass in this.InnerClasses) {
 						if (filter == null || filter(innerClass)) {
 							nestedTypes.Add(innerClass);
 						}
@@ -430,18 +430,18 @@ namespace Mi.NRefactory.TypeSystem
 			return nestedTypes;
 		}
 		
-		public virtual IEnumerable<IMethod> GetMethods(ITypeResolveContext context, Predicate<IMethod> filter = null)
+		public virtual IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter = null)
 		{
-			ITypeDefinition compound = GetCompoundClass();
+			TypeDefinition compound = GetCompoundClass();
 			if (compound != this)
 				return compound.GetMethods(context, filter);
 			
-			List<IMethod> methods = new List<IMethod>();
+			List<Method> methods = new List<Method>();
 			using (var busyLock = BusyManager.Enter(this)) {
 				if (busyLock.Success) {
 					int baseCount = 0;
 					foreach (var baseType in GetBaseTypes(context)) {
-						ITypeDefinition baseTypeDef = baseType.GetDefinition();
+						TypeDefinition baseTypeDef = baseType.GetDefinition();
 						if (baseTypeDef != null && (baseTypeDef.ClassType != ClassType.Interface || this.ClassType == ClassType.Interface)) {
 							methods.AddRange(baseType.GetMethods(context, filter));
 							baseCount++;
@@ -455,13 +455,13 @@ namespace Mi.NRefactory.TypeSystem
 			return methods;
 		}
 		
-		public virtual IEnumerable<IMethod> GetConstructors(ITypeResolveContext context, Predicate<IMethod> filter = null)
+		public virtual IEnumerable<Method> GetConstructors(ITypeResolveContext context, Predicate<Method> filter = null)
 		{
-			ITypeDefinition compound = GetCompoundClass();
+			TypeDefinition compound = GetCompoundClass();
 			if (compound != this)
 				return compound.GetConstructors(context, filter);
 			
-			List<IMethod> methods = new List<IMethod>();
+			List<Method> methods = new List<Method>();
 			AddFilteredRange(methods, this.Methods.Where(m => m.IsConstructor && !m.IsStatic), filter);
 			
 			if (this.AddDefaultConstructorIfRequired) {
@@ -476,18 +476,18 @@ namespace Mi.NRefactory.TypeSystem
 			return methods;
 		}
 		
-		public virtual IEnumerable<IProperty> GetProperties(ITypeResolveContext context, Predicate<IProperty> filter = null)
+		public virtual IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)
 		{
-			ITypeDefinition compound = GetCompoundClass();
+			TypeDefinition compound = GetCompoundClass();
 			if (compound != this)
 				return compound.GetProperties(context, filter);
 			
-			List<IProperty> properties = new List<IProperty>();
+			List<Property> properties = new List<Property>();
 			using (var busyLock = BusyManager.Enter(this)) {
 				if (busyLock.Success) {
 					int baseCount = 0;
 					foreach (var baseType in GetBaseTypes(context)) {
-						ITypeDefinition baseTypeDef = baseType.GetDefinition();
+						TypeDefinition baseTypeDef = baseType.GetDefinition();
 						if (baseTypeDef != null && (baseTypeDef.ClassType != ClassType.Interface || this.ClassType == ClassType.Interface)) {
 							properties.AddRange(baseType.GetProperties(context, filter));
 							baseCount++;
@@ -501,18 +501,18 @@ namespace Mi.NRefactory.TypeSystem
 			return properties;
 		}
 		
-		public virtual IEnumerable<IField> GetFields(ITypeResolveContext context, Predicate<IField> filter = null)
+		public virtual IEnumerable<Field> GetFields(ITypeResolveContext context, Predicate<Field> filter = null)
 		{
-			ITypeDefinition compound = GetCompoundClass();
+			TypeDefinition compound = GetCompoundClass();
 			if (compound != this)
 				return compound.GetFields(context, filter);
 			
-			List<IField> fields = new List<IField>();
+			List<Field> fields = new List<Field>();
 			using (var busyLock = BusyManager.Enter(this)) {
 				if (busyLock.Success) {
 					int baseCount = 0;
 					foreach (var baseType in GetBaseTypes(context)) {
-						ITypeDefinition baseTypeDef = baseType.GetDefinition();
+						TypeDefinition baseTypeDef = baseType.GetDefinition();
 						if (baseTypeDef != null && (baseTypeDef.ClassType != ClassType.Interface || this.ClassType == ClassType.Interface)) {
 							fields.AddRange(baseType.GetFields(context, filter));
 							baseCount++;
@@ -528,7 +528,7 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public virtual IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)
 		{
-			ITypeDefinition compound = GetCompoundClass();
+			TypeDefinition compound = GetCompoundClass();
 			if (compound != this)
 				return compound.GetEvents(context, filter);
 			
@@ -537,7 +537,7 @@ namespace Mi.NRefactory.TypeSystem
 				if (busyLock.Success) {
 					int baseCount = 0;
 					foreach (var baseType in GetBaseTypes(context)) {
-						ITypeDefinition baseTypeDef = baseType.GetDefinition();
+						TypeDefinition baseTypeDef = baseType.GetDefinition();
 						if (baseTypeDef != null && (baseTypeDef.ClassType != ClassType.Interface || this.ClassType == ClassType.Interface)) {
 							events.AddRange(baseType.GetEvents(context, filter));
 							baseCount++;

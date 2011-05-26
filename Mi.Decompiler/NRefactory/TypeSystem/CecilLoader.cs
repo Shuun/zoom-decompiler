@@ -56,14 +56,14 @@ namespace Mi.NRefactory.TypeSystem
 				throw new ArgumentNullException("assemblyDefinition");
 			ITypeResolveContext oldEarlyBindContext = this.EarlyBindContext;
 			try {
-				IList<IAttribute> assemblyAttributes = new List<IAttribute>();
+				IList<Attribute> assemblyAttributes = new List<Attribute>();
 				foreach (var attr in assemblyDefinition.CustomAttributes) {
 					assemblyAttributes.Add(ReadAttribute(attr));
 				}
 				if (this.InterningProvider != null)
 					assemblyAttributes = this.InterningProvider.InternList(assemblyAttributes);
 				else
-					assemblyAttributes = new ReadOnlyCollection<IAttribute>(assemblyAttributes);
+					assemblyAttributes = new ReadOnlyCollection<Attribute>(assemblyAttributes);
 				TypeStorage typeStorage = new TypeStorage();
 				CecilProjectContent pc = new CecilProjectContent(typeStorage, assemblyDefinition.Name.FullName, assemblyAttributes, this.DocumentationProvider);
 				
@@ -102,7 +102,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// <param name="typeDefinition">The Cecil TypeDefinition.</param>
 		/// <param name="projectContent">The project content used as parent for the new type.</param>
 		/// <returns>ITypeDefinition representing the Cecil type.</returns>
-		public ITypeDefinition LoadType(Mi.Assemblies.TypeDefinition typeDefinition, ITypeResolveContext projectContent)
+		public TypeDefinition LoadType(Mi.Assemblies.TypeDefinition typeDefinition, ITypeResolveContext projectContent)
 		{
 			if (typeDefinition == null)
 				throw new ArgumentNullException("typeDefinition");
@@ -118,10 +118,10 @@ namespace Mi.NRefactory.TypeSystem
 		sealed class CecilProjectContent : ProxyTypeResolveContext, ITypeResolveContext, IDocumentationProvider
 		{
 			readonly string assemblyName;
-			readonly IList<IAttribute> assemblyAttributes;
+			readonly IList<Attribute> assemblyAttributes;
 			readonly IDocumentationProvider documentationProvider;
 			
-			public CecilProjectContent(TypeStorage types, string assemblyName, IList<IAttribute> assemblyAttributes, IDocumentationProvider documentationProvider)
+			public CecilProjectContent(TypeStorage types, string assemblyName, IList<Attribute> assemblyAttributes, IDocumentationProvider documentationProvider)
 				: base(types)
 			{
 				Debug.Assert(assemblyName != null);
@@ -131,7 +131,7 @@ namespace Mi.NRefactory.TypeSystem
 				this.documentationProvider = documentationProvider;
 			}
 			
-			public IList<IAttribute> AssemblyAttributes {
+			public IList<Attribute> AssemblyAttributes {
 				get { return assemblyAttributes; }
 			}
 			
@@ -252,7 +252,7 @@ namespace Mi.NRefactory.TypeSystem
 			} else if (type is GenericParameter) {
 				GenericParameter typeGP = type as GenericParameter;
 				if (typeGP.Owner is MethodDefinition) {
-					IMethod method = entity as IMethod;
+					Method method = entity as Method;
 					if (method != null) {
 						if (typeGP.Position < method.TypeParameters.Count) {
 							return method.TypeParameters[typeGP.Position];
@@ -260,7 +260,7 @@ namespace Mi.NRefactory.TypeSystem
 					}
 					return SharedTypes.UnknownType;
 				} else {
-					ITypeDefinition c = (entity as ITypeDefinition) ?? (entity is IMember ? ((IMember)entity).DeclaringTypeDefinition : null);
+					TypeDefinition c = (entity as TypeDefinition) ?? (entity is IMember ? ((IMember)entity).DeclaringTypeDefinition : null);
 					if (c != null && typeGP.Position < c.TypeParameters.Count) {
 						if (c.TypeParameters[typeGP.Position].Name == type.Name) {
 							return c.TypeParameters[typeGP.Position];
@@ -322,8 +322,8 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		static readonly IAttribute inAttribute = new Attribute(typeof(InAttribute).ToTypeReference(), null);
-		static readonly IAttribute outAttribute = new Attribute(typeof(OutAttribute).ToTypeReference(), null);
+		static readonly Attribute inAttribute = new Attribute(typeof(InAttribute).ToTypeReference(), null);
+		static readonly Attribute outAttribute = new Attribute(typeof(OutAttribute).ToTypeReference(), null);
 		
 		void AddAttributes(ParameterDefinition parameter, Parameter targetParameter)
 		{
@@ -342,7 +342,7 @@ namespace Mi.NRefactory.TypeSystem
 		static readonly SimpleConstantValue trueValue = new SimpleConstantValue(KnownTypeReference.Boolean, true);
 		static readonly SimpleConstantValue falseValue = new SimpleConstantValue(KnownTypeReference.Boolean, true);
 		static readonly ITypeReference callingConventionTypeRef = typeof(CallingConvention).ToTypeReference();
-		static readonly IAttribute preserveSigAttribute = new Attribute(typeof(PreserveSigAttribute).ToTypeReference(), null);
+		static readonly Attribute preserveSigAttribute = new Attribute(typeof(PreserveSigAttribute).ToTypeReference(), null);
 		static readonly ITypeReference methodImplAttributeTypeRef = typeof(MethodImplAttribute).ToTypeReference();
 		static readonly ITypeReference methodImplOptionsTypeRef = typeof(MethodImplOptions).ToTypeReference();
 		
@@ -470,7 +470,7 @@ namespace Mi.NRefactory.TypeSystem
 		static readonly ITypeReference layoutKindTypeRef = typeof(LayoutKind).ToTypeReference();
 		static readonly ITypeReference charSetTypeRef = typeof(CharSet).ToTypeReference();
 		
-		void AddAttributes(Mi.Assemblies.TypeDefinition typeDefinition, ITypeDefinition targetEntity)
+		void AddAttributes(Mi.Assemblies.TypeDefinition typeDefinition, TypeDefinition targetEntity)
 		{
 			#region SerializableAttribute
 			if (typeDefinition.IsSerializable)
@@ -559,7 +559,7 @@ namespace Mi.NRefactory.TypeSystem
 		static readonly ITypeReference marshalAsAttributeTypeRef = typeof(MarshalAsAttribute).ToTypeReference();
 		static readonly ITypeReference unmanagedTypeTypeRef = typeof(UnmanagedType).ToTypeReference();
 		
-		static IAttribute ConvertMarshalInfo(MarshalInfo marshalInfo)
+		static Attribute ConvertMarshalInfo(MarshalInfo marshalInfo)
 		{
 			Attribute attr = new Attribute(marshalAsAttributeTypeRef, new[] { unmanagedTypeTypeRef });
 			attr.PositionalArguments.Add(new SimpleConstantValue(unmanagedTypeTypeRef, (int)marshalInfo.NativeType));
@@ -582,7 +582,7 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public IAttribute ReadAttribute(CustomAttribute attribute)
+		public Attribute ReadAttribute(CustomAttribute attribute)
 		{
 			if (attribute == null)
 				throw new ArgumentNullException("attribute");
@@ -866,7 +866,7 @@ namespace Mi.NRefactory.TypeSystem
 		#endregion
 		
 		#region Read Method
-		public IMethod ReadMethod(MethodDefinition method, ITypeDefinition parentType, EntityType methodType = EntityType.Method)
+		public Method ReadMethod(MethodDefinition method, TypeDefinition parentType, EntityType methodType = EntityType.Method)
 		{
 			Method m = new Method(parentType, method.Name);
 			m.EntityType = methodType;
@@ -972,7 +972,7 @@ namespace Mi.NRefactory.TypeSystem
 		#endregion
 		
 		#region Read Parameter
-		public IParameter ReadParameter(ParameterDefinition parameter, IParameterizedMember parentMember = null)
+		public Parameter ReadParameter(ParameterDefinition parameter, IParameterizedMember parentMember = null)
 		{
 			if (parameter == null)
 				throw new ArgumentNullException("parameter");
@@ -1014,7 +1014,7 @@ namespace Mi.NRefactory.TypeSystem
 				|| att == FieldAttributes.FamORAssem;
 		}
 		
-		public IField ReadField(FieldDefinition field, ITypeDefinition parentType)
+		public Field ReadField(FieldDefinition field, TypeDefinition parentType)
 		{
 			if (field == null)
 				throw new ArgumentNullException("field");
@@ -1084,7 +1084,7 @@ namespace Mi.NRefactory.TypeSystem
 		#endregion
 		
 		#region Read Property
-		public IProperty ReadProperty(PropertyDefinition property, ITypeDefinition parentType, EntityType propertyType = EntityType.Property)
+		public Property ReadProperty(PropertyDefinition property, TypeDefinition parentType, EntityType propertyType = EntityType.Property)
 		{
 			if (property == null)
 				throw new ArgumentNullException("property");
@@ -1109,7 +1109,7 @@ namespace Mi.NRefactory.TypeSystem
 			return p;
 		}
 		
-		IAccessor ReadAccessor(MethodDefinition accessorMethod)
+		Accessor ReadAccessor(MethodDefinition accessorMethod)
 		{
 			if (accessorMethod != null && IsVisible(accessorMethod.Attributes)) {
 				Accessibility accessibility = GetAccessibility(accessorMethod.Attributes);
@@ -1128,7 +1128,7 @@ namespace Mi.NRefactory.TypeSystem
 		#endregion
 		
 		#region Read Event
-		public Event ReadEvent(EventDefinition ev, ITypeDefinition parentType)
+		public Event ReadEvent(EventDefinition ev, TypeDefinition parentType)
 		{
 			if (ev == null)
 				throw new ArgumentNullException("ev");

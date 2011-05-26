@@ -7,9 +7,9 @@ using Mi.NRefactory.TypeSystem.Implementation;
 namespace Mi.NRefactory.TypeSystem
 {
 	/// <summary>
-	/// Default implementation of <see cref="IField"/>.
+	/// Default implementation of <see cref="Field"/>.
 	/// </summary>
-	public class Field : AbstractMember, IField
+	public class Field : AbstractMember, IVariable
 	{
 		IConstantValue constantValue;
 		
@@ -20,12 +20,12 @@ namespace Mi.NRefactory.TypeSystem
 			base.FreezeInternal();
 		}
 		
-		public Field(ITypeDefinition declaringTypeDefinition, string name)
+		public Field(TypeDefinition declaringTypeDefinition, string name)
 			: base(declaringTypeDefinition, name, EntityType.Field)
 		{
 		}
 		
-		protected Field(IField f) : base(f)
+		protected Field(Field f) : base(f)
 		{
 			this.constantValue = f.ConstantValue;
 			this.IsReadOnly = f.IsReadOnly;

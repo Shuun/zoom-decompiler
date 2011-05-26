@@ -15,7 +15,7 @@ namespace Mi.NRefactory.TypeSystem
 	#endif
 	public interface IParameterizedMember : IMember
 	{
-		IList<IParameter> Parameters { get; }
+		IList<Parameter> Parameters { get; }
 	}
 	
 	#if WITH_CONTRACTS

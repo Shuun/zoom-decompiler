@@ -68,7 +68,7 @@ namespace Mi.CSharp.Resolver
 		/// <summary>
 		/// Gets/Sets the current type definition that is used to look up identifiers as simple members.
 		/// </summary>
-		public ITypeDefinition CurrentTypeDefinition { get; set; }
+		public TypeDefinition CurrentTypeDefinition { get; set; }
 		
 		/// <summary>
 		/// Gets/Sets the current using scope that is used to look up identifiers as class names.
@@ -194,8 +194,8 @@ namespace Mi.CSharp.Resolver
 		
 		class OperatorMethod : Immutable, IParameterizedMember
 		{
-			static readonly IParameter[] normalParameters = new IParameter[(int)(TypeCode.String + 1 - TypeCode.Object)];
-			static readonly IParameter[] nullableParameters = new IParameter[(int)(TypeCode.Decimal + 1 - TypeCode.Boolean)];
+			static readonly Parameter[] normalParameters = new Parameter[(int)(TypeCode.String + 1 - TypeCode.Object)];
+			static readonly Parameter[] nullableParameters = new Parameter[(int)(TypeCode.Decimal + 1 - TypeCode.Boolean)];
 			
 			static OperatorMethod()
 			{
@@ -207,12 +207,12 @@ namespace Mi.CSharp.Resolver
 				}
 			}
 			
-			protected static IParameter MakeParameter(TypeCode code)
+			protected static Parameter MakeParameter(TypeCode code)
 			{
 				return normalParameters[code - TypeCode.Object];
 			}
 			
-			protected static IParameter MakeNullableParameter(IParameter normalParameter)
+			protected static Parameter MakeNullableParameter(Parameter normalParameter)
 			{
 				for (TypeCode i = TypeCode.Boolean; i <= TypeCode.Decimal; i++) {
 					if (normalParameter == normalParameters[i - TypeCode.Object])
@@ -221,9 +221,9 @@ namespace Mi.CSharp.Resolver
 				throw new ArgumentException();
 			}
 			
-			readonly IList<IParameter> parameters = new List<IParameter>();
+			readonly IList<Parameter> parameters = new List<Parameter>();
 			
-			public IList<IParameter> Parameters {
+			public IList<Parameter> Parameters {
 				get { return parameters; }
 			}
 			
@@ -236,7 +236,7 @@ namespace Mi.CSharp.Resolver
 				return null;
 			}
 			
-			ITypeDefinition IEntity.DeclaringTypeDefinition {
+			TypeDefinition IEntity.DeclaringTypeDefinition {
 				get { throw new NotSupportedException(); }
 			}
 			
@@ -248,8 +248,8 @@ namespace Mi.CSharp.Resolver
 				get { return null; }
 			}
 			
-			IList<IExplicitInterfaceImplementation> IMember.InterfaceImplementations {
-                get { return Empty.ReadOnlyCollection<IExplicitInterfaceImplementation>(); }
+			IList<ExplicitInterfaceImplementation> IMember.InterfaceImplementations {
+                get { return Empty.ReadOnlyCollection<ExplicitInterfaceImplementation>(); }
 			}
 			
 			bool IMember.IsVirtual {
@@ -540,7 +540,7 @@ namespace Mi.CSharp.Resolver
 					return baseMethod.Invoke(resolver, input);
 			}
 			
-			public IList<IParameter> NonLiftedParameters {
+			public IList<Parameter> NonLiftedParameters {
 				get { return baseMethod.Parameters; }
 			}
 		}
@@ -1073,7 +1073,7 @@ namespace Mi.CSharp.Resolver
 				throw new NotSupportedException(); // cannot use nullables at compile time
 			}
 			
-			public IList<IParameter> NonLiftedParameters {
+			public IList<Parameter> NonLiftedParameters {
 				get { return baseMethod.Parameters; }
 			}
 		}
@@ -1274,7 +1274,7 @@ namespace Mi.CSharp.Resolver
 			{
 				this.baseMethod = baseMethod;
 				this.ReturnType = baseMethod.ReturnType;
-				IParameter p = MakeNullableParameter(baseMethod.Parameters[0]);
+				Parameter p = MakeNullableParameter(baseMethod.Parameters[0]);
 				this.Parameters.Add(p);
 				this.Parameters.Add(p);
 			}
@@ -1292,7 +1292,7 @@ namespace Mi.CSharp.Resolver
 				return baseMethod.Invoke(resolver, lhs, rhs);
 			}
 			
-			public IList<IParameter> NonLiftedParameters {
+			public IList<Parameter> NonLiftedParameters {
 				get { return baseMethod.Parameters; }
 			}
 		}
@@ -1514,7 +1514,7 @@ namespace Mi.CSharp.Resolver
 				}
 				IParameterizedMember parameterizedMember = this.CurrentMember as IParameterizedMember;
 				if (parameterizedMember != null) {
-					foreach (IParameter p in parameterizedMember.Parameters) {
+					foreach (Parameter p in parameterizedMember.Parameters) {
 						if (p.Name == identifier) {
 							return new LocalResolveResult(p, p.Type.Resolve(context));
 						}
@@ -1548,9 +1548,9 @@ namespace Mi.CSharp.Resolver
 			
 			// look in type parameters of current method
 			if (k == 0) {
-				IMethod m = this.CurrentMember as IMethod;
+				Method m = this.CurrentMember as Method;
 				if (m != null) {
-					foreach (ITypeParameter tp in m.TypeParameters) {
+					foreach (TypeParameter tp in m.TypeParameters) {
 						if (tp.Name == identifier)
 							return new TypeResolveResult(tp);
 					}
@@ -1558,10 +1558,10 @@ namespace Mi.CSharp.Resolver
 			}
 			
 			// look in current type definitions
-			for (ITypeDefinition t = this.CurrentTypeDefinition; t != null; t = t.DeclaringTypeDefinition) {
+			for (TypeDefinition t = this.CurrentTypeDefinition; t != null; t = t.DeclaringTypeDefinition) {
 				if (k == 0) {
 					// look for type parameter with that name
-					foreach (ITypeParameter tp in t.TypeParameters) {
+					foreach (TypeParameter tp in t.TypeParameters) {
 						if (tp.Name == identifier)
 							return new TypeResolveResult(tp);
 					}
@@ -1589,7 +1589,7 @@ namespace Mi.CSharp.Resolver
 					}
 				}
 				// then look for a type
-				ITypeDefinition def = context.GetClass(n.NamespaceName, identifier, k, StringComparer.Ordinal);
+				TypeDefinition def = context.GetClass(n.NamespaceName, identifier, k, StringComparer.Ordinal);
 				if (def != null) {
 					IType result = def;
 					if (k != 0) {
@@ -1687,7 +1687,7 @@ namespace Mi.CSharp.Resolver
 					if (context.GetNamespace(fullName, StringComparer.Ordinal) != null)
 						return new NamespaceResolveResult(fullName);
 				}
-				ITypeDefinition def = context.GetClass(nrr.NamespaceName, identifier, typeArguments.Count, StringComparer.Ordinal);
+				TypeDefinition def = context.GetClass(nrr.NamespaceName, identifier, typeArguments.Count, StringComparer.Ordinal);
 				if (def != null)
 					return new TypeResolveResult(def);
 				return ErrorResult;
@@ -1701,7 +1701,7 @@ namespace Mi.CSharp.Resolver
 			if (result is UnknownMemberResolveResult) {
 				var extensionMethods = GetExtensionMethods(target.Type, identifier, typeArguments.Count);
 				if (extensionMethods.Count > 0) {
-                    return new MethodGroupResolveResult(target.Type, identifier, Empty.ReadOnlyCollection<IMethod>(), typeArguments)
+                    return new MethodGroupResolveResult(target.Type, identifier, Empty.ReadOnlyCollection<Method>(), typeArguments)
                     {
 						ExtensionMethods = extensionMethods
 					};
@@ -1721,11 +1721,11 @@ namespace Mi.CSharp.Resolver
 		/// Gets the extension methods that are called 'name', and can be called with 'typeArgumentCount' explicit type arguments;
 		/// and are applicable with a first argument type of 'targetType'.
 		/// </summary>
-		List<List<IMethod>> GetExtensionMethods(IType targetType, string name, int typeArgumentCount)
+		List<List<Method>> GetExtensionMethods(IType targetType, string name, int typeArgumentCount)
 		{
-			List<List<IMethod>> extensionMethodGroups = new List<List<IMethod>>();
+			List<List<Method>> extensionMethodGroups = new List<List<Method>>();
 			foreach (var inputGroup in GetAllExtensionMethods()) {
-				List<IMethod> outputGroup = new List<IMethod>();
+				List<Method> outputGroup = new List<Method>();
 				foreach (var method in inputGroup) {
 					if (method.Name == name && (typeArgumentCount == 0 || method.TypeParameters.Count == typeArgumentCount)) {
 						// TODO: verify targetType
@@ -1738,11 +1738,11 @@ namespace Mi.CSharp.Resolver
 			return extensionMethodGroups;
 		}
 		
-		List<List<IMethod>> GetAllExtensionMethods()
+		List<List<Method>> GetAllExtensionMethods()
 		{
 			// TODO: maybe cache the result?
-			List<List<IMethod>> extensionMethodGroups = new List<List<IMethod>>();
-			List<IMethod> m;
+			List<List<Method>> extensionMethodGroups = new List<List<Method>>();
+			List<Method> m;
 			for (UsingScope scope = this.UsingScope; scope != null; scope = scope.Parent) {
 				m = GetExtensionMethods(scope.NamespaceName).ToList();
 				if (m.Count > 0)
@@ -1760,7 +1760,7 @@ namespace Mi.CSharp.Resolver
 			return extensionMethodGroups;
 		}
 		
-		IEnumerable<IMethod> GetExtensionMethods(string namespaceName)
+		IEnumerable<Method> GetExtensionMethods(string namespaceName)
 		{
 			return
 				from c in context.GetClasses(namespaceName, StringComparer.Ordinal)
@@ -1785,7 +1785,7 @@ namespace Mi.CSharp.Resolver
 			if (mgrr != null) {
 				var typeArgumentArray = mgrr.TypeArguments.ToArray();
 				OverloadResolution or = new OverloadResolution(context, arguments, argumentNames, typeArgumentArray);
-				foreach (IMethod method in mgrr.Methods) {
+				foreach (Method method in mgrr.Methods) {
 					// TODO: grouping by class definition?
 					or.AddCandidate(method);
 				}
@@ -1844,16 +1844,16 @@ namespace Mi.CSharp.Resolver
 			if (uirr != null && CurrentTypeDefinition != null) {
                 return new UnknownMethodResolveResult(CurrentTypeDefinition, uirr.Identifier, Empty.ReadOnlyCollection<IType>(), CreateParameters(arguments, argumentNames));
 			}
-			IMethod invokeMethod = target.Type.GetDelegateInvokeMethod();
+			Method invokeMethod = target.Type.GetDelegateInvokeMethod();
 			if (invokeMethod != null) {
 				return new ResolveResult(invokeMethod.ReturnType.Resolve(context));
 			}
 			return ErrorResult;
 		}
 		
-		static List<IParameter> CreateParameters(ResolveResult[] arguments, string[] argumentNames)
+		static List<Parameter> CreateParameters(ResolveResult[] arguments, string[] argumentNames)
 		{
-			List<IParameter> list = new List<IParameter>();
+			List<Parameter> list = new List<Parameter>();
 			if (argumentNames == null) {
 				argumentNames = new string[arguments.Length];
 			} else {
@@ -1946,7 +1946,7 @@ namespace Mi.CSharp.Resolver
 			bool allowProtectedAccess = lookup.IsProtectedAccessAllowed(target.Type);
 			var indexers = target.Type.GetProperties(context, p => p.IsIndexer && lookup.IsAccessible(p, allowProtectedAccess));
 			// TODO: filter indexers hiding other indexers?
-			foreach (IProperty p in indexers) {
+			foreach (Property p in indexers) {
 				// TODO: grouping by class definition?
 				or.AddCandidate(p);
 			}
@@ -1967,7 +1967,7 @@ namespace Mi.CSharp.Resolver
 			MemberLookup lookup = CreateMemberLookup();
 			bool allowProtectedAccess = lookup.IsProtectedAccessAllowed(type);
 			var constructors = type.GetConstructors(context, m => lookup.IsAccessible(m, allowProtectedAccess));
-			foreach (IMethod ctor in constructors) {
+			foreach (Method ctor in constructors) {
 				or.AddCandidate(ctor);
 			}
 			if (or.BestCandidate != null) {
@@ -2020,7 +2020,7 @@ namespace Mi.CSharp.Resolver
 		/// </summary>
 		public ResolveResult ResolveThisReference()
 		{
-			ITypeDefinition t = CurrentTypeDefinition;
+			TypeDefinition t = CurrentTypeDefinition;
 			if (t != null) {
 				return new ResolveResult(t);
 			}
@@ -2032,10 +2032,10 @@ namespace Mi.CSharp.Resolver
 		/// </summary>
 		public ResolveResult ResolveBaseReference()
 		{
-			ITypeDefinition t = CurrentTypeDefinition;
+			TypeDefinition t = CurrentTypeDefinition;
 			if (t != null) {
 				foreach (IType baseType in t.GetBaseTypes(context)) {
-					ITypeDefinition baseTypeDef = baseType.GetDefinition();
+					TypeDefinition baseTypeDef = baseType.GetDefinition();
 					if (baseTypeDef != null && baseTypeDef.ClassType != ClassType.Interface) {
 						return new ResolveResult(baseType);
 					}

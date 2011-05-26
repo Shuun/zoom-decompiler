@@ -16,10 +16,10 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		// - put 'bool isFrozen' into flags
 		// - store regions in more compact form (e.g. assume both file names are identical; use ushort for columns)
 		
-		ITypeDefinition declaringTypeDefinition;
+		TypeDefinition declaringTypeDefinition;
 		ITypeReference returnType = SharedTypes.UnknownType;
 		IList<IAttribute> attributes;
-		IList<IExplicitInterfaceImplementation> interfaceImplementations;
+		IList<ExplicitInterfaceImplementation> interfaceImplementations;
 		DomRegion region;
 		DomRegion bodyRegion;
 		string name;
@@ -55,7 +55,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			base.FreezeInternal();
 		}
 		
-		protected AbstractMember(ITypeDefinition declaringTypeDefinition, string name, EntityType entityType)
+		protected AbstractMember(TypeDefinition declaringTypeDefinition, string name, EntityType entityType)
 		{
 			if (declaringTypeDefinition == null)
 				throw new ArgumentNullException("declaringTypeDefinition");
@@ -91,7 +91,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			this.IsStatic = member.IsStatic;
 		}
 		
-		public ITypeDefinition DeclaringTypeDefinition {
+		public TypeDefinition DeclaringTypeDefinition {
 			get { return declaringTypeDefinition; }
 		}
 		
@@ -113,10 +113,10 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			}
 		}
 		
-		public IList<IExplicitInterfaceImplementation> InterfaceImplementations {
+		public IList<ExplicitInterfaceImplementation> InterfaceImplementations {
 			get {
 				if (interfaceImplementations == null)
-					interfaceImplementations = new List<IExplicitInterfaceImplementation>();
+					interfaceImplementations = new List<ExplicitInterfaceImplementation>();
 				return interfaceImplementations;
 			}
 		}

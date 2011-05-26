@@ -27,7 +27,7 @@ namespace Mi.NRefactory.TypeSystem
 		{
 			int hashCode = obj.Parameters.Count;
 			unchecked {
-				foreach (IParameter p in obj.Parameters) {
+				foreach (Parameter p in obj.Parameters) {
 					hashCode *= 27;
 					hashCode += p.Type.GetHashCode();
 				}

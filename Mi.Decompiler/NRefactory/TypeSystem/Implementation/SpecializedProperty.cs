@@ -13,7 +13,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		readonly IMember memberDefinition;
 		IType declaringType;
 		
-		public SpecializedProperty(IProperty p) : base(p)
+		public SpecializedProperty(Property p) : base(p)
 		{
 			this.memberDefinition = p.MemberDefinition;
 			this.declaringType = p.DeclaringType;

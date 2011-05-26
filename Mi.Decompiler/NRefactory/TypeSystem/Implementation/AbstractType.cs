@@ -44,7 +44,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			get { return null; }
 		}
 		
-		public virtual ITypeDefinition GetDefinition()
+		public virtual TypeDefinition GetDefinition()
 		{
 			return null;
 		}
@@ -59,29 +59,29 @@ namespace Mi.NRefactory.TypeSystem.Implementation
             return Empty.ReadOnlyCollection<IType>();
 		}
 		
-		public virtual IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<ITypeDefinition> filter = null)
+		public virtual IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter = null)
 		{
             return Empty.ReadOnlyCollection<IType>();
 		}
 		
-		public virtual IEnumerable<IMethod> GetMethods(ITypeResolveContext context, Predicate<IMethod> filter = null)
+		public virtual IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter = null)
 		{
-            return Empty.ReadOnlyCollection<IMethod>();
+            return Empty.ReadOnlyCollection<Method>();
 		}
 		
-		public virtual IEnumerable<IMethod> GetConstructors(ITypeResolveContext context, Predicate<IMethod> filter = null)
+		public virtual IEnumerable<Method> GetConstructors(ITypeResolveContext context, Predicate<Method> filter = null)
 		{
-            return Empty.ReadOnlyCollection<IMethod>();
+            return Empty.ReadOnlyCollection<Method>();
 		}
 		
-		public virtual IEnumerable<IProperty> GetProperties(ITypeResolveContext context, Predicate<IProperty> filter = null)
+		public virtual IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)
 		{
-            return Empty.ReadOnlyCollection<IProperty>();
+            return Empty.ReadOnlyCollection<Property>();
 		}
 		
-		public virtual IEnumerable<IField> GetFields(ITypeResolveContext context, Predicate<IField> filter = null)
+		public virtual IEnumerable<Field> GetFields(ITypeResolveContext context, Predicate<Field> filter = null)
 		{
-            return Empty.ReadOnlyCollection<IField>();
+            return Empty.ReadOnlyCollection<Field>();
 		}
 		
 		public virtual IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)

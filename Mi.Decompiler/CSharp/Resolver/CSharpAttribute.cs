@@ -9,7 +9,7 @@ using Mi.NRefactory.TypeSystem.Implementation;
 
 namespace Mi.CSharp.Resolver
 {
-	public sealed class CSharpAttribute : Immutable, IAttribute
+	public sealed class CSharpAttribute : Immutable
 	{
 		ITypeReference attributeType;
 		DomRegion region;
@@ -39,7 +39,7 @@ namespace Mi.CSharp.Resolver
 			get { return attributeType; }
 		}
 		
-		public IMethod ResolveConstructor(ITypeResolveContext context)
+		public Method ResolveConstructor(ITypeResolveContext context)
 		{
 			IType type = attributeType.Resolve(context);
 			throw new NotImplementedException();
@@ -56,10 +56,10 @@ namespace Mi.CSharp.Resolver
 			}
 			// we do have namedCtorArguments, which need to be re-ordered and appended to the positional arguments
 			List<IConstantValue> result = new List<IConstantValue>(this.positionalArguments);
-			IMethod method = ResolveConstructor(context);
+			Method method = ResolveConstructor(context);
 			if (method != null) {
 				for (int i = result.Count; i < method.Parameters.Count; i++) {
-					IParameter p = method.Parameters[i];
+					Parameter p = method.Parameters[i];
 					bool found = false;
 					foreach (var pair in namedCtorArguments) {
 						if (pair.Key == p.Name) {

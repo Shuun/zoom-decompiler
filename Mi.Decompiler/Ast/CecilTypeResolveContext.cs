@@ -41,21 +41,15 @@ namespace Mi.Decompiler.Ast
 			this.loader.IncludeInternalMembers = true;
 			this.module = module;
 			this.namespaces = module.Types.Select(t => t.Namespace).Distinct().ToArray();
-			
-			List<IAttribute> assemblyAttributes = new List<IAttribute>();
-			foreach (var attr in module.Assembly.CustomAttributes) {
-				assemblyAttributes.Add(loader.ReadAttribute(attr));
-			}
-			this.AssemblyAttributes = assemblyAttributes.AsReadOnly();
 		}
 		
-		ITypeDefinition GetClass(Mi.Assemblies.TypeDefinition cecilType)
+		Mi.NRefactory.TypeSystem.TypeDefinition GetClass(Mi.Assemblies.TypeDefinition cecilType)
 		{
 			lock (resolvedCache) {
 				WeakReference wr;
-				ITypeDefinition type;
+				Mi.NRefactory.TypeSystem.TypeDefinition type;
 				if (resolvedCache.TryGetValue(cecilType, out wr)) {
-					type = (ITypeDefinition)wr.Target;
+					type = (Mi.NRefactory.TypeSystem.TypeDefinition)wr.Target;
 				} else {
 					wr = null;
 					type = null;
@@ -88,9 +82,7 @@ namespace Mi.Decompiler.Ast
 			countUntilNextCleanup = resolvedCache.Count + 4;
 		}
 		
-		public IList<IAttribute> AssemblyAttributes { get; private set; }
-		
-		public ITypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer)
+		public Mi.NRefactory.TypeSystem.TypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer)
 		{
 			if (typeParameterCount > 0)
 				name = name + "`" + typeParameterCount.ToString();
@@ -112,14 +104,14 @@ namespace Mi.Decompiler.Ast
 			return null;
 		}
 		
-		public IEnumerable<ITypeDefinition> GetClasses()
+		public IEnumerable<Mi.NRefactory.TypeSystem.TypeDefinition> GetClasses()
 		{
 			foreach (var cecilType in module.Types) {
 				yield return GetClass(cecilType);
 			}
 		}
 		
-		public IEnumerable<ITypeDefinition> GetClasses(string nameSpace, StringComparer nameComparer)
+		public IEnumerable<Mi.NRefactory.TypeSystem.TypeDefinition> GetClasses(string nameSpace, StringComparer nameComparer)
 		{
 			foreach (var cecilType in module.Types) {
 				if (nameComparer.Equals(nameSpace, cecilType.Namespace))

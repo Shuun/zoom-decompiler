@@ -59,12 +59,12 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		#endregion
 		
 		#region Type Dictionary Storage
-		volatile Dictionary<FullNameAndTypeParameterCount, ITypeDefinition>[] _typeDicts = {
-			new Dictionary<FullNameAndTypeParameterCount, ITypeDefinition>(FullNameAndTypeParameterCountComparer.Ordinal)
+		volatile Dictionary<FullNameAndTypeParameterCount, TypeDefinition>[] _typeDicts = {
+			new Dictionary<FullNameAndTypeParameterCount, TypeDefinition>(FullNameAndTypeParameterCountComparer.Ordinal)
 		};
 		readonly object dictsLock = new object();
 		
-		Dictionary<FullNameAndTypeParameterCount, ITypeDefinition> GetTypeDictionary(StringComparer nameComparer)
+		Dictionary<FullNameAndTypeParameterCount, TypeDefinition> GetTypeDictionary(StringComparer nameComparer)
 		{
 			// Gets the dictionary for the specified comparer, creating it if necessary.
 			// New dictionaries might be added during read accesses, so this method needs to be thread-safe,
@@ -89,7 +89,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 				
 				// now create new dict
 				var oldDict = typeDicts[0]; // Ordinal dict
-				var newDict = new Dictionary<FullNameAndTypeParameterCount, ITypeDefinition>(
+				var newDict = new Dictionary<FullNameAndTypeParameterCount, TypeDefinition>(
 					oldDict.Count,
 					new FullNameAndTypeParameterCountComparer(nameComparer));
 				foreach (var pair in oldDict) {
@@ -98,7 +98,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 				}
 				
 				// add the new dict to the array of dicts
-				var newTypeDicts = new Dictionary<FullNameAndTypeParameterCount, ITypeDefinition>[typeDicts.Length + 1];
+				var newTypeDicts = new Dictionary<FullNameAndTypeParameterCount, TypeDefinition>[typeDicts.Length + 1];
 				Array.Copy(typeDicts, 0, newTypeDicts, 0, typeDicts.Length);
 				newTypeDicts[typeDicts.Length] = newDict;
 				this._typeDicts = newTypeDicts;
@@ -161,7 +161,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		#region ITypeResolveContext implementation
 		/// <inheritdoc/>
-		public ITypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer)
+		public TypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer)
 		{
 			if (nameSpace == null)
 				throw new ArgumentNullException("nameSpace");
@@ -171,7 +171,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 				throw new ArgumentNullException("nameComparer");
 			
 			var key = new FullNameAndTypeParameterCount(nameSpace, name, typeParameterCount);
-			ITypeDefinition result;
+			TypeDefinition result;
 			if (GetTypeDictionary(nameComparer).TryGetValue(key, out result))
 				return result;
 			else
@@ -179,13 +179,13 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		}
 		
 		/// <inheritdoc/>
-		public IEnumerable<ITypeDefinition> GetClasses()
+		public IEnumerable<TypeDefinition> GetClasses()
 		{
 			return _typeDicts[0].Values;
 		}
 		
 		/// <inheritdoc/>
-		public IEnumerable<ITypeDefinition> GetClasses(string nameSpace, StringComparer nameComparer)
+		public IEnumerable<TypeDefinition> GetClasses(string nameSpace, StringComparer nameComparer)
 		{
 			if (nameSpace == null)
 				throw new ArgumentNullException("nameSpace");
@@ -229,14 +229,14 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		/// <summary>
 		/// Removes a type definition from this project content.
 		/// </summary>
-		public void RemoveType(ITypeDefinition typeDefinition)
+		public void RemoveType(TypeDefinition typeDefinition)
 		{
 			if (typeDefinition == null)
 				throw new ArgumentNullException("typeDefinition");
 			var key = new FullNameAndTypeParameterCount(typeDefinition.Namespace, typeDefinition.Name, typeDefinition.TypeParameterCount);
 			bool wasRemoved = false;
 			foreach (var dict in _typeDicts) {
-				ITypeDefinition defInDict;
+				TypeDefinition defInDict;
 				if (dict.TryGetValue(key, out defInDict)) {
 					if (defInDict == typeDefinition) {
 						wasRemoved = true;
@@ -261,7 +261,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		/// Adds the type definition to this project content.
 		/// Replaces existing type definitions with the same name.
 		/// </summary>
-		public void UpdateType(ITypeDefinition typeDefinition)
+		public void UpdateType(TypeDefinition typeDefinition)
 		{
 			if (typeDefinition == null)
 				throw new ArgumentNullException("typeDefinition");

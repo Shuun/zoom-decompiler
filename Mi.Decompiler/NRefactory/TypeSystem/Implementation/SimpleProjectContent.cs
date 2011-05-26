@@ -28,16 +28,16 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		readonly TypeStorage types = new TypeStorage();
 		
 		#region AssemblyAttributes
-		readonly List<IAttribute> assemblyAttributes = new List<IAttribute>(); // mutable assembly attribute storage
+		readonly List<Attribute> assemblyAttributes = new List<Attribute>(); // mutable assembly attribute storage
 		
-		volatile IAttribute[] readOnlyAssemblyAttributes = {}; // volatile field with copy for reading threads
+		volatile Attribute[] readOnlyAssemblyAttributes = {}; // volatile field with copy for reading threads
 		
 		/// <inheritdoc/>
-		public IList<IAttribute> AssemblyAttributes {
+		public IList<Attribute> AssemblyAttributes {
 			get { return readOnlyAssemblyAttributes; }
 		}
 		
-		void AddRemoveAssemblyAttributes(ICollection<IAttribute> addedAttributes, ICollection<IAttribute> removedAttributes)
+		void AddRemoveAssemblyAttributes(ICollection<Attribute> addedAttributes, ICollection<Attribute> removedAttributes)
 		{
 			// API uses ICollection instead of IEnumerable to discourage users from evaluating
 			// the list inside the lock (this method is called inside the write lock)
@@ -57,7 +57,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		#endregion
 		
 		#region AddType
-		void AddType(ITypeDefinition typeDefinition)
+		void AddType(TypeDefinition typeDefinition)
 		{
 			if (typeDefinition == null)
 				throw new ArgumentNullException("typeDefinition");
@@ -71,7 +71,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		#endregion
 		
 		#region RemoveType
-		void RemoveType(ITypeDefinition typeDefinition)
+		void RemoveType(TypeDefinition typeDefinition)
 		{
 			throw new NotImplementedException();
 		}
@@ -86,10 +86,10 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		/// The update is done inside a write lock; when other threads access this project content
 		/// from within a <c>using (Synchronize())</c> block, they will not see intermediate (inconsistent) state.
 		/// </remarks>
-		public void UpdateProjectContent(ICollection<ITypeDefinition> oldTypes = null,
-		                                 ICollection<ITypeDefinition> newTypes = null,
-		                                 ICollection<IAttribute> oldAssemblyAttributes = null,
-		                                 ICollection<IAttribute> newAssemblyAttributes = null)
+		public void UpdateProjectContent(ICollection<TypeDefinition> oldTypes = null,
+		                                 ICollection<TypeDefinition> newTypes = null,
+		                                 ICollection<Attribute> oldAssemblyAttributes = null,
+		                                 ICollection<Attribute> newAssemblyAttributes = null)
 		{
 				if (oldTypes != null) {
 					foreach (var element in oldTypes) {
@@ -106,18 +106,18 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		#endregion
 		
 		#region ITypeResolveContext implementation
-		public ITypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer)
+		public TypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer)
 		{
 			return types.GetClass(nameSpace, name, typeParameterCount, nameComparer);
 		}
 		
-		public IEnumerable<ITypeDefinition> GetClasses()
+		public IEnumerable<TypeDefinition> GetClasses()
 		{
 			// make a copy with ToArray() for thread-safe access
 			return types.GetClasses().ToArray();
 		}
 		
-		public IEnumerable<ITypeDefinition> GetClasses(string nameSpace, StringComparer nameComparer)
+		public IEnumerable<TypeDefinition> GetClasses(string nameSpace, StringComparer nameComparer)
 		{
 			// make a copy with ToArray() for thread-safe access
 			return types.GetClasses(nameSpace, nameComparer).ToArray();

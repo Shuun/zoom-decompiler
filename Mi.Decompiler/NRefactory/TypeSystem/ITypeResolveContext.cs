@@ -26,7 +26,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// <param name="nameComparer">Language-specific rules for how class names are compared</param>
 		/// <returns>The type definition for the class; or null if no such class exists.</returns>
 		/// <remarks>This method never returns inner classes; it can be used only with top-level classes.</remarks>
-		ITypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer);
+		TypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer);
 		
 		/// <summary>
 		/// Retrieves all top-level classes.
@@ -35,7 +35,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// If this method is called within <c>using (pc.Synchronize())</c>, then the returned enumerable is valid
 		/// only until the end of the synchronize block.
 		/// </remarks>
-		IEnumerable<ITypeDefinition> GetClasses();
+		IEnumerable<TypeDefinition> GetClasses();
 		
 		/// <summary>
 		/// Retrieves all classes in the specified namespace.
@@ -47,7 +47,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// If this method is called within <c>using (var spc = pc.Synchronize())</c>, then the returned enumerable is valid
 		/// only until the end of the synchronize block.
 		/// </remarks>
-		IEnumerable<ITypeDefinition> GetClasses(string nameSpace, StringComparer nameComparer);
+		IEnumerable<TypeDefinition> GetClasses(string nameSpace, StringComparer nameComparer);
 		
 		/// <summary>
 		/// Retrieves all namespaces.
