@@ -174,7 +174,6 @@ namespace Mi.CSharp.Resolver
 
                 members.AddRange(type.GetMethods(context, m => memberFilter(m)).Cast<IMember>());
                 members.AddRange(type.GetProperties(context, m => memberFilter(m)).Cast<IMember>());
-                members.AddRange(type.GetFields(context, m => memberFilter(m)).Cast<IMember>());
                 members.AddRange(type.GetEvents(context, m => memberFilter(m)).Cast<IMember>());
 
 				if (isInvocation)

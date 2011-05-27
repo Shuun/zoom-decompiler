@@ -834,7 +834,6 @@ namespace Mi.NRefactory.TypeSystem
 				if (typeDefinition.HasFields) {
 					foreach (FieldDefinition field in typeDefinition.Fields) {
 						if (loader.IsVisible(field.Attributes) && !field.IsSpecialName) {
-							this.Fields.Add(loader.ReadField(field, this));
 						}
 					}
 				}
@@ -1012,32 +1011,6 @@ namespace Mi.NRefactory.TypeSystem
 				|| att == FieldAttributes.Public
 				|| att == FieldAttributes.Family
 				|| att == FieldAttributes.FamORAssem;
-		}
-		
-		public Field ReadField(FieldDefinition field, TypeDefinition parentType)
-		{
-			if (field == null)
-				throw new ArgumentNullException("field");
-			if (parentType == null)
-				throw new ArgumentNullException("parentType");
-			
-			Field f = new Field(parentType, field.Name);
-			f.Accessibility = GetAccessibility(field.Attributes);
-			f.IsReadOnly = field.IsInitOnly;
-			f.IsStatic = field.IsStatic;
-			if (field.HasConstant) {
-				f.ConstantValue = ReadConstantValue(new CustomAttributeArgument(field.FieldType, field.Constant));
-			}
-			AddAttributes(field, f);
-			
-			f.ReturnType = ReadTypeReference(field.FieldType, typeAttributes: field, entity: f);
-			RequiredModifierType modreq = field.FieldType as RequiredModifierType;
-			if (modreq != null && modreq.ModifierType.FullName == typeof(IsVolatile).FullName) {
-				f.IsVolatile = true;
-			}
-			
-			FinishReadMember(f);
-			return f;
 		}
 		
 		static Accessibility GetAccessibility(FieldAttributes attr)

@@ -79,11 +79,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
             return Empty.ReadOnlyCollection<Property>();
 		}
 		
-		public virtual IEnumerable<Field> GetFields(ITypeResolveContext context, Predicate<Field> filter = null)
-		{
-            return Empty.ReadOnlyCollection<Field>();
-		}
-		
 		public virtual IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)
 		{
             return Empty.ReadOnlyCollection<Event>();
