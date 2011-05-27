@@ -438,7 +438,7 @@ namespace Mi.NRefactory.TypeSystem
 					}
 					if (baseCount > 1)
 						RemoveDuplicates(methods);
-					AddFilteredRange(methods, this.Methods.Where(m => !m.IsConstructor), filter);
+                    AddFilteredRange(methods, this.Methods.Where(m => { throw new NotSupportedException("Method class is disabled."); }), filter);
 				}
 			}
 			return methods;
@@ -451,7 +451,7 @@ namespace Mi.NRefactory.TypeSystem
 				return compound.GetConstructors(context, filter);
 			
 			List<Method> methods = new List<Method>();
-			AddFilteredRange(methods, this.Methods.Where(m => m.IsConstructor && !m.IsStatic), filter);
+            AddFilteredRange(methods, this.Methods.Where(m => { throw new NotSupportedException("Method clas is disabled."); }), filter);
 			
 			if (this.AddDefaultConstructorIfRequired) {
 				if (this.ClassType == ClassType.Class && methods.Count == 0

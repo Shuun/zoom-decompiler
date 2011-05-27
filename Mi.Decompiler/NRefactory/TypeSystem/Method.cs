@@ -44,13 +44,6 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public bool IsExtensionMethod {
-            get { throw new NotSupportedException("Method class is disabled."); }
-			set {
-                throw new NotSupportedException("Method class is disabled.");
-			}
-		}
-		
 		public bool IsConstructor {
             get { throw new NotSupportedException("Method class is disabled."); }
 		}
