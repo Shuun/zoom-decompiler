@@ -979,10 +979,7 @@ namespace Mi.CSharp.Resolver
 				if (typeArguments.Count == 0 && parentMethodDefinition != null) {
 					// SimpleTypeOrNamespaceReference doesn't support method type parameters,
 					// so we directly handle them here.
-					foreach (TypeParameter tp in parentMethodDefinition.TypeParameters) {
-						if (tp.Name == s.Identifier)
-							return tp;
-					}
+                    throw new NotSupportedException("Method class is disabled.");
 				}
 				return new SimpleTypeOrNamespaceReference(s.Identifier, typeArguments, parentTypeDefinition, parentUsingScope, isInUsingDeclaration);
 			}

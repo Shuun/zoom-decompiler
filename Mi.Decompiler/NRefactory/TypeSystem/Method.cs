@@ -11,60 +11,11 @@ namespace Mi.NRefactory.TypeSystem
 	/// <summary>
 	/// Default implementation of <see cref="Method" /> interface.
 	/// </summary>
-	public class Method : AbstractMember, IParameterizedMember
+	public abstract class Method : AbstractMember, IParameterizedMember
 	{
-		public Method(TypeDefinition declaringTypeDefinition, string name)
-			: base(declaringTypeDefinition, name, EntityType.Method)
-		{
-            throw new NotSupportedException("Method class is disabled.");
-		}
-		
-		/// <summary>
-		/// Copy constructor
-		/// </summary>
-		protected Method(Method method) : base(method)
-		{
-            throw new NotSupportedException("Method class is disabled.");
-		}
-		
-		public override void ApplyInterningProvider(IInterningProvider provider)
-		{
-            throw new NotSupportedException("Method class is disabled.");
-		}
-		
-		public IList<IAttribute> ReturnTypeAttributes {
-			get {
-                throw new NotSupportedException("Method class is disabled.");
-            }
-		}
-		
-		public IList<ITypeParameter> TypeParameters {
-			get {
-                throw new NotSupportedException("Method class is disabled.");
-			}
-		}
-		
-		public bool IsConstructor {
-            get { throw new NotSupportedException("Method class is disabled."); }
-		}
-		
-		public bool IsDestructor {
-            get { throw new NotSupportedException("Method class is disabled."); }
-		}
-		
-		public bool IsOperator {
-            get { throw new NotSupportedException("Method class is disabled."); }
-		}
-		
-		public IList<Parameter> Parameters {
-			get {
-                throw new NotSupportedException("Method class is disabled.");
-			}
-		}
-		
-		public override string ToString()
-		{
-            throw new NotSupportedException("Method class is disabled.");
-		}
-	}
+        public IList<Parameter> Parameters
+        {
+            get { throw new NotImplementedException(); }
+        }
+    }
 }

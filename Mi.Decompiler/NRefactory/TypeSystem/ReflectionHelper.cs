@@ -88,9 +88,7 @@ namespace Mi.NRefactory.TypeSystem
 				if (type.DeclaringMethod != null) {
 					Method method = entity as Method;
 					if (method != null) {
-						if (type.GenericParameterPosition < method.TypeParameters.Count) {
-							return method.TypeParameters[type.GenericParameterPosition];
-						}
+                        throw new NotSupportedException("Method class is disabled.");
 					}
 					return SharedTypes.UnknownType;
 				} else {
@@ -272,11 +270,7 @@ namespace Mi.NRefactory.TypeSystem
 					// method type parameter reference
 					pos++;
 					int index = ReadTypeParameterCount(reflectionTypeName, ref pos);
-					Method method = entity as Method;
-					if (method != null && index >= 0 && index < method.TypeParameters.Count)
-						return method.TypeParameters[index];
-					else
-						return SharedTypes.UnknownType;
+                    return SharedTypes.UnknownType;
 				} else {
 					// class type parameter reference
 					int index = ReadTypeParameterCount(reflectionTypeName, ref pos);

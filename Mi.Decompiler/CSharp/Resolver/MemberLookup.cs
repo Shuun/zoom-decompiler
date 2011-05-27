@@ -182,8 +182,7 @@ namespace Mi.CSharp.Resolver
 				// No need to check for isInvocation/isInvocable here:
 				// we filter out all non-methods
 				Predicate<Method> memberFilter = delegate(Method method) {
-					return method.TypeParameters.Count == typeArgumentCount
-						&& !method.IsOverride && method.Name == name && IsAccessible(method, allowProtectedAccess);
+                    throw new NotSupportedException("Method class is not supported.");
 				};
                 members.AddRange(type.GetMethods(context, memberFilter).Cast<IMember>());
 			}

@@ -43,7 +43,7 @@ namespace Mi.CSharp.Resolver
 			public bool IsGenericMethod {
 				get {
 					Method method = Member as Method;
-					return method != null && method.TypeParameters.Count > 0;
+					return false;
 				}
 			}
 			
@@ -197,42 +197,7 @@ namespace Mi.CSharp.Resolver
 		void RunTypeInference(Candidate candidate)
 		{
 			Method method = candidate.Member as Method;
-			if (method == null || method.TypeParameters.Count == 0) {
-				if (explicitlyGivenTypeArguments != null) {
-					// method does not expect type arguments, but was given some
-					candidate.AddError(OverloadResolutionErrors.WrongNumberOfTypeArguments);
-				}
-				return;
-			}
-			// The method is generic:
-			if (explicitlyGivenTypeArguments != null) {
-				if (explicitlyGivenTypeArguments.Length == method.TypeParameters.Count) {
-					candidate.InferredTypes = explicitlyGivenTypeArguments;
-				} else {
-					candidate.AddError(OverloadResolutionErrors.WrongNumberOfTypeArguments);
-					// wrong number of type arguments given, so truncate the list or pad with UnknownType
-					candidate.InferredTypes = new IType[method.TypeParameters.Count];
-					for (int i = 0; i < candidate.InferredTypes.Length; i++) {
-						if (i < explicitlyGivenTypeArguments.Length)
-							candidate.InferredTypes[i] = explicitlyGivenTypeArguments[i];
-						else
-							candidate.InferredTypes[i] = SharedTypes.UnknownType;
-					}
-				}
-			} else {
-				TypeInference ti = new TypeInference(context, conversions);
-				bool success;
-				candidate.InferredTypes = ti.InferTypeArguments(method.TypeParameters, arguments, candidate.ParameterTypes, out success);
-				if (!success)
-					candidate.AddError(OverloadResolutionErrors.TypeInferenceFailed);
-			}
-			// Now substitute in the formal parameters:
-			var substitution = new ConstraintValidatingSubstitution(candidate.InferredTypes, this);
-			for (int i = 0; i < candidate.ParameterTypes.Length; i++) {
-				candidate.ParameterTypes[i] = candidate.ParameterTypes[i].AcceptVisitor(substitution);
-			}
-			if (!substitution.ConstraintsValid)
-				candidate.AddError(OverloadResolutionErrors.ConstructedTypeDoesNotSatisfyConstraint);
+			return;
 		}
 		
 		sealed class ConstraintValidatingSubstitution : MethodTypeParameterSubstitution

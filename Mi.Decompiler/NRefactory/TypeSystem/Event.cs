@@ -10,20 +10,7 @@ namespace Mi.NRefactory.TypeSystem
 	/// Default implementation of <see cref="Event"/>.
 	/// </summary>
 	public abstract class Event : AbstractMember
-	{
-		public Event(TypeDefinition declaringTypeDefinition, string name)
-			: base(declaringTypeDefinition, name, EntityType.Event)
-		{
-            throw new NotSupportedException("Event class is removed.");
-		}
-		
-		/// <summary>
-		/// Copy constructor
-		/// </summary>
-		protected Event(Event ev)
-			: base(ev)
-		{
-            throw new NotSupportedException("Event class is removed.");
-		}
-	}
+    {
+
+    }
 }
