@@ -27,6 +27,13 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		// 1 byte per enum + 2 bytes for flags
 		Accessibility accessibility;
 		EntityType entityType;
+
+        readonly object Always = CreateAlways();
+
+        private static object CreateAlways()
+        {
+            throw new NotSupportedException();
+        }
 		
 		protected MemberFlags flags;
 
