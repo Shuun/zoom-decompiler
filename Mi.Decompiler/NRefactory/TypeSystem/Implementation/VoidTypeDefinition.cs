@@ -29,11 +29,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
             return Empty.ReadOnlyCollection<Event>();
 		}
 		
-		public override IEnumerable<Field> GetFields(ITypeResolveContext context, Predicate<Field> filter)
-		{
-            return Empty.ReadOnlyCollection<Field>();
-		}
-		
 		public override IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter)
 		{
             return Empty.ReadOnlyCollection<Method>();

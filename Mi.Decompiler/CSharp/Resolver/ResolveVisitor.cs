@@ -239,10 +239,6 @@ namespace Mi.CSharp.Resolver
 			ResolveResult result = null;
 			for (AstNode node = fieldOrEventDeclaration.FirstChild; node != null; node = node.NextSibling) {
 				if (node.Role == FieldDeclaration.Roles.Variable) {
-					if (resolver.CurrentTypeDefinition != null) {
-						resolver.CurrentMember = resolver.CurrentTypeDefinition.Fields.FirstOrDefault(f => f.Region.IsInside(node.StartLocation));
-					}
-					
 					if (resolverEnabled && initializerCount == 1) {
 						result = Resolve(node);
 					} else {
@@ -400,10 +396,6 @@ namespace Mi.CSharp.Resolver
 		public override ResolveResult VisitEnumMemberDeclaration(EnumMemberDeclaration enumMemberDeclaration, object data)
 		{
 			try {
-				if (resolver.CurrentTypeDefinition != null) {
-					resolver.CurrentMember = resolver.CurrentTypeDefinition.Fields.FirstOrDefault(f => f.Region.IsInside(enumMemberDeclaration.StartLocation));
-				}
-				
 				ScanChildren(enumMemberDeclaration);
 				
 				if (resolverEnabled && resolver.CurrentMember != null)

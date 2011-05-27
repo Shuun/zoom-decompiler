@@ -82,11 +82,6 @@ namespace Mi.NRefactory.TypeSystem
 		IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null);
 		
 		/// <summary>
-		/// Gets all fields that can be called on this return type.
-		/// </summary>
-		IEnumerable<Field> GetFields(ITypeResolveContext context, Predicate<Field> filter = null);
-		
-		/// <summary>
 		/// Gets all events that can be called on this return type.
 		/// </summary>
 		IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null);

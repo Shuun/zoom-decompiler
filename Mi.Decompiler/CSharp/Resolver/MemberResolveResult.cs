@@ -34,12 +34,6 @@ namespace Mi.CSharp.Resolver
 		public MemberResolveResult(IMember member, ITypeResolveContext context) : base(member.ReturnType.Resolve(context))
 		{
 			this.member = member;
-			Field field = member as Field;
-			if (field != null) {
-				isConstant = field.IsConst;
-				if (isConstant)
-					constantValue = field.ConstantValue.GetValue(context);
-			}
 		}
 		
 		public IMember Member {

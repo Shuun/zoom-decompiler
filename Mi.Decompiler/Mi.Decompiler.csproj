@@ -745,7 +745,6 @@
     <Compile Include="NRefactory\TypeSystem\Attribute.cs" />
     <Compile Include="NRefactory\TypeSystem\Event.cs" />
     <Compile Include="NRefactory\TypeSystem\ExplicitInterfaceImplementation.cs" />
-    <Compile Include="NRefactory\TypeSystem\Field.cs" />
     <Compile Include="NRefactory\TypeSystem\Method.cs" />
     <Compile Include="NRefactory\TypeSystem\Parameter.cs" />
     <Compile Include="NRefactory\TypeSystem\Property.cs" />
@@ -759,7 +758,6 @@
     <Compile Include="NRefactory\TypeSystem\Implementation\SimpleInterningProvider.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\SimpleProjectContent.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\SpecializedEvent.cs" />
-    <Compile Include="NRefactory\TypeSystem\Implementation\SpecializedField.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\SpecializedMethod.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\SpecializedProperty.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\TypeStorage.cs" />

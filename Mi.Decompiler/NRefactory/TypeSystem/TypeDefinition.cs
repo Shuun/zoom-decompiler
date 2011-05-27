@@ -23,7 +23,6 @@ namespace Mi.NRefactory.TypeSystem
 		IList<ITypeReference> baseTypes;
 		IList<TypeParameter> typeParameters;
 		IList<TypeDefinition> innerClasses;
-		IList<Field> fields;
 		IList<Method> methods;
 		IList<Property> properties;
 		IList<Event> events;
@@ -53,7 +52,6 @@ namespace Mi.NRefactory.TypeSystem
 			baseTypes = FreezeList(baseTypes);
 			typeParameters = FreezeList(typeParameters);
 			innerClasses = FreezeList(innerClasses);
-			fields = FreezeList(fields);
 			methods = FreezeList(methods);
 			properties = FreezeList(properties);
 			events = FreezeList(events);
@@ -127,14 +125,6 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public IList<Field> Fields {
-			get {
-				if (fields == null)
-					fields = new List<Field>();
-				return fields;
-			}
-		}
-		
 		public IList<Property> Properties {
 			get {
 				if (properties == null)
@@ -161,8 +151,7 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public IEnumerable<IMember> Members {
 			get {
-				return this.Fields.Cast<IMember>()
-                    .Concat(this.Properties.Cast<IMember>())
+				return this.Properties.Cast<IMember>()
                     .Concat(this.Methods.Cast<IMember>())
                     .Concat(this.Events.Cast<IMember>());
 			}
@@ -499,31 +488,6 @@ namespace Mi.NRefactory.TypeSystem
 				}
 			}
 			return properties;
-		}
-		
-		public virtual IEnumerable<Field> GetFields(ITypeResolveContext context, Predicate<Field> filter = null)
-		{
-			TypeDefinition compound = GetCompoundClass();
-			if (compound != this)
-				return compound.GetFields(context, filter);
-			
-			List<Field> fields = new List<Field>();
-			using (var busyLock = BusyManager.Enter(this)) {
-				if (busyLock.Success) {
-					int baseCount = 0;
-					foreach (var baseType in GetBaseTypes(context)) {
-						TypeDefinition baseTypeDef = baseType.GetDefinition();
-						if (baseTypeDef != null && (baseTypeDef.ClassType != ClassType.Interface || this.ClassType == ClassType.Interface)) {
-							fields.AddRange(baseType.GetFields(context, filter));
-							baseCount++;
-						}
-					}
-					if (baseCount > 1)
-						RemoveDuplicates(fields);
-					AddFilteredRange(fields, this.Fields, filter);
-				}
-			}
-			return fields;
 		}
 		
 		public virtual IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)

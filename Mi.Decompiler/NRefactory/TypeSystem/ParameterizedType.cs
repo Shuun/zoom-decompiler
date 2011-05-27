@@ -235,19 +235,6 @@ namespace Mi.NRefactory.TypeSystem
 			return properties;
 		}
 		
-		public IEnumerable<Field> GetFields(ITypeResolveContext context, Predicate<Field> filter = null)
-		{
-			Substitution substitution = new Substitution(typeArguments);
-			List<Field> fields = genericType.GetFields(context, filter).ToList();
-			for (int i = 0; i < fields.Count; i++) {
-				SpecializedField f = new SpecializedField(fields[i]);
-				f.SetDeclaringType(this);
-				f.ReturnType = f.ReturnType.Resolve(context).AcceptVisitor(substitution);
-				fields[i] = f;
-			}
-			return fields;
-		}
-		
 		public IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)
 		{
 			Substitution substitution = new Substitution(typeArguments);
