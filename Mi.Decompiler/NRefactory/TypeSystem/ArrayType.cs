@@ -16,6 +16,8 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public ArrayType(IType elementType, int dimensions = 1) : base(elementType)
 		{
+            throw new NotSupportedException("Property and SpecializedProperty classes are disabled.");
+
 			if (dimensions <= 0)
 				throw new ArgumentOutOfRangeException("dimensions");
 			this.dimensions = dimensions;
