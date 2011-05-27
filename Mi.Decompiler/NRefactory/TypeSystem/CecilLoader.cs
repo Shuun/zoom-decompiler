@@ -44,6 +44,13 @@ namespace Mi.NRefactory.TypeSystem
 		/// </summary>
 		public IInterningProvider InterningProvider { get; set; }
 		#endregion
+
+        readonly object always = CreateAlways();
+
+        private static object CreateAlways()
+        {
+            throw new NotSupportedException("Disabling CecilLoader.");
+        }
 		
 		#region Load From AssemblyDefinition
 		/// <summary>
