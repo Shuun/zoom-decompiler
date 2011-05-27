@@ -23,7 +23,7 @@ namespace Mi.CSharp.Resolver
 			if (member == null)
 				throw new ArgumentNullException("member");
 			// C# 4.0 spec, §7.4 member lookup
-			if (member is Event || member is Method)
+			if (member is Event)
 				return true;
 			if (member.ReturnType == SharedTypes.Dynamic)
 				return true;
@@ -172,7 +172,6 @@ namespace Mi.CSharp.Resolver
                     && member.Name == name 
                     && IsAccessible(member, allowProtectedAccess);
 
-                members.AddRange(type.GetMethods(context, m => memberFilter(m)).Cast<IMember>());
                 members.AddRange(type.GetProperties(context, m => memberFilter(m)).Cast<IMember>());
                 members.AddRange(type.GetEvents(context, m => memberFilter(m)).Cast<IMember>());
 
@@ -181,10 +180,6 @@ namespace Mi.CSharp.Resolver
 			} else {
 				// No need to check for isInvocation/isInvocable here:
 				// we filter out all non-methods
-				Predicate<Method> memberFilter = delegate(Method method) {
-                    throw new NotSupportedException("Method class is not supported.");
-				};
-                members.AddRange(type.GetMethods(context, memberFilter).Cast<IMember>());
 			}
 			
 			// TODO: can't members also hide types?
@@ -199,14 +194,8 @@ namespace Mi.CSharp.Resolver
 			// remove members hidden by other members
 			for (int i = members.Count - 1; i >= 0; i--) {
 				TypeDefinition d = members[i].DeclaringTypeDefinition;
-				Method mi = members[i] as Method;
 				// nested loop depends on the fact that the members of more derived classes appear later in the list
 				for (int j = i + 1; j < members.Count; j++) {
-					if (mi != null) {
-						Method mj = members[j] as Method;
-						if (mj != null && !ParameterListComparer.Instance.Equals(mi, mj))
-							continue;
-					}
 					TypeDefinition s = members[j].DeclaringTypeDefinition;
 					if (s != null && s != d && s.IsDerivedFrom(d, context)) {
 						// members[j] hides members[i]
@@ -222,13 +211,7 @@ namespace Mi.CSharp.Resolver
 					TypeDefinition d = members[i].DeclaringTypeDefinition;
 					if (d.ClassType != ClassType.Interface)
 						continue;
-					Method mi = members[i] as Method;
 					for (int j = 0; j < members.Count; j++) {
-						if (mi != null) {
-							Method mj = members[j] as Method;
-							if (mj != null && !ParameterListComparer.Instance.Equals(mi, mj))
-								continue;
-						}
 						TypeDefinition s = members[j].DeclaringTypeDefinition;
 						if (s != null && IsNonInterfaceType(s)) {
 							// members[j] hides members[i]
@@ -245,7 +228,7 @@ namespace Mi.CSharp.Resolver
 			}
 			if (members.Count == 0)
 				return new UnknownMemberResolveResult(type, name, typeArguments);
-			IMember firstNonMethod = members.FirstOrDefault(m => !(m is Method));
+			IMember firstNonMethod = members.FirstOrDefault();
 			if (members.Count == 1 && firstNonMethod != null)
 				return new MemberResolveResult(firstNonMethod, context);
 			if (firstNonMethod == null)

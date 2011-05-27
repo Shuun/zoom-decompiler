@@ -86,10 +86,6 @@ namespace Mi.NRefactory.TypeSystem
 				return new ByReferenceTypeReference(ToTypeReference(type.GetElementType(), entity));
 			} else if (type.IsGenericParameter) {
 				if (type.DeclaringMethod != null) {
-					Method method = entity as Method;
-					if (method != null) {
-                        throw new NotSupportedException("Method class is disabled.");
-					}
 					return SharedTypes.UnknownType;
 				} else {
 					TypeDefinition c = (entity as TypeDefinition) ?? (entity != null ? entity.DeclaringTypeDefinition : null);

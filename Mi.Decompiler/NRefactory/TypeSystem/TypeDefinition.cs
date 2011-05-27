@@ -23,7 +23,6 @@ namespace Mi.NRefactory.TypeSystem
 		IList<ITypeReference> baseTypes;
 		IList<TypeParameter> typeParameters;
 		IList<TypeDefinition> innerClasses;
-		IList<Method> methods;
 		IList<Property> properties;
 		IList<Event> events;
 		IList<IAttribute> attributes;
@@ -52,7 +51,6 @@ namespace Mi.NRefactory.TypeSystem
 			baseTypes = FreezeList(baseTypes);
 			typeParameters = FreezeList(typeParameters);
 			innerClasses = FreezeList(innerClasses);
-			methods = FreezeList(methods);
 			properties = FreezeList(properties);
 			events = FreezeList(events);
 			attributes = FreezeList(attributes);
@@ -133,14 +131,6 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public IList<Method> Methods {
-			get {
-				if (methods == null)
-					methods = new List<Method>();
-				return methods;
-			}
-		}
-		
 		public IList<Event> Events {
 			get {
 				if (events == null)
@@ -152,7 +142,6 @@ namespace Mi.NRefactory.TypeSystem
 		public IEnumerable<IMember> Members {
 			get {
 				return this.Properties.Cast<IMember>()
-                    .Concat(this.Methods.Cast<IMember>())
                     .Concat(this.Events.Cast<IMember>());
 			}
 		}
@@ -417,50 +406,6 @@ namespace Mi.NRefactory.TypeSystem
 				}
 			}
 			return nestedTypes;
-		}
-		
-		public virtual IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter = null)
-		{
-			TypeDefinition compound = GetCompoundClass();
-			if (compound != this)
-				return compound.GetMethods(context, filter);
-			
-			List<Method> methods = new List<Method>();
-			using (var busyLock = BusyManager.Enter(this)) {
-				if (busyLock.Success) {
-					int baseCount = 0;
-					foreach (var baseType in GetBaseTypes(context)) {
-						TypeDefinition baseTypeDef = baseType.GetDefinition();
-						if (baseTypeDef != null && (baseTypeDef.ClassType != ClassType.Interface || this.ClassType == ClassType.Interface)) {
-							methods.AddRange(baseType.GetMethods(context, filter));
-							baseCount++;
-						}
-					}
-					if (baseCount > 1)
-						RemoveDuplicates(methods);
-                    AddFilteredRange(methods, this.Methods.Where(m => { throw new NotSupportedException("Method class is disabled."); }), filter);
-				}
-			}
-			return methods;
-		}
-		
-		public virtual IEnumerable<Method> GetConstructors(ITypeResolveContext context, Predicate<Method> filter = null)
-		{
-			TypeDefinition compound = GetCompoundClass();
-			if (compound != this)
-				return compound.GetConstructors(context, filter);
-			
-			List<Method> methods = new List<Method>();
-            AddFilteredRange(methods, this.Methods.Where(m => { throw new NotSupportedException("Method clas is disabled."); }), filter);
-			
-			if (this.AddDefaultConstructorIfRequired) {
-				if (this.ClassType == ClassType.Class && methods.Count == 0
-				    || this.ClassType == ClassType.Enum || this.ClassType == ClassType.Struct)
-				{
-                    throw new NotSupportedException("Method class is disabled.");
-				}
-			}
-			return methods;
 		}
 		
 		public virtual IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)

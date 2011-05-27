@@ -40,13 +40,6 @@ namespace Mi.CSharp.Resolver
 			
 			public IList<Parameter> Parameters { get { return Member.Parameters; } }
 			
-			public bool IsGenericMethod {
-				get {
-					Method method = Member as Method;
-					return false;
-				}
-			}
-			
 			public int ArgumentsPassedToParamsArray {
 				get {
 					int count = 0;
@@ -196,7 +189,6 @@ namespace Mi.CSharp.Resolver
 		#region RunTypeInference
 		void RunTypeInference(Candidate candidate)
 		{
-			Method method = candidate.Member as Method;
 			return;
 		}
 		
@@ -237,10 +229,6 @@ namespace Mi.CSharp.Resolver
 								TypeDefinition def = typeArg.GetDefinition();
 								if (def != null && def.IsAbstract)
 									ConstraintsValid = false;
-								ConstraintsValid &= typeArg.GetConstructors(
-									overloadResolution.context,
-									m => m.Parameters.Count == 0 && m.Accessibility == Accessibility.Public
-								).Any();
 							}
 							foreach (IType constraintType in tp.Constraints) {
 								IType c = newParameterizedType.SubstituteInType(constraintType);
@@ -347,12 +335,6 @@ namespace Mi.CSharp.Resolver
 			
 			if (!c1IsBetter && !c2IsBetter) {
 				// we need the tie-breaking rules
-				
-				// non-generic methods are better
-				if (!c1.IsGenericMethod && c2.IsGenericMethod)
-					return 1;
-				else if (c1.IsGenericMethod && !c2.IsGenericMethod)
-					return 2;
 				
 				// non-expanded members are better
 				if (!c1.IsExpandedForm && c2.IsExpandedForm)

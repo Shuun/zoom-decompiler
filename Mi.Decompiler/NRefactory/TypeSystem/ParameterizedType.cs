@@ -198,26 +198,6 @@ namespace Mi.NRefactory.TypeSystem
 			return types;
 		}
 		
-		public IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter = null)
-		{
-			Substitution substitution = new Substitution(typeArguments);
-			List<Method> methods = genericType.GetMethods(context, filter).ToList();
-			for (int i = 0; i < methods.Count; i++) {
-                throw new NotSupportedException("Method class is disabled.");
-			}
-			return methods;
-		}
-		
-		public IEnumerable<Method> GetConstructors(ITypeResolveContext context, Predicate<Method> filter = null)
-		{
-			Substitution substitution = new Substitution(typeArguments);
-			List<Method> methods = genericType.GetConstructors(context, filter).ToList();
-			for (int i = 0; i < methods.Count; i++) {
-				throw new NotSupportedException("Method class is not supported.");
-			}
-			return methods;
-		}
-		
 		public IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)
 		{
 			Substitution substitution = new Substitution(typeArguments);

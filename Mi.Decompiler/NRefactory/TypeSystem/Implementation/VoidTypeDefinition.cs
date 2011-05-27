@@ -19,19 +19,9 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			this.IsSealed = true;
 		}
 		
-		public override IEnumerable<Method> GetConstructors(ITypeResolveContext context, Predicate<Method> filter)
-		{
-            return Empty.ReadOnlyCollection<Method>();
-		}
-		
 		public override IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter)
 		{
             return Empty.ReadOnlyCollection<Event>();
-		}
-		
-		public override IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter)
-		{
-            return Empty.ReadOnlyCollection<Method>();
 		}
 		
 		public override IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter)

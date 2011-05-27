@@ -87,38 +87,6 @@ namespace Mi.NRefactory.TypeSystem
 			return this.NamedArguments;
 		}
 		
-		public Method ResolveConstructor(ITypeResolveContext context)
-		{
-			IType[] parameterTypes = null;
-			if (constructorParameterTypes != null && constructorParameterTypes.Length > 0) {
-				parameterTypes = new IType[constructorParameterTypes.Length];
-				for (int i = 0; i < parameterTypes.Length; i++) {
-					parameterTypes[i] = constructorParameterTypes[i].Resolve(context);
-				}
-			}
-			Method bestMatch = null;
-			foreach (Method ctor in attributeType.Resolve(context).GetConstructors(context)) {
-				if (ctor.IsStatic)
-					continue;
-				if (parameterTypes == null) {
-					if (ctor.Parameters.Count == 0)
-						return ctor;
-				} else if (ctor.Parameters.Count == parameterTypes.Length) {
-					bestMatch = ctor;
-					bool ok = true;
-					for (int i = 0; i < parameterTypes.Length; i++) {
-						if (ctor.Parameters[i].Type != parameterTypes[i]) {
-							ok = false;
-							break;
-						}
-					}
-					if (ok)
-						return ctor;
-				}
-			}
-			return bestMatch;
-		}
-		
 		public override string ToString()
 		{
 			StringBuilder b = new StringBuilder();

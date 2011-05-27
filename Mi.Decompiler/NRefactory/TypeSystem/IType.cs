@@ -65,18 +65,6 @@ namespace Mi.NRefactory.TypeSystem
 		IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter = null);
 		
 		/// <summary>
-		/// Gets all methods that can be called on this return type.
-		/// </summary>
-		/// <remarks>The list does not include constructors.</remarks>
-		IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter = null);
-		
-		/// <summary>
-		/// Gets all instance constructors for this type.
-		/// </summary>
-		/// <remarks>This list does not include constructors in base classes or static constructors.</remarks>
-		IEnumerable<Method> GetConstructors(ITypeResolveContext context, Predicate<Method> filter = null);
-		
-		/// <summary>
 		/// Gets all properties that can be called on this return type.
 		/// </summary>
 		IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null);

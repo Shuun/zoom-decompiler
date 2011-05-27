@@ -1688,45 +1688,12 @@ namespace Mi.CSharp.Resolver
 			
 			MemberLookup lookup = CreateMemberLookup();
 			ResolveResult result = lookup.Lookup(target.Type, identifier, typeArguments, isInvocationTarget);
-			if (result is UnknownMemberResolveResult) {
-				var extensionMethods = GetExtensionMethods(target.Type, identifier, typeArguments.Count);
-				if (extensionMethods.Count > 0) {
-                    return new MethodGroupResolveResult(target.Type, identifier, typeArguments)
-                    {
-						ExtensionMethods = extensionMethods
-					};
-				}
-			}
 			return result;
 		}
 		
 		MemberLookup CreateMemberLookup()
 		{
 			return new MemberLookup(context, this.CurrentTypeDefinition, this.UsingScope != null ? this.UsingScope.ProjectContent : null);
-		}
-		#endregion
-		
-		#region GetExtensionMethods
-		/// <summary>
-		/// Gets the extension methods that are called 'name', and can be called with 'typeArgumentCount' explicit type arguments;
-		/// and are applicable with a first argument type of 'targetType'.
-		/// </summary>
-		List<List<Method>> GetExtensionMethods(IType targetType, string name, int typeArgumentCount)
-		{
-			List<List<Method>> extensionMethodGroups = new List<List<Method>>();
-			return extensionMethodGroups;
-		}
-		
-		List<List<Method>> GetAllExtensionMethods()
-		{
-			// TODO: maybe cache the result?
-			List<List<Method>> extensionMethodGroups = new List<List<Method>>();
-			return extensionMethodGroups;
-		}
-		
-		IEnumerable<Method> GetExtensionMethods(string namespaceName)
-		{
-            return Enumerable.Empty<Method>();
 		}
 		#endregion
 		
@@ -1744,42 +1711,6 @@ namespace Mi.CSharp.Resolver
 			if (mgrr != null) {
 				var typeArgumentArray = mgrr.TypeArguments.ToArray();
 				OverloadResolution or = new OverloadResolution(context, arguments, argumentNames, typeArgumentArray);
-				if (!or.FoundApplicableCandidate) {
-					// No applicable match found, so let's try extension methods.
-					
-					var extensionMethods = mgrr.ExtensionMethods;
-					// Look in extension methods pre-calcalculated by ResolveMemberAccess if possible;
-					// otherwise call GetExtensionMethods().
-					if (extensionMethods == null)
-						extensionMethods = GetExtensionMethods(mgrr.TargetType, mgrr.MethodName, mgrr.TypeArguments.Count);
-					
-					if (extensionMethods.Count > 0) {
-						ResolveResult[] extArguments = new ResolveResult[arguments.Length + 1];
-						extArguments[0] = new ResolveResult(mgrr.TargetType);
-						arguments.CopyTo(extArguments, 1);
-						string[] extArgumentNames = null;
-						if (argumentNames != null) {
-							extArgumentNames = new string[argumentNames.Length + 1];
-							argumentNames.CopyTo(extArgumentNames, 1);
-						}
-						var extOr = new OverloadResolution(context, extArguments, extArgumentNames, typeArgumentArray);
-						
-						foreach (var g in extensionMethods) {
-							foreach (var m in g) {
-								extOr.AddCandidate(m);
-							}
-							if (extOr.FoundApplicableCandidate)
-								break;
-						}
-						// For the lack of a better comparison function (the one within OverloadResolution
-						// cannot be used as it depends on the argument set):
-						if (extOr.FoundApplicableCandidate || or.BestCandidate == null) {
-							// Consider an extension method result better than the normal result only
-							// if it's applicable; or if there is no normal result.
-							or = extOr;
-						}
-					}
-				}
 				if (or.BestCandidate != null) {
 					IType returnType = or.BestCandidate.ReturnType.Resolve(context);
 					returnType = returnType.AcceptVisitor(new MethodTypeParameterSubstitution(or.InferredTypeArguments));
@@ -1798,10 +1729,6 @@ namespace Mi.CSharp.Resolver
 			UnknownIdentifierResolveResult uirr = target as UnknownIdentifierResolveResult;
 			if (uirr != null && CurrentTypeDefinition != null) {
                 return new UnknownMethodResolveResult(CurrentTypeDefinition, uirr.Identifier, Empty.ReadOnlyCollection<IType>(), CreateParameters(arguments, argumentNames));
-			}
-			Method invokeMethod = target.Type.GetDelegateInvokeMethod();
-			if (invokeMethod != null) {
-				return new ResolveResult(invokeMethod.ReturnType.Resolve(context));
 			}
 			return ErrorResult;
 		}
@@ -1917,10 +1844,6 @@ namespace Mi.CSharp.Resolver
 			OverloadResolution or = new OverloadResolution(context, arguments, argumentNames, new IType[0]);
 			MemberLookup lookup = CreateMemberLookup();
 			bool allowProtectedAccess = lookup.IsProtectedAccessAllowed(type);
-			var constructors = type.GetConstructors(context, m => lookup.IsAccessible(m, allowProtectedAccess));
-			foreach (Method ctor in constructors) {
-				or.AddCandidate(ctor);
-			}
 			if (or.BestCandidate != null) {
 				return new MemberResolveResult(or.BestCandidate, type);
 			} else {
