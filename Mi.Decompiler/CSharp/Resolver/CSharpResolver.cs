@@ -26,6 +26,7 @@ namespace Mi.CSharp.Resolver
 		
 		readonly ITypeResolveContext context;
 		internal readonly Action verifyProgress;
+
 		
 		#region Constructor
 		public CSharpResolver(ITypeResolveContext context)
@@ -1762,12 +1763,13 @@ namespace Mi.CSharp.Resolver
 		
 		IEnumerable<Method> GetExtensionMethods(string namespaceName)
 		{
-			return
-				from c in context.GetClasses(namespaceName, StringComparer.Ordinal)
-				where c.IsStatic && c.HasExtensionMethods
-				from m in c.Methods
-				where m.IsExtensionMethod
-				select m;
+            if ((from c in context.GetClasses(namespaceName, StringComparer.Ordinal)
+                 where c.IsStatic && c.HasExtensionMethods
+                 from m in c.Methods
+                 select m).Any())
+                throw new NotSupportedException("Method class is disabled.");
+            else
+                return Enumerable.Empty<Method>();
 		}
 		#endregion
 		
