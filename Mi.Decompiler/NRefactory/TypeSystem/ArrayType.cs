@@ -67,19 +67,6 @@ namespace Mi.NRefactory.TypeSystem
 		
 		static readonly Parameter indexerParam = new Parameter(KnownTypeReference.Int32, string.Empty);
 		
-		public override IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)
-		{
-            throw new NotSupportedException("Property class is disabled.");
-
-			TypeDefinition arrayDef = systemArray.Resolve(context) as TypeDefinition;
-			if (arrayDef != null) {
-				foreach (Property p in arrayDef.GetProperties(context, filter)) {
-					yield return p;
-				}
-                throw new NotSupportedException("Property class is disabled.");
-			}
-		}
-		
 		// Events, Fields: System.Array doesn't have any; so we can use the AbstractType default implementation
 		// that simply returns an empty list
 		

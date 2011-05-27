@@ -233,11 +233,6 @@ namespace Mi.NRefactory.TypeSystem
 			return c;
 		}
 		
-		public IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)
-		{
-            return Empty.ReadOnlyCollection<Property>();
-		}
-		
 		public IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)
 		{
             return Empty.ReadOnlyCollection<Event>();

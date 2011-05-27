@@ -318,7 +318,7 @@ namespace Mi.CSharp.Resolver
 		{
 			try {
 				if (resolver.CurrentTypeDefinition != null) {
-					resolver.CurrentMember = resolver.CurrentTypeDefinition.Properties.FirstOrDefault(p => p.Region.IsInside(propertyOrIndexerDeclaration.StartLocation));
+					resolver.CurrentMember = null;
 				}
 				
 				for (AstNode node = propertyOrIndexerDeclaration.FirstChild; node != null; node = node.NextSibling) {

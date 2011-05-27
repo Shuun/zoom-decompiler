@@ -172,7 +172,6 @@ namespace Mi.CSharp.Resolver
                     && member.Name == name 
                     && IsAccessible(member, allowProtectedAccess);
 
-                members.AddRange(type.GetProperties(context, m => memberFilter(m)).Cast<IMember>());
                 members.AddRange(type.GetEvents(context, m => memberFilter(m)).Cast<IMember>());
 
 				if (isInvocation)

@@ -198,16 +198,6 @@ namespace Mi.NRefactory.TypeSystem
 			return types;
 		}
 		
-		public IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)
-		{
-			Substitution substitution = new Substitution(typeArguments);
-			List<Property> properties = genericType.GetProperties(context, filter).ToList();
-			for (int i = 0; i < properties.Count; i++) {
-                throw new NotSupportedException();
-			}
-			return properties;
-		}
-		
 		public IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)
 		{
 			Substitution substitution = new Substitution(typeArguments);
