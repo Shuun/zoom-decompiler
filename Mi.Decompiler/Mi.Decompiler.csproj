@@ -721,7 +721,6 @@
     <Compile Include="NRefactory\TypeSystem\Accessibility.cs" />
     <Compile Include="NRefactory\TypeSystem\ArrayType.cs" />
     <Compile Include="NRefactory\TypeSystem\ByReferenceType.cs" />
-    <Compile Include="NRefactory\TypeSystem\CecilLoader.cs" />
     <Compile Include="NRefactory\TypeSystem\ClassType.cs" />
     <Compile Include="NRefactory\TypeSystem\IAttribute.cs" />
     <Compile Include="NRefactory\TypeSystem\ITypeParameter.cs" />
@@ -756,7 +755,6 @@
     <Compile Include="NRefactory\TypeSystem\Implementation\SimpleConstantValue.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\SimpleInterningProvider.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\SimpleProjectContent.cs" />
-    <Compile Include="NRefactory\TypeSystem\Implementation\SpecializedEvent.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\SpecializedMethod.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\SpecializedProperty.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\TypeStorage.cs" />
