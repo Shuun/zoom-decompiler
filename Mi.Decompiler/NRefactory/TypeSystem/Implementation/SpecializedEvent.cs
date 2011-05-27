@@ -10,47 +10,9 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 	/// </summary>
 	public class SpecializedEvent : Event
 	{
-		readonly IMember memberDefinition;
-		IType declaringType;
-		
 		public SpecializedEvent(Event e) : base(e)
 		{
-			this.memberDefinition = e.MemberDefinition;
-			this.declaringType = e.DeclaringType;
-		}
-		
-		public override IType DeclaringType {
-			get { return declaringType; }
-		}
-		
-		public void SetDeclaringType(IType declaringType)
-		{
-			CheckBeforeMutation();
-			this.declaringType = declaringType;
-		}
-		
-		public override IMember MemberDefinition {
-			get { return memberDefinition; }
-		}
-		
-		public override int GetHashCode()
-		{
-			int hashCode = 0;
-			unchecked {
-				if (memberDefinition != null)
-					hashCode += 1000000007 * memberDefinition.GetHashCode();
-				if (declaringType != null)
-					hashCode += 1000000009 * declaringType.GetHashCode();
-			}
-			return hashCode;
-		}
-		
-		public override bool Equals(object obj)
-		{
-			SpecializedEvent other = obj as SpecializedEvent;
-			if (other == null)
-				return false;
-			return object.Equals(this.memberDefinition, other.memberDefinition) && object.Equals(this.declaringType, other.declaringType);
+            throw new NotSupportedException("Event class (as well as SpecializedEvent class) is removed.");
 		}
 	}
 }

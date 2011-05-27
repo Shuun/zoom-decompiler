@@ -240,10 +240,7 @@ namespace Mi.NRefactory.TypeSystem
 			Substitution substitution = new Substitution(typeArguments);
 			List<Event> events = genericType.GetEvents(context, filter).ToList();
 			for (int i = 0; i < events.Count; i++) {
-				SpecializedEvent e = new SpecializedEvent(events[i]);
-				e.SetDeclaringType(this);
-				e.ReturnType = e.ReturnType.Resolve(context).AcceptVisitor(substitution);
-				events[i] = e;
+                throw new NotSupportedException("Event class (as well as SpecializedEvent class) is removed.");
 			}
 			return events;
 		}
