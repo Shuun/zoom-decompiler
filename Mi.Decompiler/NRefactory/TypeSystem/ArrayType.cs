@@ -72,6 +72,8 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public override IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)
 		{
+            throw new NotSupportedException("Property class is disabled.");
+
 			TypeDefinition arrayDef = systemArray.Resolve(context) as TypeDefinition;
 			if (arrayDef != null) {
 				foreach (Property p in arrayDef.GetProperties(context, filter)) {

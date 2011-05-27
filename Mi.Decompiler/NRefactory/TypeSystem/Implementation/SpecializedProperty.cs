@@ -15,6 +15,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		public SpecializedProperty(Property p) : base(p)
 		{
+            throw new NotSupportedException("Property and SpecializedProperty classes are disabled.");
 			this.memberDefinition = p.MemberDefinition;
 			this.declaringType = p.DeclaringType;
 		}
