@@ -39,41 +39,13 @@ namespace Mi.CSharp.Resolver
 			get { return attributeType; }
 		}
 		
-		public Method ResolveConstructor(ITypeResolveContext context)
-		{
-			IType type = attributeType.Resolve(context);
-			throw new NotImplementedException();
-		}
-		
 		public IList<IConstantValue> GetPositionalArguments(ITypeResolveContext context)
 		{
-			if (namedCtorArguments == null || namedCtorArguments.Count == 0) {
-				// no namedCtorArguments: just return the positionalArguments
-				if (positionalArguments != null)
-					return new ReadOnlyCollection<IConstantValue>(positionalArguments);
-				else
-					return Empty.ReadOnlyCollection<IConstantValue>();
-			}
-			// we do have namedCtorArguments, which need to be re-ordered and appended to the positional arguments
-			List<IConstantValue> result = new List<IConstantValue>(this.positionalArguments);
-			Method method = ResolveConstructor(context);
-			if (method != null) {
-				for (int i = result.Count; i < method.Parameters.Count; i++) {
-					Parameter p = method.Parameters[i];
-					bool found = false;
-					foreach (var pair in namedCtorArguments) {
-						if (pair.Key == p.Name) {
-							result.Add(pair.Value);
-							found = true;
-						}
-					}
-					if (!found) {
-						// add the parameter's default value:
-						result.Add(p.DefaultValue ?? new SimpleConstantValue(p.Type, CSharpResolver.GetDefaultValue(p.Type.Resolve(context))));
-					}
-				}
-			}
-			return result.AsReadOnly();
+			// no namedCtorArguments: just return the positionalArguments
+			if (positionalArguments != null)
+				return new ReadOnlyCollection<IConstantValue>(positionalArguments);
+			else
+				return Empty.ReadOnlyCollection<IConstantValue>();
 		}
 		
 		public IList<KeyValuePair<string, IConstantValue>> GetNamedArguments(ITypeResolveContext context)
