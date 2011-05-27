@@ -677,6 +677,8 @@ namespace Mi.NRefactory.TypeSystem
 			
 			public void Init(CecilLoader loader)
 			{
+                throw new NotSupportedException("Event class (as well as SpecializedEvent class) is removed.");
+
 				InitModifiers();
 				
 				if (typeDefinition.HasGenericParameters) {
@@ -814,7 +816,9 @@ namespace Mi.NRefactory.TypeSystem
 			
 			void InitMembers(CecilLoader loader)
 			{
-				this.AddDefaultConstructorIfRequired = (this.ClassType == ClassType.Struct || this.ClassType == ClassType.Enum);
+                throw new NotSupportedException("Event class (as well as SpecializedEvent class) is removed.");
+                
+                this.AddDefaultConstructorIfRequired = (this.ClassType == ClassType.Struct || this.ClassType == ClassType.Enum);
 				if (typeDefinition.HasMethods) {
 					foreach (MethodDefinition method in typeDefinition.Methods) {
 						if (loader.IsVisible(method.Attributes)) {
@@ -853,6 +857,9 @@ namespace Mi.NRefactory.TypeSystem
 						}
 					}
 				}
+
+                throw new NotSupportedException("Event class (as well as SpecializedEvent class) is removed.");
+
 				if (typeDefinition.HasEvents) {
 					foreach (EventDefinition ev in typeDefinition.Events) {
 						if (ev.AddMethod != null && loader.IsVisible(ev.AddMethod.Attributes)) {
