@@ -40,25 +40,25 @@ namespace ICSharpCode.ILSpy.Xaml
 				return CreateNode(er.Name, er.GetResourceStream());
 			return null;
 		}
-
+		
 		public ILSpyTreeNode CreateNode(string key, Stream data)
 		{
 			foreach (string fileExt in xmlFileExtensions)
 				if (key.EndsWith(fileExt, StringComparison.OrdinalIgnoreCase))
 					return new XmlResourceEntryNode(key, data);
-			return null;
+				return null;
 		}
 	}
-
+	
 	sealed class XmlResourceEntryNode : ResourceEntryNode
 	{
 		string xml;
-
+		
 		public XmlResourceEntryNode(string key, Stream data)
 			: base(key, data)
 		{
 		}
-
+		
 		public override object Icon
 		{
 			get
@@ -75,11 +75,11 @@ namespace ICSharpCode.ILSpy.Xaml
 			}
 		}
 
-		internal override bool View(DecompilerTextView textView)
+		public override bool View(DecompilerTextView textView)
 		{
 			AvalonEditTextOutput output = new AvalonEditTextOutput();
 			IHighlightingDefinition highlighting = null;
-
+			
 			textView.RunWithCancellation(
 				token => Task.Factory.StartNew(
 					() => {
