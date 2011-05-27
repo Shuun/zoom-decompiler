@@ -14,7 +14,6 @@ namespace Mi.CSharp.Resolver
 	/// </summary>
 	public class MethodGroupResolveResult : ResolveResult
 	{
-		readonly ReadOnlyCollection<Method> methods;
 		readonly ReadOnlyCollection<IType> typeArguments;
 		readonly IType targetType;
 		readonly string methodName;
@@ -25,15 +24,12 @@ namespace Mi.CSharp.Resolver
 		/// </summary>
 		internal List<List<Method>> ExtensionMethods;
 		
-		public MethodGroupResolveResult(IType targetType, string methodName, IList<Method> methods, IList<IType> typeArguments) : base(SharedTypes.UnknownType)
+		public MethodGroupResolveResult(IType targetType, string methodName, IList<IType> typeArguments) : base(SharedTypes.UnknownType)
 		{
 			if (targetType == null)
 				throw new ArgumentNullException("targetType");
-			if (methods == null)
-				throw new ArgumentNullException("methods");
 			this.targetType = targetType;
 			this.methodName = methodName;
-			this.methods = new ReadOnlyCollection<Method>(methods);
             this.typeArguments = typeArguments != null ? new ReadOnlyCollection<IType>(typeArguments) : Empty.ReadOnlyCollection<IType>();
 		}
 		
@@ -45,17 +41,13 @@ namespace Mi.CSharp.Resolver
 			get { return methodName; }
 		}
 		
-		public ReadOnlyCollection<Method> Methods {
-			get { return methods; }
-		}
-		
 		public ReadOnlyCollection<IType> TypeArguments {
 			get { return typeArguments; }
 		}
 		
 		public override string ToString()
 		{
-			return string.Format("[{0} with {1} method(s)]", GetType().Name, methods.Count);
+			return string.Format("[{0}]", GetType().Name);
 		}
 	}
 }

@@ -1691,7 +1691,7 @@ namespace Mi.CSharp.Resolver
 			if (result is UnknownMemberResolveResult) {
 				var extensionMethods = GetExtensionMethods(target.Type, identifier, typeArguments.Count);
 				if (extensionMethods.Count > 0) {
-                    return new MethodGroupResolveResult(target.Type, identifier, Empty.ReadOnlyCollection<Method>(), typeArguments)
+                    return new MethodGroupResolveResult(target.Type, identifier, typeArguments)
                     {
 						ExtensionMethods = extensionMethods
 					};
@@ -1714,14 +1714,6 @@ namespace Mi.CSharp.Resolver
 		List<List<Method>> GetExtensionMethods(IType targetType, string name, int typeArgumentCount)
 		{
 			List<List<Method>> extensionMethodGroups = new List<List<Method>>();
-			foreach (var inputGroup in GetAllExtensionMethods()) {
-				List<Method> outputGroup = new List<Method>();
-				foreach (var method in inputGroup) {
-                    throw new NotSupportedException();
-				}
-				if (outputGroup.Count > 0)
-					extensionMethodGroups.Add(outputGroup);
-			}
 			return extensionMethodGroups;
 		}
 		
@@ -1729,33 +1721,12 @@ namespace Mi.CSharp.Resolver
 		{
 			// TODO: maybe cache the result?
 			List<List<Method>> extensionMethodGroups = new List<List<Method>>();
-			List<Method> m;
-			for (UsingScope scope = this.UsingScope; scope != null; scope = scope.Parent) {
-				m = GetExtensionMethods(scope.NamespaceName).ToList();
-				if (m.Count > 0)
-					extensionMethodGroups.Add(m);
-				
-				m = (
-					from u in scope.Usings
-					select u.ResolveNamespace(context) into ns
-					where ns != null
-					select ns.NamespaceName
-				).Distinct().SelectMany(ns => GetExtensionMethods(ns)).ToList();
-				if (m.Count > 0)
-					extensionMethodGroups.Add(m);
-			}
 			return extensionMethodGroups;
 		}
 		
 		IEnumerable<Method> GetExtensionMethods(string namespaceName)
 		{
-            if ((from c in context.GetClasses(namespaceName, StringComparer.Ordinal)
-                 where c.IsStatic && c.HasExtensionMethods
-                 from m in c.Methods
-                 select m).Any())
-                throw new NotSupportedException("Method class is disabled.");
-            else
-                return Enumerable.Empty<Method>();
+            return Enumerable.Empty<Method>();
 		}
 		#endregion
 		
@@ -1773,10 +1744,6 @@ namespace Mi.CSharp.Resolver
 			if (mgrr != null) {
 				var typeArgumentArray = mgrr.TypeArguments.ToArray();
 				OverloadResolution or = new OverloadResolution(context, arguments, argumentNames, typeArgumentArray);
-				foreach (Method method in mgrr.Methods) {
-					// TODO: grouping by class definition?
-					or.AddCandidate(method);
-				}
 				if (!or.FoundApplicableCandidate) {
 					// No applicable match found, so let's try extension methods.
 					
@@ -1895,10 +1862,6 @@ namespace Mi.CSharp.Resolver
 			UnknownMemberResolveResult umrr = rr as UnknownMemberResolveResult;
 			if (umrr != null)
 				return umrr.MemberName;
-			
-			MethodGroupResolveResult mgrr = rr as MethodGroupResolveResult;
-			if (mgrr != null && mgrr.Methods.Count > 0)
-				return mgrr.Methods[0].Name;
 			
 			LocalResolveResult vrr = rr as LocalResolveResult;
 			if (vrr != null)
