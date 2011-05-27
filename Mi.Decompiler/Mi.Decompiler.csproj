@@ -102,7 +102,6 @@
     <Compile Include="Assemblies\Pdb\PdbReader.cs" />
     <Compile Include="AstServices\AstBuilder.cs" />
     <Compile Include="AstServices\AstMethodBodyBuilder.cs" />
-    <Compile Include="AstServices\CecilTypeResolveContext.cs" />
     <Compile Include="AstServices\CommentStatement.cs" />
     <Compile Include="AstServices\DecompilerContext.cs" />
     <Compile Include="AstServices\NameVariables.cs" />

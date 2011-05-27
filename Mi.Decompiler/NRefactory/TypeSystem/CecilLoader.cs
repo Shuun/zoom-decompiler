@@ -51,6 +51,11 @@ namespace Mi.NRefactory.TypeSystem
         {
             throw new NotSupportedException("Disabling CecilLoader.");
         }
+
+        static CecilLoader()
+        {
+            throw new NotSupportedException("Disabling CecilLoader.");
+        }
 		
 		#region Load From AssemblyDefinition
 		/// <summary>
