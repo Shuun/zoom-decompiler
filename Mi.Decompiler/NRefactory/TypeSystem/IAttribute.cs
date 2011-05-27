@@ -35,12 +35,6 @@ namespace Mi.NRefactory.TypeSystem
 		/// Gets the named arguments passed to the attribute.
 		/// </summary>
 		IList<KeyValuePair<string, IConstantValue>> GetNamedArguments(ITypeResolveContext context);
-		
-		/// <summary>
-		/// Resolves the constructor method used for this attribute invocation.
-		/// Returns null if the constructor cannot be found.
-		/// </summary>
-		Method ResolveConstructor(ITypeResolveContext context);
 	}
 	
 	#if WITH_CONTRACTS

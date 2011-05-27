@@ -279,7 +279,7 @@ namespace Mi.CSharp.Resolver
 		{
 			try {
 				if (resolver.CurrentTypeDefinition != null) {
-					resolver.CurrentMember = resolver.CurrentTypeDefinition.Methods.FirstOrDefault(m => m.Region.IsInside(member.StartLocation));
+					resolver.CurrentMember = null;
 				}
 				
 				ScanChildren(member);
@@ -965,18 +965,18 @@ namespace Mi.CSharp.Resolver
 		
 		ITypeReference MakeTypeReference(AstType type)
 		{
-			return ConvertType(type, resolver.CurrentTypeDefinition, resolver.CurrentMember as Method, resolver.UsingScope, false);
+			return ConvertType(type, resolver.CurrentTypeDefinition, resolver.UsingScope, false);
 		}
 
-        static ITypeReference ConvertType(AstType type, TypeDefinition parentTypeDefinition, Method parentMethodDefinition, UsingScope parentUsingScope, bool isInUsingDeclaration)
+        static ITypeReference ConvertType(AstType type, TypeDefinition parentTypeDefinition, UsingScope parentUsingScope, bool isInUsingDeclaration)
 		{
 			SimpleType s = type as SimpleType;
 			if (s != null) {
 				List<ITypeReference> typeArguments = new List<ITypeReference>();
 				foreach (var ta in s.TypeArguments) {
-					typeArguments.Add(ConvertType(ta, parentTypeDefinition, parentMethodDefinition, parentUsingScope, isInUsingDeclaration));
+					typeArguments.Add(ConvertType(ta, parentTypeDefinition, parentUsingScope, isInUsingDeclaration));
 				}
-				if (typeArguments.Count == 0 && parentMethodDefinition != null) {
+				if (typeArguments.Count == 0) {
 					// SimpleTypeOrNamespaceReference doesn't support method type parameters,
 					// so we directly handle them here.
                     throw new NotSupportedException("Method class is disabled.");
@@ -1034,19 +1034,19 @@ namespace Mi.CSharp.Resolver
 						t = null;
 					}
 				} else {
-					t = ConvertType(m.Target, parentTypeDefinition, parentMethodDefinition, parentUsingScope, isInUsingDeclaration) as ITypeOrNamespaceReference;
+					t = ConvertType(m.Target, parentTypeDefinition, parentUsingScope, isInUsingDeclaration) as ITypeOrNamespaceReference;
 				}
 				if (t == null)
 					return SharedTypes.UnknownType;
 				List<ITypeReference> typeArguments = new List<ITypeReference>();
 				foreach (var ta in m.TypeArguments) {
-					typeArguments.Add(ConvertType(ta, parentTypeDefinition, parentMethodDefinition, parentUsingScope, isInUsingDeclaration));
+					typeArguments.Add(ConvertType(ta, parentTypeDefinition, parentUsingScope, isInUsingDeclaration));
 				}
 				return new MemberTypeOrNamespaceReference(t, m.MemberName, typeArguments, parentTypeDefinition, parentUsingScope);
 			}
 			ComposedType c = type as ComposedType;
 			if (c != null) {
-				ITypeReference t = ConvertType(c.BaseType, parentTypeDefinition, parentMethodDefinition, parentUsingScope, isInUsingDeclaration);
+				ITypeReference t = ConvertType(c.BaseType, parentTypeDefinition, parentUsingScope, isInUsingDeclaration);
 				if (c.HasNullableSpecifier) {
 					t = NullableType.Create(t);
 				}

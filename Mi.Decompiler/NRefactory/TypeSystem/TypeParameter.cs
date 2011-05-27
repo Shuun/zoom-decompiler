@@ -233,28 +233,6 @@ namespace Mi.NRefactory.TypeSystem
 			return c;
 		}
 		
-		public IEnumerable<Method> GetConstructors(ITypeResolveContext context, Predicate<Method> filter = null)
-		{
-			if (HasDefaultConstructorConstraint || HasValueTypeConstraint) {
-                throw new NotSupportedException("Method class is disabled.");
-			}
-            return Empty.ReadOnlyCollection<Method>();
-		}
-		
-		public IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter = null)
-		{
-			// TODO: get methods from constraints
-			IType objectType = context.GetClass("System", "Object", 0, StringComparer.Ordinal);
-			IEnumerable<Method> objectMethods;
-			if (objectType != null)
-				objectMethods = objectType.GetMethods(context, filter);
-			else
-                objectMethods = Empty.ReadOnlyCollection<Method>();
-			
-			// don't return static methods (those cannot be called from type parameter)
-			return objectMethods.Where(m => !m.IsStatic);
-		}
-		
 		public IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)
 		{
             return Empty.ReadOnlyCollection<Property>();

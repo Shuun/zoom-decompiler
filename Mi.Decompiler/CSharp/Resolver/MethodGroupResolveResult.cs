@@ -18,12 +18,6 @@ namespace Mi.CSharp.Resolver
 		readonly IType targetType;
 		readonly string methodName;
 		
-		/// <summary>
-		/// List of extension methods, used to avoid re-calculating it in ResolveInvocation() when it was already
-		/// calculated by ResolveMemberAccess().
-		/// </summary>
-		internal List<List<Method>> ExtensionMethods;
-		
 		public MethodGroupResolveResult(IType targetType, string methodName, IList<IType> typeArguments) : base(SharedTypes.UnknownType)
 		{
 			if (targetType == null)

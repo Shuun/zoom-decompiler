@@ -65,11 +65,6 @@ namespace Mi.NRefactory.TypeSystem
 			return baseTypes;
 		}
 		
-		public override IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter = null)
-		{
-			return systemArray.Resolve(context).GetMethods(context, filter);
-		}
-		
 		static readonly Parameter indexerParam = new Parameter(KnownTypeReference.Int32, string.Empty);
 		
 		public override IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)

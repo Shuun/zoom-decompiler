@@ -64,16 +64,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
             return Empty.ReadOnlyCollection<IType>();
 		}
 		
-		public virtual IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter = null)
-		{
-            return Empty.ReadOnlyCollection<Method>();
-		}
-		
-		public virtual IEnumerable<Method> GetConstructors(ITypeResolveContext context, Predicate<Method> filter = null)
-		{
-            return Empty.ReadOnlyCollection<Method>();
-		}
-		
 		public virtual IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)
 		{
             return Empty.ReadOnlyCollection<Property>();

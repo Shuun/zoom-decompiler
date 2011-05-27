@@ -103,12 +103,6 @@ namespace Mi.NRefactory.TypeSystem
 			return types.SelectMany(t => t.GetEvents(context, filter));
 		}
 		
-		public override IEnumerable<Method> GetMethods(ITypeResolveContext context, Predicate<Method> filter)
-		{
-			filter = FilterNonStatic(filter);
-			return types.SelectMany(t => t.GetMethods(context, filter));
-		}
-		
 		public override IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter)
 		{
 			filter = FilterNonStatic(filter);
