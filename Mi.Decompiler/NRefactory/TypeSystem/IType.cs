@@ -63,11 +63,6 @@ namespace Mi.NRefactory.TypeSystem
 		/// Gets inner classes (including inherited inner classes).
 		/// </summary>
 		IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter = null);
-		
-		/// <summary>
-		/// Gets all events that can be called on this return type.
-		/// </summary>
-		IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null);
 	}
 	
 	#if WITH_CONTRACTS

@@ -23,8 +23,6 @@ namespace Mi.CSharp.Resolver
 			if (member == null)
 				throw new ArgumentNullException("member");
 			// C# 4.0 spec, §7.4 member lookup
-			if (member is Event)
-				return true;
 			if (member.ReturnType == SharedTypes.Dynamic)
 				return true;
 			return member.ReturnType.Resolve(context).IsDelegate();
@@ -171,8 +169,6 @@ namespace Mi.CSharp.Resolver
 					!member.IsOverride 
                     && member.Name == name 
                     && IsAccessible(member, allowProtectedAccess);
-
-                members.AddRange(type.GetEvents(context, m => memberFilter(m)).Cast<IMember>());
 
 				if (isInvocation)
 					members.RemoveAll(m => !IsInvocable(m, context));

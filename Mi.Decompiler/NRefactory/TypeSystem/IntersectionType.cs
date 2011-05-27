@@ -97,12 +97,6 @@ namespace Mi.NRefactory.TypeSystem
 			return types;
 		}
 		
-		public override IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter)
-		{
-			filter = FilterNonStatic(filter);
-			return types.SelectMany(t => t.GetEvents(context, filter));
-		}
-		
 		static Predicate<T> FilterNonStatic<T>(Predicate<T> filter) where T : class, IMember
 		{
 			return member => !member.IsStatic && (filter == null || filter(member));

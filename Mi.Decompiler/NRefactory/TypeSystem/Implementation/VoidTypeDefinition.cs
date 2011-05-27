@@ -18,10 +18,5 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			this.Accessibility = Accessibility.Public;
 			this.IsSealed = true;
 		}
-		
-		public override IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter)
-		{
-            return Empty.ReadOnlyCollection<Event>();
-		}
 	}
 }

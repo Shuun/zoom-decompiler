@@ -354,7 +354,7 @@ namespace Mi.CSharp.Resolver
 		{
 			try {
 				if (resolver.CurrentTypeDefinition != null) {
-					resolver.CurrentMember = resolver.CurrentTypeDefinition.Events.FirstOrDefault(e => e.Region.IsInside(eventDeclaration.StartLocation));
+					resolver.CurrentMember = null;
 				}
 				
 				if (resolver.CurrentMember != null) {
