@@ -108,9 +108,8 @@ namespace Mi.NRefactory.TypeSystem
 				throw new ArgumentNullException("typeDefinition");
 			if (projectContent == null)
 				throw new ArgumentNullException("projectContent");
-			var c = new CecilTypeDefinition(projectContent, typeDefinition);
-			c.Init(this);
-			return c;
+
+            throw new NotSupportedException("Disabling CecilLoader.");
 		}
 		#endregion
 		
