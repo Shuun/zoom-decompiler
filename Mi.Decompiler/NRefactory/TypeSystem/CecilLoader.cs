@@ -652,6 +652,8 @@ namespace Mi.NRefactory.TypeSystem
 			public CecilTypeDefinition(ITypeResolveContext pc, Mi.Assemblies.TypeDefinition typeDefinition)
 				: base(pc, typeDefinition.Namespace, ReflectionHelper.SplitTypeParameterCountFromReflectionName(typeDefinition.Name))
 			{
+                throw new NotSupportedException("Disabling CecilLoader.");
+
 				this.typeDefinition = typeDefinition;
 				InitTypeParameters();
 			}
@@ -659,6 +661,8 @@ namespace Mi.NRefactory.TypeSystem
 			public CecilTypeDefinition(CecilTypeDefinition parentType, string name, Mi.Assemblies.TypeDefinition typeDefinition)
 				: base(parentType, name)
 			{
+                throw new NotSupportedException("Disabling CecilLoader.");
+
 				this.typeDefinition = typeDefinition;
 				InitTypeParameters();
 			}
