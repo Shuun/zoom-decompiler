@@ -457,9 +457,7 @@ namespace Mi.NRefactory.TypeSystem
 				if (this.ClassType == ClassType.Class && methods.Count == 0
 				    || this.ClassType == ClassType.Enum || this.ClassType == ClassType.Struct)
 				{
-					var m = Method.CreateDefaultConstructor(this);
-					if (filter == null || filter(m))
-						methods.Add(m);
+                    throw new NotSupportedException("Method class is disabled.");
 				}
 			}
 			return methods;

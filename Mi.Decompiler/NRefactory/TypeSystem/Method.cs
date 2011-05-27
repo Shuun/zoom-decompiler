@@ -13,18 +13,6 @@ namespace Mi.NRefactory.TypeSystem
 	/// </summary>
 	public class Method : AbstractMember, IParameterizedMember
 	{
-		IList<IAttribute> returnTypeAttributes;
-		IList<ITypeParameter> typeParameters;
-		IList<Parameter> parameters;
-		
-		protected override void FreezeInternal()
-		{
-			returnTypeAttributes = FreezeList(returnTypeAttributes);
-			typeParameters = FreezeList(typeParameters);
-			parameters = FreezeList(parameters);
-			base.FreezeInternal();
-		}
-		
 		public Method(TypeDefinition declaringTypeDefinition, string name)
 			: base(declaringTypeDefinition, name, EntityType.Method)
 		{
@@ -36,89 +24,52 @@ namespace Mi.NRefactory.TypeSystem
 		/// </summary>
 		protected Method(Method method) : base(method)
 		{
-			returnTypeAttributes = CopyList(returnTypeAttributes);
-			typeParameters = CopyList(typeParameters);
-			parameters = CopyList(parameters);
-			this.IsExtensionMethod = method.IsExtensionMethod;
+            throw new NotSupportedException("Method class is disabled.");
 		}
 		
 		public override void ApplyInterningProvider(IInterningProvider provider)
 		{
-			base.ApplyInterningProvider(provider);
-			if (provider != null) {
-				returnTypeAttributes = provider.InternList(returnTypeAttributes);
-				typeParameters = provider.InternList(typeParameters);
-				parameters = provider.InternList(parameters);
-			}
+            throw new NotSupportedException("Method class is disabled.");
 		}
 		
 		public IList<IAttribute> ReturnTypeAttributes {
 			get {
-				if (returnTypeAttributes == null)
-					returnTypeAttributes = new List<IAttribute>();
-				return returnTypeAttributes;
-			}
+                throw new NotSupportedException("Method class is disabled.");
+            }
 		}
 		
 		public IList<ITypeParameter> TypeParameters {
 			get {
-				if (typeParameters == null)
-					typeParameters = new List<ITypeParameter>();
-				return typeParameters;
+                throw new NotSupportedException("Method class is disabled.");
 			}
 		}
 		
 		public bool IsExtensionMethod {
-			get { return (flags & MemberFlags.ExtensionMethod)!=0; }
+            get { throw new NotSupportedException("Method class is disabled."); }
 			set {
-				CheckBeforeMutation();
-				flags = value ?
-                    flags | MemberFlags.ExtensionMethod :
-                    flags & ~MemberFlags.ExtensionMethod;
+                throw new NotSupportedException("Method class is disabled.");
 			}
 		}
 		
 		public bool IsConstructor {
-			get { return this.EntityType == EntityType.Constructor; }
+            get { throw new NotSupportedException("Method class is disabled."); }
 		}
 		
 		public bool IsDestructor {
-			get { return this.EntityType == EntityType.Destructor; }
+            get { throw new NotSupportedException("Method class is disabled."); }
 		}
 		
 		public bool IsOperator {
-			get { return this.EntityType == EntityType.Operator; }
+            get { throw new NotSupportedException("Method class is disabled."); }
 		}
 		
 		public IList<Parameter> Parameters {
 			get {
-				if (parameters == null)
-					parameters = new List<Parameter>();
-				return parameters;
+                throw new NotSupportedException("Method class is disabled.");
 			}
 		}
 		
 		public override string ToString()
-		{
-			StringBuilder b = new StringBuilder("[");
-			b.Append(EntityType.ToString());
-			b.Append(' ');
-			b.Append(DeclaringType.Name);
-			b.Append('.');
-			b.Append(Name);
-			b.Append('(');
-			var p = this.Parameters;
-			for (int i = 0; i < p.Count; i++) {
-				if (i > 0) b.Append(", ");
-				b.Append(p[i].ToString());
-			}
-			b.Append("):");
-			b.Append(ReturnType.ToString());
-			b.Append(']');
-			return b.ToString();
-		}
-		
-		public static Method CreateDefaultConstructor(TypeDefinition typeDefinition)
 		{
             throw new NotSupportedException("Method class is disabled.");
 		}

@@ -236,9 +236,7 @@ namespace Mi.NRefactory.TypeSystem
 		public IEnumerable<Method> GetConstructors(ITypeResolveContext context, Predicate<Method> filter = null)
 		{
 			if (HasDefaultConstructorConstraint || HasValueTypeConstraint) {
-				Method m = Method.CreateDefaultConstructor(GetDummyClassForTypeParameter());
-				if (filter(m))
-					return new [] { m };
+                throw new NotSupportedException("Method class is disabled.");
 			}
             return Empty.ReadOnlyCollection<Method>();
 		}
