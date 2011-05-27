@@ -28,6 +28,7 @@ namespace Mi.NRefactory.TypeSystem
 		public Method(TypeDefinition declaringTypeDefinition, string name)
 			: base(declaringTypeDefinition, name, EntityType.Method)
 		{
+            throw new NotSupportedException("Method class is disabled.");
 		}
 		
 		/// <summary>
@@ -119,14 +120,7 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public static Method CreateDefaultConstructor(TypeDefinition typeDefinition)
 		{
-			DomRegion region = new DomRegion(typeDefinition.Region.BeginLine, typeDefinition.Region.BeginColumn);
-			return new Method(typeDefinition, ".ctor") {
-				EntityType = EntityType.Constructor,
-				Accessibility = typeDefinition.IsAbstract ? Accessibility.Protected : Accessibility.Public,
-				IsSynthetic = true,
-				Region = region,
-				ReturnType = typeDefinition
-			};
+            throw new NotSupportedException("Method class is disabled.");
 		}
 	}
 }
