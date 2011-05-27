@@ -9,22 +9,12 @@ namespace Mi.NRefactory.TypeSystem
 	/// <summary>
 	/// Default implementation of <see cref="Event"/>.
 	/// </summary>
-	public class Event : AbstractMember
+	public abstract class Event : AbstractMember
 	{
-		Accessor addAccessor, removeAccessor, invokeAccessor;
-		
-		protected override void FreezeInternal()
-		{
-			base.FreezeInternal();
-			if (addAccessor != null)    addAccessor.Freeze();
-			if (removeAccessor != null) removeAccessor.Freeze();
-			if (invokeAccessor != null) invokeAccessor.Freeze();
-		}
-		
 		public Event(TypeDefinition declaringTypeDefinition, string name)
 			: base(declaringTypeDefinition, name, EntityType.Event)
 		{
-            throw new NotSupportedException("Event is used.");
+            throw new NotSupportedException("Event class is removed.");
 		}
 		
 		/// <summary>
@@ -33,45 +23,7 @@ namespace Mi.NRefactory.TypeSystem
 		protected Event(Event ev)
 			: base(ev)
 		{
-			this.addAccessor = ev.AddAccessor;
-			this.removeAccessor = ev.RemoveAccessor;
-			this.invokeAccessor = ev.InvokeAccessor;
-		}
-		
-		public bool CanAdd {
-			get { return addAccessor != null; }
-		}
-		
-		public bool CanRemove {
-			get { return removeAccessor != null; }
-		}
-		
-		public bool CanInvoke {
-			get { return invokeAccessor != null; }
-		}
-		
-		public Accessor AddAccessor{
-			get { return addAccessor; }
-			set {
-				CheckBeforeMutation();
-				addAccessor = value;
-			}
-		}
-		
-		public Accessor RemoveAccessor {
-			get { return removeAccessor; }
-			set {
-				CheckBeforeMutation();
-				removeAccessor = value;
-			}
-		}
-		
-		public Accessor InvokeAccessor {
-			get { return invokeAccessor; }
-			set {
-				CheckBeforeMutation();
-				invokeAccessor = value;
-			}
+            throw new NotSupportedException("Event class is removed.");
 		}
 	}
 }

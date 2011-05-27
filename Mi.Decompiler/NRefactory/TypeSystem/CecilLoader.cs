@@ -1108,18 +1108,7 @@ namespace Mi.NRefactory.TypeSystem
 			if (parentType == null)
 				throw new ArgumentNullException("parentType");
 			
-			Event e = new Event(parentType, ev.Name);
-			TranslateModifiers(ev.AddMethod, e);
-			e.ReturnType = ReadTypeReference(ev.EventType, typeAttributes: ev, entity: e);
-			
-			e.AddAccessor = ReadAccessor(ev.AddMethod);
-			e.RemoveAccessor = ReadAccessor(ev.RemoveMethod);
-			e.InvokeAccessor = ReadAccessor(ev.InvokeMethod);
-			
-			AddAttributes(ev, e);
-			
-			FinishReadMember(e);
-			return e;
+            throw new NotSupportedException("Event class is removed.");
 		}
 		#endregion
 		
