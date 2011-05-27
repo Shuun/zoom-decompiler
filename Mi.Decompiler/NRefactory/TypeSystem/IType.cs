@@ -65,11 +65,6 @@ namespace Mi.NRefactory.TypeSystem
 		IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter = null);
 		
 		/// <summary>
-		/// Gets all properties that can be called on this return type.
-		/// </summary>
-		IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null);
-		
-		/// <summary>
 		/// Gets all events that can be called on this return type.
 		/// </summary>
 		IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null);

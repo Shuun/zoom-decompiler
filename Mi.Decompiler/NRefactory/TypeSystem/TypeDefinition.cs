@@ -23,7 +23,6 @@ namespace Mi.NRefactory.TypeSystem
 		IList<ITypeReference> baseTypes;
 		IList<TypeParameter> typeParameters;
 		IList<TypeDefinition> innerClasses;
-		IList<Property> properties;
 		IList<Event> events;
 		IList<IAttribute> attributes;
 		
@@ -51,7 +50,6 @@ namespace Mi.NRefactory.TypeSystem
 			baseTypes = FreezeList(baseTypes);
 			typeParameters = FreezeList(typeParameters);
 			innerClasses = FreezeList(innerClasses);
-			properties = FreezeList(properties);
 			events = FreezeList(events);
 			attributes = FreezeList(attributes);
 			base.FreezeInternal();
@@ -123,14 +121,6 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public IList<Property> Properties {
-			get {
-				if (properties == null)
-					properties = new List<Property>();
-				return properties;
-			}
-		}
-		
 		public IList<Event> Events {
 			get {
 				if (events == null)
@@ -141,8 +131,7 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public IEnumerable<IMember> Members {
 			get {
-				return this.Properties.Cast<IMember>()
-                    .Concat(this.Events.Cast<IMember>());
+				return this.Events.Cast<IMember>();
 			}
 		}
 		
@@ -406,31 +395,6 @@ namespace Mi.NRefactory.TypeSystem
 				}
 			}
 			return nestedTypes;
-		}
-		
-		public virtual IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter = null)
-		{
-			TypeDefinition compound = GetCompoundClass();
-			if (compound != this)
-				return compound.GetProperties(context, filter);
-			
-			List<Property> properties = new List<Property>();
-			using (var busyLock = BusyManager.Enter(this)) {
-				if (busyLock.Success) {
-					int baseCount = 0;
-					foreach (var baseType in GetBaseTypes(context)) {
-						TypeDefinition baseTypeDef = baseType.GetDefinition();
-						if (baseTypeDef != null && (baseTypeDef.ClassType != ClassType.Interface || this.ClassType == ClassType.Interface)) {
-							properties.AddRange(baseType.GetProperties(context, filter));
-							baseCount++;
-						}
-					}
-					if (baseCount > 1)
-						RemoveDuplicates(properties);
-					AddFilteredRange(properties, this.Properties, filter);
-				}
-			}
-			return properties;
 		}
 		
 		public virtual IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)

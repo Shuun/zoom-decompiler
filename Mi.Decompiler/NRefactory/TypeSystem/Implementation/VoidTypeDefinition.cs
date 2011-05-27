@@ -23,10 +23,5 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		{
             return Empty.ReadOnlyCollection<Event>();
 		}
-		
-		public override IEnumerable<Property> GetProperties(ITypeResolveContext context, Predicate<Property> filter)
-		{
-            return Empty.ReadOnlyCollection<Property>();
-		}
 	}
 }

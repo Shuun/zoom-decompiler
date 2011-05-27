@@ -1822,12 +1822,6 @@ namespace Mi.CSharp.Resolver
 			OverloadResolution or = new OverloadResolution(context, arguments, argumentNames, new IType[0]);
 			MemberLookup lookup = CreateMemberLookup();
 			bool allowProtectedAccess = lookup.IsProtectedAccessAllowed(target.Type);
-			var indexers = target.Type.GetProperties(context, p => { throw new NotSupportedException();});
-			// TODO: filter indexers hiding other indexers?
-			foreach (Property p in indexers) {
-				// TODO: grouping by class definition?
-				or.AddCandidate(p);
-			}
 			if (or.BestCandidate != null) {
 				return new MemberResolveResult(or.BestCandidate, or.BestCandidate.ReturnType.Resolve(context));
 			} else {
