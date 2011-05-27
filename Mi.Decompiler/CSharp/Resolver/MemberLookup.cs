@@ -249,7 +249,7 @@ namespace Mi.CSharp.Resolver
 			if (members.Count == 1 && firstNonMethod != null)
 				return new MemberResolveResult(firstNonMethod, context);
 			if (firstNonMethod == null)
-				return new MethodGroupResolveResult(type, name, members.Select(m => (Method)m).ToList(), typeArguments);
+				return new MethodGroupResolveResult(type, name, typeArguments);
 			return new AmbiguousMemberResultResult(firstNonMethod, firstNonMethod.ReturnType.Resolve(context));
 		}
 
