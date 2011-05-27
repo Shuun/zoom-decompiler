@@ -24,6 +24,7 @@ namespace Mi.NRefactory.TypeSystem
 		public Event(TypeDefinition declaringTypeDefinition, string name)
 			: base(declaringTypeDefinition, name, EntityType.Event)
 		{
+            throw new NotSupportedException("Event is used.");
 		}
 		
 		/// <summary>
