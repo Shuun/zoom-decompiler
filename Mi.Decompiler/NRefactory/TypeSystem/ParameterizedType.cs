@@ -203,10 +203,7 @@ namespace Mi.NRefactory.TypeSystem
 			Substitution substitution = new Substitution(typeArguments);
 			List<Method> methods = genericType.GetMethods(context, filter).ToList();
 			for (int i = 0; i < methods.Count; i++) {
-				SpecializedMethod m = new SpecializedMethod(methods[i]);
-				m.SetDeclaringType(this);
-				m.SubstituteTypes(context, substitution);
-				methods[i] = m;
+                throw new NotSupportedException("Method class is disabled.");
 			}
 			return methods;
 		}
@@ -216,10 +213,7 @@ namespace Mi.NRefactory.TypeSystem
 			Substitution substitution = new Substitution(typeArguments);
 			List<Method> methods = genericType.GetConstructors(context, filter).ToList();
 			for (int i = 0; i < methods.Count; i++) {
-				SpecializedMethod m = new SpecializedMethod(methods[i]);
-				m.SetDeclaringType(this);
-				m.SubstituteTypes(context, substitution);
-				methods[i] = m;
+				throw new NotSupportedException("Method class is not supported.");
 			}
 			return methods;
 		}
@@ -229,10 +223,7 @@ namespace Mi.NRefactory.TypeSystem
 			Substitution substitution = new Substitution(typeArguments);
 			List<Property> properties = genericType.GetProperties(context, filter).ToList();
 			for (int i = 0; i < properties.Count; i++) {
-				SpecializedProperty p = new SpecializedProperty(properties[i]);
-				p.SetDeclaringType(this);
-				p.SubstituteTypes(context, substitution);
-				properties[i] = p;
+                throw new NotSupportedException();
 			}
 			return properties;
 		}

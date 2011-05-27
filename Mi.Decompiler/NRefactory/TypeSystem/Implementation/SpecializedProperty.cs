@@ -8,65 +8,8 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 	/// <summary>
 	/// Represents a specialized IProperty (e.g. after type substitution).
 	/// </summary>
-	public class SpecializedProperty : Property
-	{
-		readonly IMember memberDefinition;
-		IType declaringType;
-		
-		public SpecializedProperty(Property p) : base(p)
-		{
-            throw new NotSupportedException("Property and SpecializedProperty classes are disabled.");
-			this.memberDefinition = p.MemberDefinition;
-			this.declaringType = p.DeclaringType;
-		}
-		
-		public override IType DeclaringType {
-			get { return declaringType; }
-		}
-		
-		public void SetDeclaringType(IType declaringType)
-		{
-			CheckBeforeMutation();
-			this.declaringType = declaringType;
-		}
-		
-		public override IMember MemberDefinition {
-			get { return memberDefinition; }
-		}
-		
-		public override int GetHashCode()
-		{
-			int hashCode = 0;
-			unchecked {
-				if (memberDefinition != null)
-					hashCode += 1000000007 * memberDefinition.GetHashCode();
-				if (declaringType != null)
-					hashCode += 1000000009 * declaringType.GetHashCode();
-			}
-			return hashCode;
-		}
-		
-		public override bool Equals(object obj)
-		{
-			SpecializedProperty other = obj as SpecializedProperty;
-			if (other == null)
-				return false;
-			return object.Equals(this.memberDefinition, other.memberDefinition) && object.Equals(this.declaringType, other.declaringType);
-		}
-		
-		/// <summary>
-		/// Performs type substitution in parameter types and in the return type.
-		/// </summary>
-		public void SubstituteTypes(ITypeResolveContext context, TypeVisitor substitution)
-		{
-			this.ReturnType = this.ReturnType.Resolve(context).AcceptVisitor(substitution);
-			var p = this.Parameters;
-			for (int i = 0; i < p.Count; i++) {
-				IType newType = p[i].Type.Resolve(context).AcceptVisitor(substitution);
-				if (newType != p[i].Type) {
-					p[i] = new Parameter(p[i]) { Type = newType };
-				}
-			}
-		}
-	}
+	public abstract class SpecializedProperty : Property
+    {
+
+    }
 }

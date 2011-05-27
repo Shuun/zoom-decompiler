@@ -81,21 +81,7 @@ namespace Mi.NRefactory.TypeSystem
 				foreach (Property p in arrayDef.GetProperties(context, filter)) {
 					yield return p;
 				}
-				Property indexer = new Property(arrayDef, "Items") {
-					EntityType = EntityType.Indexer,
-					ReturnType = elementType,
-					Accessibility = Accessibility.Public,
-					Getter = Accessor.GetFromAccessibility(Accessibility.Public),
-					Setter = Accessor.GetFromAccessibility(Accessibility.Public),
-					IsSynthetic = true
-				};
-				for (int i = 0; i < dimensions; i++) {
-					indexer.Parameters.Add(indexerParam);
-				}
-				indexer.Freeze();
-				if (filter == null || filter(indexer)) {
-					yield return indexer;
-				}
+                throw new NotSupportedException("Property class is disabled.");
 			}
 		}
 		

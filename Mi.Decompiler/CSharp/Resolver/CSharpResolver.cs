@@ -1547,17 +1547,6 @@ namespace Mi.CSharp.Resolver
 			
 			int k = typeArguments.Count;
 			
-			// look in type parameters of current method
-			if (k == 0) {
-				Method m = this.CurrentMember as Method;
-				if (m != null) {
-					foreach (TypeParameter tp in m.TypeParameters) {
-						if (tp.Name == identifier)
-							return new TypeResolveResult(tp);
-					}
-				}
-			}
-			
 			// look in current type definitions
 			for (TypeDefinition t = this.CurrentTypeDefinition; t != null; t = t.DeclaringTypeDefinition) {
 				if (k == 0) {
@@ -1728,10 +1717,7 @@ namespace Mi.CSharp.Resolver
 			foreach (var inputGroup in GetAllExtensionMethods()) {
 				List<Method> outputGroup = new List<Method>();
 				foreach (var method in inputGroup) {
-					if (method.Name == name && (typeArgumentCount == 0 || method.TypeParameters.Count == typeArgumentCount)) {
-						// TODO: verify targetType
-						outputGroup.Add(method);
-					}
+                    throw new NotSupportedException();
 				}
 				if (outputGroup.Count > 0)
 					extensionMethodGroups.Add(outputGroup);
@@ -1946,7 +1932,7 @@ namespace Mi.CSharp.Resolver
 			OverloadResolution or = new OverloadResolution(context, arguments, argumentNames, new IType[0]);
 			MemberLookup lookup = CreateMemberLookup();
 			bool allowProtectedAccess = lookup.IsProtectedAccessAllowed(target.Type);
-			var indexers = target.Type.GetProperties(context, p => p.IsIndexer && lookup.IsAccessible(p, allowProtectedAccess));
+			var indexers = target.Type.GetProperties(context, p => { throw new NotSupportedException();});
 			// TODO: filter indexers hiding other indexers?
 			foreach (Property p in indexers) {
 				// TODO: grouping by class definition?
