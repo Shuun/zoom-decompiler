@@ -198,16 +198,6 @@ namespace Mi.NRefactory.TypeSystem
 			return types;
 		}
 		
-		public IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)
-		{
-			Substitution substitution = new Substitution(typeArguments);
-			List<Event> events = genericType.GetEvents(context, filter).ToList();
-			for (int i = 0; i < events.Count; i++) {
-                throw new NotSupportedException("Event class (as well as SpecializedEvent class) is removed.");
-			}
-			return events;
-		}
-		
 		public override bool Equals(object obj)
 		{
 			return Equals(obj as IType);

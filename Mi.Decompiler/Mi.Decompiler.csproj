@@ -741,7 +741,6 @@
     <Compile Include="NRefactory\TypeSystem\Implementation\CompositeTypeResolveContext.cs" />
     <Compile Include="NRefactory\TypeSystem\Accessor.cs" />
     <Compile Include="NRefactory\TypeSystem\Attribute.cs" />
-    <Compile Include="NRefactory\TypeSystem\Event.cs" />
     <Compile Include="NRefactory\TypeSystem\ExplicitInterfaceImplementation.cs" />
     <Compile Include="NRefactory\TypeSystem\Parameter.cs" />
     <Compile Include="NRefactory\TypeSystem\TypeDefinition.cs" />

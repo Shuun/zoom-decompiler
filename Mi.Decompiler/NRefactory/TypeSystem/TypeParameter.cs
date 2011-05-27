@@ -233,11 +233,6 @@ namespace Mi.NRefactory.TypeSystem
 			return c;
 		}
 		
-		public IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)
-		{
-            return Empty.ReadOnlyCollection<Event>();
-		}
-		
 		IEnumerable<IType> IType.GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter)
 		{
             return Empty.ReadOnlyCollection<IType>();

@@ -64,11 +64,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
             return Empty.ReadOnlyCollection<IType>();
 		}
 		
-		public virtual IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)
-		{
-            return Empty.ReadOnlyCollection<Event>();
-		}
-		
 		public override bool Equals(object obj)
 		{
 			return Equals(obj as IType);

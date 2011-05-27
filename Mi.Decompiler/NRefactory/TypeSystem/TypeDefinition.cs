@@ -23,7 +23,6 @@ namespace Mi.NRefactory.TypeSystem
 		IList<ITypeReference> baseTypes;
 		IList<TypeParameter> typeParameters;
 		IList<TypeDefinition> innerClasses;
-		IList<Event> events;
 		IList<IAttribute> attributes;
 		
 		DomRegion region;
@@ -50,7 +49,6 @@ namespace Mi.NRefactory.TypeSystem
 			baseTypes = FreezeList(baseTypes);
 			typeParameters = FreezeList(typeParameters);
 			innerClasses = FreezeList(innerClasses);
-			events = FreezeList(events);
 			attributes = FreezeList(attributes);
 			base.FreezeInternal();
 		}
@@ -121,17 +119,9 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public IList<Event> Events {
-			get {
-				if (events == null)
-					events = new List<Event>();
-				return events;
-			}
-		}
-		
 		public IEnumerable<IMember> Members {
 			get {
-				return this.Events.Cast<IMember>();
+				return Enumerable.Empty<IMember>();
 			}
 		}
 		
@@ -395,43 +385,6 @@ namespace Mi.NRefactory.TypeSystem
 				}
 			}
 			return nestedTypes;
-		}
-		
-		public virtual IEnumerable<Event> GetEvents(ITypeResolveContext context, Predicate<Event> filter = null)
-		{
-			TypeDefinition compound = GetCompoundClass();
-			if (compound != this)
-				return compound.GetEvents(context, filter);
-			
-			List<Event> events = new List<Event>();
-			using (var busyLock = BusyManager.Enter(this)) {
-				if (busyLock.Success) {
-					int baseCount = 0;
-					foreach (var baseType in GetBaseTypes(context)) {
-						TypeDefinition baseTypeDef = baseType.GetDefinition();
-						if (baseTypeDef != null && (baseTypeDef.ClassType != ClassType.Interface || this.ClassType == ClassType.Interface)) {
-							events.AddRange(baseType.GetEvents(context, filter));
-							baseCount++;
-						}
-					}
-					if (baseCount > 1)
-						RemoveDuplicates(events);
-					AddFilteredRange(events, this.Events, filter);
-				}
-			}
-			return events;
-		}
-		
-		static void AddFilteredRange<T>(List<T> targetList, IEnumerable<T> sourceList, Predicate<T> filter) where T : class
-		{
-			if (filter == null) {
-				targetList.AddRange(sourceList);
-			} else {
-				foreach (T element in sourceList) {
-					if (filter(element))
-						targetList.Add(element);
-				}
-			}
 		}
 		
 		/// <summary>
