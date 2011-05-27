@@ -93,8 +93,6 @@
     </Compile>
     <Compile Include="AssemblyList.cs" />
     <Compile Include="AssemblyListManager.cs" />
-    <Compile Include="BamlDecompiler.cs" />
-    <Compile Include="TreeNodes\ResourceNodes\BamlResourceEntryNode.cs" />
     <Compile Include="CommandLineArguments.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="ConnectMethodDecompiler.cs" />
@@ -150,6 +148,7 @@
     <Compile Include="TreeNodes\Analyzer\AnalyzedInterfacePropertyImplementedByTreeNode.cs" />
     <Compile Include="TreeNodes\Analyzer\AnalyzedInterfaceMethodImplementedByTreeNode.cs" />
     <Compile Include="TreeNodes\Analyzer\AnalyzedInterfaceEventImplementedByTreeNode.cs" />
+    <Compile Include="TreeNodes\Analyzer\AnalyzedEventFiredByTreeNode.cs" />
     <Compile Include="TreeNodes\Analyzer\AnalyzedPropertyAccessorTreeNode.cs" />
     <Compile Include="TreeNodes\Analyzer\AnalyzedTypeExposedByTreeNode.cs" />
     <Compile Include="TreeNodes\Analyzer\AnalyzedTypeExtensionMethodsTreeNode.cs" />
@@ -160,6 +159,8 @@
     <Compile Include="TreeNodes\Analyzer\Helpers.cs" />
     <Compile Include="TreeNodes\Analyzer\ScopedWhereUsedAnalyzer.cs" />
     <Compile Include="TreeNodes\IMemberTreeNode.cs" />
+    <Compile Include="TreeNodes\ResourceNodes\CursorResourceEntryNode.cs" />
+    <Compile Include="TreeNodes\ResourceNodes\ImageResourceEntryNode.cs" />
     <Compile Include="TreeNodes\ResourceNodes\XmlResourceNode.cs" />
     <Compile Include="TreeNodes\ResourceNodes\IResourceNodeFactory.cs" />
     <Compile Include="TreeNodes\ResourceNodes\ResourcesFileTreeNode.cs" />
