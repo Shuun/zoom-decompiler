@@ -51,6 +51,8 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public ParameterizedType(TypeDefinition genericType, IEnumerable<IType> typeArguments)
 		{
+            throw new NotSupportedException("Property and SpecializedProperty classes are disabled.");
+
 			if (genericType == null)
 				throw new ArgumentNullException("genericType");
 			if (typeArguments == null)
