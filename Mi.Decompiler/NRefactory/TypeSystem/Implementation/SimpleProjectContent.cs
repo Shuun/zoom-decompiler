@@ -26,6 +26,13 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		// If you wanted to derive from this: use delegation, not inheritance.
 		
 		readonly TypeStorage types = new TypeStorage();
+
+        readonly object always = CreateAlways();
+
+        private static object CreateAlways()
+        {
+            throw new NotImplementedException();
+        }
 		
 		#region AddType
 		void AddType(TypeDefinition typeDefinition)
