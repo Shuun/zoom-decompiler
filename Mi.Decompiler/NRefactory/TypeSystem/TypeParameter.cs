@@ -207,22 +207,6 @@ namespace Mi.NRefactory.TypeSystem
 			return this;
 		}
 		
-		static readonly SimpleProjectContent dummyProjectContent = new SimpleProjectContent();
-		
-		TypeDefinition GetDummyClassForTypeParameter()
-		{
-			TypeDefinition c = new TypeDefinition(dummyProjectContent, string.Empty, this.Name);
-			c.Region = this.Region;
-			if (HasValueTypeConstraint) {
-				c.ClassType = ClassType.Struct;
-			} else if (HasDefaultConstructorConstraint) {
-				c.ClassType = ClassType.Class;
-			} else {
-				c.ClassType = ClassType.Interface;
-			}
-			return c;
-		}
-		
 		IEnumerable<IType> IType.GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter)
 		{
             return Empty.ReadOnlyCollection<IType>();
