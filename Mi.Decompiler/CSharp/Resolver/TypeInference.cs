@@ -39,6 +39,13 @@ namespace Mi.CSharp.Resolver
 		// determines the maximum generic nesting level; necessary to avoid infinite recursion in 'Improved' mode.
 		const int maxNestingLevel = 5;
 		int nestingLevel;
+
+        readonly object always = CreateAlways();
+
+        private static object CreateAlways()
+        {
+            throw new NotImplementedException();
+        }
 		
 		#region Constructor
 		public TypeInference(ITypeResolveContext context, Conversions conversions = null)
