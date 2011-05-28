@@ -175,29 +175,6 @@ namespace Mi.CSharp.Resolver
 			if (fromType == SharedTypes.Null)
 				return true;
 			
-			ArrayType fromArray = fromType as ArrayType;
-			if (fromArray != null) {
-				ArrayType toArray = toType as ArrayType;
-				if (toArray != null) {
-					// array covariance (the broken kind)
-					return fromArray.Dimensions == toArray.Dimensions
-						&& ImplicitReferenceConversion(fromArray.ElementType, toArray.ElementType);
-				}
-				// conversion from single-dimensional array S[] to IList<T>:
-				ParameterizedType toPT = toType as ParameterizedType;
-				if (fromArray.Dimensions == 1 && toPT != null && toPT.TypeArguments.Count == 1
-				    && toPT.Namespace == "System.Collections.Generic"
-				    && (toPT.Name == "IList" || toPT.Name == "ICollection" || toPT.Name == "IEnumerable"))
-				{
-					// array covariance plays a part here as well (string[] is IList<object>)
-					return IdentityConversion(fromArray.ElementType, toPT.TypeArguments[0])
-						|| ImplicitReferenceConversion(fromArray.ElementType, toPT.TypeArguments[0]);
-				}
-				// conversion from any array to System.Array and the interfaces it implements:
-				TypeDefinition systemArray = context.GetClass("System", "Array", 0, StringComparer.Ordinal);
-				return systemArray != null && (systemArray.Equals(toType) || ImplicitReferenceConversion(systemArray, toType));
-			}
-			
 			// now comes the hard part: traverse the inheritance chain and figure out generics+variance
 			return IsSubtypeOf(fromType, toType);
 		}
@@ -308,10 +285,6 @@ namespace Mi.CSharp.Resolver
 		bool ImplicitPointerConversion(IType fromType, IType toType)
 		{
 			// C# 4.0 spec: §18.4 Pointer conversions
-			if (fromType is PointerType && toType is PointerType && toType.ReflectionName == "System.Void*")
-				return true;
-			if (fromType == SharedTypes.Null && toType is PointerType)
-				return true;
 			return false;
 		}
 		#endregion

@@ -210,11 +210,7 @@ namespace Mi.CSharp.Resolver
 				// TODO: what if Ei is an anonymous function?
 				IType U = Ei.Type;
 				if (U != SharedTypes.UnknownType) {
-					if (Ti is ByReferenceType) {
-						MakeExactInference(Ei.Type, Ti);
-					} else {
-						MakeLowerBoundInference(Ei.Type, Ti);
-					}
+					MakeLowerBoundInference(Ei.Type, Ti);
 				}
 			}
 		}
@@ -449,20 +445,6 @@ namespace Mi.CSharp.Resolver
 				tp.UpperBounds.Add(U);
 				return;
 			}
-			// Handle by reference types:
-			ByReferenceType brU = U as ByReferenceType;
-			ByReferenceType brV = V as ByReferenceType;
-			if (brU != null && brV != null) {
-				MakeExactInference(brU.ElementType, brV.ElementType);
-				return;
-			}
-			// Handle array types:
-			ArrayType arrU = U as ArrayType;
-			ArrayType arrV = V as ArrayType;
-			if (arrU != null && arrV != null && arrU.Dimensions == arrV.Dimensions) {
-				MakeExactInference(arrU.ElementType, arrV.ElementType);
-				return;
-			}
 			// Handle parameterized type:
 			ParameterizedType pU = U as ParameterizedType;
 			ParameterizedType pV = V as ParameterizedType;
@@ -508,15 +490,7 @@ namespace Mi.CSharp.Resolver
 			}
 			
 			// Handle array types:
-			ArrayType arrU = U as ArrayType;
-			ArrayType arrV = V as ArrayType;
 			ParameterizedType pV = V as ParameterizedType;
-			if (arrU != null && (arrV != null && arrU.Dimensions == arrV.Dimensions
-			                     || IsIEnumerableCollectionOrList(pV) && arrU.Dimensions == 1))
-			{
-				MakeLowerBoundInference(arrU.ElementType, arrV.ElementType);
-				return;
-			}
 			// Handle parameterized types:
 			if (pV != null) {
 				ParameterizedType uniqueBaseType = null;
@@ -591,15 +565,7 @@ namespace Mi.CSharp.Resolver
 			}
 			
 			// Handle array types:
-			ArrayType arrU = U as ArrayType;
-			ArrayType arrV = V as ArrayType;
 			ParameterizedType pU = U as ParameterizedType;
-			if (arrV != null && (arrU != null && arrU.Dimensions == arrV.Dimensions
-			                     || IsIEnumerableCollectionOrList(pU) && arrV.Dimensions == 1))
-			{
-				MakeUpperBoundInference(arrU.ElementType, arrV.ElementType);
-				return;
-			}
 			// Handle parameterized types:
 			if (pU != null) {
 				ParameterizedType uniqueBaseType = null;
