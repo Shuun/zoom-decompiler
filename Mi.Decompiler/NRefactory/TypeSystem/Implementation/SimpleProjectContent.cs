@@ -27,35 +27,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		readonly TypeStorage types = new TypeStorage();
 		
-		#region AssemblyAttributes
-		readonly List<Attribute> assemblyAttributes = new List<Attribute>(); // mutable assembly attribute storage
-		
-		volatile Attribute[] readOnlyAssemblyAttributes = {}; // volatile field with copy for reading threads
-		
-		/// <inheritdoc/>
-		public IList<Attribute> AssemblyAttributes {
-			get { return readOnlyAssemblyAttributes; }
-		}
-		
-		void AddRemoveAssemblyAttributes(ICollection<Attribute> addedAttributes, ICollection<Attribute> removedAttributes)
-		{
-			// API uses ICollection instead of IEnumerable to discourage users from evaluating
-			// the list inside the lock (this method is called inside the write lock)
-			bool hasChanges = false;
-			if (removedAttributes != null && removedAttributes.Count > 0) {
-				if (assemblyAttributes.RemoveAll(removedAttributes.Contains) > 0)
-					hasChanges = true;
-			}
-			if (addedAttributes != null) {
-				assemblyAttributes.AddRange(addedAttributes);
-				hasChanges = true;
-			}
-			
-			if (hasChanges)
-				readOnlyAssemblyAttributes = assemblyAttributes.ToArray();
-		}
-		#endregion
-		
 		#region AddType
 		void AddType(TypeDefinition typeDefinition)
 		{
@@ -87,9 +58,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		/// from within a <c>using (Synchronize())</c> block, they will not see intermediate (inconsistent) state.
 		/// </remarks>
 		public void UpdateProjectContent(ICollection<TypeDefinition> oldTypes = null,
-		                                 ICollection<TypeDefinition> newTypes = null,
-		                                 ICollection<Attribute> oldAssemblyAttributes = null,
-		                                 ICollection<Attribute> newAssemblyAttributes = null)
+		                                 ICollection<TypeDefinition> newTypes = null)
 		{
 				if (oldTypes != null) {
 					foreach (var element in oldTypes) {
@@ -101,7 +70,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 						AddType(element);
 					}
 				}
-				AddRemoveAssemblyAttributes(oldAssemblyAttributes, newAssemblyAttributes);
 		}
 		#endregion
 		
