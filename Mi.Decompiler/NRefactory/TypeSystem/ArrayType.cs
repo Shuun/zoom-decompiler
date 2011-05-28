@@ -7,84 +7,6 @@ using Mi.NRefactory.TypeSystem.Implementation;
 
 namespace Mi.NRefactory.TypeSystem
 {
-	/// <summary>
-	/// Represents an array type.
-	/// </summary>
-	public class ArrayType : TypeWithElementType
-	{
-		readonly int dimensions;
-		
-		public ArrayType(IType elementType, int dimensions = 1) : base(elementType)
-		{
-            throw new NotSupportedException("Property and SpecializedProperty classes are disabled.");
-
-			if (dimensions <= 0)
-				throw new ArgumentOutOfRangeException("dimensions");
-			this.dimensions = dimensions;
-		}
-		
-		public int Dimensions {
-			get { return dimensions; }
-		}
-		
-		public override string NameSuffix {
-			get {
-				return "[" + new string(',', dimensions-1) + "]";
-			}
-		}
-		
-		public override Nullable<bool> IsReferenceType {
-			get { return true; }
-		}
-		
-		public override int GetHashCode()
-		{
-			return unchecked(elementType.GetHashCode() * 71681 + dimensions);
-		}
-		
-		public override bool Equals(IType other)
-		{
-			ArrayType a = other as ArrayType;
-			return a != null && elementType.Equals(a.elementType) && a.dimensions == dimensions;
-		}
-		
-		static readonly GetClassTypeReference systemArray = new GetClassTypeReference("System", "Array", 0);
-		static readonly GetClassTypeReference listInterface = new GetClassTypeReference("System.Collections.Generic", "IList", 1);
-		
-		public override IEnumerable<IType> GetBaseTypes(ITypeResolveContext context)
-		{
-			List<IType> baseTypes = new List<IType>();
-			IType t = systemArray.Resolve(context);
-			if (t != SharedTypes.UnknownType)
-				baseTypes.Add(t);
-			if (dimensions == 1) { // single-dimensional arrays implement IList<T>
-				TypeDefinition def = listInterface.Resolve(context) as TypeDefinition;
-				if (def != null)
-					baseTypes.Add(new ParameterizedType(def, new[] { elementType }));
-			}
-			return baseTypes;
-		}
-		
-		static readonly Parameter indexerParam = new Parameter(KnownTypeReference.Int32, string.Empty);
-		
-		// Events, Fields: System.Array doesn't have any; so we can use the AbstractType default implementation
-		// that simply returns an empty list
-		
-		public override IType AcceptVisitor(TypeVisitor visitor)
-		{
-			return visitor.VisitArrayType(this);
-		}
-		
-		public override IType VisitChildren(TypeVisitor visitor)
-		{
-			IType e = elementType.AcceptVisitor(visitor);
-			if (e == elementType)
-				return this;
-			else
-				return new ArrayType(e, dimensions);
-		}
-	}
-	
 	public sealed class ArrayTypeReference : ITypeReference, ISupportsInterning
 	{
 		ITypeReference elementType;
@@ -108,11 +30,6 @@ namespace Mi.NRefactory.TypeSystem
 			get { return dimensions; }
 		}
 		
-		public IType Resolve(ITypeResolveContext context)
-		{
-			return new ArrayType(elementType.Resolve(context), dimensions);
-		}
-		
 		public override string ToString()
 		{
 			return elementType.ToString() + "[" + new string(',', dimensions - 1) + "]";
@@ -120,10 +37,7 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public static ITypeReference Create(ITypeReference elementType, int dimensions)
 		{
-			if (elementType is IType)
-				return new ArrayType((IType)elementType, dimensions);
-			else
-				return new ArrayTypeReference(elementType, dimensions);
+			return new ArrayTypeReference(elementType, dimensions);
 		}
 		
 		void ISupportsInterning.PrepareForInterning(IInterningProvider provider)
@@ -141,5 +55,10 @@ namespace Mi.NRefactory.TypeSystem
 			ArrayTypeReference o = other as ArrayTypeReference;
 			return o != null && elementType == o.elementType && dimensions == o.dimensions;
 		}
-	}
+
+        public IType Resolve(ITypeResolveContext context)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

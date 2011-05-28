@@ -575,13 +575,8 @@ namespace Mi.CSharp.Resolver
 		
 		public override ResolveResult VisitDirectionExpression(DirectionExpression directionExpression, object data)
 		{
-			if (resolverEnabled) {
-				ResolveResult rr = Resolve(directionExpression.Expression);
-				return new ByReferenceResolveResult(rr.Type, directionExpression.FieldDirection == FieldDirection.Out);
-			} else {
-				ScanChildren(directionExpression);
-				return null;
-			}
+			ScanChildren(directionExpression);
+			return null;
 		}
 		
 		public override ResolveResult VisitIdentifierExpression(IdentifierExpression identifierExpression, object data)
@@ -717,13 +712,8 @@ namespace Mi.CSharp.Resolver
 		
 		public override ResolveResult VisitStackAllocExpression(StackAllocExpression stackAllocExpression, object data)
 		{
-			if (resolverEnabled) {
-				Scan(stackAllocExpression.CountExpression);
-				return new ResolveResult(new PointerType(ResolveType(stackAllocExpression.Type)));
-			} else {
-				ScanChildren(stackAllocExpression);
-				return null;
-			}
+			ScanChildren(stackAllocExpression);
+			return null;
 		}
 		
 		public override ResolveResult VisitThisReferenceExpression(ThisReferenceExpression thisReferenceExpression, object data)

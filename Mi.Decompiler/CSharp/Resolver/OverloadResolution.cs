@@ -144,11 +144,7 @@ namespace Mi.CSharp.Resolver
 			for (int i = 0; i < candidate.Parameters.Count; i++) {
 				IType type = candidate.Parameters[i].Type.Resolve(context);
 				if (candidate.IsExpandedForm && i == candidate.Parameters.Count - 1) {
-					ArrayType arrayType = type as ArrayType;
-					if (arrayType != null && arrayType.Dimensions == 1)
-						type = arrayType.ElementType;
-					else
-						return false; // error: cannot unpack params-array. abort considering the expanded form for this candidate
+					return false; // error: cannot unpack params-array. abort considering the expanded form for this candidate
 				}
 				candidate.ParameterTypes[i] = type;
 			}
@@ -277,15 +273,10 @@ namespace Mi.CSharp.Resolver
 				int parameterIndex = candidate.ArgumentToParameterMap[i];
 				if (parameterIndex < 0) continue;
 				
-				ByReferenceResolveResult brrr = arguments[i] as ByReferenceResolveResult;
-				if (brrr != null) {
-					if ((brrr.IsOut && !candidate.Parameters[parameterIndex].IsOut) || (brrr.IsRef && !candidate.Parameters[parameterIndex].IsRef))
-						candidate.AddError(OverloadResolutionErrors.ParameterPassingModeMismatch);
-				} else {
-					if (candidate.Parameters[parameterIndex].IsOut || candidate.Parameters[parameterIndex].IsRef)
-						candidate.AddError(OverloadResolutionErrors.ParameterPassingModeMismatch);
-				}
-				if (!conversions.ImplicitConversion(arguments[i], candidate.ParameterTypes[parameterIndex]))
+				if (candidate.Parameters[parameterIndex].IsOut || candidate.Parameters[parameterIndex].IsRef)
+					candidate.AddError(OverloadResolutionErrors.ParameterPassingModeMismatch);
+
+                if (!conversions.ImplicitConversion(arguments[i], candidate.ParameterTypes[parameterIndex]))
 					candidate.AddError(OverloadResolutionErrors.ArgumentTypeMismatch);
 			}
 		}
@@ -423,11 +414,6 @@ namespace Mi.CSharp.Resolver
 				int r = MoreSpecificFormalParameters(p1.TypeArguments, p2.TypeArguments);
 				if (r > 0)
 					return r;
-			}
-			TypeWithElementType tew1 = t1 as TypeWithElementType;
-			TypeWithElementType tew2 = t2 as TypeWithElementType;
-			if (tew1 != null && tew2 != null) {
-				return MoreSpecificFormalParameter(tew1.ElementType, tew2.ElementType);
 			}
 			return 0;
 		}

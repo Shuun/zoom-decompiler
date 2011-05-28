@@ -25,21 +25,6 @@ namespace Mi.NRefactory.TypeSystem
 			return type.VisitChildren(this);
 		}
 		
-		public virtual IType VisitArrayType(ArrayType type)
-		{
-			return type.VisitChildren(this);
-		}
-		
-		public virtual IType VisitPointerType(PointerType type)
-		{
-			return type.VisitChildren(this);
-		}
-		
-		public virtual IType VisitByReferenceType(ByReferenceType type)
-		{
-			return type.VisitChildren(this);
-		}
-		
 		public virtual IType VisitOtherType(IType type)
 		{
 			return type.VisitChildren(this);

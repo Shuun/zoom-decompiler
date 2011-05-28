@@ -358,13 +358,7 @@ namespace Mi.CSharp.Resolver
 			if (overloadableOperatorName == null) {
 				switch (op) {
 					case UnaryOperatorType.Dereference:
-						PointerType p = expression.Type as PointerType;
-						if (p != null)
-							return new ResolveResult(p.ElementType);
-						else
-							return ErrorResult;
-					case UnaryOperatorType.AddressOf:
-						return new ResolveResult(new PointerType(expression.Type));
+						return ErrorResult;
 					default:
 						throw new ArgumentException("Invalid value for UnaryOperatorType", "op");
 				}
@@ -387,7 +381,7 @@ namespace Mi.CSharp.Resolver
 					// C# 4.0 spec: §7.6.9 Postfix increment and decrement operators
 					// C# 4.0 spec: §7.7.5 Prefix increment and decrement operators
 					TypeCode code = ReflectionHelper.GetTypeCode(type);
-					if ((code >= TypeCode.SByte && code <= TypeCode.Decimal) || type.IsEnum() || type is PointerType)
+					if ((code >= TypeCode.SByte && code <= TypeCode.Decimal) || type.IsEnum())
 						return new ResolveResult(expression.Type);
 					else
 						return new ErrorResolveResult(expression.Type);
@@ -679,11 +673,6 @@ namespace Mi.CSharp.Resolver
 						} else if (rhsType.IsDelegate() && conversions.ImplicitConversion(lhsType, rhsType)) {
 							return new ResolveResult(rhsType);
 						}
-						if (lhsType is PointerType && IsInteger(ReflectionHelper.GetTypeCode(rhsType))) {
-							return new ResolveResult(lhsType);
-						} else if (rhsType is PointerType && IsInteger(ReflectionHelper.GetTypeCode(lhsType))) {
-							return new ResolveResult(rhsType);
-						}
 						if (lhsType == SharedTypes.Null && rhsType == SharedTypes.Null)
 							return new ErrorResolveResult(SharedTypes.Null);
 					}
@@ -706,11 +695,6 @@ namespace Mi.CSharp.Resolver
 							return new ResolveResult(lhsType);
 						} else if (rhsType.IsDelegate() && conversions.ImplicitConversion(lhsType, rhsType)) {
 							return new ResolveResult(rhsType);
-						}
-						if (lhsType is PointerType && IsInteger(ReflectionHelper.GetTypeCode(rhsType))) {
-							return new ResolveResult(lhsType);
-						} else if (lhsType is PointerType && lhsType.Equals(rhsType)) {
-							return new ResolveResult(KnownTypeReference.Int64.Resolve(context));
 						}
 						if (lhsType == SharedTypes.Null && rhsType == SharedTypes.Null)
 							return new ErrorResolveResult(SharedTypes.Null);
@@ -736,8 +720,6 @@ namespace Mi.CSharp.Resolver
 						} else if (rhsType.IsEnum() && conversions.ImplicitConversion(lhs, rhs.Type)) {
 							// bool operator op(E x, E y);
 							return HandleEnumComparison(op, rhsType, isNullable, lhs, rhs);
-						} else if (lhsType is PointerType && rhsType is PointerType) {
-							return new ResolveResult(KnownTypeReference.Boolean.Resolve(context));
 						}
 						switch (op) {
 							case BinaryOperatorType.Equality:
@@ -1761,20 +1743,12 @@ namespace Mi.CSharp.Resolver
 				}
 				
 				// create the parameter:
-				ByReferenceResolveResult brrr = arguments[i] as ByReferenceResolveResult;
-				if (brrr != null) {
-					list.Add(new Parameter(arguments[i].Type, argumentNames[i]) {
-					         	IsRef = brrr.IsRef,
-					         	IsOut = brrr.IsOut
-					         });
+				// argument might be a lambda or delegate type, so we have to try to guess the delegate type
+				IType type = arguments[i].Type;
+				if (type == SharedTypes.Null || type == SharedTypes.UnknownType) {
+					list.Add(new Parameter(KnownTypeReference.Object, argumentNames[i]));
 				} else {
-					// argument might be a lambda or delegate type, so we have to try to guess the delegate type
-					IType type = arguments[i].Type;
-					if (type == SharedTypes.Null || type == SharedTypes.UnknownType) {
-						list.Add(new Parameter(KnownTypeReference.Object, argumentNames[i]));
-					} else {
-						list.Add(new Parameter(type, argumentNames[i]));
-					}
+					list.Add(new Parameter(type, argumentNames[i]));
 				}
 			}
 			return list;
