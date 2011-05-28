@@ -12,8 +12,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class ImportCecilTests {
+	public class ZAsm_ImportCecilTests {
 
+        [Ignore]
 		[TestMethod]
 		public void ImportStringByRef ()
 		{
@@ -111,6 +112,7 @@ namespace Mi.Assemblies.Tests {
 			}
 		}
 
+        [Ignore]
 		[TestMethod]
 		public void ImportGenericField ()
 		{
@@ -135,6 +137,7 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("foo", get_field (generic));
 		}
 
+        [Ignore]
 		[TestMethod]
 		public void ImportGenericMethod ()
 		{
@@ -155,6 +158,7 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (42, generic_identity (new Generic<int> (), 42));
 		}
 
+        [Ignore]
 		[TestMethod]
 		public void ImportGenericMethodSpec ()
 		{
@@ -179,6 +183,7 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (42, gen_spec_id (new Generic<string> (), 42));
 		}
 
+        [Ignore]
 		[TestMethod]
 		public void ImportComplexGenericMethodSpec ()
 		{
@@ -214,7 +219,7 @@ namespace Mi.Assemblies.Tests {
 
 			var method = module.Import (generic.GetMethod ("Method"));
 
-			Assert.AreEqual ("T Mi.Assemblies.Tests.ImportCecilTests/Generic`1<T>::Method(T)", method.FullName);
+			Assert.AreEqual ("T Mi.Assemblies.Tests.ZAsm_ImportCecilTests/Generic`1<T>::Method(T)", method.FullName);
 		}
 
 		delegate void Emitter (ModuleDefinition module, MethodBody body);

@@ -9,7 +9,7 @@ using Mi.Decompiler.Tests;
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class EventTests {
+	public class ZAsm_EventTests {
 
 		[TestMethod]
 		public void TestEventsCS ()
@@ -37,6 +37,7 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (MethodSemanticsAttributes.RemoveOn, @event.RemoveMethod.SemanticsAttributes);
 		}
 
+        [Ignore]
 		[TestMethod]
 		public void TestOthersIL ()
 		{

@@ -6,7 +6,7 @@ using Mi.Decompiler.Tests;
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class PropertyTests 
+	public class ZAsm_PropertyTests 
     {
 		[TestMethod]
 		public void AbstractMethod ()
@@ -55,6 +55,7 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (MethodSemanticsAttributes.Setter, property.SetMethod.SemanticsAttributes);
 		}
 
+        [Ignore]
 		[TestMethod]
         public void OtherMethod()
         {

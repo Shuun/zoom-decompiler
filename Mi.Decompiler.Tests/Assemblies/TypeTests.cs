@@ -11,7 +11,7 @@ using Mi.Decompiler.Tests;
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class TypeTests
+	public class ZAsm_TypeTests
     {
 		[TestMethod]
         public void TypeLayout()
@@ -30,6 +30,7 @@ namespace Mi.Assemblies.Tests {
 			Assert.IsFalse (babar.HasLayoutInfo);
 		}
 
+        [Ignore]
 		[TestMethod]
         public void SimpleInterfaces()
         {

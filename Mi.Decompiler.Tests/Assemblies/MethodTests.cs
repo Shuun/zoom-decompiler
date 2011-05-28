@@ -10,7 +10,7 @@ using Mi.Decompiler.Tests;
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class MethodTests 
+	public class ZAsm_MethodTests 
     {
 		[TestMethod]
 		public void AbstractMethod ()
