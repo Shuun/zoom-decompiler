@@ -28,11 +28,6 @@ namespace Mi.NRefactory.TypeSystem
 		int Index { get; }
 		
 		/// <summary>
-		/// Gets the list of attributes declared on this type parameter.
-		/// </summary>
-		IList<IAttribute> Attributes { get; }
-		
-		/// <summary>
 		/// Gets the constraints of this type parameter.
 		/// </summary>
 		IList<ITypeReference> Constraints { get; }

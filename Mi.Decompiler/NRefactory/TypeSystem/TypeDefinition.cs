@@ -23,7 +23,6 @@ namespace Mi.NRefactory.TypeSystem
 		IList<ITypeReference> baseTypes;
 		IList<TypeParameter> typeParameters;
 		IList<TypeDefinition> innerClasses;
-		IList<IAttribute> attributes;
 		
 		DomRegion region;
 		DomRegion bodyRegion;
@@ -49,7 +48,6 @@ namespace Mi.NRefactory.TypeSystem
 			baseTypes = FreezeList(baseTypes);
 			typeParameters = FreezeList(typeParameters);
 			innerClasses = FreezeList(innerClasses);
-			attributes = FreezeList(attributes);
 			base.FreezeInternal();
 		}
 		
@@ -99,7 +97,6 @@ namespace Mi.NRefactory.TypeSystem
 				name = provider.Intern(name);
 				baseTypes = provider.InternList(baseTypes);
 				typeParameters = provider.InternList(typeParameters);
-				attributes = provider.InternList(attributes);
 			}
 		}
 		
@@ -218,14 +215,6 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public IType DeclaringType {
 			get { return declaringTypeDefinition; }
-		}
-		
-		public IList<IAttribute> Attributes {
-			get {
-				if (attributes == null)
-					attributes = new List<IAttribute>();
-				return attributes;
-			}
 		}
 		
 		public virtual string Documentation {

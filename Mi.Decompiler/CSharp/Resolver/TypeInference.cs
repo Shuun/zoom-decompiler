@@ -674,10 +674,6 @@ namespace Mi.CSharp.Resolver
 				get { return 0; }
 			}
 			
-			IList<IAttribute> ITypeParameter.Attributes {
-                get { return Empty.ReadOnlyCollection<IAttribute>(); }
-			}
-			
 			EntityType ITypeParameter.OwnerType {
 				get { return EntityType.Method; }
 			}

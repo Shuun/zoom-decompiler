@@ -18,7 +18,6 @@ namespace Mi.NRefactory.TypeSystem
 		string name;
 		int index;
 		IList<ITypeReference> constraints;
-		IList<IAttribute> attributes;
 		
 		DomRegion region;
 		
@@ -38,7 +37,6 @@ namespace Mi.NRefactory.TypeSystem
 		protected override void FreezeInternal()
 		{
 			constraints = FreezeList(constraints);
-			attributes = FreezeList(attributes);
 			base.FreezeInternal();
 		}
 		
@@ -135,14 +133,6 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public int Index {
 			get { return index; }
-		}
-		
-		public IList<IAttribute> Attributes {
-			get {
-				if (attributes == null)
-					attributes = new List<IAttribute>();
-				return attributes;
-			}
 		}
 		
 		public IList<ITypeReference> Constraints {
@@ -252,7 +242,6 @@ namespace Mi.NRefactory.TypeSystem
 		void ISupportsInterning.PrepareForInterning(IInterningProvider provider)
 		{
 			constraints = provider.InternList(constraints);
-			attributes = provider.InternList(attributes);
 		}
 		
 		int ISupportsInterning.GetHashCodeForInterning()
@@ -261,8 +250,6 @@ namespace Mi.NRefactory.TypeSystem
 				int hashCode = GetHashCode();
 				if (name != null)
 					hashCode += name.GetHashCode();
-				if (attributes != null)
-					hashCode += attributes.GetHashCode();
 				if (constraints != null)
 					hashCode += constraints.GetHashCode();
 				hashCode += 771 * (int)flags + 900103 * (int)variance;
@@ -274,7 +261,6 @@ namespace Mi.NRefactory.TypeSystem
 		{
 			TypeParameter o = other as TypeParameter;
 			return o != null 
-				&& this.attributes == o.attributes
 				&& this.constraints == o.constraints
 				&& this.flags == o.flags
 				&& this.ownerType == o.ownerType

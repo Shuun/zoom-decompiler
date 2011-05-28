@@ -31,8 +31,6 @@ namespace Mi.NRefactory.TypeSystem
 		/// </summary>
 		TypeDefinition DeclaringTypeDefinition { get; }
 		
-		IList<IAttribute> Attributes { get; }
-		
 		string Documentation { get; }
 		
 		/// <summary>
