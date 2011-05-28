@@ -39,6 +39,8 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public Attribute(ITypeReference attributeType, IEnumerable<ITypeReference> constructorParameterTypes)
 		{
+            throw new NotSupportedException();
+
 			if (attributeType == null)
 				throw new ArgumentNullException("attributeType");
 			this.attributeType = attributeType;
