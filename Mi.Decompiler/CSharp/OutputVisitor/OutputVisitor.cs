@@ -470,10 +470,22 @@ namespace Mi.CSharp
 				Space(policy.SpaceBeforeMethodDeclarationParentheses);
 				WriteCommaSeparatedListInParenthesis(anonymousMethodExpression.Parameters, policy.SpaceWithinMethodDeclarationParentheses);
 			}
-			anonymousMethodExpression.Body.AcceptVisitor(this, data);
+			anonymousMethodExpression.Body.AcceptVisitor(
+                this,
+                new AnonymousMethodBlockStatementNoNewLine
+                {
+                    BlockStatement = anonymousMethodExpression.Body,
+                    Data = data
+                });
 			return EndNode(anonymousMethodExpression);
 		}
-		
+
+        private sealed class AnonymousMethodBlockStatementNoNewLine
+        {
+            public BlockStatement BlockStatement;
+            public object Data;
+        }
+
 		public object VisitUndocumentedExpression(UndocumentedExpression undocumentedExpression, object data)
 		{
 			StartNode(undocumentedExpression);
@@ -1380,39 +1392,64 @@ namespace Mi.CSharp
 		
 		#region Statements
 		public object VisitBlockStatement(BlockStatement blockStatement, object data)
-		{
-			StartNode(blockStatement);
-			BraceStyle style;
-			if (blockStatement.Parent is AnonymousMethodExpression || blockStatement.Parent is LambdaExpression) {
-				style = policy.AnonymousMethodBraceStyle;
-			} else if (blockStatement.Parent is ConstructorDeclaration) {
-				style = policy.ConstructorBraceStyle;
-			} else if (blockStatement.Parent is DestructorDeclaration) {
-				style = policy.DestructorBraceStyle;
-			} else if (blockStatement.Parent is MethodDeclaration) {
-				style = policy.MethodBraceStyle;
-			} else if (blockStatement.Parent is Mi.CSharp.Ast.Accessor) {
-				if (blockStatement.Parent.Role == PropertyDeclaration.GetterRole)
-					style = policy.PropertyGetBraceStyle;
-				else if (blockStatement.Parent.Role == PropertyDeclaration.SetterRole)
-					style = policy.PropertySetBraceStyle;
-				else if (blockStatement.Parent.Role == CustomEventDeclaration.AddAccessorRole)
-					style = policy.EventAddBraceStyle;
-				else if (blockStatement.Parent.Role == CustomEventDeclaration.RemoveAccessorRole)
-					style = policy.EventRemoveBraceStyle;
-				else
-					throw new NotSupportedException("Unknown type of accessor");
-			} else {
-				style = policy.StatementBraceStyle;
-			}
-			OpenBrace(style);
-			foreach (var node in blockStatement.Statements) {
-				node.AcceptVisitor(this, data);
-			}
-			CloseBrace(style);
-			NewLine();
-			return EndNode(blockStatement);
-		}
+        {
+            bool skipNewLine = false;
+            {
+                var noNewLine = data as AnonymousMethodBlockStatementNoNewLine;
+                if (noNewLine != null
+                    && noNewLine.BlockStatement == blockStatement)
+                {
+                    data = noNewLine.Data;
+                    skipNewLine = true;
+                }
+            }
+
+            StartNode(blockStatement);
+            BraceStyle style;
+            if (blockStatement.Parent is AnonymousMethodExpression || blockStatement.Parent is LambdaExpression)
+            {
+                style = policy.AnonymousMethodBraceStyle;
+            }
+            else if (blockStatement.Parent is ConstructorDeclaration)
+            {
+                style = policy.ConstructorBraceStyle;
+            }
+            else if (blockStatement.Parent is DestructorDeclaration)
+            {
+                style = policy.DestructorBraceStyle;
+            }
+            else if (blockStatement.Parent is MethodDeclaration)
+            {
+                style = policy.MethodBraceStyle;
+            }
+            else if (blockStatement.Parent is Mi.CSharp.Ast.Accessor)
+            {
+                if (blockStatement.Parent.Role == PropertyDeclaration.GetterRole)
+                    style = policy.PropertyGetBraceStyle;
+                else if (blockStatement.Parent.Role == PropertyDeclaration.SetterRole)
+                    style = policy.PropertySetBraceStyle;
+                else if (blockStatement.Parent.Role == CustomEventDeclaration.AddAccessorRole)
+                    style = policy.EventAddBraceStyle;
+                else if (blockStatement.Parent.Role == CustomEventDeclaration.RemoveAccessorRole)
+                    style = policy.EventRemoveBraceStyle;
+                else
+                    throw new NotSupportedException("Unknown type of accessor");
+            }
+            else
+            {
+                style = policy.StatementBraceStyle;
+            }
+            OpenBrace(style);
+            foreach (var node in blockStatement.Statements)
+            {
+                node.AcceptVisitor(this, data);
+            }
+            CloseBrace(style);
+
+            if (!skipNewLine)
+                NewLine();
+            return EndNode(blockStatement);
+        }
 		
 		public object VisitBreakStatement(BreakStatement breakStatement, object data)
 		{
