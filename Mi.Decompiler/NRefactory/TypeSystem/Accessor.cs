@@ -44,13 +44,10 @@ namespace Mi.NRefactory.TypeSystem
 		
 		Accessibility accessibility;
 		DomRegion region;
-		IList<IAttribute> attributes;
-		IList<IAttribute> returnTypeAttributes;
 		
 		protected override void FreezeInternal()
 		{
 			base.FreezeInternal();
-			this.attributes = FreezeList(this.attributes);
 		}
 		
 		public Accessibility Accessibility {
@@ -69,40 +66,19 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public IList<IAttribute> Attributes {
-			get {
-				if (attributes == null)
-					attributes = new List<IAttribute>();
-				return attributes;
-			}
-		}
-		
-		public IList<IAttribute> ReturnTypeAttributes {
-			get {
-				if (returnTypeAttributes == null)
-					returnTypeAttributes = new List<IAttribute>();
-				return returnTypeAttributes;
-			}
-		}
-		
 		void ISupportsInterning.PrepareForInterning(IInterningProvider provider)
 		{
-			attributes = provider.InternList(attributes);
-			returnTypeAttributes = provider.InternList(returnTypeAttributes);
 		}
 		
 		int ISupportsInterning.GetHashCodeForInterning()
 		{
-			return (attributes != null ? attributes.GetHashCode() : 0)
-				^ (returnTypeAttributes != null ? returnTypeAttributes.GetHashCode() : 0)
-				^ region.GetHashCode() ^ (int)accessibility;
+			return region.GetHashCode() ^ (int)accessibility;
 		}
 		
 		bool ISupportsInterning.EqualsForInterning(ISupportsInterning other)
 		{
 			Accessor a = other as Accessor;
-			return a != null && (attributes == a.attributes && returnTypeAttributes == a.returnTypeAttributes 
-			                     && accessibility == a.accessibility && region == a.region);
+			return a != null && (accessibility == a.accessibility && region == a.region);
 		}
 	}
 }

@@ -277,10 +277,6 @@ namespace Mi.CSharp.Resolver
 				get { return DomRegion.Empty; }
 			}
 			
-			IList<IAttribute> IEntity.Attributes {
-                get { return Empty.ReadOnlyCollection<IAttribute>(); }
-			}
-			
 			string IEntity.Documentation {
 				get { return null; }
 			}

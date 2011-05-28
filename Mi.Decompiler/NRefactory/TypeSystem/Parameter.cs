@@ -16,7 +16,6 @@ namespace Mi.NRefactory.TypeSystem
 	{
 		string name = string.Empty;
 		ITypeReference type = SharedTypes.UnknownType;
-		IList<IAttribute> attributes;
 		IConstantValue defaultValue;
 		DomRegion region;
 		byte flags;
@@ -38,7 +37,6 @@ namespace Mi.NRefactory.TypeSystem
 		{
 			this.name = p.Name;
 			this.type = p.Type;
-			this.attributes = CopyList(p.Attributes);
 			this.defaultValue = p.DefaultValue;
 			this.region = p.Region;
 			this.IsRef = p.IsRef;
@@ -48,7 +46,6 @@ namespace Mi.NRefactory.TypeSystem
 		
 		protected override void FreezeInternal()
 		{
-			attributes = FreezeList(attributes);
 			if (defaultValue != null)
 				defaultValue.Freeze();
 			base.FreezeInternal();
@@ -71,14 +68,6 @@ namespace Mi.NRefactory.TypeSystem
 					throw new ArgumentNullException();
 				CheckBeforeMutation();
 				type = value;
-			}
-		}
-		
-		public IList<IAttribute> Attributes {
-			get {
-				if (attributes == null)
-					attributes = new List<IAttribute>();
-				return attributes;
 			}
 		}
 		
@@ -142,20 +131,18 @@ namespace Mi.NRefactory.TypeSystem
 		{
 			name = provider.Intern(name);
 			type = provider.Intern(type);
-			attributes = provider.InternList(attributes);
 			defaultValue = provider.Intern(defaultValue);
 		}
 		
 		int ISupportsInterning.GetHashCodeForInterning()
 		{
-			return type.GetHashCode() ^ (attributes != null ? attributes.GetHashCode() : 0) ^ (defaultValue != null ? defaultValue.GetHashCode() : 0);
+			return type.GetHashCode() ^ (defaultValue != null ? defaultValue.GetHashCode() : 0);
 		}
 		
 		bool ISupportsInterning.EqualsForInterning(ISupportsInterning other)
 		{
 			Parameter p = other as Parameter;
-			return p != null && type == p.type && attributes == p.attributes
-				&& defaultValue == p.defaultValue && region == p.region && flags == p.flags;
+			return p != null && type == p.type && defaultValue == p.defaultValue && region == p.region && flags == p.flags;
 		}
 		
 		public override string ToString()
