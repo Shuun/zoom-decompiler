@@ -11,6 +11,8 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		protected TypeWithElementType(IType elementType)
 		{
+            throw new NotSupportedException("Property and SpecializedProperty classes are disabled.");
+
 			if (elementType == null)
 				throw new ArgumentNullException("elementType");
 			this.elementType = elementType;
