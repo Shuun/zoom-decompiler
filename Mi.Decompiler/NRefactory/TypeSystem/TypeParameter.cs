@@ -26,6 +26,13 @@ namespace Mi.NRefactory.TypeSystem
 		EntityType ownerType;
 		ParameterConstraint flags;
 
+        readonly object always = CreateAlways();
+
+        private static object CreateAlways()
+        {
+            throw new NotImplementedException();
+        }
+
         [Flags]
         private enum ParameterConstraint
         {
