@@ -650,6 +650,13 @@ namespace Mi.CSharp.Resolver
 		
 		sealed class DummyTypeParameter : AbstractType, ITypeParameter
 		{
+            readonly object always = CreateAlways();
+
+            private static object CreateAlways()
+            {
+                throw new NotImplementedException();
+            }
+
 			public static readonly DummyTypeParameter Instance = new DummyTypeParameter();
 			
 			public override string Name {
