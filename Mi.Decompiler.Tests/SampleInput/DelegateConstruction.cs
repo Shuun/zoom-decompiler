@@ -28,7 +28,7 @@ public static class DelegateConstruction
         {
             return delegate
             {
-                CaptureOfThis();
+                this.CaptureOfThis();
             };
         }
 
@@ -36,7 +36,7 @@ public static class DelegateConstruction
         {
             return delegate
             {
-                CaptureOfThisAndParameter(a);
+                this.CaptureOfThisAndParameter(a);
             };
         }
 
@@ -48,7 +48,7 @@ public static class DelegateConstruction
                 {
                     return delegate
                     {
-                        CaptureOfThisAndParameter(item + a);
+                        this.CaptureOfThisAndParameter(item + a);
                     };
                 }
             }
