@@ -10,7 +10,7 @@ using Mi.Decompiler.Tests;
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class FieldTests
+	public class ZAsm_FieldTests
     {
 		[TestMethod]
 		public void TypeDefField ()
@@ -103,6 +103,7 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (4, field.Offset);
 		}
 
+        [Ignore]
 		[TestMethod]
 		public void FieldRVA ()
 		{
@@ -151,6 +152,7 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (t, bang.FieldType);
 		}
 
+        [Ignore]
 		[TestMethod]
 		public void ArrayFields ()
 		{
@@ -230,6 +232,7 @@ namespace Mi.Assemblies.Tests {
 			Assert.IsNull (field.Constant);
 		}
 
+        [Ignore]
 		[TestMethod]
 		public void NullPrimitiveConstant ()
 		{
@@ -255,6 +258,7 @@ namespace Mi.Assemblies.Tests {
 			Assert.IsNull (field.Constant);
 		}
 
+        [Ignore]
 		[TestMethod]
 		public void ConstantCoalescing ()
 		{

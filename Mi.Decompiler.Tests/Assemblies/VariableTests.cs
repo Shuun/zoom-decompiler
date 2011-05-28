@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class VariableTests
+	public class ZAsm_VariableTests
     {
 		[TestMethod]
 		public void AddVariableIndex ()

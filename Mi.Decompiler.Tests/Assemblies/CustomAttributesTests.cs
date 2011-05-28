@@ -14,7 +14,7 @@ using Mi.Decompiler.Tests;
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class CustomAttributesTests
+	public class ZAsm_CustomAttributesTests
     {
 		[TestMethod]
 		public void StringArgumentOnType ()
@@ -373,6 +373,7 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual ("System.Collections.Generic.Dictionary`2<System.String,OpenGeneric`2<Machin,System.Int32>[,]>", type.FullName);
 		}
 
+        [Ignore]
 		[TestMethod]
 		public void DefineCustomAttributeFromBlob ()
 		{

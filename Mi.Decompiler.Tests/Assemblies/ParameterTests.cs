@@ -10,7 +10,7 @@ using Mi.Decompiler.Tests;
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class ParameterTests 
+	public class ZAsm_ParameterTests 
     {
 		[TestMethod]
 		public void MarshalAsI4 ()
@@ -214,6 +214,7 @@ namespace Mi.Assemblies.Tests {
 			Assert.AreEqual (2, z.Index);
 		}
 
+        [Ignore]
 		[TestMethod]
         public void GenericParameterConstant()
         {

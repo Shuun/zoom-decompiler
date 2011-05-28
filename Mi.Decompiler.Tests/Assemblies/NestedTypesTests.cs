@@ -8,7 +8,7 @@ using Mi.Decompiler.Tests;
 namespace Mi.Assemblies.Tests {
 
 	[TestClass]
-	public class NestedTypesTests 
+	public class ZAsm_NestedTypesTests 
     {
 		[TestMethod]
 		public void NestedTypes ()
