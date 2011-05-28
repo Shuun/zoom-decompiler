@@ -733,7 +733,6 @@
     <Compile Include="NRefactory\TypeSystem\IInterningProvider.cs" />
     <Compile Include="NRefactory\TypeSystem\IMember.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\AbstractFreezable.cs" />
-    <Compile Include="NRefactory\TypeSystem\Implementation\AbstractMember.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\AbstractType.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\CompositeTypeResolveContext.cs" />
     <Compile Include="NRefactory\TypeSystem\Accessor.cs" />
