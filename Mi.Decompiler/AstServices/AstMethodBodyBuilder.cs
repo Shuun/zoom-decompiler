@@ -70,15 +70,7 @@ namespace Mi.Decompiler.AstServices
 				builder.methodDef = methodDef;
 				builder.context = context;
 				builder.typeSystem = methodDef.Module.TypeSystem;
-				if (Debugger.IsAttached) {
-					return builder.CreateMethodBody(parameters, localVariables);
-				} else {
-					try {
-						return builder.CreateMethodBody(parameters, localVariables);
-					} catch (Exception ex) {
-						throw new Mi.Decompiler.DecompilerException(methodDef, ex);
-					}
-				}
+				return builder.CreateMethodBody(parameters, localVariables);
 			} finally {
 				context.CurrentMethod = oldCurrentMethod;
 			}
