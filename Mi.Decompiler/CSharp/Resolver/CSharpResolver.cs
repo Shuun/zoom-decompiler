@@ -341,13 +341,6 @@ namespace Mi.CSharp.Resolver
 		#endregion
 		
 		#region ResolveUnaryOperator
-		#region ResolveUnaryOperator method
-		public ResolveResult ResolveUnaryOperator(UnaryOperatorType op, ResolveResult expression)
-        {
-            throw new NotSupportedException();
-        }
-		#endregion
-		
 		#region UnaryNumericPromotion
 		ResolveResult UnaryNumericPromotion(UnaryOperatorType op, ref IType type, bool isNullable, ResolveResult expression)
 		{

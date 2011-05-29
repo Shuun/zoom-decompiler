@@ -731,7 +731,6 @@
     <Compile Include="NRefactory\TypeSystem\Implementation\MethodTypeParameterSubstitution.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\NestedTypeReference.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\ProxyTypeResolveContext.cs" />
-    <Compile Include="NRefactory\TypeSystem\Implementation\SimpleConstantValue.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\SimpleInterningProvider.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\TypeStorage.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\VoidTypeDefinition.cs" />
