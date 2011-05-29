@@ -550,7 +550,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Empty.cs" />
-    <Compile Include="DecompilerException.cs" />
     <Compile Include="DecompilerSettings.cs" />
     <Compile Include="Disassembler\DisassemblerHelpers.cs" />
     <Compile Include="Disassembler\ILStructure.cs" />
@@ -771,7 +770,6 @@
     <Compile Include="NRefactory\Utils\TreeTraversal.cs" />
     <Compile Include="PlainTextOutput.cs" />
     <Compile Include="ReferenceResolvingException.cs" />
-    <Compile Include="TextOutputWriter.cs" />
     <None Include="Assemblies\Microsoft.Cci.Pdb\LICENSE" />
     <None Include="Properties\AssemblyInfo.template.cs" />
   </ItemGroup>
