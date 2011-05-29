@@ -17,43 +17,51 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.IO;
+using System.Windows;
+using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Utils;
 
-namespace ICSharpCode.Decompiler
+namespace ICSharpCode.ILSpy.AvalonEdit
 {
-	public interface ITextOutput
+	public static class TextEditorWeakEventManager
 	{
-		int CurrentLine { get; }
-		int CurrentColumn { get; }
-		
-		void Indent();
-		void Unindent();
-		void Write(char ch);
-		void Write(string text);
-		void WriteLine();
-		void WriteDefinition(string text, object definition);
-		void WriteReference(string text, object reference);
-		
-		void MarkFoldStart(string collapsedText = "...", bool defaultCollapsed = false);
-		void MarkFoldEnd();
-	}
-	
-	public static class TextOutputExtensions
-	{
-		public static void Write(this ITextOutput output, string format, params object[] args)
+		public sealed class MouseHover : WeakEventManagerBase<MouseHover, TextEditor>
 		{
-			output.Write(string.Format(format, args));
+			protected override void StopListening(TextEditor source)
+			{
+				source.MouseHover -= DeliverEvent;
+			}
+			
+			protected override void StartListening(TextEditor source)
+			{
+				source.MouseHover += DeliverEvent;
+			}
 		}
 		
-		public static void WriteLine(this ITextOutput output, string text)
+		public sealed class MouseHoverStopped : WeakEventManagerBase<MouseHoverStopped, TextEditor>
 		{
-			output.Write(text);
-			output.WriteLine();
+			protected override void StopListening(TextEditor source)
+			{
+				source.MouseHoverStopped -= DeliverEvent;
+			}
+			
+			protected override void StartListening(TextEditor source)
+			{
+				source.MouseHoverStopped += DeliverEvent;
+			}
 		}
 		
-		public static void WriteLine(this ITextOutput output, string format, params object[] args)
+		public sealed class MouseDown : WeakEventManagerBase<MouseDown, TextEditor>
 		{
-			output.WriteLine(string.Format(format, args));
+			protected override void StopListening(TextEditor source)
+			{
+				source.MouseDown -= DeliverEvent;
+			}
+			
+			protected override void StartListening(TextEditor source)
+			{
+				source.MouseDown += DeliverEvent;
+			}
 		}
 	}
 }
