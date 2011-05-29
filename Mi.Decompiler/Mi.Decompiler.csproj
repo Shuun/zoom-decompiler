@@ -565,7 +565,6 @@
     <Compile Include="FlowAnalysis\SsaBlock.cs" />
     <Compile Include="FlowAnalysis\SsaForm.cs" />
     <Compile Include="FlowAnalysis\SsaInstruction.cs" />
-    <Compile Include="FlowAnalysis\SsaOptimization.cs" />
     <Compile Include="FlowAnalysis\SsaVariable.cs" />
     <Compile Include="ILAst\InitializerPeepholeTransforms.cs" />
     <Compile Include="ILAst\DefaultDictionary.cs" />
