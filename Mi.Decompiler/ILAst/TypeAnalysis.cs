@@ -845,7 +845,7 @@ namespace Mi.Decompiler.ILAst
 			return null;
 		}
 		
-		static TypeReference UnpackModifiers(TypeReference type)
+		internal static TypeReference UnpackModifiers(TypeReference type)
 		{
 			while (type is OptionalModifierType || type is RequiredModifierType)
 				type = ((TypeSpecification)type).ElementType;
