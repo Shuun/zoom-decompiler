@@ -709,7 +709,6 @@
     <Compile Include="NRefactory\PatternMatching\Repeat.cs" />
     <Compile Include="NRefactory\TypeSystem\Accessibility.cs" />
     <Compile Include="NRefactory\TypeSystem\ArrayType.cs" />
-    <Compile Include="NRefactory\TypeSystem\ByReferenceType.cs" />
     <Compile Include="NRefactory\TypeSystem\ClassType.cs" />
     <Compile Include="NRefactory\TypeSystem\ITypeParameter.cs" />
     <Compile Include="NRefactory\TypeSystem\VarianceModifier.cs" />
