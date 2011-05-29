@@ -4,7 +4,7 @@ using Mi.NRefactory.TypeSystem.Implementation;
 
 namespace Mi.NRefactory.TypeSystem
 {
-	public class ByReferenceTypeReference : ITypeReference
+	public sealed class ByReferenceTypeReference : ITypeReference
 	{
 		readonly ITypeReference elementType;
 		
