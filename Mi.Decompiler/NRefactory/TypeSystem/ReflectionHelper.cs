@@ -68,6 +68,8 @@ namespace Mi.NRefactory.TypeSystem
 		/// <returns>Returns the type reference.</returns>
 		public static ITypeReference ToTypeReference(this Type type, IEntity entity = null)
 		{
+            throw new NotSupportedException();
+
 			if (type == null)
 				return SharedTypes.UnknownType;
 			if (type.IsGenericType && !type.IsGenericTypeDefinition) {
@@ -83,7 +85,8 @@ namespace Mi.NRefactory.TypeSystem
 			} else if (type.IsPointer) {
 				return new PointerTypeReference(ToTypeReference(type.GetElementType(), entity));
 			} else if (type.IsByRef) {
-				return new ByReferenceTypeReference(ToTypeReference(type.GetElementType(), entity));
+                throw new NotSupportedException();
+				//return new ByReferenceTypeReference(ToTypeReference(type.GetElementType(), entity));
 			} else if (type.IsGenericParameter) {
 				if (type.DeclaringMethod != null) {
 					return SharedTypes.UnknownType;
