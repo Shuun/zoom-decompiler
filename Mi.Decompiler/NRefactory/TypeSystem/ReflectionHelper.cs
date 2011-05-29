@@ -67,53 +67,9 @@ namespace Mi.NRefactory.TypeSystem
 		/// <param name="entity">The parent entity, used to fetch the ITypeParameter for generic types.</param>
 		/// <returns>Returns the type reference.</returns>
 		public static ITypeReference ToTypeReference(this Type type, IEntity entity = null)
-		{
+        {
             throw new NotSupportedException();
-
-			if (type == null)
-				return SharedTypes.UnknownType;
-			if (type.IsGenericType && !type.IsGenericTypeDefinition) {
-				ITypeReference def = ToTypeReference(type.GetGenericTypeDefinition(), entity);
-				Type[] arguments = type.GetGenericArguments();
-				ITypeReference[] args = new ITypeReference[arguments.Length];
-				for (int i = 0; i < arguments.Length; i++) {
-					args[i] = ToTypeReference(arguments[i], entity);
-				}
-				return new ParameterizedTypeReference(def, args);
-			} else if (type.IsArray) {
-				return new ArrayTypeReference(ToTypeReference(type.GetElementType(), entity), type.GetArrayRank());
-			} else if (type.IsPointer) {
-				return new PointerTypeReference(ToTypeReference(type.GetElementType(), entity));
-			} else if (type.IsByRef) {
-                throw new NotSupportedException();
-				//return new ByReferenceTypeReference(ToTypeReference(type.GetElementType(), entity));
-			} else if (type.IsGenericParameter) {
-				if (type.DeclaringMethod != null) {
-					return SharedTypes.UnknownType;
-				} else {
-					TypeDefinition c = (entity as TypeDefinition) ?? (entity != null ? entity.DeclaringTypeDefinition : null);
-					if (c != null && type.GenericParameterPosition < c.TypeParameters.Count) {
-						if (c.TypeParameters[type.GenericParameterPosition].Name == type.Name) {
-							return c.TypeParameters[type.GenericParameterPosition];
-						}
-					}
-					return SharedTypes.UnknownType;
-				}
-			} else if (type.DeclaringType != null) {
-				if (type == typeof(Dynamic))
-					return SharedTypes.Dynamic;
-				else if (type == typeof(Null))
-					return SharedTypes.Null;
-				ITypeReference baseTypeRef = ToTypeReference(type.DeclaringType, entity);
-				int typeParameterCount;
-				string name = SplitTypeParameterCountFromReflectionName(type.Name, out typeParameterCount);
-				return new NestedTypeReference(baseTypeRef, name, typeParameterCount);
-			} else {
-				int typeParameterCount;
-				string name = SplitTypeParameterCountFromReflectionName(type.Name, out typeParameterCount);
-				return new GetClassTypeReference(type.Namespace, name, typeParameterCount);
-			}
-		}
+        }
 		#endregion
 		
 		#region SplitTypeParameterCountFromReflectionName

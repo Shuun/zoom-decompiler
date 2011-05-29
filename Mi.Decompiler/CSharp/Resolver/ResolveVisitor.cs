@@ -45,7 +45,7 @@ namespace Mi.CSharp.Resolver
 		
 		readonly IResolveVisitorNavigator navigator;
 		ResolveVisitorNavigationMode mode = ResolveVisitorNavigationMode.Scan;
-		
+
 		#region Constructor
 		/// <summary>
 		/// Creates a new ResolveVisitor instance.
@@ -734,13 +734,7 @@ namespace Mi.CSharp.Resolver
 		
 		public override ResolveResult VisitUnaryOperatorExpression(UnaryOperatorExpression unaryOperatorExpression, object data)
 		{
-			if (resolverEnabled) {
-				ResolveResult expr = Resolve(unaryOperatorExpression.Expression);
-				return resolver.ResolveUnaryOperator(unaryOperatorExpression.Operator, expr);
-			} else {
-				ScanChildren(unaryOperatorExpression);
-				return null;
-			}
+            throw new NotImplementedException();
 		}
 		#endregion
 		
