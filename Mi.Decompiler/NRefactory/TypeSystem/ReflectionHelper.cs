@@ -59,19 +59,6 @@ namespace Mi.NRefactory.TypeSystem
 		}
 		#endregion
 		
-		#region Type.ToTypeReference()
-		/// <summary>
-		/// Creates a reference to the specified type.
-		/// </summary>
-		/// <param name="type">The type to be converted.</param>
-		/// <param name="entity">The parent entity, used to fetch the ITypeParameter for generic types.</param>
-		/// <returns>Returns the type reference.</returns>
-		public static ITypeReference ToTypeReference(this Type type, IEntity entity = null)
-        {
-            throw new NotSupportedException();
-        }
-		#endregion
-		
 		#region SplitTypeParameterCountFromReflectionName
 		/// <summary>
 		/// Removes the ` with type parameter count from the reflection name.
