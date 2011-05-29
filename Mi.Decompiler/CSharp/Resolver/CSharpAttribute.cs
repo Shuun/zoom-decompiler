@@ -16,6 +16,13 @@ namespace Mi.CSharp.Resolver
 		IList<IConstantValue> positionalArguments;
 		IList<KeyValuePair<string, IConstantValue>> namedCtorArguments;
 		IList<KeyValuePair<string, IConstantValue>> namedArguments;
+
+        readonly object always = CreateAlways();
+
+        private static object CreateAlways()
+        {
+            throw new NotImplementedException();
+        }
 		
 		public CSharpAttribute(ITypeReference attributeType, DomRegion region,
 		                       IList<IConstantValue> positionalArguments,
