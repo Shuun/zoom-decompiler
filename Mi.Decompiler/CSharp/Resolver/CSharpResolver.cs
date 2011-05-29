@@ -343,90 +343,9 @@ namespace Mi.CSharp.Resolver
 		#region ResolveUnaryOperator
 		#region ResolveUnaryOperator method
 		public ResolveResult ResolveUnaryOperator(UnaryOperatorType op, ResolveResult expression)
-		{
-			verifyProgress();
-			
-			if (expression.Type == SharedTypes.Dynamic)
-				return DynamicResult;
-			
-			// C# 4.0 spec: §7.3.3 Unary operator overload resolution
-			string overloadableOperatorName = GetOverloadableOperatorName(op);
-			if (overloadableOperatorName == null) {
-				switch (op) {
-					case UnaryOperatorType.Dereference:
-						return ErrorResult;
-					default:
-						throw new ArgumentException("Invalid value for UnaryOperatorType", "op");
-				}
-			}
-			// If the type is nullable, get the underlying type:
-			IType type = NullableType.GetUnderlyingType(expression.Type);
-			bool isNullable = NullableType.IsNullable(expression.Type);
-			
-			// the operator is overloadable:
-			// TODO: implicit support for user operators
-			//var candidateSet = GetUnaryOperatorCandidates();
-			
-			expression = UnaryNumericPromotion(op, ref type, isNullable, expression);
-			OperatorMethod[] methodGroup;
-			switch (op) {
-				case UnaryOperatorType.Increment:
-				case UnaryOperatorType.Decrement:
-				case UnaryOperatorType.PostIncrement:
-				case UnaryOperatorType.PostDecrement:
-					// C# 4.0 spec: §7.6.9 Postfix increment and decrement operators
-					// C# 4.0 spec: §7.7.5 Prefix increment and decrement operators
-					TypeCode code = ReflectionHelper.GetTypeCode(type);
-					if ((code >= TypeCode.SByte && code <= TypeCode.Decimal) || type.IsEnum())
-						return new ResolveResult(expression.Type);
-					else
-						return new ErrorResolveResult(expression.Type);
-				case UnaryOperatorType.Plus:
-					methodGroup = unaryPlusOperators;
-					break;
-				case UnaryOperatorType.Minus:
-					methodGroup = CheckForOverflow ? checkedUnaryMinusOperators : uncheckedUnaryMinusOperators;
-					break;
-				case UnaryOperatorType.Not:
-					methodGroup = logicalNegationOperator;
-					break;
-				case UnaryOperatorType.BitNot:
-					if (type.IsEnum()) {
-						if (expression.IsCompileTimeConstant && !isNullable) {
-							// evaluate as (E)(~(U)x);
-							var U = expression.ConstantValue.GetType().ToTypeReference().Resolve(context);
-							var unpackedEnum = new ConstantResolveResult(U, expression.ConstantValue);
-							return CheckErrorAndResolveCast(expression.Type, ResolveUnaryOperator(op, unpackedEnum));
-						} else {
-							return new ResolveResult(expression.Type);
-						}
-					} else {
-						methodGroup = bitwiseComplementOperators;
-						break;
-					}
-				default:
-					throw new InvalidOperationException();
-			}
-			OverloadResolution r = new OverloadResolution(context, new[] { expression });
-			foreach (var candidate in methodGroup) {
-				r.AddCandidate(candidate);
-			}
-			UnaryOperatorMethod m = (UnaryOperatorMethod)r.BestCandidate;
-			IType resultType = m.ReturnType.Resolve(context);
-			if (r.BestCandidateErrors != OverloadResolutionErrors.None) {
-				return new ErrorResolveResult(resultType);
-			} else if (expression.IsCompileTimeConstant && !isNullable) {
-				object val;
-				try {
-					val = m.Invoke(this, expression.ConstantValue);
-				} catch (ArithmeticException) {
-					return new ErrorResolveResult(resultType);
-				}
-				return new ConstantResolveResult(resultType, val);
-			} else {
-				return new ResolveResult(resultType);
-			}
-		}
+        {
+            throw new NotSupportedException();
+        }
 		#endregion
 		
 		#region UnaryNumericPromotion
