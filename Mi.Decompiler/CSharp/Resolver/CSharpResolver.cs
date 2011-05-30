@@ -29,12 +29,10 @@ namespace Mi.CSharp.Resolver
 
 		
 		#region Constructor
-		public CSharpResolver(ITypeResolveContext context)
-		{
-			if (context == null)
-				throw new ArgumentNullException("context");
-			this.context = context;
-		}
+        public CSharpResolver(ITypeResolveContext context)
+            : this(context, () => { })
+        {
+        }
 		
 		public CSharpResolver(ITypeResolveContext context, Action verifyProgress)
 		{
