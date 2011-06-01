@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using DiffLib;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
 
 namespace Mi.Decompiler.Tests.Helpers
 {
@@ -14,7 +14,7 @@ namespace Mi.Decompiler.Tests.Helpers
 		{
 			var diff = new StringWriter();
 			if (!Compare(input1, input2, diff)) {
-				Assert.Fail(diff.ToString());
+				throw new MatchException(input1, input2, diff.ToString());
 			}
 		}
 
