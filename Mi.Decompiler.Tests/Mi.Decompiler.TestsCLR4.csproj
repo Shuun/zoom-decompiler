@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{436DBAAF-4C12-48AE-B2F7-9BA699639A5C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mi.Decompiler.Tests</RootNamespace>
+    <AssemblyName>Mi.Decompiler.TestsCLR4</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assemblies\CustomAttributesTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Assemblies\EventTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Assemblies\Extensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Assemblies\FieldTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Assemblies\ImportCecilTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Assemblies\ImportReflectionTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Assemblies\MethodTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Assemblies\ModuleTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Assemblies\NestedTypesTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Assemblies\ParameterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Assemblies\PropertyTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Assemblies\TypeTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Assemblies\VariableTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CodeSampleFileParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleInputLoader.cs" />
+    <Compile Include="CustomAttributes.code.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CustomAttributes\CustomAttributeTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DecompilerTestBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\CodeAssert.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\RemoveCompilerAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleInputFiles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SampleInputFiles.resx</DependentUpon>
+    </Compile>
+    <None Include="Assemblies\Resources\assemblies\moda.netmodule" />
+    <None Include="Assemblies\Resources\assemblies\modb.netmodule" />
+    <None Include="SampleInput\CallOverloadedMethod.cs" />
+    <None Include="SampleInput\CheckedUnchecked.cs" />
+    <None Include="SampleInput\Assemblies\CustomAttributes.cs" />
+    <None Include="SampleInput\DelegateConstruction.cs" />
+    <None Include="SampleInput\Assemblies\Events.cs" />
+    <None Include="SampleInput\ExceptionHandling.cs" />
+    <None Include="SampleInput\Assemblies\Fields.cs" />
+    <None Include="SampleInput\Assemblies\Generics.cs" />
+    <None Include="SampleInput\IncrementDecrement.cs" />
+    <None Include="SampleInput\InitializerTests.cs" />
+    <None Include="SampleInput\Assemblies\Interfaces.cs" />
+    <None Include="SampleInput\Assemblies\Layouts.cs" />
+    <None Include="SampleInput\Loops.cs" />
+    <None Include="SampleInput\Assemblies\Methods.cs" />
+    <None Include="SampleInput\MultidimensionalArray.cs" />
+    <None Include="SampleInput\Assemblies\NestedTypes.cs" />
+    <None Include="SampleInput\Assemblies\Properties.cs" />
+    <None Include="SampleInput\PropertiesAndEvents.cs" />
+    <None Include="SampleInput\QueryExpressions.cs" />
+    <None Include="SampleInput\CustomAttributes\S_AssemblyCustomAttribute.cs" />
+    <None Include="SampleInput\CustomAttributes\S_CustomAttributes.cs" />
+    <None Include="SampleInput\CustomAttributes\S_CustomAttributeSamples.cs" />
+    <None Include="SampleInput\Types\S_EnumSamples.cs" />
+    <None Include="SampleInput\Types\S_TypeDeclarations.cs" />
+    <None Include="SampleInput\Types\S_TypeMemberDeclarations.cs" />
+    <None Include="SampleInput\Switch.cs" />
+    <None Include="SampleInput\UndocumentedExpressions.cs" />
+    <None Include="SampleInput\UnsafeCode.cs" />
+    <None Include="SampleInput\ValueTypes.cs" />
+    <None Include="SampleInput\YieldReturn.cs" />
+    <None Include="SampleInput\PInvoke.cs" />
+    <Compile Include="TestRunner.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\EnumTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\TypeTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DiffLib\AlignedDiff.cs" />
+    <Compile Include="DiffLib\AlignedDiffChange.cs" />
+    <Compile Include="DiffLib\ChangeType.cs" />
+    <Compile Include="DiffLib\Diff.cs" />
+    <Compile Include="DiffLib\DiffChange.cs" />
+    <Compile Include="DiffLib\EnumerableExtensions.cs" />
+    <Compile Include="DiffLib\IAlignmentFilter.cs" />
+    <Compile Include="DiffLib\ISimilarityComparer.cs" />
+    <Compile Include="DiffLib\LongestCommonSubstring.cs" />
+    <Compile Include="DiffLib\LongestCommonSubstringResult.cs" />
+    <Compile Include="DiffLib\StringAlignmentFilter.cs" />
+    <Compile Include="DiffLib\StringSimilarityComparer.cs" />
+    <Compile Include="DiffLib\StringSimilarityFilterPredicate.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Empty.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BooleanConsumedAsInteger.il" />
+    <None Include="StackTests\StackTests.il" />
+    <None Include="DiffLib\LICENSE.markdown" />
+    <None Include="DiffLib\README.markdown" />
+    <None Include="DiffLib\SIGNING.markdown" />
+    <None Include="Properties\AppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mscorlibdll" />
+    <None Include="Resources\System.Coredll" />
+    <None Include="Resources\systemdll" />
+    <None Include="SampleInput\bin\Debug\CallOverloadedMethod.dll" />
+    <None Include="SampleInput\bin\Debug\CallOverloadedMethod.pdb" />
+    <None Include="SampleInput\bin\Debug\CheckedUnchecked.dll" />
+    <None Include="SampleInput\bin\Debug\CheckedUnchecked.pdb" />
+    <None Include="SampleInput\bin\Debug\CustomAttributes.dll" />
+    <None Include="SampleInput\bin\Debug\CustomAttributes.pdb" />
+    <None Include="SampleInput\bin\Debug\DelegateConstruction.dll" />
+    <None Include="SampleInput\bin\Debug\DelegateConstruction.pdb" />
+    <None Include="SampleInput\bin\Debug\ExceptionHandling.dll" />
+    <None Include="SampleInput\bin\Debug\ExceptionHandling.pdb" />
+    <None Include="SampleInput\bin\Debug\IncrementDecrement.dll" />
+    <None Include="SampleInput\bin\Debug\IncrementDecrement.pdb" />
+    <None Include="SampleInput\bin\Debug\InitializerTests.dll" />
+    <None Include="SampleInput\bin\Debug\InitializerTests.pdb" />
+    <None Include="SampleInput\bin\Debug\Loops.dll" />
+    <None Include="SampleInput\bin\Debug\Loops.pdb" />
+    <None Include="SampleInput\bin\Debug\MultidimensionalArray.dll" />
+    <None Include="SampleInput\bin\Debug\MultidimensionalArray.pdb" />
+    <None Include="SampleInput\bin\Debug\PropertiesAndEvents.dll" />
+    <None Include="SampleInput\bin\Debug\PropertiesAndEvents.pdb" />
+    <None Include="SampleInput\bin\Debug\QueryExpressions.dll" />
+    <None Include="SampleInput\bin\Debug\QueryExpressions.pdb" />
+    <None Include="SampleInput\bin\Debug\Switch.dll" />
+    <None Include="SampleInput\bin\Debug\Switch.pdb" />
+    <None Include="SampleInput\bin\Debug\UndocumentedExpressions.dll" />
+    <None Include="SampleInput\bin\Debug\UndocumentedExpressions.pdb" />
+    <None Include="SampleInput\bin\Debug\UnsafeCode.dll" />
+    <None Include="SampleInput\bin\Debug\UnsafeCode.pdb" />
+    <None Include="SampleInput\bin\Debug\ValueTypes.dll" />
+    <None Include="SampleInput\bin\Debug\ValueTypes.pdb" />
+    <None Include="SampleInput\bin\Debug\YieldReturn.dll" />
+    <None Include="SampleInput\bin\Debug\YieldReturn.pdb" />
+    <None Include="SampleInput\Types\bin\Debug\S_EnumSamples.dll" />
+    <None Include="SampleInput\Types\bin\Debug\S_EnumSamples.pdb" />
+    <None Include="SampleInput\Types\bin\Debug\S_TypeDeclarations.dll" />
+    <None Include="SampleInput\Types\bin\Debug\S_TypeDeclarations.pdb" />
+    <None Include="SampleInput\Types\bin\Debug\S_TypeMemberDeclarations.dll" />
+    <None Include="SampleInput\Types\bin\Debug\S_TypeMemberDeclarations.pdb" />
+    <None Include="SampleInput\CustomAttributes\bin\Debug\S_AssemblyCustomAttribute.dll" />
+    <None Include="SampleInput\CustomAttributes\bin\Debug\S_AssemblyCustomAttribute.pdb" />
+    <None Include="SampleInput\CustomAttributes\bin\Debug\S_CustomAttributes.dll" />
+    <None Include="SampleInput\CustomAttributes\bin\Debug\S_CustomAttributes.pdb" />
+    <None Include="SampleInput\CustomAttributes\bin\Debug\S_CustomAttributeSamples.dll" />
+    <None Include="SampleInput\CustomAttributes\bin\Debug\S_CustomAttributeSamples.pdb" />
+    <None Include="SampleInput\bin\Debug\Generics.pdb" />
+    <None Include="SampleInput\bin\Debug\Generics.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\CustomAttributes.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\CustomAttributes.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Events.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Events.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Fields.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Fields.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Generics.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Generics.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Interfaces.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Interfaces.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Layouts.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Layouts.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Methods.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Methods.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\NestedTypes.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\NestedTypes.pdb" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Properties.dll" />
+    <None Include="SampleInput\Assemblies\bin\Debug\Properties.pdb" />
+    <None Include="Assemblies\Resources\assemblies\cppcli.dll" />
+    <None Include="Assemblies\Resources\assemblies\decsec1-xml.dll" />
+    <None Include="Assemblies\Resources\assemblies\decsec-att.dll" />
+    <None Include="Assemblies\Resources\assemblies\decsec-xml.dll" />
+    <None Include="Assemblies\Resources\assemblies\fptr.exe" />
+    <None Include="Assemblies\Resources\assemblies\gifaceref.exe" />
+    <None Include="Assemblies\Resources\assemblies\hello.anycpu.exe" />
+    <None Include="Assemblies\Resources\assemblies\hello.exe" />
+    <None Include="Assemblies\Resources\assemblies\hello.ia64.exe" />
+    <None Include="Assemblies\Resources\assemblies\hello.x64.exe" />
+    <None Include="Assemblies\Resources\assemblies\hello.x86.exe" />
+    <None Include="Assemblies\Resources\assemblies\hello1.exe" />
+    <None Include="Assemblies\Resources\assemblies\hellow.exe" />
+    <None Include="Assemblies\Resources\assemblies\iterator.exe" />
+    <None Include="Assemblies\Resources\assemblies\libhello.dll" />
+    <None Include="Assemblies\Resources\assemblies\libres.dll" />
+    <None Include="Assemblies\Resources\assemblies\marshal.dll" />
+    <None Include="Assemblies\Resources\assemblies\mma.exe" />
+    <None Include="Assemblies\Resources\assemblies\noblob.dll" />
+    <None Include="Assemblies\Resources\assemblies\pinvoke.exe" />
+    <None Include="Assemblies\Resources\assemblies\switch.exe" />
+    <None Include="Assemblies\Resources\assemblies\text_file.txt" />
+    <None Include="Assemblies\Resources\assemblies\varargs.exe" />
+    <None Include="Assemblies\Resources\assemblies\boxedoptarg.dll" />
+    <None Include="Assemblies\Resources\assemblies\catch.exe" />
+    <None Include="Properties\OutOfBrowserSettings.xml" />
+    <None Include="SampleInput\bin\Debug\PInvoke.dll" />
+    <None Include="SampleInput\bin\Debug\PInvoke.pdb" />
+    <None Include="SampleInput\bin\Debug\CustomShortCircuitOperators.dll" />
+    <None Include="SampleInput\bin\Debug\CustomShortCircuitOperators.pdb" />
+    <Content Include="StackTests\StackTests.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SampleInputFiles.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>SampleInputFiles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mi.Decompiler\Mi.DecompilerCLR4.csproj">
+      <Project>{75B266B6-A750-4014-95BA-0572C54467A5}</Project>
+      <Name>Mi.DecompilerCLR4</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

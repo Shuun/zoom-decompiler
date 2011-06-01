@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 
+#if SILVERLIGHT
 using Microsoft.Silverlight.Testing;
+#endif
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Mi.Decompiler.Tests

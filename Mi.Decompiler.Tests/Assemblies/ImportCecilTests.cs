@@ -253,9 +253,13 @@ namespace Mi.Assemblies.Tests {
             {
                 module.Write(stream);
                 //File.WriteAllBytes (Path.Combine (Path.Combine (Path.GetTempPath (), "cecil"), module.Name + ".dll"), stream.ToArray ());
+#if SILVERLIGHT
                 var p = new System.Windows.AssemblyPart();
                 var result = p.Load(stream);
-                return result; // SR.Assembly.Load(stream.ToArray());
+#else
+                var result = SR.Assembly.Load(stream.ToArray());
+#endif
+                return result;
             }
         }
 
