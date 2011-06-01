@@ -37,6 +37,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mi.Decompiler">
+      <HintPath>..\Mi.Decompiler\bin\Debug\Mi.Decompiler.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -160,12 +163,6 @@
     <Compile Include="UnsafeCode.cs" />
     <Compile Include="ValueTypes.cs" />
     <Compile Include="YieldReturn.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Mi.Decompiler\Mi.DecompilerCLR4.csproj">
-      <Project>{75B266B6-A750-4014-95BA-0572C54467A5}</Project>
-      <Name>Mi.DecompilerCLR4</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
