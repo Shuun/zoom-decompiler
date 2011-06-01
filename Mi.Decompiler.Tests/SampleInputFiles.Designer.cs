@@ -75,30 +75,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///using System.Collections.Generic;
-        ///
-        ///public class CallOverloadedMethod
-        ///{
-        ///	public void OverloadedMethod(object a)
-        ///	{
-        ///	}
-        ///	
-        ///	public void OverloadedMethod(int? a)
-        ///	{
-        ///	}
-        ///	
-        ///	public void OverloadedMethod(string a)
-        ///	{
-        ///	}
-        ///	
-        ///	public void Call()
-        ///	{
-        ///		this.OverloadedMethod(&quot;(string)&quot;);
-        ///		this.OverloadedMethod((obje [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CallOverloadedMethod_cs {
             get {
@@ -128,22 +112,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///public class CheckedUnchecked
-        ///{
-        ///	public int Operators(int a, int b)
-        ///	{
-        ///		int num = checked(a + b);
-        ///		int num2 = a + b;
-        ///		int num3 = checked(a - b);
-        ///		int num4 = a - b;
-        ///		int num5 = checked(a * b);
-        ///		int num6 = a * b;
-        ///		int num7 = a / b;
-        ///		int num8 = a % b;
-        ///		// The division operators / and % only exist in one form  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CheckedUnchecked_cs {
             get {
@@ -268,28 +244,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///using System.Collections.Generic;
-        ///using System.Linq;
-        ///
-        ///public static class DelegateConstruction
-        ///{
-        ///	class InstanceTests
-        ///	{
-        ///		public Action CaptureOfThis()
-        ///		{
-        ///			return delegate {
-        ///				CaptureOfThis();
-        ///			};
-        ///		}
-        ///		
-        ///		public Action CaptureOfThisAndParameter(int a)
-        ///		{
-        ///			return delegate {
-        ///				CaptureOfThi [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DelegateConstruction_cs {
             get {
@@ -343,39 +305,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///using System.Threading;
-        ///
-        ///public class ExceptionHandling
-        ///{
-        ///	public void MethodEndingWithEndFinally()
-        ///	{
-        ///		try
-        ///		{
-        ///			throw null;
-        ///		}
-        ///		finally
-        ///		{
-        ///			Console.WriteLine();
-        ///		}
-        ///	}
-        ///	
-        ///	public void MethodEndingWithRethrow()
-        ///	{
-        ///		try
-        ///		{
-        ///			throw null;
-        ///		}
-        ///		catch
-        ///		{
-        ///			throw;
-        ///		}
-        ///	}
-        ///	
-        ///	public void TryCatch [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ExceptionHandling_cs {
             get {
@@ -466,31 +403,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///using System.Collections.Generic;
-        ///
-        ///public static class Generics
-        ///{
-        ///	public class MyArray&lt;T&gt;
-        ///	{
-        ///		public class NestedClass&lt;Y&gt;
-        ///		{
-        ///			public T Item1;
-        ///			public Y Item2;
-        ///		}
-        ///		
-        ///		private T[] arr;
-        ///		
-        ///		public MyArray(int capacity)
-        ///		{
-        ///			this.arr = new T[capacity];
-        ///		}
-        ///		
-        ///		public void Size(int capacity)
-        ///	 [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Generics_cs {
             get {
@@ -583,41 +503,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///
-        ///public class IncrementDecrement
-        ///{
-        ///	[Flags]
-        ///	private enum MyEnum
-        ///	{
-        ///		None = 0,
-        ///		One = 1,
-        ///		Two = 2,
-        ///		Four = 4
-        ///	}
-        ///	
-        ///	public class MutableClass
-        ///	{
-        ///		public int Field;
-        ///		
-        ///		public int Property
-        ///		{
-        ///			get;
-        ///			set;
-        ///		}
-        ///		
-        ///		public uint this[string name]
-        ///		{
-        ///			get
-        ///			{
-        ///				return 0u;
-        ///			}
-        ///			set
-        ///			{
-        ///		 [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string IncrementDecrement_cs {
             get {
@@ -640,39 +533,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///using System.Collections.Generic;
-        ///
-        ///public class InitializerTests
-        ///{
-        ///	enum MyEnum
-        ///	{
-        ///		a,
-        ///		b
-        ///	}
-        ///	
-        ///	enum MyEnum2
-        ///	{
-        ///		c,
-        ///		d
-        ///	}
-        ///	
-        ///	class Data
-        ///	{
-        ///		public InitializerTests.MyEnum a
-        ///		{
-        ///			get;
-        ///			set;
-        ///		}
-        ///		public List&lt;InitializerTests.MyEnum2&gt; PropertyList
-        ///		{
-        ///			get;
-        ///			set;
-        ///		}
-        ///		public List&lt;Initializ [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string InitializerTests_cs {
             get {
@@ -800,26 +668,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///using System.Collections;
-        ///using System.Collections.Generic;
-        ///
-        ///public class Loops
-        ///{
-        ///	public void ForEach(IEnumerable&lt;string&gt; enumerable)
-        ///	{
-        ///		foreach (string current in enumerable)
-        ///		{
-        ///			current.ToLower();
-        ///		}
-        ///	}
-        ///	
-        ///	public void ForEachOverList(List&lt;string&gt; list)
-        ///	{
-        ///		// List has a struct as enumerator, [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Loops_cs {
             get {
@@ -921,31 +777,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///
-        ///public class MultidimensionalArray
-        ///{
-        ///	internal class Generic&lt;T, S&gt; where T : new()
-        ///	{
-        ///		private T[,] a = new T[20, 20];
-        ///		private S[,][] b = new S[20, 20][];
-        ///
-        ///		public T this[int i, int j]
-        ///		{
-        ///			get
-        ///			{
-        ///				return this.a[i, j];
-        ///			}
-        ///			set
-        ///			{
-        ///				this.a[i, j] = value;
-        ///			}
-        ///		}
-        ///		
-        ///		public void Te [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MultidimensionalArray_cs {
             get {
@@ -1091,30 +930,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///using System.Text;
-        ///
-        ///public class PropertiesAndEvents
-        ///{
-        ///	public event EventHandler AutomaticEvent;
-        ///	
-        ///	[field: NonSerialized]
-        ///	public event EventHandler AutomaticEventWithInitializer = delegate
-        ///	{
-        ///	}
-        ///	;
-        ///	
-        ///	public event EventHandler CustomEvent
-        ///	{
-        ///		add
-        ///		{
-        ///			this.AutomaticEvent += value;
-        ///		}
-        ///		remove
-        ///	 [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PropertiesAndEvents_cs {
             get {
@@ -1137,27 +960,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///using System.Collections.Generic;
-        ///using System.Linq;
-        ///
-        ///public class QueryExpressions
-        ///{
-        ///	public class Customer
-        ///	{
-        ///		public int CustomerID;
-        ///		public IEnumerable&lt;QueryExpressions.Order&gt; Orders;
-        ///		public string Name;
-        ///		public string Country;
-        ///		public string City;
-        ///	}
-        ///	
-        ///	public class Order
-        ///	{
-        ///		public int Or [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string QueryExpressions_cs {
             get {
@@ -1439,29 +1249,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///
-        ///public static class Switch
-        ///{
-        ///	public static string ShortSwitchOverString(string text)
-        ///	{
-        ///		switch (text) {
-        ///			case &quot;First case&quot;:
-        ///				return &quot;Text&quot;;
-        ///			default:
-        ///				return &quot;Default&quot;;
-        ///		}
-        ///	}
-        ///	
-        ///	public static string SwitchOverString1(string text)
-        ///	{
-        ///		switch (text)
-        ///		{
-        ///			case &quot;First case&quot;:
-        ///				return &quot; [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Switch_cs {
             get {
@@ -1515,23 +1310,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///
-        ///public class UndocumentedExpressions
-        ///{
-        ///	public static int GetArgCount(__arglist)
-        ///	{
-        ///		ArgIterator argIterator = new ArgIterator(__arglist);
-        ///		return argIterator.GetRemainingCount();
-        ///	}
-        ///	
-        ///	public static void MakeTypedRef(object o)
-        ///	{
-        ///		TypedReference tr = __makeref(o);
-        ///		UndocumentedExpressions.Accept [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string UndocumentedExpressions_cs {
             get {
@@ -1554,31 +1340,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///
-        ///public class UnsafeCode
-        ///{
-        ///	public unsafe int* NullPointer
-        ///	{
-        ///		get
-        ///		{
-        ///			return null;
-        ///		}
-        ///	}
-        ///	
-        ///	public unsafe long ConvertDoubleToLong(double d)
-        ///	{
-        ///		return *(long*)(&amp;d);
-        ///	}
-        ///	
-        ///	public unsafe void PassRefParameterAsPointer(ref int p)
-        ///	{
-        ///		fixed (int* ptr = &amp;p)
-        ///		{
-        ///			this.PassPointerAsRefParameter(pt [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string UnsafeCode_cs {
             get {
@@ -1601,33 +1370,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///
-        ///public static class ValueTypes
-        ///{
-        ///	public struct S
-        ///	{
-        ///		public int Field;
-        ///		
-        ///		public S(int field)
-        ///		{
-        ///			this.Field = field;
-        ///		}
-        ///		
-        ///		public void SetField()
-        ///		{
-        ///			this.Field = 5;
-        ///		}
-        ///		
-        ///		public void MethodCalls()
-        ///		{
-        ///			this.SetField();
-        ///			ValueTypes.S.Test(this);
-        ///			ValueTypes.S.Test(ref this);
-        ///		 [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ValueTypes_cs {
             get {
@@ -1657,26 +1407,14 @@ namespace Mi.Decompiler.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team (for details please see \doc\copyright.txt)
-        ///// This code is distributed under MIT X11 license (for details please see \doc\license.txt)
-        ///
-        ///using System;
-        ///using System.Collections.Generic;
-        ///
-        ///public static class YieldReturn
-        ///{
-        ///	public static IEnumerable&lt;string&gt; SimpleYieldReturn()
-        ///	{
-        ///		yield return &quot;A&quot;;
-        ///		yield return &quot;B&quot;;
-        ///		yield return &quot;C&quot;;
-        ///	}
-        ///	
-        ///	public static IEnumerable&lt;int&gt; YieldReturnInLoop()
-        ///	{
-        ///		for (int i = 0; i &lt; 100; i++) {
-        ///			yield return i;
-        ///		 [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to // Copyright (c) AlphaSierraPapa for the SharpDevelop Team
+        ///// 
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        ///// software and associated documentation files (the &quot;Software&quot;), to deal in the Software
+        ///// without restriction, including without limitation the rights to use, copy, modify, merge,
+        ///// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        ///// to whom the Software is furnished to do so, subject to the following conditions:
+        //// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string YieldReturn_cs {
             get {
