@@ -15,7 +15,7 @@
           <Configuration>
             <CodeCoverage xmlns="">
               <Regular>
-                <CodeCoverageItem binaryFile="C:\Users\Mihailik\Documents\Dev\ILSPY\SL\Mi.Decompiler\bin\Debug\Mi.DecompilerCLR4.dll" pdbFile="C:\Users\Mihailik\Documents\Dev\ILSPY\SL\Mi.Decompiler\bin\Debug\Mi.DecompilerCLR4.pdb" instrumentInPlace="true" />
+                <CodeCoverageItem binaryFile="C:\Users\Mihailik\Documents\Dev\ILSPY\SL\Mi.Decompiler\bin\Debug\Mi.Decompiler.dll" pdbFile="C:\Users\Mihailik\Documents\Dev\ILSPY\SL\Mi.Decompiler\bin\Debug\Mi.Decompiler.pdb" instrumentInPlace="true" />
               </Regular>
             </CodeCoverage>
           </Configuration>
