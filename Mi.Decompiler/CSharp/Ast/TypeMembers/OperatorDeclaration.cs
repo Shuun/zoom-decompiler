@@ -156,7 +156,36 @@ namespace Mi.CSharp.Ast
 		/// </summary>
 		public static string GetToken(OperatorType type)
 		{
-			return type.ToString();
+            switch (type)
+            {
+                case OperatorType.LogicalNot: return "!";
+                case OperatorType.OnesComplement: return "~";
+                case OperatorType.Increment: return "++";
+                case OperatorType.Decrement: return "--";
+                case OperatorType.True: return "true";
+                case OperatorType.False: return "false";
+                case OperatorType.Addition: return "+";
+                case OperatorType.Subtraction: return "-";
+                case OperatorType.UnaryPlus: return "+";
+                case OperatorType.UnaryNegation: return "-";
+                case OperatorType.Multiply: return "*";
+                case OperatorType.Division: return "/";
+                case OperatorType.Modulus: return "%";
+                case OperatorType.BitwiseAnd: return "&";
+                case OperatorType.BitwiseOr: return "|";
+                case OperatorType.ExclusiveOr: return "^";
+                case OperatorType.LeftShift: return "<<";
+                case OperatorType.RightShift: return ">>";
+                case OperatorType.Equality: return "==";
+                case OperatorType.Inequality: return "!=";
+                case OperatorType.GreaterThan: return ">";
+                case OperatorType.LessThan: return "<";
+                case OperatorType.GreaterThanOrEqual: return ">=";
+                case OperatorType.LessThanOrEqual: return "<=";
+                case OperatorType.Implicit: return "implicit";
+                case OperatorType.Explicit: return "explicit";
+                default: return type.ToString();
+            }
 		}
 		
 		public override NodeType NodeType {
