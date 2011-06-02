@@ -630,7 +630,6 @@
     <Compile Include="NRefactory\TypeSystem\ITypeParameter.cs" />
     <Compile Include="NRefactory\TypeSystem\VarianceModifier.cs" />
     <Compile Include="NRefactory\TypeSystem\EntityType.cs" />
-    <Compile Include="NRefactory\TypeSystem\ExtensionMethods.cs" />
     <Compile Include="NRefactory\TypeSystem\IConstantValue.cs" />
     <Compile Include="NRefactory\TypeSystem\IConversions.cs" />
     <Compile Include="NRefactory\TypeSystem\IEntity.cs" />
