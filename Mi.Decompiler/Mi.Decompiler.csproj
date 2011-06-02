@@ -488,19 +488,10 @@
     <Compile Include="CSharp\Resolver\LocalResolveResult.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CSharp\Resolver\MapTypeIntoNewContext.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\MemberLookup.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CSharp\Resolver\MemberResolveResult.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CSharp\Resolver\MethodGroupResolveResult.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\NamespaceResolveResult.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CSharp\Resolver\OverloadResolution.cs">
