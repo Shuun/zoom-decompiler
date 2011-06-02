@@ -467,9 +467,6 @@
     <Compile Include="CSharp\OutputVisitor\TextWriterOutputFormatter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CSharp\Resolver\AliasNamespaceReference.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CSharp\Resolver\AmbiguousResolveResult.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -503,9 +500,6 @@
     <Compile Include="CSharp\Resolver\MemberResolveResult.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CSharp\Resolver\MemberTypeOrNamespaceReference.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CSharp\Resolver\MethodGroupResolveResult.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -525,12 +519,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CSharp\Resolver\ResolveVisitor.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\SimpleTypeOrNamespaceReference.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\TypeInference.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CSharp\Resolver\TypeResolveResult.cs">
