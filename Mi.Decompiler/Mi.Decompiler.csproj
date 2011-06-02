@@ -452,7 +452,7 @@
     <Compile Include="CSharp\Ast\TypeMembers\VariableInitializer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CSharp\Formatter\CSharpFormattingOptions.cs">
+    <Compile Include="CSharp\OutputVisitor\CSharpFormattingOptions.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CSharp\OutputVisitor\InsertParenthesesVisitor.cs">
@@ -655,10 +655,7 @@
     <Compile Include="NRefactory\TypeSystem\ITypeResolveContext.cs" />
     <Compile Include="NRefactory\TypeSystem\IVariable.cs" />
     <Compile Include="NRefactory\TypeSystem\KnownTypeReference.cs" />
-    <Compile Include="NRefactory\TypeSystem\NullableType.cs" />
     <Compile Include="NRefactory\TypeSystem\ParameterizedType.cs" />
-    <Compile Include="NRefactory\TypeSystem\ParameterListComparer.cs" />
-    <Compile Include="NRefactory\TypeSystem\PointerType.cs" />
     <Compile Include="NRefactory\TypeSystem\ReflectionHelper.cs" />
     <Compile Include="NRefactory\TypeSystem\ReflectionNameParseException.cs" />
     <Compile Include="NRefactory\TypeSystem\SharedTypes.cs" />

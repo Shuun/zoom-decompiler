@@ -20,9 +20,12 @@ namespace Mi.Decompiler.Tests.Helpers
 
 		static bool Compare(string input1, string input2, StringWriter diff)
 		{
+            string[] inputLines1 = NormalizeAndSplitCode(input1);
+            string[] inputLines2 = NormalizeAndSplitCode(input2);
+
 			var differ = new AlignedDiff<string>(
-				NormalizeAndSplitCode(input1),
-				NormalizeAndSplitCode(input2),
+				inputLines1,
+                inputLines2,
 				new CodeLineEqualityComparer(),
 				new StringSimilarityComparer(),
 				new StringAlignmentFilter());
@@ -100,7 +103,7 @@ namespace Mi.Decompiler.Tests.Helpers
 			return NormalizeLine(line) == string.Empty;
 		}
 
-		private static IEnumerable<string> NormalizeAndSplitCode(string input)
+		private static string[] NormalizeAndSplitCode(string input)
 		{
 			return input.Split(new[] { "\r\n", "\n\r", "\n", "\r" }, StringSplitOptions.None);
 		}

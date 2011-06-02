@@ -100,7 +100,9 @@ namespace Mi.Decompiler.Tests.Helpers
 			var buffer = new StringBuilder();
 			foreach (var line in lines)
 			{
-				buffer.AppendLine(line);
+                if (buffer.Length > 0)
+                    buffer.AppendLine();
+				buffer.Append(line);
 			}
 			return buffer.ToString();
 		}
