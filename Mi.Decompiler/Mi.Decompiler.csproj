@@ -716,7 +716,6 @@
     <Compile Include="NRefactory\TypeSystem\IMember.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\AbstractFreezable.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\AbstractType.cs" />
-    <Compile Include="NRefactory\TypeSystem\Implementation\CompositeTypeResolveContext.cs" />
     <Compile Include="NRefactory\TypeSystem\Parameter.cs" />
     <Compile Include="NRefactory\TypeSystem\TypeDefinition.cs" />
     <Compile Include="NRefactory\TypeSystem\TypeParameter.cs" />
