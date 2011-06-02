@@ -68,17 +68,12 @@ namespace Mi.NRefactory.TypeSystem
                 get { throw new NotImplementedException(); }
             }
 
-            System.Collections.Generic.IEnumerable<IType> IType.GetBaseTypes(ITypeResolveContext context)
+            System.Collections.Generic.IEnumerable<IType> IType.GetNestedTypes(Object context, Predicate<TypeDefinition> filter)
             {
                 throw new NotImplementedException();
             }
 
-            System.Collections.Generic.IEnumerable<IType> IType.GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter)
-            {
-                throw new NotImplementedException();
-            }
-
-            IType ITypeReference.Resolve(ITypeResolveContext context)
+            IType ITypeReference.Resolve()
             {
                 throw new NotImplementedException();
             }

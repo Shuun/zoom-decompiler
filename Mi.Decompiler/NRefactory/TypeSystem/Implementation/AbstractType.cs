@@ -45,17 +45,12 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			return null;
 		}
 		
-		IType ITypeReference.Resolve(ITypeResolveContext context)
+		IType ITypeReference.Resolve()
 		{
 			return this;
 		}
 		
-		public virtual IEnumerable<IType> GetBaseTypes(ITypeResolveContext context)
-		{
-            return Empty.ReadOnlyCollection<IType>();
-		}
-		
-		public virtual IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter = null)
+		public virtual IEnumerable<IType> GetNestedTypes(Object context, Predicate<TypeDefinition> filter = null)
 		{
             return Empty.ReadOnlyCollection<IType>();
 		}

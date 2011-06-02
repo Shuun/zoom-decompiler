@@ -131,9 +131,6 @@
     <Compile Include="CSharp\Analysis\DefiniteAssignmentAnalysis.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CSharp\Analysis\MinimalResolveContext.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CSharp\Ast\AstLocation.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -627,6 +624,7 @@
     <Compile Include="NRefactory\PatternMatching\Repeat.cs" />
     <Compile Include="NRefactory\TypeSystem\Accessibility.cs" />
     <Compile Include="NRefactory\TypeSystem\ClassType.cs" />
+    <Compile Include="NRefactory\TypeSystem\ITypeReference.cs" />
     <Compile Include="NRefactory\TypeSystem\VarianceModifier.cs" />
     <Compile Include="NRefactory\TypeSystem\EntityType.cs" />
     <Compile Include="NRefactory\TypeSystem\IConversions.cs" />
@@ -641,8 +639,6 @@
     <Compile Include="NRefactory\TypeSystem\INamedElement.cs" />
     <Compile Include="NRefactory\TypeSystem\ISupportsInterning.cs" />
     <Compile Include="NRefactory\TypeSystem\IType.cs" />
-    <Compile Include="NRefactory\TypeSystem\ITypeReference.cs" />
-    <Compile Include="NRefactory\TypeSystem\ITypeResolveContext.cs" />
     <Compile Include="NRefactory\TypeSystem\KnownTypeReference.cs" />
     <Compile Include="NRefactory\TypeSystem\SharedTypes.cs" />
     <Compile Include="NRefactory\Utils\BusyManager.cs" />
