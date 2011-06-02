@@ -39,8 +39,6 @@ namespace Mi.CSharp.Resolver
 	/// </remarks>
 	public sealed class ResolveVisitor : DepthFirstAstVisitor<object, ResolveResult>
 	{
-		CSharpResolver resolver;
-
 		#region Constructor
 		/// <summary>
 		/// Creates a new ResolveVisitor instance.

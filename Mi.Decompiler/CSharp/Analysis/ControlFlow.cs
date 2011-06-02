@@ -141,22 +141,16 @@ namespace Mi.CSharp.Analysis
 		}
 		
 		Statement rootStatement;
-		ResolveVisitor resolveVisitor;
+		ITypeResolveContext typeResolveContext;
+        Action verifyProgress;
 		List<ControlFlowNode> nodes;
 		Dictionary<string, ControlFlowNode> labels;
 		List<ControlFlowNode> gotoStatements;
 		
 		public IList<ControlFlowNode> BuildControlFlowGraph(Statement statement, ITypeResolveContext context, Action verifyProgress = default(Action))
 		{
-			return BuildControlFlowGraph(statement, new ResolveVisitor(context, verifyProgress));
-		}
-		
-		public IList<ControlFlowNode> BuildControlFlowGraph(Statement statement, ResolveVisitor resolveVisitor)
-		{
 			if (statement == null)
 				throw new ArgumentNullException("statement");
-			if (resolveVisitor == null)
-				throw new ArgumentNullException("resolveVisitor");
 			
 			NodeCreationVisitor nodeCreationVisitor = new NodeCreationVisitor();
 			nodeCreationVisitor.builder = this;
@@ -165,7 +159,8 @@ namespace Mi.CSharp.Analysis
 				this.labels = new Dictionary<string, ControlFlowNode>();
 				this.gotoStatements = new List<ControlFlowNode>();
 				this.rootStatement = statement;
-				this.resolveVisitor = resolveVisitor;
+				this.typeResolveContext = context;
+                this.verifyProgress = verifyProgress;
 				ControlFlowNode entryPoint = CreateStartNode(statement);
 				statement.AcceptVisitor(nodeCreationVisitor, entryPoint);
 				
@@ -185,7 +180,8 @@ namespace Mi.CSharp.Analysis
 				this.labels = null;
 				this.gotoStatements = null;
 				this.rootStatement = null;
-				this.resolveVisitor = null;
+				this.typeResolveContext = null;
+                this.verifyProgress = null;
 			}
 		}
 		
@@ -288,7 +284,7 @@ namespace Mi.CSharp.Analysis
 		{
 			if (c1 == null || c2 == null)
 				return false;
-			CSharpResolver r = new CSharpResolver(resolveVisitor.TypeResolveContext, resolveVisitor.Action);
+			CSharpResolver r = new CSharpResolver(typeResolveContext, verifyProgress);
 			ResolveResult c = r.ResolveBinaryOperator(BinaryOperatorType.Equality, c1, c2);
 			return c.IsCompileTimeConstant && (c.ConstantValue as bool?) == true;
 		}
