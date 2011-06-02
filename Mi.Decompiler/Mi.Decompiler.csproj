@@ -631,7 +631,6 @@
     <Compile Include="NRefactory\TypeSystem\IFreezable.cs" />
     <Compile Include="NRefactory\TypeSystem\IInterningProvider.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\AbstractFreezable.cs" />
-    <Compile Include="NRefactory\TypeSystem\TypeDefinition.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\GetClassTypeReference.cs" />
     <Compile Include="NRefactory\TypeSystem\INamedElement.cs" />
     <Compile Include="NRefactory\TypeSystem\ISupportsInterning.cs" />

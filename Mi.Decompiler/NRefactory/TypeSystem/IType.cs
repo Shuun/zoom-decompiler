@@ -23,21 +23,10 @@ namespace Mi.NRefactory.TypeSystem
 		bool? IsReferenceType { get; }
 		
 		/// <summary>
-		/// Gets the underlying type definition.
-		/// Can return null for types which do not have a type definition (for example arrays, pointers, type parameters)
-		/// </summary>
-		TypeDefinition GetDefinition();
-		
-		/// <summary>
 		/// Gets the parent type, if this is a nested type.
 		/// Returns null for top-level types.
 		/// </summary>
 		IType DeclaringType { get; }
-		
-		/// <summary>
-		/// Gets inner classes (including inherited inner classes).
-		/// </summary>
-		IEnumerable<IType> GetNestedTypes(Object context, Predicate<TypeDefinition> filter = null);
 	}
 	
 	#if WITH_CONTRACTS

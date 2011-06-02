@@ -58,19 +58,9 @@ namespace Mi.NRefactory.TypeSystem
                 get { throw new NotImplementedException(); }
             }
 
-            TypeDefinition IType.GetDefinition()
-            {
-                throw new NotImplementedException();
-            }
-
             IType IType.DeclaringType
             {
                 get { throw new NotImplementedException(); }
-            }
-
-            System.Collections.Generic.IEnumerable<IType> IType.GetNestedTypes(Object context, Predicate<TypeDefinition> filter)
-            {
-                throw new NotImplementedException();
             }
 
             IType ITypeReference.Resolve()
