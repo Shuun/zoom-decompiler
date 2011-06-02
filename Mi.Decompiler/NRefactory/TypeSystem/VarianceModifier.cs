@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Mi.NRefactory.Utils;
-using Mi.NRefactory.TypeSystem.Implementation;
 
 namespace Mi.NRefactory.TypeSystem
 {
