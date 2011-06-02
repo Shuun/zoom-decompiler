@@ -503,9 +503,6 @@
     <Compile Include="CSharp\Resolver\ResolveResult.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CSharp\Resolver\ResolveVisitor.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CSharp\Resolver\TypeResolveResult.cs">
       <SubType>Code</SubType>
     </Compile>
