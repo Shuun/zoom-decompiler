@@ -204,54 +204,6 @@ namespace Mi.CSharp.Analysis
 			return conditionNodeDict[statement].NodeStatus;
 		}
 		
-		/// <summary>
-		/// Exports the CFG. This method is intended to help debugging issues related to definite assignment.
-		/// </summary>
-		public GraphVizGraph ExportGraph()
-		{
-			GraphVizGraph g = new GraphVizGraph();
-			g.Title = "DefiniteAssignment - " + variableName;
-			for (int i = 0; i < allNodes.Count; i++) {
-				string name = "#" + i + " = " + allNodes[i].NodeStatus.ToString() + Environment.NewLine;
-				switch (allNodes[i].Type) {
-					case ControlFlowNodeType.StartNode:
-					case ControlFlowNodeType.BetweenStatements:
-						name += allNodes[i].NextStatement.ToString();
-						break;
-					case ControlFlowNodeType.EndNode:
-						name += "End of " + allNodes[i].PreviousStatement.ToString();
-						break;
-					case ControlFlowNodeType.LoopCondition:
-						name += "Condition in " + allNodes[i].NextStatement.ToString();
-						break;
-					default:
-						name += allNodes[i].Type.ToString();
-						break;
-				}
-				g.AddNode(new GraphVizNode(i) { label = name });
-				foreach (ControlFlowEdge edge in allNodes[i].Outgoing) {
-					GraphVizEdge ge = new GraphVizEdge(i, ((DefiniteAssignmentNode)edge.To).Index);
-					if (edgeStatus.Count > 0)
-						ge.label = edgeStatus[edge].ToString();
-					if (edge.IsLeavingTryFinally)
-						ge.style = "dashed";
-					switch (edge.Type) {
-						case ControlFlowEdgeType.ConditionTrue:
-							ge.color = "green";
-							break;
-						case ControlFlowEdgeType.ConditionFalse:
-							ge.color = "red";
-							break;
-						case ControlFlowEdgeType.Jump:
-							ge.color = "blue";
-							break;
-					}
-					g.AddEdge(ge);
-				}
-			}
-			return g;
-		}
-		
 		static DefiniteAssignmentStatus MergeStatus(DefiniteAssignmentStatus a, DefiniteAssignmentStatus b)
 		{
 			// The result will be DefinitelyAssigned if at least one incoming edge is DefinitelyAssigned and all others are unreachable.
