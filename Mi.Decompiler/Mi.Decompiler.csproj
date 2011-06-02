@@ -461,9 +461,6 @@
     <Compile Include="CSharp\OutputVisitor\OutputVisitor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CSharp\OutputVisitor\TextWriterOutputFormatter.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Empty.cs" />
     <Compile Include="DecompilerSettings.cs" />
     <Compile Include="Disassembler\DisassemblerHelpers.cs" />
@@ -625,7 +622,6 @@
     <Compile Include="NRefactory\TypeSystem\ClassType.cs" />
     <Compile Include="NRefactory\TypeSystem\VarianceModifier.cs" />
     <Compile Include="NRefactory\Utils\CSharpPrimitiveCast.cs" />
-    <Compile Include="NRefactory\Utils\GraphVizGraph.cs" />
     <Compile Include="NRefactory\Utils\TreeTraversal.cs" />
     <Compile Include="PlainTextOutput.cs" />
     <Compile Include="ReferenceResolvingException.cs" />

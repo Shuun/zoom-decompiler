@@ -59,36 +59,6 @@ namespace Mi.Decompiler.FlowAnalysis
 			Debug.Assert(ExceptionalExit.NodeType == ControlFlowNodeType.ExceptionalExit);
 		}
 		
-		public GraphVizGraph ExportGraph()
-		{
-			GraphVizGraph graph = new GraphVizGraph();
-			foreach (ControlFlowNode node in nodes) {
-				graph.AddNode(new GraphVizNode(node.BlockIndex) { label = node.ToString(), shape = "box" });
-			}
-			foreach (ControlFlowNode node in nodes) {
-				foreach (ControlFlowEdge edge in node.Outgoing) {
-					GraphVizEdge e = new GraphVizEdge(edge.Source.BlockIndex, edge.Target.BlockIndex);
-					switch (edge.Type) {
-						case JumpType.Normal:
-							break;
-						case JumpType.LeaveTry:
-						case JumpType.EndFinally:
-							e.color = "red";
-							break;
-						default:
-							e.color = "gray";
-							//e.constraint = false;
-							break;
-					}
-					graph.AddEdge(e);
-				}
-				if (node.ImmediateDominator != null) {
-					graph.AddEdge(new GraphVizEdge(node.ImmediateDominator.BlockIndex, node.BlockIndex) { color = "green", constraint = false });
-				}
-			}
-			return graph;
-		}
-		
 		/// <summary>
 		/// Resets "Visited" to false for all nodes in this graph.
 		/// </summary>
