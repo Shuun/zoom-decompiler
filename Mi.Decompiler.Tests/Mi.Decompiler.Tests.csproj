@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CFCDEB6B-7693-4216-982F-D8A7F4B76034}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mi.Decompiler.Tests</RootNamespace>
+    <AssemblyName>Mi.Decompiler.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mi.Decompiler">
+      <HintPath>..\Mi.Decompiler\bin\Debug\Mi.Decompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomAttributes\AppliedToEvent.cs" />
+    <Compile Include="CustomAttributes\AppliedToField.cs" />
+    <Compile Include="CustomAttributes\AppliedToIndexer.cs" />
+    <Compile Include="CustomAttributes\AppliedToMethod.cs" />
+    <Compile Include="CustomAttributes\AppliedToParameter.cs" />
+    <Compile Include="CustomAttributes\AppliedToProperty.cs" />
+    <Compile Include="CustomAttributes\AppliedToPropertyGet.cs" />
+    <Compile Include="CustomAttributes\AppliedToPropertySet.cs" />
+    <Compile Include="CustomAttributes\AttributeWithEnumArgument.cs" />
+    <Compile Include="CustomAttributes\AttributeWithEnumExpressionArgument.cs" />
+    <Compile Include="CustomAttributes\AttributeWithStringExpressionArgument.cs" />
+    <Compile Include="CustomAttributes\AttributeWithTypeArgument.cs" />
+    <Compile Include="CustomAttributes\ClassAttributeOnTypeParameter.cs" />
+    <Compile Include="CustomAttributes\AppliedToDelegate.cs" />
+    <Compile Include="CustomAttributes\AppliedToInterface.cs" />
+    <Compile Include="CustomAttributes\AppliedToStruct.cs" />
+    <Compile Include="CustomAttributes\NamedInitializerFieldEnum.cs" />
+    <Compile Include="CustomAttributes\NamedInitializerProperty.cs" />
+    <Compile Include="CustomAttributes\NamedInitializerPropertyEnum.cs" />
+    <Compile Include="CustomAttributes\NamedInitializerPropertyString.cs" />
+    <Compile Include="CustomAttributes\NamedInitializerPropertyType.cs" />
+    <Compile Include="CustomAttributes\ParameterLessAttributeUsage.cs" />
+    <Compile Include="CustomAttributes\TargetPropertyGetReturn.cs" />
+    <Compile Include="CustomAttributes\TargetPropertyIndexGetReturn.cs" />
+    <Compile Include="CustomAttributes\TargetPropertyIndexParamOnlyGet.cs" />
+    <Compile Include="CustomAttributes\TargetPropertyIndexParamOnlySet.cs" />
+    <Compile Include="CustomAttributes\TargetPropertyIndexSetMultiParam.cs" />
+    <Compile Include="CustomAttributes\TargetPropertyIndexSetReturn.cs" />
+    <Compile Include="CustomAttributes\TargetPropertySetParam.cs" />
+    <Compile Include="CustomAttributes\TargetPropertySetReturn.cs" />
+    <Compile Include="CustomAttributes\TargetReturn.cs" />
+    <Compile Include="Goto.cs" />
+    <Compile Include="Helpers\AssemblyResolver.cs" />
+    <Compile Include="Helpers\MatchException.cs" />
+    <Compile Include="TestingLogic.cs" />
+    <Compile Include="Helpers\CodeSampleFileParser.cs" />
+    <Compile Include="CallOverloadedMethod.cs" />
+    <Compile Include="CheckedUnchecked.cs" />
+    <Compile Include="CustomAttributes\AssemblyCustomAttribute.cs" />
+    <Compile Include="CustomAttributes\CustomAttributes.cs" />
+    <Compile Include="CustomShortCircuitOperators.cs" />
+    <Compile Include="DelegateConstruction.cs" />
+    <Compile Include="DiffLib\AlignedDiff.cs" />
+    <Compile Include="DiffLib\AlignedDiffChange.cs" />
+    <Compile Include="DiffLib\ChangeType.cs" />
+    <Compile Include="DiffLib\Diff.cs" />
+    <Compile Include="DiffLib\DiffChange.cs" />
+    <Compile Include="DiffLib\EnumerableExtensions.cs" />
+    <Compile Include="DiffLib\IAlignmentFilter.cs" />
+    <Compile Include="DiffLib\ISimilarityComparer.cs" />
+    <Compile Include="DiffLib\LongestCommonSubstring.cs" />
+    <Compile Include="DiffLib\LongestCommonSubstringResult.cs" />
+    <Compile Include="DiffLib\StringAlignmentFilter.cs" />
+    <Compile Include="DiffLib\StringSimilarityComparer.cs" />
+    <Compile Include="DiffLib\StringSimilarityFilterPredicate.cs" />
+    <Compile Include="ExceptionHandling.cs" />
+    <Compile Include="Generics.cs" />
+    <Compile Include="Helpers\CodeAssert.cs" />
+    <Compile Include="Helpers\RemoveCompilerAttribute.cs" />
+    <Compile Include="IncrementDecrement.cs" />
+    <Compile Include="InitializerTests.cs" />
+    <Compile Include="Loops.cs" />
+    <Compile Include="MultidimensionalArray.cs" />
+    <Compile Include="PInvoke.cs" />
+    <Compile Include="PropertiesAndEvents.cs" />
+    <Compile Include="QueryExpressions.cs" />
+    <Compile Include="Switch.cs" />
+    <Compile Include="Types\HideIndexerDiffAccessor.cs" />
+    <Compile Include="Types\HideIndexerGeneric.cs" />
+    <Compile Include="Types\HideMembers.cs" />
+    <Compile Include="Types\HideMembers2.cs" />
+    <Compile Include="Types\HideMembers2a.cs" />
+    <Compile Include="Types\HideMembers3.cs" />
+    <Compile Include="Types\HideMembers4.cs" />
+    <Compile Include="Types\HideMembers5.cs" />
+    <Compile Include="Types\HideMemberSkipNotVisible.cs" />
+    <Compile Include="Types\HideMethod.cs" />
+    <Compile Include="Types\HideMethodDiffSignatures.cs" />
+    <Compile Include="Types\HideMethodGeneric.cs" />
+    <Compile Include="Types\HideMethodGeneric2.cs" />
+    <Compile Include="Types\HideMethodGenericSkipPrivate.cs" />
+    <Compile Include="Types\HideMethodStatic.cs" />
+    <Compile Include="Types\HideNestedClass.cs" />
+    <Compile Include="Types\HideProperty.cs" />
+    <Compile Include="Types\HidePropertyReservedMethod.cs" />
+    <Compile Include="Types\IndexerAbstract.cs" />
+    <Compile Include="Types\IndexerInGenericClass.cs" />
+    <Compile Include="Types\IndexerInInterface.cs" />
+    <Compile Include="Types\IndexerInterfaceExplicitImplementation.cs" />
+    <Compile Include="Types\IndexerInterfaceImplementation.cs" />
+    <Compile Include="Types\IndexerOverrideRestrictedAccessorOnly.cs" />
+    <Compile Include="Types\IndexerWithGetOnly.cs" />
+    <Compile Include="Types\EnumSamples.cs" />
+    <Compile Include="Types\IndexerWithMoreParameters.cs" />
+    <Compile Include="Types\IndexerWithSetOnly.cs" />
+    <Compile Include="Types\MethodExplicit.cs" />
+    <Compile Include="Types\MethodFromInterface.cs" />
+    <Compile Include="Types\MethodFromInterfaceAbstract.cs" />
+    <Compile Include="Types\MethodFromInterfaceVirtual.cs" />
+    <Compile Include="Types\OverloadedIndexer.cs" />
+    <Compile Include="Types\PropertyInterface.cs" />
+    <Compile Include="Types\PropertyInterfaceExplicitImplementation.cs" />
+    <Compile Include="Types\PropertyInterfaceImplementation.cs" />
+    <Compile Include="Types\PropertyOverrideDefaultAccessorOnly.cs" />
+    <Compile Include="Types\PropertyOverrideOneAccessor.cs" />
+    <Compile Include="Types\PropertyOverrideRestrictedAccessorOnly.cs" />
+    <Compile Include="Types\PropertyPrivateGetPublicSet.cs" />
+    <Compile Include="Types\PropertyPublicGetProtectedSet.cs" />
+    <Compile Include="Types\InterfacesAndImplementations.cs" />
+    <Compile Include="UndocumentedExpressions.cs" />
+    <Compile Include="UnsafeCode.cs" />
+    <Compile Include="ValueTypes.cs" />
+    <Compile Include="YieldReturn.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
