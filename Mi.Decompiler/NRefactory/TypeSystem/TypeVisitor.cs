@@ -20,11 +20,6 @@ namespace Mi.NRefactory.TypeSystem
 			return type.VisitChildren(this);
 		}
 		
-		public virtual IType VisitParameterizedType(ParameterizedType type)
-		{
-			return type.VisitChildren(this);
-		}
-		
 		public virtual IType VisitOtherType(IType type)
 		{
 			return type.VisitChildren(this);
