@@ -476,9 +476,6 @@
     <Compile Include="CSharp\Resolver\Conversions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CSharp\Resolver\CSharpResolver.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CSharp\Resolver\ErrorResolveResult.cs">
       <SubType>Code</SubType>
     </Compile>
