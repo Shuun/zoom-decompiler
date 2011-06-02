@@ -467,43 +467,10 @@
     <Compile Include="CSharp\OutputVisitor\TextWriterOutputFormatter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CSharp\Resolver\AmbiguousResolveResult.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CSharp\Resolver\ConstantResolveResult.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CSharp\Resolver\Conversions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\ErrorResolveResult.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\IResolveVisitorNavigator.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\LocalResolveResult.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\MemberResolveResult.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\MethodGroupResolveResult.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\OverloadResolution.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\OverloadResolutionErrors.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CSharp\Resolver\ResolveResult.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\TypeResolveResult.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\UnknownMemberResolveResult.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Empty.cs" />
