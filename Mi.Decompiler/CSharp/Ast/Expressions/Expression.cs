@@ -89,16 +89,6 @@ namespace Mi.CSharp.Ast.Expressions
 			return (Expression)base.Clone();
 		}
 		
-		// Make debugging easier by giving Expressions a ToString() implementation
-		public override string ToString()
-		{
-			if (IsNull)
-				return "Null";
-			StringWriter w = new StringWriter();
-			AcceptVisitor(new OutputVisitor(w, new CSharpFormattingOptions()), null);
-			return w.ToString();
-		}
-		
 		public Expression ReplaceWith(Func<Expression, Expression> replaceFunction)
 		{
 			if (replaceFunction == null)

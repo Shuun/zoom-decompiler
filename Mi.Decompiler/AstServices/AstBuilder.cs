@@ -306,7 +306,7 @@ namespace Mi.Decompiler.AstServices
 					} else {
 						EnumMemberDeclaration enumMember = new EnumMemberDeclaration();
 						enumMember.Name = CleanName(field.Name);
-						long memberValue = (long)CSharpPrimitiveCast.Cast(TypeCode.Int64, field.Constant, false);
+						long memberValue = (long)CSharpPrimitiveCast.CSharpPrimitiveCastUnchecked(TypeCode.Int64, field.Constant);
 						if (forcePrintingInitializers || memberValue != expectedEnumMemberValue) {
 							enumMember.AddChild(new PrimitiveExpression(field.Constant), EnumMemberDeclaration.InitializerRole);
 						}
@@ -1063,7 +1063,7 @@ namespace Mi.Decompiler.AstServices
 			} else {
 				TypeCode c = Type.GetTypeCode(constant.GetType());
 				if (c >= TypeCode.SByte && c <= TypeCode.UInt64 && !isEnumMemberDeclaration) {
-					return MakePrimitive((long)CSharpPrimitiveCast.Cast(TypeCode.Int64, constant, false), type);
+					return MakePrimitive((long)CSharpPrimitiveCast.CSharpPrimitiveCastUnchecked(TypeCode.Int64, constant), type);
 				} else {
 					return new PrimitiveExpression(constant);
 				}
@@ -1542,7 +1542,7 @@ namespace Mi.Decompiler.AstServices
 				TypeDefinition enumDefinition = type.Resolve();
 				if (enumDefinition != null && enumDefinition.IsEnum) {
 					foreach (FieldDefinition field in enumDefinition.Fields) {
-						if (field.IsStatic && object.Equals(CSharpPrimitiveCast.Cast(TypeCode.Int64, field.Constant, false), val))
+						if (field.IsStatic && object.Equals(CSharpPrimitiveCast.CSharpPrimitiveCastUnchecked(TypeCode.Int64, field.Constant), val))
 							return ConvertType(enumDefinition).Member(field.Name).WithAnnotation(field);
 						else if (!field.IsStatic && field.IsRuntimeSpecialName)
 							type = field.FieldType; // use primitive type of the enum
@@ -1569,7 +1569,7 @@ namespace Mi.Decompiler.AstServices
 						}
 						Expression negatedExpr = null;
 						foreach (FieldDefinition field in enumDefinition.Fields.Where(fld => fld.IsStatic)) {
-							long fieldValue = (long)CSharpPrimitiveCast.Cast(TypeCode.Int64, field.Constant, false);
+							long fieldValue = (long)CSharpPrimitiveCast.CSharpPrimitiveCastUnchecked(TypeCode.Int64, field.Constant);
 							if (fieldValue == 0)
 								continue;	// skip None enum value
 
@@ -1601,13 +1601,13 @@ namespace Mi.Decompiler.AstServices
 							return new UnaryOperatorExpression(UnaryOperatorType.BitNot, negatedExpr);
 						}
 					}
-					return new PrimitiveExpression(CSharpPrimitiveCast.Cast(enumBaseTypeCode, val, false)).CastTo(ConvertType(enumDefinition));
+					return new PrimitiveExpression(CSharpPrimitiveCast.CSharpPrimitiveCastUnchecked(enumBaseTypeCode, val)).CastTo(ConvertType(enumDefinition));
 				}
 			}
 			TypeCode code = TypeAnalysis.GetTypeCode(type);
 			if (code == TypeCode.Object || code == TypeCode.Empty)
 				code = TypeCode.Int32;
-			return new PrimitiveExpression(CSharpPrimitiveCast.Cast(code, val, false));
+			return new PrimitiveExpression(CSharpPrimitiveCast.CSharpPrimitiveCastUnchecked(code, val));
 		}
 
 		static bool IsFlagsEnum(TypeDefinition type)
