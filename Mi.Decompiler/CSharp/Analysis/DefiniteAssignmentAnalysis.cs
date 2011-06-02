@@ -88,8 +88,7 @@ namespace Mi.CSharp.Analysis
 		}
 		
 		public DefiniteAssignmentAnalysis(Statement rootStatement, ITypeResolveContext context, Action verifyProgress = default(Action))
-			: this(rootStatement, new ResolveVisitor(new CSharpResolver(context ?? MinimalResolveContext.Instance, verifyProgress),
-			                                         ConstantModeResolveVisitorNavigator.Skip))
+			: this(rootStatement, new ResolveVisitor(context ?? MinimalResolveContext.Instance, verifyProgress))
 		{
 		}
 		

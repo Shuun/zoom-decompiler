@@ -39,12 +39,7 @@ namespace Mi.CSharp.Resolver
 	/// </remarks>
 	public sealed class ResolveVisitor : DepthFirstAstVisitor<object, ResolveResult>
 	{
-		static readonly ResolveResult errorResult = new ErrorResolveResult(SharedTypes.UnknownType);
 		CSharpResolver resolver;
-		readonly Dictionary<AstNode, ResolveResult> cache = new Dictionary<AstNode, ResolveResult>();
-		
-		readonly IResolveVisitorNavigator navigator;
-		ResolveVisitorNavigationMode mode = ResolveVisitorNavigationMode.Scan;
 
 		#region Constructor
 		/// <summary>
@@ -64,29 +59,21 @@ namespace Mi.CSharp.Resolver
 		/// The navigator, which controls where the resolve visitor will switch between scanning mode and resolving mode.
 		/// If you pass <c>null</c>, then <c>ResolveAll</c> mode will be used.
 		/// </param>
-		public ResolveVisitor(CSharpResolver resolver, IResolveVisitorNavigator navigator = null)
+		public ResolveVisitor(ITypeResolveContext context, Action verifyProgress)
 		{
-			if (resolver == null)
-				throw new ArgumentNullException("resolver");
-			this.resolver = resolver;
-			this.navigator = navigator;
-			if (navigator == null)
-				mode = ResolveVisitorNavigationMode.ResolveAll;
+            this.TypeResolveContext = context;
+            this.Action = verifyProgress;
 		}
 		#endregion
 		
 		/// <summary>
 		/// Gets the TypeResolveContext used by this ResolveVisitor.
 		/// </summary>
-		public ITypeResolveContext TypeResolveContext {
-			get { return resolver.Context; }
-		}
+        public ITypeResolveContext TypeResolveContext { get; private set; }
 		
 		/// <summary>
 		/// Gets the Action used by this ResolveVisitor.
 		/// </summary>
-		public Action Action {
-			get { return resolver.verifyProgress; }
-		}
+        public Action Action { get; private set; }
 	}
 }
