@@ -68,16 +68,6 @@ namespace Mi.NRefactory.TypeSystem
                 get { throw new NotImplementedException(); }
             }
 
-            IType IType.AcceptVisitor(TypeVisitor visitor)
-            {
-                throw new NotImplementedException();
-            }
-
-            IType IType.VisitChildren(TypeVisitor visitor)
-            {
-                throw new NotImplementedException();
-            }
-
             System.Collections.Generic.IEnumerable<IType> IType.GetBaseTypes(ITypeResolveContext context)
             {
                 throw new NotImplementedException();

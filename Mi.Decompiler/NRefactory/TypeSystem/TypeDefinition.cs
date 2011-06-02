@@ -417,15 +417,5 @@ namespace Mi.NRefactory.TypeSystem
                     flags & ~TypeDefinitionFlags.AddDefaultConstructorIfRequired;
 			}
 		}
-		
-		public IType AcceptVisitor(TypeVisitor visitor)
-		{
-			return visitor.VisitTypeDefinition(this);
-		}
-		
-		public IType VisitChildren(TypeVisitor visitor)
-		{
-			return this;
-		}
 	}
 }
