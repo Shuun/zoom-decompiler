@@ -17,43 +17,34 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.IO;
+using ICSharpCode.ILSpy.AvalonEdit;
+using ICSharpCode.ILSpy.TreeNodes.Analyzer;
+using Mono.Cecil;
 
-namespace ICSharpCode.Decompiler
+namespace ICSharpCode.ILSpy.Bookmarks
 {
-	public interface ITextOutput
+	[ExportBookmarkContextMenuEntry(Header = "Analyze", Icon = "images/Search.png", Category="Default")]
+	internal sealed class AnalyzeBookmarkEntry : IBookmarkContextMenuEntry
 	{
-		int CurrentLine { get; }
-		int CurrentColumn { get; }
-		
-		void Indent();
-		void Unindent();
-		void Write(char ch);
-		void Write(string text);
-		void WriteLine();
-		void WriteDefinition(string text, object definition);
-		void WriteReference(string text, object reference);
-		
-		void MarkFoldStart(string collapsedText = "...", bool defaultCollapsed = false);
-		void MarkFoldEnd();
-	}
-	
-	public static class TextOutputExtensions
-	{
-		public static void Write(this ITextOutput output, string format, params object[] args)
+		public bool IsVisible(IBookmark[] marks)
 		{
-			output.Write(string.Format(format, args));
+			return true;
 		}
-		
-		public static void WriteLine(this ITextOutput output, string text)
+
+		public bool IsEnabled(IBookmark[] marks)
 		{
-			output.Write(text);
-			output.WriteLine();
+			return true;
 		}
-		
-		public static void WriteLine(this ITextOutput output, string format, params object[] args)
+
+		public void Execute(IBookmark[] marks)
 		{
-			output.WriteLine(string.Format(format, args));
+			foreach (var mark in marks) {
+				if (!(mark is MemberBookmark))
+					continue;
+				
+				var member = (mark as MemberBookmark).Node.Annotation<MemberReference>();
+				AnalyzeContextMenuEntry.Analyze(member);
+			}
 		}
 	}
 }
