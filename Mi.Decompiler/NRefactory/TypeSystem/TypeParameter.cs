@@ -19,8 +19,6 @@ namespace Mi.NRefactory.TypeSystem
 		int index;
 		IList<ITypeReference> constraints;
 		
-		DomRegion region;
-		
 		// Small fields: byte+byte+short
 		VarianceModifier variance;
 		EntityType ownerType;
@@ -185,14 +183,6 @@ namespace Mi.NRefactory.TypeSystem
 			set {
 				CheckBeforeMutation();
 				variance = value;
-			}
-		}
-		
-		public DomRegion Region {
-			get { return region; }
-			set {
-				CheckBeforeMutation();
-				region = value;
 			}
 		}
 		
