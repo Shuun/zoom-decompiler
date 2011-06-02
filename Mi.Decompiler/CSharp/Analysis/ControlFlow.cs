@@ -284,9 +284,8 @@ namespace Mi.CSharp.Analysis
 		{
 			if (c1 == null || c2 == null)
 				return false;
-			CSharpResolver r = new CSharpResolver(typeResolveContext, verifyProgress);
-			ResolveResult c = r.ResolveBinaryOperator(BinaryOperatorType.Equality, c1, c2);
-			return c.IsCompileTimeConstant && (c.ConstantValue as bool?) == true;
+
+            throw new NotSupportedException();
 		}
 		#endregion
 		
