@@ -12,8 +12,9 @@ using Mi.NRefactory.TypeSystem.Implementation;
 
 namespace Mi.NRefactory.TypeSystem
 {
-    public abstract class TypeDefinition : AbstractFreezable, IType, IEntity
+    public abstract class TypeDefinition : AbstractFreezable, IType
     {
+
         bool? IType.IsReferenceType
         {
             get { throw new NotImplementedException(); }
@@ -55,66 +56,6 @@ namespace Mi.NRefactory.TypeSystem
         }
 
         bool IEquatable<IType>.Equals(IType other)
-        {
-            throw new NotImplementedException();
-        }
-
-        EntityType IEntity.EntityType
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        TypeDefinition IEntity.DeclaringTypeDefinition
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        string IEntity.Documentation
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        Accessibility IEntity.Accessibility
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        bool IEntity.IsStatic
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        bool IEntity.IsAbstract
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        bool IEntity.IsSealed
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        bool IEntity.IsShadowing
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        bool IEntity.IsSynthetic
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        object IEntity.ProjectContent
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        bool IFreezable.IsFrozen
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        void IFreezable.Freeze()
         {
             throw new NotImplementedException();
         }
