@@ -485,9 +485,6 @@
     <Compile Include="CSharp\Resolver\IResolveVisitorNavigator.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CSharp\Resolver\ITypeOrNamespaceReference.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CSharp\Resolver\LocalResolveResult.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -522,9 +519,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CSharp\Resolver\UnknownMemberResolveResult.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\UsingScope.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Empty.cs" />

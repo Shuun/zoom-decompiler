@@ -1359,40 +1359,6 @@ namespace Mi.CSharp.Resolver
 		}
 		#endregion
 		
-		#region ResolveMemberAccess
-		public ResolveResult ResolveMemberAccess(ResolveResult target, string identifier, IList<IType> typeArguments, bool isInvocationTarget = false)
-		{
-			// C# 4.0 spec: §7.6.4
-			
-			verifyProgress();
-			
-			NamespaceResolveResult nrr = target as NamespaceResolveResult;
-			if (nrr != null) {
-				if (typeArguments.Count == 0) {
-					string fullName = NamespaceDeclaration.BuildQualifiedName(nrr.NamespaceName, identifier);
-					if (context.GetNamespace(fullName, StringComparer.Ordinal) != null)
-						return new NamespaceResolveResult(fullName);
-				}
-				TypeDefinition def = context.GetClass(nrr.NamespaceName, identifier, typeArguments.Count, StringComparer.Ordinal);
-				if (def != null)
-					return new TypeResolveResult(def);
-				return ErrorResult;
-			}
-			
-			if (target.Type == SharedTypes.Dynamic)
-				return DynamicResult;
-			
-			MemberLookup lookup = CreateMemberLookup();
-			ResolveResult result = lookup.Lookup(target.Type, identifier, typeArguments, isInvocationTarget);
-			return result;
-		}
-		
-		MemberLookup CreateMemberLookup()
-		{
-			return new MemberLookup(context, this.CurrentTypeDefinition, null);
-		}
-		#endregion
-		
 		#region ResolveInvocation
 		public ResolveResult ResolveInvocation(ResolveResult target, ResolveResult[] arguments, string[] argumentNames = null)
 		{
@@ -1496,41 +1462,6 @@ namespace Mi.CSharp.Resolver
 			if (variableName.Length > 1 && variableName[0] == '_')
 				variableName = variableName.Substring(1);
 			return char.ToLower(variableName[0]) + variableName.Substring(1);
-		}
-		#endregion
-		
-		#region ResolveIndexer
-		public ResolveResult ResolveIndexer(ResolveResult target, ResolveResult[] arguments, string[] argumentNames = null)
-		{
-			verifyProgress();
-			
-			if (target.Type == SharedTypes.Dynamic)
-				return DynamicResult;
-			
-			OverloadResolution or = new OverloadResolution(context, arguments, argumentNames, new IType[0]);
-			MemberLookup lookup = CreateMemberLookup();
-			bool allowProtectedAccess = lookup.IsProtectedAccessAllowed(target.Type);
-			if (or.BestCandidate != null) {
-				return new MemberResolveResult(or.BestCandidate, or.BestCandidate.ReturnType.Resolve(context));
-			} else {
-				return ErrorResult;
-			}
-		}
-		#endregion
-		
-		#region ResolveObjectCreation
-		public ResolveResult ResolveObjectCreation(IType type, ResolveResult[] arguments, string[] argumentNames = null)
-		{
-			verifyProgress();
-			
-			OverloadResolution or = new OverloadResolution(context, arguments, argumentNames, new IType[0]);
-			MemberLookup lookup = CreateMemberLookup();
-			bool allowProtectedAccess = lookup.IsProtectedAccessAllowed(type);
-			if (or.BestCandidate != null) {
-				return new MemberResolveResult(or.BestCandidate, type);
-			} else {
-				return new ErrorResolveResult(type);
-			}
 		}
 		#endregion
 		
