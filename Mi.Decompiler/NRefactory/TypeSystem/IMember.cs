@@ -36,11 +36,6 @@ namespace Mi.NRefactory.TypeSystem
 		ITypeReference ReturnType { get; }
 		
 		/// <summary>
-		/// Gets the list of interfaces this member is implementing explicitly.
-		/// </summary>
-		IList<ExplicitInterfaceImplementation> InterfaceImplementations { get; }
-		
-		/// <summary>
 		/// Gets if the member is virtual. Is true only if the "virtual" modifier was used, but non-virtual
 		/// members can be overridden, too; if they are already overriding a method.
 		/// </summary>

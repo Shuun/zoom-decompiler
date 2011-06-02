@@ -247,10 +247,6 @@ namespace Mi.CSharp.Resolver
 				get { return null; }
 			}
 			
-			IList<ExplicitInterfaceImplementation> IMember.InterfaceImplementations {
-                get { return Empty.ReadOnlyCollection<ExplicitInterfaceImplementation>(); }
-			}
-			
 			bool IMember.IsVirtual {
 				get { return false; }
 			}
