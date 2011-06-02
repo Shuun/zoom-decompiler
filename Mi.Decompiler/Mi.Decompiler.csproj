@@ -506,9 +506,6 @@
     <Compile Include="CSharp\Resolver\NamespaceResolveResult.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CSharp\Resolver\NodeListResolveVisitorNavigator.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CSharp\Resolver\OverloadResolution.cs">
       <SubType>Code</SubType>
     </Compile>
