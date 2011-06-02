@@ -23,16 +23,6 @@ namespace Mi.NRefactory.TypeSystem
 		/// Gets the type of the variable.
 		/// </summary>
 		ITypeReference Type { get; }
-		
-		/// <summary>
-		/// Gets whether this field is a constant (C#-like const).
-		/// </summary>
-		bool IsConst { get; }
-		
-		/// <summary>
-		/// If this field is a constant, retrieves the value.
-		/// </summary>
-		IConstantValue ConstantValue { get; }
 	}
 	
 	#if WITH_CONTRACTS
