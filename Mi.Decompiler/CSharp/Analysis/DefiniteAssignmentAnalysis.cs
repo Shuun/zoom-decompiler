@@ -391,11 +391,7 @@ namespace Mi.CSharp.Analysis
 		/// <returns>The constant value of the expression; or null if the expression is not a constant.</returns>
 		ConstantResolveResult EvaluateConstant(Expression expr)
 		{
-			if (resolveVisitor.TypeResolveContext is MinimalResolveContext) {
-				if (!(expr is PrimitiveExpression || expr is NullReferenceExpression))
-					return null;
-			}
-			return resolveVisitor.Resolve(expr) as ConstantResolveResult;
+            throw new NotSupportedException();
 		}
 		
 		/// <summary>

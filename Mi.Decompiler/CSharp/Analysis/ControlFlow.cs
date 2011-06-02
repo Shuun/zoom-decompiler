@@ -270,7 +270,7 @@ namespace Mi.CSharp.Analysis
 				if (!(expr is PrimitiveExpression || expr is NullReferenceExpression))
 					return null;
 			}
-			return resolveVisitor.Resolve(expr) as ConstantResolveResult;
+			throw new NotSupportedException();
 		}
 		
 		/// <summary>
