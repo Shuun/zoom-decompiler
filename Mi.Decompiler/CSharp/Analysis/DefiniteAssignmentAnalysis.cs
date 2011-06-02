@@ -72,7 +72,7 @@ namespace Mi.CSharp.Analysis
 		readonly Dictionary<Statement, DefiniteAssignmentNode> beginNodeDict = new Dictionary<Statement, DefiniteAssignmentNode>();
 		readonly Dictionary<Statement, DefiniteAssignmentNode> endNodeDict = new Dictionary<Statement, DefiniteAssignmentNode>();
 		readonly Dictionary<Statement, DefiniteAssignmentNode> conditionNodeDict = new Dictionary<Statement, DefiniteAssignmentNode>();
-		readonly ResolveVisitor resolveVisitor;
+		readonly ITypeResolveContext context;
 		readonly Action verifyProgress;
 		Dictionary<ControlFlowEdge, DefiniteAssignmentStatus> edgeStatus = new Dictionary<ControlFlowEdge, DefiniteAssignmentStatus>();
 		
@@ -88,23 +88,18 @@ namespace Mi.CSharp.Analysis
 		}
 		
 		public DefiniteAssignmentAnalysis(Statement rootStatement, ITypeResolveContext context, Action verifyProgress = default(Action))
-			: this(rootStatement, new ResolveVisitor(context ?? MinimalResolveContext.Instance, verifyProgress))
-		{
-		}
-		
-		public DefiniteAssignmentAnalysis(Statement rootStatement, ResolveVisitor resolveVisitor)
 		{
 			if (rootStatement == null)
 				throw new ArgumentNullException("rootStatement");
-			if (resolveVisitor == null)
-				throw new ArgumentNullException("resolveVisitor");
-			this.resolveVisitor = resolveVisitor;
-			this.verifyProgress = resolveVisitor.Action;
+            
+            context = context ?? MinimalResolveContext.Instance;
+            this.context = context;
+			this.verifyProgress = verifyProgress;
 			visitor.analysis = this;
-			if (resolveVisitor.TypeResolveContext is MinimalResolveContext) {
+			if (context is MinimalResolveContext) {
 				cfgBuilder.EvaluateOnlyPrimitiveConstants = true;
 			}
-			allNodes.AddRange(cfgBuilder.BuildControlFlowGraph(rootStatement, resolveVisitor).Cast<DefiniteAssignmentNode>());
+			allNodes.AddRange(cfgBuilder.BuildControlFlowGraph(rootStatement, context, verifyProgress).Cast<DefiniteAssignmentNode>());
 			for (int i = 0; i < allNodes.Count; i++) {
 				DefiniteAssignmentNode node = allNodes[i];
 				node.Index = i; // assign numbers to the nodes
@@ -140,12 +135,12 @@ namespace Mi.CSharp.Analysis
 				return;
 			AnonymousMethodExpression ame = node as AnonymousMethodExpression;
 			if (ame != null) {
-				allNodes.InsertRange(insertPos, cfgBuilder.BuildControlFlowGraph(ame.Body, resolveVisitor).Cast<DefiniteAssignmentNode>());
+				allNodes.InsertRange(insertPos, cfgBuilder.BuildControlFlowGraph(ame.Body, context, verifyProgress).Cast<DefiniteAssignmentNode>());
 				return;
 			}
 			LambdaExpression lambda = node as LambdaExpression;
 			if (lambda != null && lambda.Body is Statement) {
-				allNodes.InsertRange(insertPos, cfgBuilder.BuildControlFlowGraph((Statement)lambda.Body, resolveVisitor).Cast<DefiniteAssignmentNode>());
+				allNodes.InsertRange(insertPos, cfgBuilder.BuildControlFlowGraph((Statement)lambda.Body, context, verifyProgress).Cast<DefiniteAssignmentNode>());
 				return;
 			}
 			// Descend into child expressions
