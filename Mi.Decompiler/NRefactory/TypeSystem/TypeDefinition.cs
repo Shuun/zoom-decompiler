@@ -46,18 +46,6 @@ namespace Mi.NRefactory.TypeSystem
 			base.FreezeInternal();
 		}
 		
-		public TypeDefinition(TypeDefinition declaringTypeDefinition, string name)
-		{
-			if (declaringTypeDefinition == null)
-				throw new ArgumentNullException("declaringTypeDefinition");
-			if (string.IsNullOrEmpty(name))
-				throw new ArgumentException("name");
-			this.projectContent = declaringTypeDefinition.ProjectContent;
-			this.declaringTypeDefinition = declaringTypeDefinition;
-			this.name = name;
-			this.ns = declaringTypeDefinition.Namespace;
-		}
-		
 		public TypeDefinition(ITypeResolveContext projectContent, string ns, string name)
 		{
 			if (projectContent == null)
@@ -82,15 +70,6 @@ namespace Mi.NRefactory.TypeSystem
 				if (baseTypes == null)
 					baseTypes = new List<ITypeReference>();
 				return baseTypes;
-			}
-		}
-		
-		public void ApplyInterningProvider(IInterningProvider provider)
-		{
-			if (provider != null) {
-				ns = provider.Intern(ns);
-				name = provider.Intern(name);
-				baseTypes = provider.InternList(baseTypes);
 			}
 		}
 		
