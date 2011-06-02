@@ -1541,13 +1541,13 @@ namespace Mi.Decompiler.AstServices
 			{ // cannot rely on type.IsValueType, it's not set for typerefs (but is set for typespecs)
 				TypeDefinition enumDefinition = type.Resolve();
 				if (enumDefinition != null && enumDefinition.IsEnum) {
+					TypeCode enumBaseTypeCode = TypeCode.Int32;
 					foreach (FieldDefinition field in enumDefinition.Fields) {
-						if (field.IsStatic && object.Equals(CSharpPrimitiveCast.CSharpPrimitiveCastUnchecked(TypeCode.Int64, field.Constant), val))
+						if (field.IsStatic && object.Equals(CSharpPrimitiveCast.Cast(TypeCode.Int64, field.Constant, false), val))
 							return ConvertType(enumDefinition).Member(field.Name).WithAnnotation(field);
 						else if (!field.IsStatic && field.IsRuntimeSpecialName)
-							type = field.FieldType; // use primitive type of the enum
+							enumBaseTypeCode = TypeAnalysis.GetTypeCode(field.FieldType); // use primitive type of the enum
 					}
-					TypeCode enumBaseTypeCode = TypeAnalysis.GetTypeCode(type);
 					if (IsFlagsEnum(enumDefinition)) {
 						long enumValue = val;
 						Expression expr = null;
@@ -1574,7 +1574,7 @@ namespace Mi.Decompiler.AstServices
 								continue;	// skip None enum value
 
 							if ((fieldValue & enumValue) == fieldValue) {
-								var fieldExpression = ConvertType(enumDefinition).Member(field.Name).WithAnnotation(field);
+								var fieldExpression = ConvertType(type).Member(field.Name).WithAnnotation(field);
 								if (expr == null)
 									expr = fieldExpression;
 								else
@@ -1583,7 +1583,7 @@ namespace Mi.Decompiler.AstServices
 								enumValue &= ~fieldValue;
 							}
 							if ((fieldValue & negatedEnumValue) == fieldValue) {
-								var fieldExpression = ConvertType(enumDefinition).Member(field.Name).WithAnnotation(field);
+								var fieldExpression = ConvertType(type).Member(field.Name).WithAnnotation(field);
 								if (negatedExpr == null)
 									negatedExpr = fieldExpression;
 								else
@@ -1601,7 +1601,7 @@ namespace Mi.Decompiler.AstServices
 							return new UnaryOperatorExpression(UnaryOperatorType.BitNot, negatedExpr);
 						}
 					}
-					return new PrimitiveExpression(CSharpPrimitiveCast.CSharpPrimitiveCastUnchecked(enumBaseTypeCode, val)).CastTo(ConvertType(enumDefinition));
+					return new PrimitiveExpression(CSharpPrimitiveCast.CSharpPrimitiveCastUnchecked(enumBaseTypeCode, val)).CastTo(ConvertType(type));
 				}
 			}
 			TypeCode code = TypeAnalysis.GetTypeCode(type);
