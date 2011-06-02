@@ -60,7 +60,7 @@ namespace Mi.CSharp.Analysis
 		public TypeDefinition GetClass(string nameSpace, string name, int typeParameterCount, StringComparer nameComparer)
 		{
 			foreach (TypeDefinition type in types) {
-				if (nameComparer.Equals(type.Name, name) && nameComparer.Equals(type.Namespace, nameSpace) && type.TypeParameterCount == typeParameterCount)
+				if (nameComparer.Equals(type.Name, name) && nameComparer.Equals(type.Namespace, nameSpace))
 					return type;
 			}
 			return null;

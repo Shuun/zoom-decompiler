@@ -21,7 +21,6 @@ namespace Mi.NRefactory.TypeSystem
 		string name;
 		
 		IList<ITypeReference> baseTypes;
-		IList<TypeParameter> typeParameters;
 		IList<TypeDefinition> innerClasses;
 		
 		// 1 byte per enum + 2 bytes for flags
@@ -43,7 +42,6 @@ namespace Mi.NRefactory.TypeSystem
 		protected override void FreezeInternal()
 		{
 			baseTypes = FreezeList(baseTypes);
-			typeParameters = FreezeList(typeParameters);
 			innerClasses = FreezeList(innerClasses);
 			base.FreezeInternal();
 		}
@@ -93,15 +91,6 @@ namespace Mi.NRefactory.TypeSystem
 				ns = provider.Intern(ns);
 				name = provider.Intern(name);
 				baseTypes = provider.InternList(baseTypes);
-				typeParameters = provider.InternList(typeParameters);
-			}
-		}
-		
-		public IList<TypeParameter> TypeParameters {
-			get {
-				if (typeParameters == null)
-					typeParameters = new List<TypeParameter>();
-				return typeParameters;
 			}
 		}
 		
@@ -153,37 +142,6 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public string Namespace {
 			get { return this.ns; }
-		}
-		
-		public string ReflectionName {
-			get {
-				if (declaringTypeDefinition != null) {
-					int tpCount = this.TypeParameterCount - declaringTypeDefinition.TypeParameterCount;
-					string combinedName;
-					if (tpCount > 0)
-						combinedName = declaringTypeDefinition.ReflectionName + "+" + this.Name + "`" + tpCount.ToString(CultureInfo.InvariantCulture);
-					else
-						combinedName = declaringTypeDefinition.ReflectionName + "+" + this.Name;
-					return combinedName;
-				} else {
-					int tpCount = this.TypeParameterCount;
-					if (string.IsNullOrEmpty(ns)) {
-						if (tpCount > 0)
-							return this.Name + "`" + tpCount.ToString(CultureInfo.InvariantCulture);
-						else
-							return this.Name;
-					} else {
-						if (tpCount > 0)
-							return this.Namespace + "." + this.Name + "`" + tpCount.ToString(CultureInfo.InvariantCulture);
-						else
-							return this.Namespace + "." + this.Name;
-					}
-				}
-			}
-		}
-		
-		public int TypeParameterCount {
-			get { return typeParameters != null ? typeParameters.Count : 0; }
 		}
 		
 		public EntityType EntityType {
@@ -280,7 +238,7 @@ namespace Mi.NRefactory.TypeSystem
 					yield return baseType;
 				}
 			}
-			if (!hasNonInterface && !(this.Name == "Object" && this.Namespace == "System" && this.TypeParameterCount == 0)) {
+			if (!hasNonInterface && !(this.Name == "Object" && this.Namespace == "System")) {
 				Type primitiveBaseType;
 				switch (classType) {
 					case ClassType.Enum:
@@ -319,10 +277,9 @@ namespace Mi.NRefactory.TypeSystem
                 {
                     int typeParameterCount;
                     string name = SplitTypeParameterCountFromReflectionName(type.Name, out typeParameterCount);
-                    typeParameterCount += declaringType.TypeParameterCount;
                     foreach (var innerClass in declaringType.InnerClasses)
                     {
-                        if (innerClass.Name == name && innerClass.TypeParameterCount == typeParameterCount)
+                        if (innerClass.Name == name)
                         {
                             return innerClass;
                         }
@@ -441,7 +398,7 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public override string ToString()
 		{
-			return ReflectionName;
+			return this.FullName;
 		}
 		
 		/// <summary>

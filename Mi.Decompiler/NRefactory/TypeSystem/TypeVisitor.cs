@@ -15,11 +15,6 @@ namespace Mi.NRefactory.TypeSystem
 			return type.VisitChildren(this);
 		}
 		
-		public virtual IType VisitTypeParameter(TypeParameter type)
-		{
-			return type.VisitChildren(this);
-		}
-		
 		public virtual IType VisitOtherType(IType type)
 		{
 			return type.VisitChildren(this);
