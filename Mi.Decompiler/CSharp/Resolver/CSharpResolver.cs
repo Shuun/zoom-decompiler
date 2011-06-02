@@ -68,11 +68,6 @@ namespace Mi.CSharp.Resolver
 		/// Gets/Sets the current type definition that is used to look up identifiers as simple members.
 		/// </summary>
 		public TypeDefinition CurrentTypeDefinition { get; set; }
-		
-		/// <summary>
-		/// Gets/Sets the current using scope that is used to look up identifiers as class names.
-		/// </summary>
-		public UsingScope UsingScope { get; set; }
 		#endregion
 		
 		#region Local Variable Management
@@ -1394,7 +1389,7 @@ namespace Mi.CSharp.Resolver
 		
 		MemberLookup CreateMemberLookup()
 		{
-			return new MemberLookup(context, this.CurrentTypeDefinition, this.UsingScope != null ? this.UsingScope.ProjectContent : null);
+			return new MemberLookup(context, this.CurrentTypeDefinition, null);
 		}
 		#endregion
 		
