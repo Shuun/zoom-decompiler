@@ -35,11 +35,6 @@ namespace Mi.NRefactory.TypeSystem
 		IType DeclaringType { get; }
 		
 		/// <summary>
-		/// Gets the number of type parameters.
-		/// </summary>
-		int TypeParameterCount { get; }
-		
-		/// <summary>
 		/// Calls ITypeVisitor.Visit for this type.
 		/// </summary>
 		/// <returns>The return value of the ITypeVisitor.Visit call</returns>

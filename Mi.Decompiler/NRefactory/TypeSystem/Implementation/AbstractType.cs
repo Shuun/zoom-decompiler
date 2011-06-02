@@ -36,10 +36,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		public abstract bool? IsReferenceType { get; }
 		
-		public virtual int TypeParameterCount {
-			get { return 0; }
-		}
-		
 		public virtual IType DeclaringType {
 			get { return null; }
 		}
@@ -74,7 +70,7 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		
 		public override string ToString()
 		{
-			return this.ReflectionName;
+			return this.FullName;
 		}
 		
 		public virtual IType AcceptVisitor(TypeVisitor visitor)

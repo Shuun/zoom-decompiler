@@ -68,11 +68,6 @@ namespace Mi.NRefactory.TypeSystem
                 get { throw new NotImplementedException(); }
             }
 
-            int IType.TypeParameterCount
-            {
-                get { throw new NotImplementedException(); }
-            }
-
             IType IType.AcceptVisitor(TypeVisitor visitor)
             {
                 throw new NotImplementedException();
@@ -109,11 +104,6 @@ namespace Mi.NRefactory.TypeSystem
             }
 
             string INamedElement.Namespace
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            string INamedElement.ReflectionName
             {
                 get { throw new NotImplementedException(); }
             }
