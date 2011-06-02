@@ -466,7 +466,7 @@ namespace Mi.Decompiler.AstServices
 				return new SimpleType(type.Name);
 			} else if (type.IsNested) {
 				AstType typeRef = ConvertType(type.DeclaringType, typeAttributes, ref typeIndex, options & ~ConvertTypeOptions.IncludeTypeParameterDefinitions);
-                string namepart = Mi.NRefactory.TypeSystem.TypeDefinition.SplitTypeParameterCountFromReflectionName(type.Name);
+                string namepart = SplitTypeParameterCountFromReflectionName(type.Name);
 				MemberType memberType = new MemberType { Target = typeRef, MemberName = namepart };
 				memberType.AddAnnotation(type);
 				if ((options & ConvertTypeOptions.IncludeTypeParameterDefinitions) == ConvertTypeOptions.IncludeTypeParameterDefinitions) {
@@ -522,7 +522,7 @@ namespace Mi.Decompiler.AstServices
 						}
 					}
 
-                    name = Mi.NRefactory.TypeSystem.TypeDefinition.SplitTypeParameterCountFromReflectionName(name);
+                    name = SplitTypeParameterCountFromReflectionName(name);
 					
 					AstType astType;
 					if ((options & ConvertTypeOptions.IncludeNamespace) == ConvertTypeOptions.IncludeNamespace && ns.Length > 0) {
@@ -544,6 +544,34 @@ namespace Mi.Decompiler.AstServices
 				}
 			}
 		}
+
+        /// <summary>
+        /// Removes the ` with type parameter count from the reflection name.
+        /// </summary>
+        /// <remarks>Do not use this method with the full name of inner classes.</remarks>
+        static string SplitTypeParameterCountFromReflectionName(string reflectionName)
+        {
+            int typeParameterCount;
+            return SplitTypeParameterCountFromReflectionName(reflectionName, out typeParameterCount);
+        }
+
+        static string SplitTypeParameterCountFromReflectionName(string reflectionName, out int typeParameterCount)
+        {
+            int pos = reflectionName.LastIndexOf('`');
+            if (pos < 0)
+            {
+                typeParameterCount = 0;
+                return reflectionName;
+            }
+            else
+            {
+                string typeCount = reflectionName.Substring(pos + 1);
+                if (int.TryParse(typeCount, out typeParameterCount))
+                    return reflectionName.Substring(0, pos);
+                else
+                    return reflectionName;
+            }
+        }
 
 		static void AddTypeParameterDefininitionsTo(TypeReference type, AstType astType)
 		{
@@ -567,7 +595,7 @@ namespace Mi.Decompiler.AstServices
 				TypeReference type = mt.Annotation<TypeReference>();
 				if (type != null) {
 					int typeParameterCount;
-					Mi.NRefactory.TypeSystem.TypeDefinition.SplitTypeParameterCountFromReflectionName(type.Name, out typeParameterCount);
+					SplitTypeParameterCountFromReflectionName(type.Name, out typeParameterCount);
 					if (typeParameterCount > typeArguments.Count)
 						typeParameterCount = typeArguments.Count;
 					mt.TypeArguments.AddRange(typeArguments.GetRange(typeArguments.Count - typeParameterCount, typeParameterCount));
