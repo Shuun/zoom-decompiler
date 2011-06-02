@@ -630,12 +630,9 @@
     <Compile Include="NRefactory\TypeSystem\IConversions.cs" />
     <Compile Include="NRefactory\TypeSystem\IFreezable.cs" />
     <Compile Include="NRefactory\TypeSystem\IInterningProvider.cs" />
-    <Compile Include="NRefactory\TypeSystem\Implementation\AbstractFreezable.cs" />
-    <Compile Include="NRefactory\TypeSystem\Implementation\GetClassTypeReference.cs" />
     <Compile Include="NRefactory\TypeSystem\INamedElement.cs" />
     <Compile Include="NRefactory\TypeSystem\ISupportsInterning.cs" />
     <Compile Include="NRefactory\TypeSystem\IType.cs" />
-    <Compile Include="NRefactory\TypeSystem\KnownTypeReference.cs" />
     <Compile Include="NRefactory\TypeSystem\SharedTypes.cs" />
     <Compile Include="NRefactory\Utils\BusyManager.cs" />
     <Compile Include="NRefactory\Utils\CacheManager.cs" />
