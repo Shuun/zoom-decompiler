@@ -148,9 +148,7 @@ namespace Mi.CSharp.Analysis
 		
 		public IList<ControlFlowNode> BuildControlFlowGraph(Statement statement, ITypeResolveContext context, Action verifyProgress = default(Action))
 		{
-			return BuildControlFlowGraph(statement, new ResolveVisitor(
-				new CSharpResolver(context, verifyProgress),
-				ConstantModeResolveVisitorNavigator.Skip));
+			return BuildControlFlowGraph(statement, new ResolveVisitor(context, verifyProgress));
 		}
 		
 		public IList<ControlFlowNode> BuildControlFlowGraph(Statement statement, ResolveVisitor resolveVisitor)
