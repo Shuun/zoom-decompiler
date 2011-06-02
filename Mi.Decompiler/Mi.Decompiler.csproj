@@ -627,7 +627,6 @@
     <Compile Include="NRefactory\PatternMatching\Repeat.cs" />
     <Compile Include="NRefactory\TypeSystem\Accessibility.cs" />
     <Compile Include="NRefactory\TypeSystem\ClassType.cs" />
-    <Compile Include="NRefactory\TypeSystem\ITypeParameter.cs" />
     <Compile Include="NRefactory\TypeSystem\VarianceModifier.cs" />
     <Compile Include="NRefactory\TypeSystem\EntityType.cs" />
     <Compile Include="NRefactory\TypeSystem\IConversions.cs" />
@@ -647,7 +646,6 @@
     <Compile Include="NRefactory\TypeSystem\KnownTypeReference.cs" />
     <Compile Include="NRefactory\TypeSystem\ReflectionNameParseException.cs" />
     <Compile Include="NRefactory\TypeSystem\SharedTypes.cs" />
-    <Compile Include="NRefactory\TypeSystem\TypeVisitor.cs" />
     <Compile Include="NRefactory\Utils\BusyManager.cs" />
     <Compile Include="NRefactory\Utils\CacheManager.cs" />
     <Compile Include="NRefactory\Utils\CSharpPrimitiveCast.cs" />

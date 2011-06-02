@@ -72,15 +72,5 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		{
 			return this.FullName;
 		}
-		
-		public virtual IType AcceptVisitor(TypeVisitor visitor)
-		{
-			return visitor.VisitOtherType(this);
-		}
-		
-		public virtual IType VisitChildren(TypeVisitor visitor)
-		{
-			return this;
-		}
 	}
 }

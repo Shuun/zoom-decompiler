@@ -35,21 +35,6 @@ namespace Mi.NRefactory.TypeSystem
 		IType DeclaringType { get; }
 		
 		/// <summary>
-		/// Calls ITypeVisitor.Visit for this type.
-		/// </summary>
-		/// <returns>The return value of the ITypeVisitor.Visit call</returns>
-		IType AcceptVisitor(TypeVisitor visitor);
-		
-		/// <summary>
-		/// Calls ITypeVisitor.Visit for all children of this type, and reconstructs this type with the children based
-		/// on the return values of the visit calls.
-		/// </summary>
-		/// <returns>A copy of this type, with all children replaced by the return value of the corresponding visitor call.
-		/// If the visitor returned the original types for all children (or if there are no children), returns <c>this</c>.
-		/// </returns>
-		IType VisitChildren(TypeVisitor visitor);
-		
-		/// <summary>
 		/// Gets the direct base types.
 		/// </summary>
 		IEnumerable<IType> GetBaseTypes(ITypeResolveContext context);
