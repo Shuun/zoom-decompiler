@@ -624,8 +624,6 @@
     <Compile Include="NRefactory\PatternMatching\Repeat.cs" />
     <Compile Include="NRefactory\TypeSystem\ClassType.cs" />
     <Compile Include="NRefactory\TypeSystem\VarianceModifier.cs" />
-    <Compile Include="NRefactory\Utils\BusyManager.cs" />
-    <Compile Include="NRefactory\Utils\CacheManager.cs" />
     <Compile Include="NRefactory\Utils\CSharpPrimitiveCast.cs" />
     <Compile Include="NRefactory\Utils\GraphVizGraph.cs" />
     <Compile Include="NRefactory\Utils\TreeTraversal.cs" />

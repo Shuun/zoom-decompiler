@@ -45,16 +45,6 @@ namespace Mi.CSharp
 			Division
 		}
 		
-		public OutputVisitor(TextWriter textWriter, CSharpFormattingOptions formattingPolicy)
-		{
-			if (textWriter == null)
-				throw new ArgumentNullException("textWriter");
-			if (formattingPolicy == null)
-				throw new ArgumentNullException("formattingPolicy");
-			this.formatter = new TextWriterOutputFormatter(textWriter);
-			this.policy = formattingPolicy;
-		}
-		
 		public OutputVisitor(IOutputFormatter formatter, CSharpFormattingOptions formattingPolicy)
 		{
 			if (formatter == null)
