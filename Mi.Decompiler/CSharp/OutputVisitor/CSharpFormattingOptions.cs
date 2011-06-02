@@ -40,24 +40,10 @@ namespace Mi.CSharp
 		NextLineShifted2
 	}
 
-	public enum BraceForcement
-	{
-		DoNotChange,
-		RemoveBraces,
-		AddBraces
-	}
-
 	public enum ArrayInitializerPlacement
 	{
 		AlwaysNewLine,
 		AlwaysSameLine
-	}
-
-	public enum PropertyFormatting
-	{
-		AllowOneLine,
-		ForceOneLine,
-		ForceNewLine
 	}
 
 	public class CSharpFormattingOptions
@@ -70,11 +56,6 @@ namespace Mi.CSharp
 		public bool IsBuiltIn {
 			get;
 			set;
-		}
-
-		public CSharpFormattingOptions Clone ()
-		{
-			return (CSharpFormattingOptions)MemberwiseClone ();
 		}
 
 		#region Indentation
@@ -144,11 +125,6 @@ namespace Mi.CSharp
 		}
 
 		public bool AlignEmbeddedIfStatements { // tested
-			get;
-			set;
-		}
-
-		public PropertyFormatting PropertyFormatting { // tested
 			get;
 			set;
 		}
@@ -257,39 +233,6 @@ namespace Mi.CSharp
 		}
 
 		public bool AllowIfBlockInline {
-			get;
-			set;
-		}
-
-		#endregion
-		
-		#region Force Braces
-		public BraceForcement IfElseBraceForcement { // tested
-			get;
-			set;
-		}
-
-		public BraceForcement ForBraceForcement { // tested
-			get;
-			set;
-		}
-
-		public BraceForcement ForEachBraceForcement { // tested
-			get;
-			set;
-		}
-
-		public BraceForcement WhileBraceForcement { // tested
-			get;
-			set;
-		}
-
-		public BraceForcement UsingBraceForcement { // tested
-			get;
-			set;
-		}
-
-		public BraceForcement FixedBraceForcement { // tested
 			get;
 			set;
 		}
@@ -854,7 +797,6 @@ namespace Mi.CSharp
 			
 			AlignEmbeddedIfStatements = true;
 			AlignEmbeddedUsingStatements = true;
-			PropertyFormatting = PropertyFormatting.AllowOneLine;
 			SpaceBeforeMethodDeclarationParameterComma = false;
 			SpaceAfterMethodDeclarationParameterComma = true;
 			SpaceBeforeFieldDeclarationComma = false;

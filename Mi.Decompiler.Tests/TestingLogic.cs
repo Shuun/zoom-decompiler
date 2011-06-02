@@ -60,8 +60,11 @@ namespace Mi.Decompiler.Tests
             {
                 Console.WriteLine(" " + t);
             }
+
+            var file = new FileInfo(typeof(TestingLogic).Assembly.Location);
+            Console.WriteLine("Created: " + (file.CreationTime > file.LastWriteTime ? file.CreationTime : file.LastWriteTime) + ".");
         }
-        
+
         public static IEnumerable<KeyValuePair<string, Action>> GetTests(string path)
         {
             string testDll = typeof(TestingLogic).Assembly.Location;
@@ -141,19 +144,22 @@ namespace Mi.Decompiler.Tests
                 where !CodeSampleFileParser.IsIgnorableLine(line)
                 select line);
 
-            CodeAssert.AreEqual(originalCode, decompiledText);
+            CodeAssert.AreEqual(noComments, decompiledText);
         }
 
         static IEnumerable<string> SplitLines(string text)
         {
             using (var reader = new StringReader(text))
             {
-                string line = reader.ReadLine();
+                while (true)
+                {
+                    string line = reader.ReadLine();
 
-                if (line == null)
-                    yield break;
-                else
-                    yield return line;
+                    if (line == null)
+                        yield break;
+                    else
+                        yield return line;
+                }
             }
         }
 
@@ -170,7 +176,7 @@ namespace Mi.Decompiler.Tests
             new Helpers.RemoveCompilerAttribute().Run(decompiler.CompilationUnit);
             var output = new StringWriter();
             decompiler.GenerateCode(new PlainTextOutput(output));
-            return output.ToString();
+            return output.ToString().Trim();
         }
     }
 }
