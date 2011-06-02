@@ -21,13 +21,13 @@ namespace Mi.NRefactory.TypeSystem
 		/// The null type is used as type of the null literal. It is a reference type without any members; and it is a subtype of all reference types.
 		/// </summary>
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "It's immutable")]
-		public readonly static IType Null = new NullType();
+		public readonly static IType Null = new UnknownTypeImpl();
 		
 		/// <summary>
 		/// Type representing the C# 'dynamic' type.
 		/// </summary>
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "It's immutable")]
-		public readonly static IType Dynamic = new DynamicType();
+		public readonly static IType Dynamic = new UnknownTypeImpl();
 		
 		/*
 		 * I'd like to define static instances for common types like
@@ -51,73 +51,77 @@ namespace Mi.NRefactory.TypeSystem
 		/// <summary>
 		/// Type representing resolve errors.
 		/// </summary>
-		sealed class UnknownTypeImpl : AbstractType
+		sealed class UnknownTypeImpl : IType
 		{
-			public override string Name {
-				get { return "?"; }
-			}
-			
-			public override bool? IsReferenceType {
-				get { return null; }
-			}
-			
-			public override bool Equals(IType other)
-			{
-				return other is UnknownTypeImpl;
-			}
-			
-			public override int GetHashCode()
-			{
-				return 950772036;
-			}
-		}
-		
-		/// <summary>
-		/// Type of the 'null' literal.
-		/// </summary>
-		sealed class NullType : AbstractType
-		{
-			public override string Name {
-				get { return "null"; }
-			}
-			
-			public override bool? IsReferenceType {
-				get { return true; }
-			}
-			
-			public override bool Equals(IType other)
-			{
-				return other is NullType;
-			}
-			
-			public override int GetHashCode()
-			{
-				return 362709548;
-			}
-		}
-		
-		/// <summary>
-		/// Type representing the C# 'dynamic' type.
-		/// </summary>
-		sealed class DynamicType : AbstractType
-		{
-			public override string Name {
-				get { return "dynamic"; }
-			}
-			
-			public override bool? IsReferenceType {
-				get { return true; }
-			}
-			
-			public override bool Equals(IType other)
-			{
-				return other is DynamicType;
-			}
-			
-			public override int GetHashCode()
-			{
-				return 31986112;
-			}
-		}
+            bool? IType.IsReferenceType
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            TypeDefinition IType.GetDefinition()
+            {
+                throw new NotImplementedException();
+            }
+
+            IType IType.DeclaringType
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            int IType.TypeParameterCount
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            IType IType.AcceptVisitor(TypeVisitor visitor)
+            {
+                throw new NotImplementedException();
+            }
+
+            IType IType.VisitChildren(TypeVisitor visitor)
+            {
+                throw new NotImplementedException();
+            }
+
+            System.Collections.Generic.IEnumerable<IType> IType.GetBaseTypes(ITypeResolveContext context)
+            {
+                throw new NotImplementedException();
+            }
+
+            System.Collections.Generic.IEnumerable<IType> IType.GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter)
+            {
+                throw new NotImplementedException();
+            }
+
+            IType ITypeReference.Resolve(ITypeResolveContext context)
+            {
+                throw new NotImplementedException();
+            }
+
+            string INamedElement.FullName
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            string INamedElement.Name
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            string INamedElement.Namespace
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            string INamedElement.ReflectionName
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            bool IEquatable<IType>.Equals(IType other)
+            {
+                throw new NotImplementedException();
+            }
+        }
 	}
 }
