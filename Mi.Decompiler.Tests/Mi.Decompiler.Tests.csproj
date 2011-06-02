@@ -82,6 +82,7 @@
     <Compile Include="CustomAttributes\TargetPropertySetParam.cs" />
     <Compile Include="CustomAttributes\TargetPropertySetReturn.cs" />
     <Compile Include="CustomAttributes\TargetReturn.cs" />
+    <Compile Include="Goto.cs" />
     <Compile Include="Helpers\AssemblyResolver.cs" />
     <Compile Include="Helpers\MatchException.cs" />
     <Compile Include="TestingLogic.cs" />
