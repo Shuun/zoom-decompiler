@@ -275,14 +275,6 @@ namespace Mi.CSharp.Analysis
 			var rr = EvaluateConstant(expr);
 			return rr as bool?;
 		}
-		
-		bool AreEqualConstants(ConstantResolveResult c1, ConstantResolveResult c2)
-		{
-			if (c1 == null || c2 == null)
-				return false;
-
-            throw new NotSupportedException();
-		}
 		#endregion
 		
 		sealed class NodeCreationVisitor : DepthFirstAstVisitor<ControlFlowNode, ControlFlowNode>

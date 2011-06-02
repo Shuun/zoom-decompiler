@@ -383,9 +383,12 @@ namespace Mi.CSharp.Analysis
 		/// Evaluates an expression.
 		/// </summary>
 		/// <returns>The constant value of the expression; or null if the expression is not a constant.</returns>
-		ConstantResolveResult EvaluateConstant(Expression expr)
+		object EvaluateConstant(Expression expr)
 		{
-            throw new NotSupportedException();
+            if (expr is PrimitiveExpression)
+                return ((PrimitiveExpression)expr).Value;
+            else
+                return null;
 		}
 		
 		/// <summary>
@@ -394,11 +397,8 @@ namespace Mi.CSharp.Analysis
 		/// <returns>The value of the constant boolean expression; or null if the value is not a constant boolean expression.</returns>
 		bool? EvaluateCondition(Expression expr)
 		{
-			ConstantResolveResult rr = EvaluateConstant(expr);
-			if (rr != null)
-				return rr.ConstantValue as bool?;
-			else
-				return null;
+            var rr = EvaluateConstant(expr);
+            return rr as bool?;
 		}
 		
 		static DefiniteAssignmentStatus CleanSpecialValues(DefiniteAssignmentStatus status)
@@ -643,9 +643,8 @@ namespace Mi.CSharp.Analysis
 						return DefiniteAssignmentStatus.PotentiallyAssigned;
 				} else if (binaryOperatorExpression.Operator == BinaryOperatorType.NullCoalescing) {
 					// C# 4.0 spec: §5.3.3.27 Definite assignment for ?? expressions
-					ConstantResolveResult crr = analysis.EvaluateConstant(binaryOperatorExpression.Left);
-					if (crr != null && crr.ConstantValue == null)
-						return binaryOperatorExpression.Right.AcceptVisitor(this, data);
+                    if (binaryOperatorExpression.Left is NullReferenceExpression)
+                        return binaryOperatorExpression.Right.AcceptVisitor(this, data);
 					DefiniteAssignmentStatus status = CleanSpecialValues(binaryOperatorExpression.Left.AcceptVisitor(this, data));
 					binaryOperatorExpression.Right.AcceptVisitor(this, status);
 					return status;
