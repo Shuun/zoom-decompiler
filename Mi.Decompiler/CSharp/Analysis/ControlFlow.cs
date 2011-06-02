@@ -140,13 +140,12 @@ namespace Mi.CSharp.Analysis
 		}
 		
 		Statement rootStatement;
-		ITypeResolveContext typeResolveContext;
         Action verifyProgress;
 		List<ControlFlowNode> nodes;
 		Dictionary<string, ControlFlowNode> labels;
 		List<ControlFlowNode> gotoStatements;
 		
-		public IList<ControlFlowNode> BuildControlFlowGraph(Statement statement, ITypeResolveContext context, Action verifyProgress = default(Action))
+		public IList<ControlFlowNode> BuildControlFlowGraph(Statement statement, Action verifyProgress = default(Action))
 		{
 			if (statement == null)
 				throw new ArgumentNullException("statement");
@@ -158,7 +157,6 @@ namespace Mi.CSharp.Analysis
 				this.labels = new Dictionary<string, ControlFlowNode>();
 				this.gotoStatements = new List<ControlFlowNode>();
 				this.rootStatement = statement;
-				this.typeResolveContext = context;
                 this.verifyProgress = verifyProgress;
 				ControlFlowNode entryPoint = CreateStartNode(statement);
 				statement.AcceptVisitor(nodeCreationVisitor, entryPoint);
@@ -179,7 +177,6 @@ namespace Mi.CSharp.Analysis
 				this.labels = null;
 				this.gotoStatements = null;
 				this.rootStatement = null;
-				this.typeResolveContext = null;
                 this.verifyProgress = null;
 			}
 		}

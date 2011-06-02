@@ -57,36 +57,6 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 		}
 		 */
 		
-		public IType Resolve(ITypeResolveContext context)
-		{
-			if (context == null)
-				throw new ArgumentNullException("context");
-			
-			/*  TODO PERF: caching disabled until we measure how much of an advantage it is
-			 * (and whether other approaches like caching only the last N resolve calls in a thread-static cache would work better)
-			 * Maybe even make a distinction between the really common type references (e.g. primitiveTypeReferences) and
-			 * normal GetClassTypeReferences?
-			CacheManager cacheManager = context.CacheManager;
-			if (cacheManager != null) {
-				CachedResult result = this.v_cachedResult;
-				if (result != null && result.CacheManager == cacheManager)
-					return result.Result;
-				IType newResult = DoResolve(context);
-				this.v_cachedResult = new CachedResult(cacheManager, newResult);
-				cacheManager.Disposed += delegate { v_cachedResult = null; }; // maybe optimize this to use interface call instead of delegate?
-				return newResult;
-			} else {
-				return DoResolve(context);
-			}
-			
-		}
-		
-		IType DoResolve(ITypeResolveContext context)
-		{
-			 */
-			return context.GetClass(nameSpace, name, typeParameterCount, StringComparer.Ordinal) ?? SharedTypes.UnknownType;
-		}
-		
 		public override string ToString()
 		{
 			if (typeParameterCount == 0)
@@ -111,5 +81,10 @@ namespace Mi.NRefactory.TypeSystem.Implementation
 			GetClassTypeReference o = other as GetClassTypeReference;
 			return o != null && name == o.name && nameSpace == o.nameSpace && typeParameterCount == o.typeParameterCount;
 		}
-	}
+
+        IType ITypeReference.Resolve()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

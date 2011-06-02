@@ -35,14 +35,9 @@ namespace Mi.NRefactory.TypeSystem
 		IType DeclaringType { get; }
 		
 		/// <summary>
-		/// Gets the direct base types.
-		/// </summary>
-		IEnumerable<IType> GetBaseTypes(ITypeResolveContext context);
-		
-		/// <summary>
 		/// Gets inner classes (including inherited inner classes).
 		/// </summary>
-		IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter = null);
+		IEnumerable<IType> GetNestedTypes(Object context, Predicate<TypeDefinition> filter = null);
 	}
 	
 	#if WITH_CONTRACTS

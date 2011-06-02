@@ -25,7 +25,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// <summary>
 		/// Resolves this type reference.
 		/// </summary>
-		IType Resolve(ITypeResolveContext context);
+		IType Resolve();
 	}
 	
 	#if WITH_CONTRACTS

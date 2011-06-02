@@ -60,7 +60,7 @@ namespace Mi.NRefactory.TypeSystem
 		/// The assembly in which this entity is defined.
 		/// This property never returns null.
 		/// </summary>
-		ITypeResolveContext ProjectContent { get; }
+		Object ProjectContent { get; }
 		
 		//bool IsAccessible(IClass callingClass, bool isAccessThoughReferenceOfCurrentClass);
 	}

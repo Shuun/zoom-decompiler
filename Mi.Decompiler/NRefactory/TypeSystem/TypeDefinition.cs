@@ -14,7 +14,7 @@ namespace Mi.NRefactory.TypeSystem
 {
     public class TypeDefinition : AbstractFreezable, IType, IEntity
 	{
-		readonly ITypeResolveContext projectContent;
+		readonly Object projectContent;
 		readonly TypeDefinition declaringTypeDefinition;
 		
 		string ns;
@@ -46,7 +46,7 @@ namespace Mi.NRefactory.TypeSystem
 			base.FreezeInternal();
 		}
 		
-		public TypeDefinition(ITypeResolveContext projectContent, string ns, string name)
+		public TypeDefinition(Object projectContent, string ns, string name)
 		{
 			if (projectContent == null)
 				throw new ArgumentNullException("projectContent");
@@ -201,79 +201,10 @@ namespace Mi.NRefactory.TypeSystem
 			}
 		}
 		
-		public ITypeResolveContext ProjectContent {
+		public Object ProjectContent {
 			get { return projectContent; }
 		}
 		
-		public IEnumerable<IType> GetBaseTypes(ITypeResolveContext context)
-		{
-			bool hasNonInterface = false;
-			if (baseTypes != null && this.ClassType != ClassType.Enum) {
-				foreach (ITypeReference baseTypeRef in baseTypes) {
-					IType baseType = baseTypeRef.Resolve(context);
-					TypeDefinition baseTypeDef = baseType.GetDefinition();
-					if (baseTypeDef == null || baseTypeDef.ClassType != ClassType.Interface)
-						hasNonInterface = true;
-					yield return baseType;
-				}
-			}
-			if (!hasNonInterface && !(this.Name == "Object" && this.Namespace == "System")) {
-				Type primitiveBaseType;
-				switch (classType) {
-					case ClassType.Enum:
-						primitiveBaseType = typeof(Enum);
-						break;
-					case ClassType.Struct:
-						primitiveBaseType = typeof(ValueType);
-						break;
-					case ClassType.Delegate:
-						primitiveBaseType = typeof(Delegate);
-						break;
-					default:
-						primitiveBaseType = typeof(object);
-						break;
-				}
-                IType t = GetClass(context, primitiveBaseType);
-				if (t != null)
-					yield return t;
-			}
-		}
-
-        public TypeDefinition GetClass(ITypeResolveContext context, Type type)
-        {
-            if (type == null)
-                return null;
-            while (type.IsArray || type.IsPointer || type.IsByRef)
-                type = type.GetElementType();
-            if (type.IsGenericType && !type.IsGenericTypeDefinition)
-                type = type.GetGenericTypeDefinition();
-            if (type.IsGenericParameter)
-                return null;
-            if (type.DeclaringType != null)
-            {
-                var declaringType = GetClass(context, type.DeclaringType);
-                if (declaringType != null)
-                {
-                    int typeParameterCount;
-                    string name = SplitTypeParameterCountFromReflectionName(type.Name, out typeParameterCount);
-                    foreach (var innerClass in declaringType.InnerClasses)
-                    {
-                        if (innerClass.Name == name)
-                        {
-                            return innerClass;
-                        }
-                    }
-                }
-                return null;
-            }
-            else
-            {
-                int typeParameterCount;
-                string name = SplitTypeParameterCountFromReflectionName(type.Name, out typeParameterCount);
-                return context.GetClass(type.Namespace, name, typeParameterCount, StringComparer.Ordinal);
-            }
-        }
-
         /// <summary>
         /// Removes the ` with type parameter count from the reflection name.
         /// </summary>
@@ -322,14 +253,12 @@ namespace Mi.NRefactory.TypeSystem
 			return this;
 		}
 		
-		public IType Resolve(ITypeResolveContext context)
+		public IType Resolve()
 		{
-			if (context == null)
-				throw new ArgumentNullException("context");
 			return this;
 		}
 		
-		public virtual IEnumerable<IType> GetNestedTypes(ITypeResolveContext context, Predicate<TypeDefinition> filter = null)
+		public virtual IEnumerable<IType> GetNestedTypes(Object context, Predicate<TypeDefinition> filter = null)
 		{
 			TypeDefinition compound = GetCompoundClass();
 			if (compound != this)
@@ -339,7 +268,7 @@ namespace Mi.NRefactory.TypeSystem
 			using (var busyLock = BusyManager.Enter(this)) {
 				if (busyLock.Success) {
 					foreach (var baseTypeRef in this.BaseTypes) {
-						IType baseType = baseTypeRef.Resolve(context);
+						IType baseType = baseTypeRef.Resolve();
 						TypeDefinition baseTypeDef = baseType.GetDefinition();
 						if (baseTypeDef != null && baseTypeDef.ClassType != ClassType.Interface) {
 							// get nested types from baseType (not baseTypeDef) so that generics work correctly
