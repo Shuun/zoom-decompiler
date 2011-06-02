@@ -722,9 +722,6 @@
     <Compile Include="NRefactory\TypeSystem\TypeParameter.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\GetClassTypeReference.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\MethodTypeParameterSubstitution.cs" />
-    <Compile Include="NRefactory\TypeSystem\Implementation\NestedTypeReference.cs" />
-    <Compile Include="NRefactory\TypeSystem\Implementation\ProxyTypeResolveContext.cs" />
-    <Compile Include="NRefactory\TypeSystem\Implementation\TypeStorage.cs" />
     <Compile Include="NRefactory\TypeSystem\INamedElement.cs" />
     <Compile Include="NRefactory\TypeSystem\IntersectionType.cs" />
     <Compile Include="NRefactory\TypeSystem\IParameterizedMember.cs" />
