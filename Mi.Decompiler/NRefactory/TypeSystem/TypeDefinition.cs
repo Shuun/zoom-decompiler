@@ -296,11 +296,75 @@ namespace Mi.NRefactory.TypeSystem
 						primitiveBaseType = typeof(object);
 						break;
 				}
-				IType t = context.GetClass(primitiveBaseType);
+                IType t = GetClass(context, primitiveBaseType);
 				if (t != null)
 					yield return t;
 			}
 		}
+
+        public TypeDefinition GetClass(ITypeResolveContext context, Type type)
+        {
+            if (type == null)
+                return null;
+            while (type.IsArray || type.IsPointer || type.IsByRef)
+                type = type.GetElementType();
+            if (type.IsGenericType && !type.IsGenericTypeDefinition)
+                type = type.GetGenericTypeDefinition();
+            if (type.IsGenericParameter)
+                return null;
+            if (type.DeclaringType != null)
+            {
+                var declaringType = GetClass(context, type.DeclaringType);
+                if (declaringType != null)
+                {
+                    int typeParameterCount;
+                    string name = SplitTypeParameterCountFromReflectionName(type.Name, out typeParameterCount);
+                    typeParameterCount += declaringType.TypeParameterCount;
+                    foreach (var innerClass in declaringType.InnerClasses)
+                    {
+                        if (innerClass.Name == name && innerClass.TypeParameterCount == typeParameterCount)
+                        {
+                            return innerClass;
+                        }
+                    }
+                }
+                return null;
+            }
+            else
+            {
+                int typeParameterCount;
+                string name = SplitTypeParameterCountFromReflectionName(type.Name, out typeParameterCount);
+                return context.GetClass(type.Namespace, name, typeParameterCount, StringComparer.Ordinal);
+            }
+        }
+
+        /// <summary>
+        /// Removes the ` with type parameter count from the reflection name.
+        /// </summary>
+        /// <remarks>Do not use this method with the full name of inner classes.</remarks>
+        public static string SplitTypeParameterCountFromReflectionName(string reflectionName)
+        {
+            int typeParameterCount;
+            return SplitTypeParameterCountFromReflectionName(reflectionName, out typeParameterCount);
+        }
+
+        public static string SplitTypeParameterCountFromReflectionName(string reflectionName, out int typeParameterCount)
+        {
+            int pos = reflectionName.LastIndexOf('`');
+            if (pos < 0)
+            {
+                typeParameterCount = 0;
+                return reflectionName;
+            }
+            else
+            {
+                string typeCount = reflectionName.Substring(pos + 1);
+                if (int.TryParse(typeCount, out typeParameterCount))
+                    return reflectionName.Substring(0, pos);
+                else
+                    return reflectionName;
+            }
+        }
 		
 		public virtual TypeDefinition GetCompoundClass()
 		{

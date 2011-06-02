@@ -466,7 +466,7 @@ namespace Mi.Decompiler.AstServices
 				return new SimpleType(type.Name);
 			} else if (type.IsNested) {
 				AstType typeRef = ConvertType(type.DeclaringType, typeAttributes, ref typeIndex, options & ~ConvertTypeOptions.IncludeTypeParameterDefinitions);
-				string namepart = Mi.NRefactory.TypeSystem.ReflectionHelper.SplitTypeParameterCountFromReflectionName(type.Name);
+                string namepart = Mi.NRefactory.TypeSystem.TypeDefinition.SplitTypeParameterCountFromReflectionName(type.Name);
 				MemberType memberType = new MemberType { Target = typeRef, MemberName = namepart };
 				memberType.AddAnnotation(type);
 				if ((options & ConvertTypeOptions.IncludeTypeParameterDefinitions) == ConvertTypeOptions.IncludeTypeParameterDefinitions) {
@@ -521,8 +521,8 @@ namespace Mi.Decompiler.AstServices
 							}
 						}
 					}
-					
-					name = Mi.NRefactory.TypeSystem.ReflectionHelper.SplitTypeParameterCountFromReflectionName(name);
+
+                    name = Mi.NRefactory.TypeSystem.TypeDefinition.SplitTypeParameterCountFromReflectionName(name);
 					
 					AstType astType;
 					if ((options & ConvertTypeOptions.IncludeNamespace) == ConvertTypeOptions.IncludeNamespace && ns.Length > 0) {
@@ -544,7 +544,7 @@ namespace Mi.Decompiler.AstServices
 				}
 			}
 		}
-		
+
 		static void AddTypeParameterDefininitionsTo(TypeReference type, AstType astType)
 		{
 			if (type.HasGenericParameters) {
@@ -567,7 +567,7 @@ namespace Mi.Decompiler.AstServices
 				TypeReference type = mt.Annotation<TypeReference>();
 				if (type != null) {
 					int typeParameterCount;
-					Mi.NRefactory.TypeSystem.ReflectionHelper.SplitTypeParameterCountFromReflectionName(type.Name, out typeParameterCount);
+					Mi.NRefactory.TypeSystem.TypeDefinition.SplitTypeParameterCountFromReflectionName(type.Name, out typeParameterCount);
 					if (typeParameterCount > typeArguments.Count)
 						typeParameterCount = typeArguments.Count;
 					mt.TypeArguments.AddRange(typeArguments.GetRange(typeArguments.Count - typeParameterCount, typeParameterCount));
