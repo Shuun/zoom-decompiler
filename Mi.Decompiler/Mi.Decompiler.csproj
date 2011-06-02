@@ -705,7 +705,6 @@
     <Compile Include="NRefactory\TypeSystem\ClassType.cs" />
     <Compile Include="NRefactory\TypeSystem\ITypeParameter.cs" />
     <Compile Include="NRefactory\TypeSystem\VarianceModifier.cs" />
-    <Compile Include="NRefactory\TypeSystem\DomRegion.cs" />
     <Compile Include="NRefactory\TypeSystem\EntityType.cs" />
     <Compile Include="NRefactory\TypeSystem\ExtensionMethods.cs" />
     <Compile Include="NRefactory\TypeSystem\IConstantValue.cs" />
@@ -718,7 +717,6 @@
     <Compile Include="NRefactory\TypeSystem\Implementation\AbstractFreezable.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\AbstractType.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\CompositeTypeResolveContext.cs" />
-    <Compile Include="NRefactory\TypeSystem\Accessor.cs" />
     <Compile Include="NRefactory\TypeSystem\ExplicitInterfaceImplementation.cs" />
     <Compile Include="NRefactory\TypeSystem\Parameter.cs" />
     <Compile Include="NRefactory\TypeSystem\TypeDefinition.cs" />
@@ -729,7 +727,6 @@
     <Compile Include="NRefactory\TypeSystem\Implementation\ProxyTypeResolveContext.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\SimpleInterningProvider.cs" />
     <Compile Include="NRefactory\TypeSystem\Implementation\TypeStorage.cs" />
-    <Compile Include="NRefactory\TypeSystem\Implementation\VoidTypeDefinition.cs" />
     <Compile Include="NRefactory\TypeSystem\INamedElement.cs" />
     <Compile Include="NRefactory\TypeSystem\IntersectionType.cs" />
     <Compile Include="NRefactory\TypeSystem\IParameterizedMember.cs" />

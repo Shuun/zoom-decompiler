@@ -17,7 +17,6 @@ namespace Mi.CSharp.Resolver
 	{
 		readonly ITypeResolveContext projectContent;
 		readonly UsingScope parent;
-		DomRegion region;
 		string namespaceName = "";
 		IList<ITypeOrNamespaceReference> usings;
 		IList<KeyValuePair<string, ITypeOrNamespaceReference>> usingAliases;
@@ -80,14 +79,6 @@ namespace Mi.CSharp.Resolver
 		
 		public ITypeResolveContext ProjectContent {
 			get { return projectContent; }
-		}
-		
-		public DomRegion Region {
-			get { return region; }
-			set {
-				CheckBeforeMutation();
-				region = value;
-			}
 		}
 		
 		public string NamespaceName {

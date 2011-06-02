@@ -196,10 +196,7 @@ namespace Mi.CSharp.Resolver
 				TypeDefinition newTypeDefinition = null;
 				if (resolver.CurrentTypeDefinition != null) {
 					foreach (TypeDefinition innerClass in resolver.CurrentTypeDefinition.InnerClasses) {
-						if (innerClass.Region.IsInside(typeDeclaration.StartLocation)) {
-							newTypeDefinition = innerClass;
-							break;
-						}
+                        throw new NotSupportedException();
 					}
 				}
 				if (newTypeDefinition != null)

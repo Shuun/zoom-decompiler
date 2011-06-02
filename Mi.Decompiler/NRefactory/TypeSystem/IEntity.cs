@@ -15,16 +15,6 @@ namespace Mi.NRefactory.TypeSystem
 		EntityType EntityType { get; }
 		
 		/// <summary>
-		/// Gets the complete entity region (including header+body)
-		/// </summary>
-		DomRegion Region { get; }
-		
-		/// <summary>
-		/// Gets the entity body region.
-		/// </summary>
-		DomRegion BodyRegion { get; }
-		
-		/// <summary>
 		/// Gets the declaring class.
 		/// For members, this is the class that contains the member.
 		/// For nested classes, this is the outer class. For top-level entities, this property returns null.

@@ -267,14 +267,6 @@ namespace Mi.CSharp.Resolver
 				get { return EntityType.Operator; }
 			}
 			
-			DomRegion IEntity.Region {
-				get { return DomRegion.Empty; }
-			}
-			
-			DomRegion IEntity.BodyRegion {
-				get { return DomRegion.Empty; }
-			}
-			
 			string IEntity.Documentation {
 				get { return null; }
 			}

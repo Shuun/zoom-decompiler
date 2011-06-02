@@ -17,7 +17,6 @@ namespace Mi.NRefactory.TypeSystem
 		string name = string.Empty;
 		ITypeReference type = SharedTypes.UnknownType;
 		IConstantValue defaultValue;
-		DomRegion region;
 		byte flags;
 		
 		public Parameter(ITypeReference type, string name)
@@ -38,7 +37,6 @@ namespace Mi.NRefactory.TypeSystem
 			this.name = p.Name;
 			this.type = p.Type;
 			this.defaultValue = p.DefaultValue;
-			this.region = p.Region;
 			this.IsRef = p.IsRef;
 			this.IsOut = p.IsOut;
 			this.IsParams = p.IsParams;
@@ -85,14 +83,6 @@ namespace Mi.NRefactory.TypeSystem
 				throw new InvalidOperationException();
 			else
 				return defaultValue.GetValue(context);
-		}
-		
-		public DomRegion Region {
-			get { return region; }
-			set {
-				CheckBeforeMutation();
-				region = value;
-			}
 		}
 		
 		bool HasFlag(byte flag)
@@ -142,7 +132,7 @@ namespace Mi.NRefactory.TypeSystem
 		bool ISupportsInterning.EqualsForInterning(ISupportsInterning other)
 		{
 			Parameter p = other as Parameter;
-			return p != null && type == p.type && defaultValue == p.defaultValue && region == p.region && flags == p.flags;
+			return p != null && type == p.type && defaultValue == p.defaultValue && flags == p.flags;
 		}
 		
 		public override string ToString()

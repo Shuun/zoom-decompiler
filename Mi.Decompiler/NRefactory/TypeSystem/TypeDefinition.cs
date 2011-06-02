@@ -24,9 +24,6 @@ namespace Mi.NRefactory.TypeSystem
 		IList<TypeParameter> typeParameters;
 		IList<TypeDefinition> innerClasses;
 		
-		DomRegion region;
-		DomRegion bodyRegion;
-		
 		// 1 byte per enum + 2 bytes for flags
 		ClassType classType;
 		Accessibility accessibility;
@@ -191,22 +188,6 @@ namespace Mi.NRefactory.TypeSystem
 		
 		public EntityType EntityType {
 			get { return EntityType.TypeDefinition; }
-		}
-		
-		public DomRegion Region {
-			get { return region; }
-			set {
-				CheckBeforeMutation();
-				region = value;
-			}
-		}
-		
-		public DomRegion BodyRegion {
-			get { return bodyRegion; }
-			set {
-				CheckBeforeMutation();
-				bodyRegion = value;
-			}
 		}
 		
 		public TypeDefinition DeclaringTypeDefinition {

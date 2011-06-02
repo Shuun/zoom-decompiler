@@ -63,11 +63,6 @@ namespace Mi.NRefactory.TypeSystem
 		/// If this type parameter was bound, returns the unbound version of it.
 		/// </summary>
 		ITypeParameter UnboundTypeParameter { get; }
-		
-		/// <summary>
-		/// Gets the region where the type parameter is defined.
-		/// </summary>
-		DomRegion Region { get; }
 	}
 	
 	#if WITH_CONTRACTS

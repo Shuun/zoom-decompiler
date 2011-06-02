@@ -727,10 +727,6 @@ namespace Mi.CSharp.Resolver
 			void IFreezable.Freeze()
 			{
 			}
-			
-			DomRegion ITypeParameter.Region {
-				get { return DomRegion.Empty; }
-			}
 		}
 		#endregion
 		
