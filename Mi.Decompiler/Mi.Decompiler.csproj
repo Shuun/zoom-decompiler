@@ -467,12 +467,6 @@
     <Compile Include="CSharp\OutputVisitor\TextWriterOutputFormatter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CSharp\Resolver\ConstantResolveResult.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CSharp\Resolver\ResolveResult.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Empty.cs" />
     <Compile Include="DecompilerSettings.cs" />
     <Compile Include="Disassembler\DisassemblerHelpers.cs" />

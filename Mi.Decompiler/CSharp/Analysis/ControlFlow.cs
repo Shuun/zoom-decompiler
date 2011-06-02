@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
-using Mi.CSharp.Resolver;
 using Mi.NRefactory.TypeSystem;
 using Mi.CSharp.Ast;
 using Mi.CSharp.Ast.Statements;
