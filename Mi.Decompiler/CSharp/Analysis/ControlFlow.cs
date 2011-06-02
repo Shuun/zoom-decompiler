@@ -258,13 +258,12 @@ namespace Mi.CSharp.Analysis
 		/// Evaluates an expression.
 		/// </summary>
 		/// <returns>The constant value of the expression; or null if the expression is not a constant.</returns>
-		ConstantResolveResult EvaluateConstant(Expression expr)
+		object EvaluateConstant(Expression expr)
 		{
-			if (EvaluateOnlyPrimitiveConstants) {
-				if (!(expr is PrimitiveExpression || expr is NullReferenceExpression))
-					return null;
-			}
-			throw new NotSupportedException();
+            if (expr is PrimitiveExpression)
+                return ((PrimitiveExpression)expr).Value;
+            else
+                return null;
 		}
 		
 		/// <summary>
@@ -273,11 +272,8 @@ namespace Mi.CSharp.Analysis
 		/// <returns>The value of the constant boolean expression; or null if the value is not a constant boolean expression.</returns>
 		bool? EvaluateCondition(Expression expr)
 		{
-			ConstantResolveResult rr = EvaluateConstant(expr);
-			if (rr != null)
-				return rr.ConstantValue as bool?;
-			else
-				return null;
+			var rr = EvaluateConstant(expr);
+			return rr as bool?;
 		}
 		
 		bool AreEqualConstants(ConstantResolveResult c1, ConstantResolveResult c2)
@@ -397,7 +393,7 @@ namespace Mi.CSharp.Analysis
 			public override ControlFlowNode VisitSwitchStatement(SwitchStatement switchStatement, ControlFlowNode data)
 			{
 				// First, figure out which switch section will get called (if the expression is constant):
-				ConstantResolveResult constant = builder.EvaluateConstant(switchStatement.Expression);
+				var constant = builder.EvaluateConstant(switchStatement.Expression);
 				SwitchSection defaultSection = null;
 				SwitchSection sectionMatchedByConstant = null;
 				foreach (SwitchSection section in switchStatement.SwitchSections) {
@@ -405,8 +401,8 @@ namespace Mi.CSharp.Analysis
 						if (label.Expression.IsNull) {
 							defaultSection = section;
 						} else if (constant != null) {
-							ConstantResolveResult labelConstant = builder.EvaluateConstant(label.Expression);
-							if (builder.AreEqualConstants(constant, labelConstant))
+							var labelConstant = builder.EvaluateConstant(label.Expression);
+							if (Equals(constant, labelConstant))
 								sectionMatchedByConstant = section;
 						}
 					}
