@@ -51,6 +51,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CastCheckedUnchecked.cs" />
     <Compile Include="CustomAttributes\AppliedToEvent.cs" />
     <Compile Include="CustomAttributes\AppliedToField.cs" />
     <Compile Include="CustomAttributes\AppliedToIndexer.cs" />

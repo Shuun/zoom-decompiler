@@ -42,6 +42,7 @@ public static class DelegateConstruction
 
         public Action CaptureOfThisAndParameterInForEach(int a)
         {
+            Action result;
             foreach (int item in Enumerable.Empty<int>())
             {
                 if (item > 0)
@@ -164,7 +165,8 @@ public static class DelegateConstruction
                         {
                             Console.WriteLine();
                         }
-                    });
+                    }
+                );
             }
         }
     }
@@ -178,7 +180,8 @@ public static class DelegateConstruction
                 delegate(int i)
                 {
                     Console.WriteLine(i);
-                });
+                }
+            );
         }
     }
 
