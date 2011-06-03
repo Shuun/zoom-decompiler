@@ -6,7 +6,7 @@ using System.Windows;
 
 using Mi;
 
-namespace Mi.Scope.Model
+namespace Mi.Zoom.Model
 {
     using Mi.Decompiler;
 

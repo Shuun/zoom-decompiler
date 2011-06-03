@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 using Mi;
 
-namespace Mi.Scope.Model
+namespace Mi.Zoom.Model
 {
     public sealed class CodeLine
     {
