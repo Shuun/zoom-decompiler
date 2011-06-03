@@ -16,11 +16,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+		Zoom.vsmdi = Zoom.vsmdi
 	EndProjectSection
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = Scope.vsmdi
+		CategoryFile = Zoom.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug .NET3.5|Any CPU = Debug .NET3.5|Any CPU

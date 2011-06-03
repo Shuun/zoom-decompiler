@@ -81,7 +81,11 @@
     <Compile Include="Model\CodeLine.cs" />
     <Compile Include="Model\TypeIsland.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RichTextOutput.cs" />
     <Compile Include="Services\PopulateAssemblyService.cs" />
+    <Compile Include="ZoomRenderDemo\AssemblyMap.xaml.cs">
+      <DependentUpon>AssemblyMap.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -89,6 +93,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ZoomRenderDemo\AssemblyMap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
