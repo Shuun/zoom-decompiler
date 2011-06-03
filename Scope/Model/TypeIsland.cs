@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows;
 
-namespace Mi.Scope.Model
+namespace Mi.Zoom.Model
 {
     public sealed class TypeIsland
     {

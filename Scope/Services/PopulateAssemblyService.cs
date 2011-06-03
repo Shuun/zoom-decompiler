@@ -8,9 +8,9 @@ using Mi.Assemblies;
 
 using Mi.Decompiler;
 
-namespace Mi.Scope.Services
+namespace Mi.Zoom.Services
 {
-    using Mi.Scope.Model;
+    using Mi.Zoom.Model;
 
     public static class PopulateAssemblyService
     {

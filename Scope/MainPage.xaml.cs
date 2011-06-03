@@ -14,7 +14,7 @@ using Mi.Decompiler.AstServices;
 using Mi.Assemblies;
 using System.IO;
 
-namespace Mi.Scope
+namespace Mi.Zoom
 {
     public partial class MainPage : UserControl
     {
