@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scope", "Scope.csproj", "{7BE11302-7A09-4CCA-9DAD-B134310A3676}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoom", "Zoom.csproj", "{7BE11302-7A09-4CCA-9DAD-B134310A3676}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mi.Decompiler", "..\Mi.Decompiler\Mi.Decompiler.csproj", "{984CC812-9470-4A13-AFF9-CC44068D666C}"
 	ProjectSection(ProjectDependencies) = postProject
