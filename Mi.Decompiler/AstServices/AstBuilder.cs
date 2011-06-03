@@ -1543,7 +1543,7 @@ namespace Mi.Decompiler.AstServices
 				if (enumDefinition != null && enumDefinition.IsEnum) {
 					TypeCode enumBaseTypeCode = TypeCode.Int32;
 					foreach (FieldDefinition field in enumDefinition.Fields) {
-						if (field.IsStatic && object.Equals(CSharpPrimitiveCast.Cast(TypeCode.Int64, field.Constant, false), val))
+						if (field.IsStatic && object.Equals(CSharpPrimitiveCast.CSharpPrimitiveCastUnchecked(TypeCode.Int64, field.Constant), val))
 							return ConvertType(enumDefinition).Member(field.Name).WithAnnotation(field);
 						else if (!field.IsStatic && field.IsRuntimeSpecialName)
 							enumBaseTypeCode = TypeAnalysis.GetTypeCode(field.FieldType); // use primitive type of the enum
