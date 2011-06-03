@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scope", "Scope.csproj", "{7BE11302-7A09-4CCA-9DAD-B134310A3676}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mi.Decompiler", "..\Mi.Decompiler\Mi.Decompiler.csproj", "{984CC812-9470-4A13-AFF9-CC44068D666C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CFCDEB6B-7693-4216-982F-D8A7F4B76034} = {CFCDEB6B-7693-4216-982F-D8A7F4B76034}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mi.Decompiler.Tests", "..\Mi.Decompiler.Tests\Mi.Decompiler.Tests.csproj", "{CFCDEB6B-7693-4216-982F-D8A7F4B76034}"
 EndProject

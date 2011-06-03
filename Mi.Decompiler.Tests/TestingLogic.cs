@@ -124,6 +124,9 @@ namespace Mi.Decompiler.Tests
 
         private static void RunTest(string testCase, Assemblies.AssemblyDefinition asm, IEnumerable<TypeDefinition> types, IEnumerable<IGrouping<string,string>> matchingCode)
         {
+            if (testCase == "Generics")
+                testCase.GetHashCode();
+
             string decompiledText = Decompile(asm, types);
 
             IEnumerable<string> matchingFiles =
