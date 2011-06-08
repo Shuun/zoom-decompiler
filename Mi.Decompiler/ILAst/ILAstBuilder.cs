@@ -29,8 +29,6 @@ namespace Mi.Decompiler.ILAst
 {
 	public class ILAstBuilder
 	{
-		static ByteCode[] EmptyByteCodeArray = new ByteCode[] {};
-		
 		/// <summary> Immutable </summary>
 		class StackSlot
 		{
@@ -90,7 +88,7 @@ namespace Mi.Decompiler.ILAst
 			{
 				VariableSlot[] emptyVariableState = new VariableSlot[varCount];
 				for (int i = 0; i < emptyVariableState.Length; i++) {
-					emptyVariableState[i] = new VariableSlot(EmptyByteCodeArray, false);
+					emptyVariableState[i] = new VariableSlot(Empty.Array<ByteCode>(), false);
 				}
 				return emptyVariableState;
 			}
@@ -99,7 +97,7 @@ namespace Mi.Decompiler.ILAst
 			{
 				VariableSlot[] unknownVariableState = new VariableSlot[varCount];
 				for (int i = 0; i < unknownVariableState.Length; i++) {
-					unknownVariableState[i] = new VariableSlot(EmptyByteCodeArray, true);
+					unknownVariableState[i] = new VariableSlot(Empty.Array<ByteCode>(), true);
 				}
 				return unknownVariableState;
 			}
