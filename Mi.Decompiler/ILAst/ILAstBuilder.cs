@@ -1,3 +1,4 @@
+#region Copyright
 // Copyright (c) 2011 AlphaSierraPapa for the SharpDevelop Team
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
@@ -15,6 +16,7 @@
 // FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -27,10 +29,10 @@ using Cecil = Mi.Assemblies;
 
 namespace Mi.Decompiler.ILAst
 {
-	public class ILAstBuilder
+	public sealed class ILAstBuilder
 	{
 		/// <summary> Immutable </summary>
-		class StackSlot
+		private sealed class StackSlot
 		{
 			public readonly ByteCode[] PushedBy;  // One of those
 			public readonly ILVariable LoadFrom;  // Where can we get the value from in AST
@@ -103,7 +105,7 @@ namespace Mi.Decompiler.ILAst
 			}
 		}
 		
-		class ByteCode
+		private sealed class ByteCode
 		{
 			public ILLabel  Label;      // Non-null only if needed
 			public int      Offset;
@@ -499,7 +501,7 @@ namespace Mi.Decompiler.ILAst
 			return body;
 		}
 		
-		class VariableInfo
+		private sealed class VariableInfo
 		{
 			public ILVariable Variable;
 			public List<ByteCode> Stores;
