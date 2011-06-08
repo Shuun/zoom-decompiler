@@ -27,7 +27,6 @@ using Mi.Decompiler.Disassembler;
 using Mi.NRefactory.Utils;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
-using Cecil = Mi.Assemblies;
 
 namespace Mi.Decompiler.ILAst
 {
