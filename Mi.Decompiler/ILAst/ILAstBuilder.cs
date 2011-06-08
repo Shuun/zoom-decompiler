@@ -58,7 +58,7 @@ namespace Mi.Decompiler.ILAst
 		}
 		
 		/// <summary> Immutable </summary>
-		class VariableSlot
+		private sealed class VariableSlot
 		{			
 			public readonly ByteCode[] StoredBy;    // One of those
 			public readonly bool       StoredByAll; // Overestimate which is useful for exceptional control flow.
