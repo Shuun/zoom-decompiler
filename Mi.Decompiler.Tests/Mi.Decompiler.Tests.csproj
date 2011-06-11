@@ -38,7 +38,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mi.Decompiler">
+    <Reference Include="Mi.Decompiler" Condition=" '$(Configuration)' == 'Release' ">
+      <HintPath>..\Mi.Decompiler\bin\Release\Mi.Decompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Mi.Decompiler" Condition=" '$(Configuration)' == 'Debug' ">
       <HintPath>..\Mi.Decompiler\bin\Debug\Mi.Decompiler.dll</HintPath>
     </Reference>
     <Reference Include="System" />
