@@ -63,6 +63,8 @@ namespace Mi.Decompiler.Tests
 
             var file = new FileInfo(typeof(TestingLogic).Assembly.Location);
             Console.WriteLine("Created: " + (file.CreationTime > file.LastWriteTime ? file.CreationTime : file.LastWriteTime) + ".");
+
+            Console.Write("Press any key to exit"); Console.ReadKey();
         }
 
         public static IEnumerable<KeyValuePair<string, Action>> GetTests(string path)
