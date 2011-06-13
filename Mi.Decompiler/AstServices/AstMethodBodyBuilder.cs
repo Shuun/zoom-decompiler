@@ -95,7 +95,7 @@ namespace Mi.Decompiler.AstServices
 			context.VerifyProgress();
 			
 			var allVariables =
-                (from e in ilMethod.GetSelfAndChildrenRecursive().OfType<ILExpression>()
+                (from e in ilMethod.EnumerateSelfAndChildrenRecursive().OfType<ILExpression>()
                 let v = e.Operand as ILVariable
                 where v!=null && !v.IsParameter
                 select v).Distinct();
@@ -149,7 +149,7 @@ namespace Mi.Decompiler.AstServices
 			if (node is ILLabel) {
 				yield return new LabelStatement { Label = ((ILLabel)node).Name };
 			} else if (node is ILExpression) {
-				List<ILRange> ilRanges = ILRange.OrderAndJoint(node.GetSelfAndChildrenRecursive().OfType<ILExpression>().SelectMany(e => e.ILRanges));
+				List<ILRange> ilRanges = ILRange.OrderAndJoint(node.EnumerateSelfAndChildrenRecursive().OfType<ILExpression>().SelectMany(e => e.ILRanges));
 				AstNode codeExpr = TransformExpression((ILExpression)node);
 				if (codeExpr != null) {
 					codeExpr = codeExpr.WithAnnotation(ilRanges);
@@ -245,7 +245,7 @@ namespace Mi.Decompiler.AstServices
 			Expression astExpr = node as Expression;
 			
 			// get IL ranges - used in debugger
-			List<ILRange> ilRanges = ILRange.OrderAndJoint(expr.GetSelfAndChildrenRecursive().OfType<ILExpression>().SelectMany(e => e.ILRanges));
+			List<ILRange> ilRanges = ILRange.OrderAndJoint(expr.EnumerateSelfAndChildrenRecursive().OfType<ILExpression>().SelectMany(e => e.ILRanges));
 			AstNode result;
 			
 			if (astExpr != null)
