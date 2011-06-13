@@ -33,7 +33,7 @@ namespace Mi.Decompiler.ILAst
 		{
 			// Build the navigation data
 			parent[method] = null;
-			foreach (ILNode node in method.GetSelfAndChildrenRecursive<ILNode>()) {
+			foreach (ILNode node in method.EnumerateSelfAndChildrenRecursive()) {
 				ILNode previousChild = null;
 				foreach (ILNode child in node.GetChildren()) {
 					if (parent.ContainsKey(child))
@@ -51,7 +51,13 @@ namespace Mi.Decompiler.ILAst
 			bool modified;
 			do {
 				modified = false;
-				foreach (ILExpression gotoExpr in method.GetSelfAndChildrenRecursive<ILExpression>(e => e.Code == ILCode.Br || e.Code == ILCode.Leave)) {
+                var gotos =
+                    from e in method.EnumerateSelfAndChildrenRecursive().OfType<ILExpression>()
+                    where e.Code == ILCode.Br || e.Code == ILCode.Leave
+                    select e;
+
+                foreach (ILExpression gotoExpr in gotos)
+                {
 					modified |= TrySimplifyGoto(gotoExpr);
 				}
 			} while(modified);
@@ -62,13 +68,25 @@ namespace Mi.Decompiler.ILAst
 		public static void RemoveRedundantCode(ILBlock method)
 		{
 			// Remove dead lables and nops
-			HashSet<ILLabel> liveLabels = new HashSet<ILLabel>(method.GetSelfAndChildrenRecursive<ILExpression>(e => e.IsBranch()).SelectMany(e => e.GetBranchTargets()));
-			foreach(ILBlock block in method.GetSelfAndChildrenRecursive<ILBlock>()) {
-				block.Body = block.Body.Where(n => !n.Match(ILCode.Nop) && !(n is ILLabel && !liveLabels.Contains((ILLabel)n))).ToList();
+			var liveLabels = new HashSet<ILLabel>(
+                from e in method.EnumerateSelfAndChildrenRecursive().OfType<ILExpression>()
+                where e.IsBranch()
+                from t in e.GetBranchTargets()
+                select t);
+
+			foreach(ILBlock block in method.EnumerateSelfAndChildrenRecursive().OfType<ILBlock>()) {
+                var liveBlockNodes =
+                    from n in block.Body
+                    where !n.Match(ILCode.Nop) &&
+                    !(n is ILLabel
+                        && !liveLabels.Contains((ILLabel)n))
+                    select n;
+
+				block.Body = liveBlockNodes.ToList();
 			}
 			
 			// Remove redundant continue
-			foreach(ILWhileLoop loop in method.GetSelfAndChildrenRecursive<ILWhileLoop>()) {
+			foreach(ILWhileLoop loop in method.EnumerateSelfAndChildrenRecursive().OfType<ILWhileLoop>()) {
 				var body = loop.BodyBlock.Body;
 				if (body.Count > 0 && body.Last().Match(ILCode.LoopContinue)) {
 					body.RemoveAt(body.Count - 1);
@@ -77,7 +95,7 @@ namespace Mi.Decompiler.ILAst
 			
 			// Remove redundant break at the end of case
 			// Remove redundant case blocks altogether
-			foreach(ILSwitch ilSwitch in method.GetSelfAndChildrenRecursive<ILSwitch>()) {
+			foreach(ILSwitch ilSwitch in method.EnumerateSelfAndChildrenRecursive().OfType<ILSwitch>()) {
 				foreach(ILBlock ilCase in ilSwitch.CaseBlocks) {
 					Debug.Assert(ilCase.EntryGoto == null);
 					
@@ -105,7 +123,7 @@ namespace Mi.Decompiler.ILAst
 			
 			// Remove unreachable return statements
 			bool modified = false;
-			foreach(ILBlock block in method.GetSelfAndChildrenRecursive<ILBlock>()) {
+			foreach(ILBlock block in method.EnumerateSelfAndChildrenRecursive().OfType<ILBlock>().ToList()) {
 				for (int i = 0; i < block.Body.Count - 1;) {
 					if (block.Body[i].IsUnconditionalControlFlow() && block.Body[i+1].Match(ILCode.Ret)) {
 						modified = true;

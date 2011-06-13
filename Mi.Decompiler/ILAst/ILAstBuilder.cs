@@ -221,8 +221,12 @@ namespace Mi.Decompiler.ILAst
 		bool optimize;
 		
 		// Virtual instructions to load exception on stack
-		Dictionary<ExceptionHandler, ByteCode> ldexceptions = new Dictionary<ExceptionHandler, ILAstBuilder.ByteCode>();
-		
+		readonly Dictionary<ExceptionHandler, ByteCode> ldexceptions = new Dictionary<ExceptionHandler, ILAstBuilder.ByteCode>();
+
+        public ILAstBuilder()
+        {
+        }
+
 		public List<ILNode> Build(MethodDefinition methodDef, bool optimize)
 		{
 			this.methodDef = methodDef;

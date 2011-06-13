@@ -152,7 +152,8 @@ namespace Mi.Decompiler.AstServices
 			if (variable.Type == context.CurrentType.Module.TypeSystem.Int32) {
 				// test whether the variable might be a loop counter
 				bool isLoopCounter = false;
-				foreach (ILWhileLoop loop in methodBody.GetSelfAndChildrenRecursive<ILWhileLoop>()) {
+                foreach (ILWhileLoop loop in methodBody.EnumerateSelfAndChildrenRecursive().OfType<ILWhileLoop>())
+                {
 					ILExpression expr = loop.Condition;
 					while (expr != null && expr.Code == ILCode.LogicNot)
 						expr = expr.Arguments[0];
@@ -182,7 +183,7 @@ namespace Mi.Decompiler.AstServices
 			}
 			if (string.IsNullOrEmpty(proposedName)) {
 				var proposedNameForStores =
-					(from expr in methodBody.GetSelfAndChildrenRecursive<ILExpression>()
+					(from expr in methodBody.EnumerateSelfAndChildrenRecursive().OfType<ILExpression>()
 					 where expr.Code == ILCode.Stloc && expr.Operand == variable
 					 select GetNameFromExpression(expr.Arguments.Single())
 					).Except(fieldNamesInCurrentType).ToList();
@@ -192,7 +193,7 @@ namespace Mi.Decompiler.AstServices
 			}
 			if (string.IsNullOrEmpty(proposedName)) {
 				var proposedNameForLoads =
-					(from expr in methodBody.GetSelfAndChildrenRecursive<ILExpression>()
+					(from expr in methodBody.EnumerateSelfAndChildrenRecursive().OfType<ILExpression>()
 					 from i in Enumerable.Range(0, expr.Arguments.Count)
 					 let arg = expr.Arguments[i]
 					 where arg.Code == ILCode.Ldloc && arg.Operand == variable

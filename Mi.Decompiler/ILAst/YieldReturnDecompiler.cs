@@ -328,7 +328,7 @@ namespace Mi.Decompiler.ILAst
 			AssignStateRanges(ilMethod.Body, ilMethod.Body.Count, forDispose: true);
 			
 			// Now look at the finally blocks:
-			foreach (var tryFinally in ilMethod.GetSelfAndChildrenRecursive<ILTryCatchBlock>()) {
+			foreach (var tryFinally in ilMethod.GetSelfAndChildrenRecursive().OfType<ILTryCatchBlock>()) {
 				Interval interval = ranges[tryFinally.TryBlock.Body[0]].ToEnclosingInterval();
 				var finallyBody = tryFinally.FinallyBlock.Body;
 				if (finallyBody.Count != 2)
@@ -906,7 +906,7 @@ namespace Mi.Decompiler.ILAst
 					block.Body.RemoveAt(0);
 			}
 			// Convert ret to endfinally
-			foreach (ILExpression expr in block.GetSelfAndChildrenRecursive<ILExpression>()) {
+			foreach (ILExpression expr in block.GetSelfAndChildrenRecursive().OfType<ILExpression>()) {
 				if (expr.Code == ILCode.Ret)
 					expr.Code = ILCode.Endfinally;
 			}
@@ -919,7 +919,7 @@ namespace Mi.Decompiler.ILAst
 		{
 			var fieldToLocalMap = new DefaultDictionary<FieldDefinition, ILVariable>(f => new ILVariable { Name = f.Name, Type = f.FieldType });
 			foreach (ILNode node in newBody) {
-				foreach (ILExpression expr in node.GetSelfAndChildrenRecursive<ILExpression>()) {
+				foreach (ILExpression expr in node.GetSelfAndChildrenRecursive().OfType<ILExpression>()) {
 					FieldDefinition field = GetFieldDefinition(expr.Operand as FieldReference);
 					if (field != null) {
 						switch (expr.Code) {

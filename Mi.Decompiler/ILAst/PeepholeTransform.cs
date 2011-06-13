@@ -185,10 +185,20 @@ namespace Mi.Decompiler.ILAst
 				return;
 			
 			ILNode followingNode = block.Body.ElementAtOrDefault(i + 1);
-			if (followingNode != null && followingNode.GetSelfAndChildrenRecursive<ILExpression>().Count(
-				e => e.Code == ILCode.Ldsfld && ((FieldReference)e.Operand).ResolveWithinSameModule() == field) == 1)
+
+            int ldfldResolvingWithinSameMethodCount =
+                followingNode
+                    .GetSelfAndChildrenRecursive()
+                    .OfType<ILExpression>()
+                    .Count(
+                        e =>
+                            e.Code == ILCode.Ldsfld &&
+                            ((FieldReference)e.Operand).ResolveWithinSameModule() == field);
+
+            if (followingNode != null && ldfldResolvingWithinSameMethodCount == 1)
 			{
-				foreach (ILExpression parent in followingNode.GetSelfAndChildrenRecursive<ILExpression>()) {
+                foreach (ILExpression parent in followingNode.GetSelfAndChildrenRecursive().OfType<ILExpression>())
+                {
 					for (int j = 0; j < parent.Arguments.Count; j++) {
 						if (parent.Arguments[j].Code == ILCode.Ldsfld && ((FieldReference)parent.Arguments[j].Operand).ResolveWithinSameModule() == field) {
 							parent.Arguments[j] = newObj;
@@ -235,15 +245,23 @@ namespace Mi.Decompiler.ILAst
 				return;
 			
 			ILNode followingNode = block.Body.ElementAtOrDefault(i + 1);
-			if (followingNode != null && followingNode.GetSelfAndChildrenRecursive<ILExpression>().Count(
-				e => e.Code == ILCode.Ldloc && (ILVariable)e.Operand == v) == 1)
+            int ldlocOperandCount =
+                followingNode
+                    .GetSelfAndChildrenRecursive()
+                    .OfType<ILExpression>()
+                    .Count(
+                        e =>
+                            e.Code == ILCode.Ldloc &&
+                            (ILVariable)e.Operand == v);
+
+			if (followingNode != null && ldlocOperandCount == 1)
 			{
 				ILInlining inlining = new ILInlining(method);
 				if (!(inlining.numLdloc.GetOrDefault(v) == 2 && inlining.numStloc.GetOrDefault(v) == 2 && inlining.numLdloca.GetOrDefault(v) == 0))
 					return;
 				
 				// Find the store instruction that initializes the local to null:
-				foreach (ILBlock storeBlock in method.GetSelfAndChildrenRecursive<ILBlock>()) {
+				foreach (ILBlock storeBlock in method.GetSelfAndChildrenRecursive().OfType<ILBlock>()) {
 					for (int j = 0; j < storeBlock.Body.Count; j++) {
 						ILVariable storedVar;
 						ILExpression storedExpr;

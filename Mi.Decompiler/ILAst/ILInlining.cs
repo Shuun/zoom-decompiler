@@ -83,7 +83,7 @@ namespace Mi.Decompiler.ILAst
 		{
 			bool modified = false;
 			ILInlining i = new ILInlining(method);
-			foreach (ILBlock block in method.GetSelfAndChildrenRecursive<ILBlock>())
+			foreach (ILBlock block in method.GetSelfAndChildrenRecursive().OfType<ILBlock>())
 				modified |= i.InlineAllInBlock(block);
 			return modified;
 		}
@@ -417,7 +417,7 @@ namespace Mi.Decompiler.ILAst
 						// abort, inlining is not possible
 						return false;
 					}
-					foreach (ILExpression potentialStore in expressionBeingMoved.GetSelfAndChildrenRecursive<ILExpression>()) {
+					foreach (ILExpression potentialStore in expressionBeingMoved.GetSelfAndChildrenRecursive().OfType<ILExpression>()) {
 						if (potentialStore.Code == ILCode.Stloc && potentialStore.Operand == loadedVar)
 							return false;
 					}
@@ -449,7 +449,7 @@ namespace Mi.Decompiler.ILAst
 		/// </summary>
 		public void CopyPropagation()
 		{
-			foreach (ILBlock block in method.GetSelfAndChildrenRecursive<ILBlock>()) {
+			foreach (ILBlock block in method.GetSelfAndChildrenRecursive().OfType<ILBlock>()) {
 				for (int i = 0; i < block.Body.Count; i++) {
 					ILVariable v;
 					ILExpression copiedExpr;
@@ -465,7 +465,7 @@ namespace Mi.Decompiler.ILAst
 						}
 						
 						// perform copy propagation:
-						foreach (var expr in method.GetSelfAndChildrenRecursive<ILExpression>()) {
+						foreach (var expr in method.GetSelfAndChildrenRecursive().OfType<ILExpression>()) {
 							if (expr.Code == ILCode.Ldloc && expr.Operand == v) {
 								expr.Code = copiedExpr.Code;
 								expr.Operand = copiedExpr.Operand;

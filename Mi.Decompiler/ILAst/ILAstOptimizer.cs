@@ -84,7 +84,7 @@ namespace Mi.Decompiler.ILAst
 			RemoveRedundantCode(method);
 			
 			if (abortBeforeStep == ILAstOptimizationStep.ReduceBranchInstructionSet) return;
-			foreach(ILBlock block in method.GetSelfAndChildrenRecursive<ILBlock>()) {
+			foreach(ILBlock block in method.GetSelfAndChildrenRecursive().OfType<ILBlock>()) {
 				ReduceBranchInstructionSet(block);
 			}
 			// ReduceBranchInstructionSet runs before inlining because the non-aggressive inlining heuristic
@@ -105,30 +105,34 @@ namespace Mi.Decompiler.ILAst
 			IntroducePropertyAccessInstructions(method);
 			
 			if (abortBeforeStep == ILAstOptimizationStep.SplitToMovableBlocks) return;
-			foreach(ILBlock block in method.GetSelfAndChildrenRecursive<ILBlock>()) {
-				SplitToBasicBlocks(block);
-			}
+            foreach (ILBlock block in method.EnumerateSelfAndChildrenRecursive().OfType<ILBlock>())
+            {
+                SplitToBasicBlocks(block);
+            }
 			
 			if (abortBeforeStep == ILAstOptimizationStep.TypeInference) return;
 			// Types are needed for the ternary operator optimization
 			TypeAnalysis.Run(context, method);
-			
-			foreach(ILBlock block in method.GetSelfAndChildrenRecursive<ILBlock>()) {
+
+            var controlFlow = new SimpleControlFlow(context, method);
+
+            foreach (ILBlock block in method.GetSelfAndChildrenRecursive().OfType<ILBlock>())
+            {
 				bool modified;
 				do {
 					modified = false;
 					
 					if (abortBeforeStep == ILAstOptimizationStep.SimplifyShortCircuit) return;
-					modified |= block.RunOptimization(new SimpleControlFlow(context, method).SimplifyShortCircuit);
+					modified |= block.RunOptimization(controlFlow.SimplifyShortCircuit);
 					
 					if (abortBeforeStep == ILAstOptimizationStep.SimplifyTernaryOperator) return;
-					modified |= block.RunOptimization(new SimpleControlFlow(context, method).SimplifyTernaryOperator);
+                    modified |= block.RunOptimization(controlFlow.SimplifyTernaryOperator);
 					
 					if (abortBeforeStep == ILAstOptimizationStep.SimplifyNullCoalescing) return;
-					modified |= block.RunOptimization(new SimpleControlFlow(context, method).SimplifyNullCoalescing);
+                    modified |= block.RunOptimization(controlFlow.SimplifyNullCoalescing);
 					
 					if (abortBeforeStep == ILAstOptimizationStep.JoinBasicBlocks) return;
-					modified |= block.RunOptimization(new SimpleControlFlow(context, method).JoinBasicBlocks);
+                    modified |= block.RunOptimization(controlFlow.JoinBasicBlocks);
 					
 					if (abortBeforeStep == ILAstOptimizationStep.TransformDecimalCtorToConstant) return;
 					modified |= block.RunOptimization(TransformDecimalCtorToConstant);
@@ -138,7 +142,7 @@ namespace Mi.Decompiler.ILAst
 					modified |= block.RunOptimization(SimplifyLdObjAndStObj);
 					
 					if (abortBeforeStep == ILAstOptimizationStep.SimplifyCustomShortCircuit) return;
-					modified |= block.RunOptimization(new SimpleControlFlow(context, method).SimplifyCustomShortCircuit);
+                    modified |= block.RunOptimization(controlFlow.SimplifyCustomShortCircuit);
 					
 					if (abortBeforeStep == ILAstOptimizationStep.TransformArrayInitializers) return;
 					modified |= block.RunOptimization(TransformArrayInitializers);
@@ -161,12 +165,12 @@ namespace Mi.Decompiler.ILAst
 			}
 			
 			if (abortBeforeStep == ILAstOptimizationStep.FindLoops) return;
-			foreach(ILBlock block in method.GetSelfAndChildrenRecursive<ILBlock>()) {
+			foreach(ILBlock block in method.GetSelfAndChildrenRecursive().OfType<ILBlock>()) {
 				new LoopsAndConditions(context).FindLoops(block);
 			}
 			
 			if (abortBeforeStep == ILAstOptimizationStep.FindConditions) return;
-			foreach(ILBlock block in method.GetSelfAndChildrenRecursive<ILBlock>()) {
+			foreach(ILBlock block in method.GetSelfAndChildrenRecursive().OfType<ILBlock>()) {
 				new LoopsAndConditions(context).FindConditions(block);
 			}
 			
@@ -194,7 +198,7 @@ namespace Mi.Decompiler.ILAst
 			new ILInlining(method).InlineAllVariables();
 			
 			if (abortBeforeStep == ILAstOptimizationStep.CachedDelegateInitialization) return;
-			foreach(ILBlock block in method.GetSelfAndChildrenRecursive<ILBlock>()) {
+			foreach(ILBlock block in method.GetSelfAndChildrenRecursive().OfType<ILBlock>()) {
 				for (int i = 0; i < block.Body.Count; i++) {
 					// TODO: Move before loops
 					CachedDelegateInitializationWithField(block, ref i);
@@ -232,11 +236,17 @@ namespace Mi.Decompiler.ILAst
 		void RemoveRedundantCode(ILBlock method)
 		{
 			Dictionary<ILLabel, int> labelRefCount = new Dictionary<ILLabel, int>();
-			foreach (ILLabel target in method.GetSelfAndChildrenRecursive<ILExpression>(e => e.IsBranch()).SelectMany(e => e.GetBranchTargets())) {
+            var targets =
+                from e in method.GetSelfAndChildrenRecursive().OfType<ILExpression>()
+                where e.IsBranch()
+                from t in e.GetBranchTargets()
+                select t;
+
+			foreach (ILLabel target in targets) {
 				labelRefCount[target] = labelRefCount.GetOrDefault(target) + 1;
 			}
 			
-			foreach(ILBlock block in method.GetSelfAndChildrenRecursive<ILBlock>()) {
+			foreach(ILBlock block in method.GetSelfAndChildrenRecursive().OfType<ILBlock>()) {
 				List<ILNode> body = block.Body;
 				List<ILNode> newBody = new List<ILNode>(body.Count);
 				for (int i = 0; i < body.Count; i++) {
@@ -266,7 +276,7 @@ namespace Mi.Decompiler.ILAst
 			}
 			
 			// 'dup' removal
-			foreach (ILExpression expr in method.GetSelfAndChildrenRecursive<ILExpression>()) {
+			foreach (ILExpression expr in method.GetSelfAndChildrenRecursive().OfType<ILExpression>()) {
 				for (int i = 0; i < expr.Arguments.Count; i++) {
 					ILExpression child;
 					if (expr.Arguments[i].Match(ILCode.Dup, out child)) {
@@ -451,7 +461,7 @@ namespace Mi.Decompiler.ILAst
 			Dictionary<ILLabel, ILNode> nextSibling = new Dictionary<ILLabel, ILNode>();
 			
 			// Build navigation data
-			foreach(ILBlock block in method.GetSelfAndChildrenRecursive<ILBlock>()) {
+			foreach(ILBlock block in method.GetSelfAndChildrenRecursive().OfType<ILBlock>()) {
 				for (int i = 0; i < block.Body.Count - 1; i++) {
 					ILLabel curr = block.Body[i] as ILLabel;
 					if (curr != null) {
@@ -461,7 +471,7 @@ namespace Mi.Decompiler.ILAst
 			}
 			
 			// Duplicate returns
-			foreach(ILBlock block in method.GetSelfAndChildrenRecursive<ILBlock>()) {
+			foreach(ILBlock block in method.GetSelfAndChildrenRecursive().OfType<ILBlock>()) {
 				for (int i = 0; i < block.Body.Count; i++) {
 					ILLabel targetLabel;
 					if (block.Body[i].Match(ILCode.Br, out targetLabel) || block.Body[i].Match(ILCode.Leave, out targetLabel)) {
@@ -614,7 +624,7 @@ namespace Mi.Decompiler.ILAst
 		
 		void ReportUnassignedILRanges(ILBlock method)
 		{
-			var unassigned = ILRange.Invert(method.GetSelfAndChildrenRecursive<ILExpression>().SelectMany(e => e.ILRanges), context.CurrentMethod.Body.CodeSize).ToList();
+			var unassigned = ILRange.Invert(method.GetSelfAndChildrenRecursive().OfType<ILExpression>().SelectMany(e => e.ILRanges), context.CurrentMethod.Body.CodeSize).ToList();
 			if (unassigned.Count > 0)
 				Debug.WriteLine(string.Format("Unassigned ILRanges for {0}.{1}: {2}", this.context.CurrentMethod.DeclaringType.Name, this.context.CurrentMethod.Name, string.Join(", ", unassigned.Select(r => r.ToString()))));
 		}

@@ -83,7 +83,8 @@ namespace Mi.Decompiler.ILAst
 				cfNode.UserData = node;
 				
 				// Find all contained labels
-				foreach(ILLabel label in node.GetSelfAndChildrenRecursive<ILLabel>()) {
+                foreach (ILLabel label in node.GetSelfAndChildrenRecursive().OfType<ILLabel>())
+                {
 					labelToCfNode[label] = cfNode;
 				}
 			}
@@ -97,9 +98,15 @@ namespace Mi.Decompiler.ILAst
 			// Create edges
 			foreach(ILBasicBlock node in nodes) {
 				ControlFlowNode source = astNodeToCfNode[node];
-				
+
+                var allBranchTargets =
+                    from e in node.GetSelfAndChildrenRecursive().OfType<ILExpression>()
+                    where e.IsBranch()
+                    from t in e.GetBranchTargets()
+                    select t;
+
 				// Find all branches
-				foreach(ILLabel target in node.GetSelfAndChildrenRecursive<ILExpression>(e => e.IsBranch()).SelectMany(e => e.GetBranchTargets())) {
+				foreach(ILLabel target in allBranchTargets) {
 					ControlFlowNode destination;
 					// Labels which are out of out scope will not be int the collection
 					// Insert self edge only if we are sure we are a loop
