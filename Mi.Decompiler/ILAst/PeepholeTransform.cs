@@ -188,7 +188,7 @@ namespace Mi.Decompiler.ILAst
 
             int ldfldResolvingWithinSameMethodCount =
                 followingNode
-                    .GetSelfAndChildrenRecursive()
+                    .EnumerateSelfAndChildrenRecursive()
                     .OfType<ILExpression>()
                     .Count(
                         e =>
@@ -197,7 +197,7 @@ namespace Mi.Decompiler.ILAst
 
             if (followingNode != null && ldfldResolvingWithinSameMethodCount == 1)
 			{
-                foreach (ILExpression parent in followingNode.GetSelfAndChildrenRecursive().OfType<ILExpression>())
+                foreach (ILExpression parent in followingNode.EnumerateSelfAndChildrenRecursive().OfType<ILExpression>())
                 {
 					for (int j = 0; j < parent.Arguments.Count; j++) {
 						if (parent.Arguments[j].Code == ILCode.Ldsfld && ((FieldReference)parent.Arguments[j].Operand).ResolveWithinSameModule() == field) {
@@ -261,7 +261,7 @@ namespace Mi.Decompiler.ILAst
 					return;
 				
 				// Find the store instruction that initializes the local to null:
-				foreach (ILBlock storeBlock in method.GetSelfAndChildrenRecursive().OfType<ILBlock>()) {
+				foreach (ILBlock storeBlock in method.EnumerateSelfAndChildrenRecursive().OfType<ILBlock>()) {
 					for (int j = 0; j < storeBlock.Body.Count; j++) {
 						ILVariable storedVar;
 						ILExpression storedExpr;
