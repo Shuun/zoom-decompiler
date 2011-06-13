@@ -151,7 +151,7 @@ namespace Mi.Decompiler.ILAst
 				group expr by v;
 			foreach (var g in q.ToArray()) {
 				ILVariable v = g.Key;
-				if (g.Count() == 1 && g.Single().Expression.GetSelfAndChildrenRecursive<ILExpression>().Count(e => e.Operand == v) == 1) {
+				if (g.Count() == 1 && g.Single().Expression.GetSelfAndChildrenRecursive().OfType<ILExpression>().Count(e => e.Operand == v) == 1) {
 					singleLoadVariables.Add(v);
 					// Mark the assignments as dependent on the type from the single load:
 					foreach (var assignment in assignmentExpressions[v]) {
@@ -1076,7 +1076,7 @@ namespace Mi.Decompiler.ILAst
 		/// </summary>
 		public static void Reset(ILBlock method)
 		{
-			foreach (ILExpression expr in method.GetSelfAndChildrenRecursive<ILExpression>()) {
+			foreach (ILExpression expr in method.GetSelfAndChildrenRecursive().OfType<ILExpression>()) {
 				expr.InferredType = null;
 				expr.ExpectedType = null;
 				ILVariable v = expr.Operand as ILVariable;

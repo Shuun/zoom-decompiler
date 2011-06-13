@@ -25,23 +25,32 @@ using Mi.Assemblies;
 
 namespace Mi.Decompiler.ILAst
 {
-	public class SimpleControlFlow
+	public sealed class SimpleControlFlow
 	{
-		Dictionary<ILLabel, int> labelGlobalRefCount = new Dictionary<ILLabel, int>();
-		Dictionary<ILLabel, ILBasicBlock> labelToBasicBlock = new Dictionary<ILLabel, ILBasicBlock>();
+		readonly Dictionary<ILLabel, int> labelGlobalRefCount = new Dictionary<ILLabel, int>();
+		readonly Dictionary<ILLabel, ILBasicBlock> labelToBasicBlock = new Dictionary<ILLabel, ILBasicBlock>();
 		
-		DecompilerContext context;
-		TypeSystem typeSystem;
+		readonly DecompilerContext context;
+		readonly TypeSystem typeSystem;
 		
 		public SimpleControlFlow(DecompilerContext context, ILBlock method)
 		{
 			this.context = context;
 			this.typeSystem = context.CurrentMethod.Module.TypeSystem;
+
+            var labelTargets =
+                from e in method.GetSelfAndChildrenRecursive().OfType<ILExpression>()
+                where e.IsBranch()
+                from t in e.GetBranchTargets()
+                select t;
 			
-			foreach(ILLabel target in method.GetSelfAndChildrenRecursive<ILExpression>(e => e.IsBranch()).SelectMany(e => e.GetBranchTargets())) {
+			foreach(ILLabel target in labelTargets) {
 				labelGlobalRefCount[target] = labelGlobalRefCount.GetOrDefault(target) + 1;
 			}
-			foreach(ILBasicBlock bb in method.GetSelfAndChildrenRecursive<ILBasicBlock>()) {
+
+            var basicBlocks = method.GetSelfAndChildrenRecursive().OfType<ILBasicBlock>();
+
+			foreach(ILBasicBlock bb in basicBlocks) {
 				foreach(ILLabel label in bb.GetChildren().OfType<ILLabel>()) {
 					labelToBasicBlock[label] = bb;
 				}

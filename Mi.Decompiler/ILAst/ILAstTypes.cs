@@ -32,18 +32,36 @@ namespace Mi.Decompiler.ILAst
 {
 	public abstract class ILNode
 	{
-		public IEnumerable<T> GetSelfAndChildrenRecursive<T>(Func<T, bool> predicate = null) where T: ILNode
-		{
-			List<T> result = new List<T>(16);
-			AccumulateSelfAndChildrenRecursive(result, predicate);
-			return result;
-		}
+		public IEnumerable<ILNode> GetSelfAndChildrenRecursive()
+        {
+            return EnumerateSelfAndChildrenRecursive().ToList();
+        }
+
+        public IEnumerable<ILNode> EnumerateSelfAndChildrenRecursive()
+        {
+            yield return this;
+
+            var iterateChildren = new Queue<ILNode>();
+            iterateChildren.Enqueue(this);
+            while (iterateChildren.Count > 0)
+            {
+                var parent = iterateChildren.Dequeue();
+
+                foreach (var child in parent.GetChildren())
+                {
+                    yield return child;
+
+                    iterateChildren.Enqueue(child);
+                }
+            }
+        }
 		
 		void AccumulateSelfAndChildrenRecursive<T>(List<T> list, Func<T, bool> predicate) where T:ILNode
 		{
-			T thisAsT = this as T;
-			if (thisAsT != null && (predicate == null || predicate(thisAsT)))
-				list.Add(thisAsT);
+			var typed = this as T;
+			if (typed != null && (predicate == null || predicate(typed)))
+				list.Add(typed);
+
 			foreach (ILNode node in this.GetChildren()) {
 				if (node != null)
 					node.AccumulateSelfAndChildrenRecursive(list, predicate);
