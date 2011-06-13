@@ -39,7 +39,7 @@ namespace Mi.Decompiler.ILAst
 			this.typeSystem = context.CurrentMethod.Module.TypeSystem;
 
             var labelTargets =
-                from e in method.GetSelfAndChildrenRecursive().OfType<ILExpression>()
+                from e in method.EnumerateSelfAndChildrenRecursive().OfType<ILExpression>()
                 where e.IsBranch()
                 from t in e.GetBranchTargets()
                 select t;
@@ -48,7 +48,7 @@ namespace Mi.Decompiler.ILAst
 				labelGlobalRefCount[target] = labelGlobalRefCount.GetOrDefault(target) + 1;
 			}
 
-            var basicBlocks = method.GetSelfAndChildrenRecursive().OfType<ILBasicBlock>();
+            var basicBlocks = method.EnumerateSelfAndChildrenRecursive().OfType<ILBasicBlock>();
 
 			foreach(ILBasicBlock bb in basicBlocks) {
 				foreach(ILLabel label in bb.GetChildren().OfType<ILLabel>()) {

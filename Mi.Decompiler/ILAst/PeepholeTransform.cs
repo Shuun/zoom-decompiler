@@ -247,7 +247,7 @@ namespace Mi.Decompiler.ILAst
 			ILNode followingNode = block.Body.ElementAtOrDefault(i + 1);
             int ldlocOperandCount =
                 followingNode
-                    .GetSelfAndChildrenRecursive()
+                    .EnumerateSelfAndChildrenRecursive()
                     .OfType<ILExpression>()
                     .Count(
                         e =>
