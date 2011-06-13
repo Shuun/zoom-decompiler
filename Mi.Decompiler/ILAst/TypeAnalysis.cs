@@ -1076,7 +1076,7 @@ namespace Mi.Decompiler.ILAst
 		/// </summary>
 		public static void Reset(ILBlock method)
 		{
-			foreach (ILExpression expr in method.GetSelfAndChildrenRecursive().OfType<ILExpression>()) {
+			foreach (ILExpression expr in method.EnumerateSelfAndChildrenRecursive().OfType<ILExpression>()) {
 				expr.InferredType = null;
 				expr.ExpectedType = null;
 				ILVariable v = expr.Operand as ILVariable;
