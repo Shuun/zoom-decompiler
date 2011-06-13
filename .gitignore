@@ -12,3 +12,5 @@ _ReSharper*/
 *.sln.docstates
 TestResults
 .hg
+*.psess
+*.vsp
