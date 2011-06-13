@@ -251,7 +251,11 @@ namespace Mi.Decompiler.ILAst
 			if (input == null)
 				throw new ArgumentNullException("Input is null!");
 			
-			List<ILRange> ranges = input.Where(r => r != null).OrderBy(r => r.From).ToList();
+			var ranges =
+                (from r in input
+                where r != null
+                orderby r.From
+                select r).ToList();
 			for (int i = 0; i < ranges.Count - 1;) {
 				ILRange curr = ranges[i];
 				ILRange next = ranges[i + 1];
