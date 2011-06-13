@@ -14,8 +14,84 @@ namespace Mi.Decompiler.Tests
 {
     public static class TestingLogic
     {
+        private sealed class DummyOutput : ITextOutput
+        {
+            public int CurrentLine { get { return 0; } }
+            public void Indent() { }
+            public void MarkFoldEnd() { }
+            public void MarkFoldStart(string collapsedText = "...", bool defaultCollapsed = false) { }
+            public void Unindent() { }
+            public void Write(string text) { }
+            public void Write(char ch) { }
+            public void WriteDefinition(string text, object definition) { }
+            public void WriteIdentifier(string identifier) { }
+            public void WriteKeyword(string keyword) { }
+            public void WriteLine() { }
+            public void WriteReference(string text, object reference) { }
+        }
+
+        static void RunOnCore()
+        {
+            Console.Write("Dry run...");
+            DateTime startDryRun = DateTime.UtcNow;
+            {
+                var _para = new ReaderParameters(ReadingMode.Immediate)
+                {
+                    AssemblyResolver = new AssemblyResolver(),
+                    ReadSymbols = false
+                };
+                var sys = AssemblyDefinition.ReadAssembly(typeof(TestingLogic).Assembly.Location, _para);
+                var _dc = new DecompilerContext(sys.MainModule);
+                var _astb = new AstBuilder(_dc);
+                _astb.AddAssembly(sys);
+                _astb.RunTransformations();
+                _astb.GenerateCode(new DummyOutput());
+            }
+            TimeSpan dryRunTime = DateTime.UtcNow - startDryRun;
+            Console.WriteLine(" O.K. " + dryRunTime.TotalSeconds.ToString("0.000") + " s.");
+
+            Console.Write("Press Esc to skip large assembly reading");
+            if (Console.ReadKey().Key != ConsoleKey.Escape)
+            {
+                Console.Write("Reading assembly...");
+                DateTime startReading = DateTime.UtcNow;
+                var msco = AssemblyDefinition.ReadAssembly(typeof(int).Assembly.Location);
+                TimeSpan readAssemblyTime = DateTime.UtcNow - startReading;
+                Console.WriteLine(" O.K. " + readAssemblyTime.TotalSeconds.ToString("0.000") + " s.");
+
+                Console.Write("new DecompilerContext(), new AstBuilder()...");
+                DateTime startNewContext = DateTime.UtcNow;
+                var dc = new DecompilerContext(msco.MainModule);
+                var astb = new AstBuilder(dc);
+                TimeSpan newContextTime = DateTime.UtcNow - startNewContext;
+                Console.WriteLine(" O.K. " + newContextTime.TotalSeconds.ToString("0.000") + " s.");
+
+                Console.Write("AstBuilder.AddAssembly()...");
+                DateTime startAddAssembly = DateTime.UtcNow;
+                astb.AddAssembly(msco);
+                TimeSpan decompilerInitTime = DateTime.UtcNow - startAddAssembly;
+                Console.WriteLine(" O.K. " + decompilerInitTime.TotalSeconds.ToString("0.000") + " s.");
+
+                Console.Write("AstBuilder.RunTransformations()...");
+                DateTime startTransform = DateTime.UtcNow;
+                astb.RunTransformations();
+                TimeSpan transformTime = DateTime.UtcNow - startTransform;
+                Console.WriteLine(" O.K. " + transformTime.TotalSeconds.ToString("0.000") + " s.");
+
+                Console.Write("AstBuilder.GenerateCode()...");
+                DateTime startGeneration = DateTime.UtcNow;
+                astb.GenerateCode(new DummyOutput());
+                TimeSpan generationTime = DateTime.UtcNow - startGeneration;
+                Console.WriteLine(" O.K. " + generationTime.TotalSeconds.ToString("0.000") + " s.");
+
+                Console.Write("Press any key to exit"); Console.ReadKey();
+            }
+        }
+
         static void Main()
         {
+            RunOnCore();
+
             var succeded = new List<string>();
             var failed = new List<string>();
             foreach (var t in Mi.Decompiler.Tests.TestingLogic.GetTests("..\\..\\"))
