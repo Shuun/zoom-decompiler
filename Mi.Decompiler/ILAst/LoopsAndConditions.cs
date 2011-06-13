@@ -83,7 +83,7 @@ namespace Mi.Decompiler.ILAst
 				cfNode.UserData = node;
 				
 				// Find all contained labels
-                foreach (ILLabel label in node.GetSelfAndChildrenRecursive().OfType<ILLabel>())
+                foreach (ILLabel label in node.EnumerateSelfAndChildrenRecursive().OfType<ILLabel>())
                 {
 					labelToCfNode[label] = cfNode;
 				}
@@ -100,7 +100,7 @@ namespace Mi.Decompiler.ILAst
 				ControlFlowNode source = astNodeToCfNode[node];
 
                 var allBranchTargets =
-                    from e in node.GetSelfAndChildrenRecursive().OfType<ILExpression>()
+                    from e in node.EnumerateSelfAndChildrenRecursive().OfType<ILExpression>()
                     where e.IsBranch()
                     from t in e.GetBranchTargets()
                     select t;
