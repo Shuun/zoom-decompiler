@@ -1,3 +1,4 @@
+#region Copyright
 //
 // MethodReturnType.cs
 //
@@ -25,8 +26,11 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+#endregion
 
+using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace Mi.Assemblies {
 
@@ -59,7 +63,7 @@ namespace Mi.Assemblies {
 			get { return parameter != null && parameter.HasCustomAttributes; }
 		}
 
-		public Collection<CustomAttribute> CustomAttributes {
+		public List<CustomAttribute> CustomAttributes {
 			get { return Parameter.CustomAttributes; }
 		}
 

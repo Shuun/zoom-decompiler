@@ -1,3 +1,4 @@
+#region Copyright
 //
 // PropertyReference.cs
 //
@@ -25,9 +26,11 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+#endregion
+
 
 using System;
-
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Mi.Assemblies {
@@ -41,7 +44,7 @@ namespace Mi.Assemblies {
 			set { property_type = value; }
 		}
 
-		public abstract Collection<ParameterDefinition> Parameters {
+		public abstract List<ParameterDefinition> Parameters {
 			get;
 		}
 

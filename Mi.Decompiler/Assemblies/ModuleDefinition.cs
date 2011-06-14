@@ -204,11 +204,11 @@ namespace Mi.Assemblies {
 #if !READ_ONLY
 		MetadataImporter importer;
 #endif
-		Collection<CustomAttribute> custom_attributes;
-		Collection<AssemblyNameReference> references;
-		Collection<ModuleReference> modules;
-		Collection<Resource> resources;
-		Collection<ExportedType> exported_types;
+		List<CustomAttribute> custom_attributes;
+		List<AssemblyNameReference> references;
+		List<ModuleReference> modules;
+		List<Resource> resources;
+		List<ExportedType> exported_types;
 		TypeDefinitionCollection types;
 
 		public bool IsMain {
@@ -291,7 +291,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<AssemblyNameReference> AssemblyReferences {
+		public List<AssemblyNameReference> AssemblyReferences {
 			get {
 				if (references != null)
 					return references;
@@ -299,7 +299,7 @@ namespace Mi.Assemblies {
 				if (HasImage)
 					return Read (ref references, this, (_, reader) => reader.ReadAssemblyReferences ());
 
-				return references = new Collection<AssemblyNameReference> ();
+				return references = new List<AssemblyNameReference> ();
 			}
 		}
 
@@ -312,7 +312,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<ModuleReference> ModuleReferences {
+		public List<ModuleReference> ModuleReferences {
 			get {
 				if (modules != null)
 					return modules;
@@ -320,7 +320,7 @@ namespace Mi.Assemblies {
 				if (HasImage)
 					return Read (ref modules, this, (_, reader) => reader.ReadModuleReferences ());
 
-				return modules = new Collection<ModuleReference> ();
+				return modules = new List<ModuleReference> ();
 			}
 		}
 
@@ -336,7 +336,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<Resource> Resources {
+		public List<Resource> Resources {
 			get {
 				if (resources != null)
 					return resources;
@@ -344,7 +344,7 @@ namespace Mi.Assemblies {
 				if (HasImage)
 					return Read (ref resources, this, (_, reader) => reader.ReadResources ());
 
-				return resources = new Collection<Resource> ();
+				return resources = new List<Resource> ();
 			}
 		}
 
@@ -357,7 +357,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<CustomAttribute> CustomAttributes {
+		public List<CustomAttribute> CustomAttributes {
 			get { return custom_attributes ?? (this.GetCustomAttributes (ref custom_attributes, this)); }
 		}
 
@@ -391,7 +391,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<ExportedType> ExportedTypes {
+		public List<ExportedType> ExportedTypes {
 			get {
 				if (exported_types != null)
 					return exported_types;
@@ -399,7 +399,7 @@ namespace Mi.Assemblies {
 				if (HasImage)
 					return Read (ref exported_types, this, (_, reader) => reader.ReadExportedTypes ());
 
-				return exported_types = new Collection<ExportedType> ();
+				return exported_types = new List<ExportedType> ();
 			}
 		}
 

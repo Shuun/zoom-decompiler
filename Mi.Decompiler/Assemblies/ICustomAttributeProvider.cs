@@ -1,3 +1,4 @@
+#region Copyright
 //
 // ICustomAttributeProvider.cs
 //
@@ -25,15 +26,17 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+#endregion
 
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace Mi.Assemblies {
 
 	public interface ICustomAttributeProvider : IMetadataTokenProvider {
 
-		Collection<CustomAttribute> CustomAttributes { get; }
+		List<CustomAttribute> CustomAttributes { get; }
 
 		bool HasCustomAttributes { get; }
 	}
@@ -49,14 +52,14 @@ namespace Mi.Assemblies {
 				: false;
 		}
 
-		public static Collection<CustomAttribute> GetCustomAttributes (
+		public static List<CustomAttribute> GetCustomAttributes (
 			this ICustomAttributeProvider self,
-			ref Collection<CustomAttribute> variable,
+			ref List<CustomAttribute> variable,
 			ModuleDefinition module)
 		{
 			return module.HasImage ()
 				? module.Read (ref variable, self, (provider, reader) => reader.ReadCustomAttributes (provider))
-				: variable = new Collection<CustomAttribute>();
+				: variable = new List<CustomAttribute>();
 		}
 	}
 }

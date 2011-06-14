@@ -1,3 +1,4 @@
+#region Copyright
 //
 // TypeDefinition.cs
 //
@@ -25,9 +26,10 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+#endregion
 
 using System;
-
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Mi.Assemblies {
@@ -42,14 +44,14 @@ namespace Mi.Assemblies {
 		short packing_size = Mixin.NotResolvedMarker;
 		int class_size = Mixin.NotResolvedMarker;
 
-		Collection<TypeReference> interfaces;
+		List<TypeReference> interfaces;
 		Collection<TypeDefinition> nested_types;
 		Collection<MethodDefinition> methods;
 		Collection<FieldDefinition> fields;
 		Collection<EventDefinition> events;
 		Collection<PropertyDefinition> properties;
-		Collection<CustomAttribute> custom_attributes;
-		Collection<SecurityDeclaration> security_declarations;
+		List<CustomAttribute> custom_attributes;
+		List<SecurityDeclaration> security_declarations;
 
 		public TypeAttributes Attributes {
 			get { return (TypeAttributes) attributes; }
@@ -125,7 +127,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<TypeReference> Interfaces {
+		public List<TypeReference> Interfaces {
 			get {
 				if (interfaces != null)
 					return interfaces;
@@ -133,7 +135,7 @@ namespace Mi.Assemblies {
 				if (HasImage)
 					return Module.Read (ref interfaces, this, (type, reader) => reader.ReadInterfaces (type));
 
-				return interfaces = new Collection<TypeReference> ();
+				return interfaces = new List<TypeReference> ();
 			}
 		}
 
@@ -266,7 +268,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<SecurityDeclaration> SecurityDeclarations {
+		public List<SecurityDeclaration> SecurityDeclarations {
 			get { return security_declarations ?? (this.GetSecurityDeclarations (ref security_declarations, Module)); }
 		}
 
@@ -279,7 +281,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<CustomAttribute> CustomAttributes {
+		public List<CustomAttribute> CustomAttributes {
 			get { return custom_attributes ?? (this.GetCustomAttributes (ref custom_attributes, Module)); }
 		}
 

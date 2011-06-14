@@ -1,3 +1,4 @@
+#region Copyright
 //
 // MethodDefinition.cs
 //
@@ -25,11 +26,14 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+#endregion
 
-using Mi.Assemblies.Cil;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using RVA = System.UInt32;
+
+using Mi.Assemblies.Cil;
 
 namespace Mi.Assemblies {
 
@@ -39,8 +43,8 @@ namespace Mi.Assemblies {
 		ushort impl_attributes;
 		internal volatile bool sem_attrs_ready;
 		internal MethodSemanticsAttributes sem_attrs;
-		Collection<CustomAttribute> custom_attributes;
-		Collection<SecurityDeclaration> security_declarations;
+		List<CustomAttribute> custom_attributes;
+		List<SecurityDeclaration> security_declarations;
 
 		internal RVA rva;
 		internal PInvokeInfo pinvoke;
@@ -99,7 +103,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<SecurityDeclaration> SecurityDeclarations {
+		public List<SecurityDeclaration> SecurityDeclarations {
 			get { return security_declarations ?? (this.GetSecurityDeclarations (ref security_declarations, Module)); }
 		}
 
@@ -112,7 +116,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<CustomAttribute> CustomAttributes {
+		public List<CustomAttribute> CustomAttributes {
 			get { return custom_attributes ?? (this.GetCustomAttributes (ref custom_attributes, Module)); }
 		}
 

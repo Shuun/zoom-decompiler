@@ -584,7 +584,7 @@ namespace Mi.Decompiler.Disassembler
 		}
 		#endregion
 		
-		void WriteParameters(Collection<ParameterDefinition> parameters)
+		void WriteParameters(IList<ParameterDefinition> parameters)
 		{
 			for (int i = 0; i < parameters.Count; i++) {
 				var p = parameters[i];
@@ -942,7 +942,7 @@ namespace Mi.Decompiler.Disassembler
 		#endregion
 
 		#region Helper methods
-		void WriteAttributes(Collection<CustomAttribute> attributes)
+		void WriteAttributes(List<CustomAttribute> attributes)
 		{
 			foreach (CustomAttribute a in attributes) {
 				output.Write(".custom ");

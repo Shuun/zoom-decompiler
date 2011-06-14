@@ -519,11 +519,11 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<AssemblyNameReference> ReadAssemblyReferences ()
+		public List<AssemblyNameReference> ReadAssemblyReferences ()
 		{
 			InitializeAssemblyReferences ();
 
-			return new Collection<AssemblyNameReference> (metadata.AssemblyReferences);
+			return new List<AssemblyNameReference> (metadata.AssemblyReferences);
 		}
 
 		public MethodDefinition ReadEntryPoint ()
@@ -536,9 +536,9 @@ namespace Mi.Assemblies {
 			return GetMethodDefinition (token.RID);
 		}
 
-		public Collection<ModuleDefinition> ReadModules ()
+		public List<ModuleDefinition> ReadModules ()
 		{
-			var modules = new Collection<ModuleDefinition> ();
+			var modules = new List<ModuleDefinition> ();
 			modules.Add (this.module);
 
 			int length = MoveTo (Table.File);
@@ -587,11 +587,11 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<ModuleReference> ReadModuleReferences ()
+		public List<ModuleReference> ReadModuleReferences ()
 		{
 			InitializeModuleReferences ();
 
-			return new Collection<ModuleReference> (metadata.ModuleReferences);
+			return new List<ModuleReference> (metadata.ModuleReferences);
 		}
 
 		public bool HasFileResource ()
@@ -607,10 +607,10 @@ namespace Mi.Assemblies {
 			return false;
 		}
 
-		public Collection<Resource> ReadResources ()
+		public List<Resource> ReadResources ()
 		{
 			int length = MoveTo (Table.ManifestResource);
-			var resources = new Collection<Resource> ();
+			var resources = new List<Resource> ();
 
 			for (int i = 1; i <= length; i++) {
 				var offset = ReadUInt32 ();
@@ -1080,15 +1080,15 @@ namespace Mi.Assemblies {
 			return metadata.TryGetInterfaceMapping (type, out mapping);
 		}
 
-		public Collection<TypeReference> ReadInterfaces (TypeDefinition type)
+		public List<TypeReference> ReadInterfaces (TypeDefinition type)
 		{
 			InitializeInterfaces ();
 			MetadataToken [] mapping;
 
 			if (!metadata.TryGetInterfaceMapping (type, out mapping))
-				return new Collection<TypeReference> ();
+				return new List<TypeReference> ();
 
-			var interfaces = new Collection<TypeReference> ();
+			var interfaces = new List<TypeReference> ();
 
 			this.context = type;
 
@@ -1496,7 +1496,7 @@ namespace Mi.Assemblies {
 				case TokenType.Event: {
 					var @event = GetEvent (type, row.Col2);
 					if (@event.other_methods == null)
-						@event.other_methods = new Collection<MethodDefinition> ();
+						@event.other_methods = new List<MethodDefinition> ();
 
 					@event.other_methods.Add (method);
 					break;
@@ -1504,7 +1504,7 @@ namespace Mi.Assemblies {
 				case TokenType.Property: {
 					var property = GetProperty (type, row.Col2);
 					if (property.other_methods == null)
-						property.other_methods = new Collection<MethodDefinition> ();
+						property.other_methods = new List<MethodDefinition> ();
 
 					property.other_methods.Add (method);
 
@@ -1863,15 +1863,15 @@ namespace Mi.Assemblies {
 			return mapping.Length > 0;
 		}
 
-		public Collection<TypeReference> ReadGenericConstraints (GenericParameter generic_parameter)
+		public List<TypeReference> ReadGenericConstraints (GenericParameter generic_parameter)
 		{
 			InitializeGenericConstraints ();
 
 			MetadataToken [] mapping;
 			if (!metadata.TryGetGenericConstraintMapping (generic_parameter, out mapping))
-				return new Collection<TypeReference> ();
+				return new List<TypeReference> ();
 
-			var constraints = new Collection<TypeReference> ();
+			var constraints = new List<TypeReference> ();
 
 			this.context = (IGenericContext) generic_parameter.Owner;
 
@@ -2321,16 +2321,16 @@ namespace Mi.Assemblies {
 			return range.Length > 0;
 		}
 
-		public Collection<CustomAttribute> ReadCustomAttributes (ICustomAttributeProvider owner)
+		public List<CustomAttribute> ReadCustomAttributes (ICustomAttributeProvider owner)
 		{
 			InitializeCustomAttributes ();
 
 			Range range;
 			if (!metadata.TryGetCustomAttributeRange (owner, out range)
 				|| !MoveTo (Table.CustomAttribute, range.Start))
-				return new Collection<CustomAttribute> ();
+				return new List<CustomAttribute> ();
 
-			var custom_attributes = new Collection<CustomAttribute> ();
+			var custom_attributes = new List<CustomAttribute> ();
 
 			for (int i = 0; i < range.Length; i++) {
 				ReadMetadataToken (CodedIndex.HasCustomAttribute);
@@ -2440,16 +2440,16 @@ namespace Mi.Assemblies {
 			return range.Length > 0;
 		}
 
-		public Collection<SecurityDeclaration> ReadSecurityDeclarations (ISecurityDeclarationProvider owner)
+		public List<SecurityDeclaration> ReadSecurityDeclarations (ISecurityDeclarationProvider owner)
 		{
 			InitializeSecurityDeclarations ();
 
 			Range range;
 			if (!metadata.TryGetSecurityDeclarationRange (owner, out range)
 				|| !MoveTo (Table.DeclSecurity, range.Start))
-				return new Collection<SecurityDeclaration> ();
+				return new List<SecurityDeclaration> ();
 
-			var security_declarations = new Collection<SecurityDeclaration> ();
+			var security_declarations = new List<SecurityDeclaration> ();
 
 			for (int i = 0; i < range.Length; i++) {
 				var action = (SecurityAction) ReadUInt16 ();
@@ -2510,13 +2510,13 @@ namespace Mi.Assemblies {
 			declaration.security_attributes = attributes;
 		}
 
-		public Collection<ExportedType> ReadExportedTypes ()
+		public List<ExportedType> ReadExportedTypes ()
 		{
 			var length = MoveTo (Table.ExportedType);
 			if (length == 0)
-				return new Collection<ExportedType> ();
+				return new List<ExportedType> ();
 
-			var exported_types = new Collection<ExportedType> ();
+			var exported_types = new List<ExportedType> ();
 
 			for (int i = 1; i <= length; i++) {
 				var attributes = (TypeAttributes) ReadUInt32 ();
