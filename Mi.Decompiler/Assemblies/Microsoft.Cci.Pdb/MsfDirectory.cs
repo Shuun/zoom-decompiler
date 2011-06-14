@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 using System;
 
-namespace Microsoft.Cci.Pdb {
+namespace Internal.Microsoft.Cci.Pdb {
   internal class MsfDirectory {
     internal MsfDirectory(PdbReader reader, PdbFileHeader head, BitAccess bits) {
       bits.MinCapacity(head.directorySize);

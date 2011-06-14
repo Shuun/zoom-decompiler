@@ -6,7 +6,7 @@
 using System;
 using System.IO;
 
-namespace Microsoft.Cci.Pdb {
+namespace Internal.Microsoft.Cci.Pdb {
   internal class PdbReader {
     internal PdbReader(Stream reader, int pageSize) {
       this.pageSize = pageSize;

@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 using System;
 
-namespace Microsoft.Cci.Pdb {
+namespace Internal.Microsoft.Cci.Pdb {
   internal struct DbiDbgHdr {
     internal DbiDbgHdr(BitAccess bits) {
       bits.ReadUInt16(out snFPO);

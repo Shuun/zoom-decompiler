@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 using System;
 
-namespace Microsoft.Cci.Pdb {
+namespace Internal.Microsoft.Cci.Pdb {
   internal class PdbScope {
     internal PdbConstant[] constants;
     internal PdbSlot[] slots;

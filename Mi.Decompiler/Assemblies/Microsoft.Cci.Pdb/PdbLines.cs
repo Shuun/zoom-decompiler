@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 using System;
 
-namespace Microsoft.Cci.Pdb {
+namespace Internal.Microsoft.Cci.Pdb {
   internal class PdbLines {
     internal PdbSource file;
     internal PdbLine[] lines;

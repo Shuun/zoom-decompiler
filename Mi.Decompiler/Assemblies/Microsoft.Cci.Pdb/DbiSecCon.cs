@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 using System;
 
-namespace Microsoft.Cci.Pdb {
+namespace Internal.Microsoft.Cci.Pdb {
   internal struct DbiSecCon {
     internal DbiSecCon(BitAccess bits) {
       bits.ReadInt16(out section);

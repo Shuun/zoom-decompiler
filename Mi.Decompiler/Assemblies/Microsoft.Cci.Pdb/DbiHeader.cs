@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 using System;
 
-namespace Microsoft.Cci.Pdb {
+namespace Internal.Microsoft.Cci.Pdb {
   internal struct DbiHeader {
     internal DbiHeader(BitAccess bits) {
       bits.ReadInt32(out sig);
