@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics.SymbolStore;
 
-namespace Microsoft.Cci.Pdb {
+namespace Internal.Microsoft.Cci.Pdb {
   internal class PdbFile {
     private PdbFile()   // This class can't be instantiated.
     {

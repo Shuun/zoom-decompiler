@@ -24,7 +24,7 @@
 //
 using System;
 
-namespace Microsoft.Cci.Pdb {
+namespace Internal.Microsoft.Cci.Pdb {
   internal struct FLOAT10 {
     internal byte Data_0;
     internal byte Data_1;

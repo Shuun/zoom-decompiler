@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 using System;
 
-namespace Microsoft.Cci.Pdb {
+namespace Internal.Microsoft.Cci.Pdb {
   internal struct BitSet {
     internal BitSet(BitAccess bits) {
       bits.ReadInt32(out size);    // 0..3 : Number of words

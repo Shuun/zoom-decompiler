@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 using System;
 
-namespace Microsoft.Cci.Pdb {
+namespace Internal.Microsoft.Cci.Pdb {
   internal class DbiModuleInfo {
     internal DbiModuleInfo(BitAccess bits, bool readStrings) {
       bits.ReadInt32(out opened);

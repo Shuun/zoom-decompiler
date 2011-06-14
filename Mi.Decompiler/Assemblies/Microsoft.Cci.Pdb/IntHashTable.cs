@@ -6,7 +6,7 @@
 using System;
 using System.Collections;
 
-namespace Microsoft.Cci.Pdb {
+namespace Internal.Microsoft.Cci.Pdb {
   // The IntHashTable class represents a dictionary of associated keys and
   // values with constant lookup time.
   //

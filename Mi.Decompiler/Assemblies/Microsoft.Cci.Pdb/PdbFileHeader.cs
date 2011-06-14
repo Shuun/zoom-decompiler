@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Microsoft.Cci.Pdb {
+namespace Internal.Microsoft.Cci.Pdb {
   internal class PdbFileHeader {
     internal PdbFileHeader(int pageSize) {
       this.magic = new byte[32] {

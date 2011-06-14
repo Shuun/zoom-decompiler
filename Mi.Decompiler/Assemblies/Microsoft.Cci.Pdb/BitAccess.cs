@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Microsoft.Cci.Pdb {
+namespace Internal.Microsoft.Cci.Pdb {
   internal class BitAccess {
 
     internal BitAccess(int capacity) {
