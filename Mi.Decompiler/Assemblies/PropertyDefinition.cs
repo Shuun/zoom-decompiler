@@ -1,3 +1,4 @@
+#region Copyright
 //
 // PropertyDefinition.cs
 //
@@ -25,10 +26,12 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+#endregion
 
-using System.Text;
-
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text;
 
 using Mi;
 
@@ -39,11 +42,11 @@ namespace Mi.Assemblies {
 		bool? has_this;
 		ushort attributes;
 
-		Collection<CustomAttribute> custom_attributes;
+		List<CustomAttribute> custom_attributes;
 
 		internal MethodDefinition get_method;
 		internal MethodDefinition set_method;
-		internal Collection<MethodDefinition> other_methods;
+		internal List<MethodDefinition> other_methods;
 
 		object constant = Mixin.NotResolved;
 
@@ -77,7 +80,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<CustomAttribute> CustomAttributes {
+		public List<CustomAttribute> CustomAttributes {
 			get { return custom_attributes ?? (this.GetCustomAttributes (ref custom_attributes, Module)); }
 		}
 
@@ -113,7 +116,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<MethodDefinition> OtherMethods {
+		public List<MethodDefinition> OtherMethods {
 			get {
 				if (other_methods != null)
 					return other_methods;
@@ -123,7 +126,7 @@ namespace Mi.Assemblies {
 				if (other_methods != null)
 					return other_methods;
 
-				return other_methods = new Collection<MethodDefinition> ();
+				return other_methods = new List<MethodDefinition> ();
 			}
 		}
 
@@ -141,7 +144,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public override Collection<ParameterDefinition> Parameters {
+		public override List<ParameterDefinition> Parameters {
 			get {
 				InitializeMethods ();
 
@@ -151,13 +154,13 @@ namespace Mi.Assemblies {
 				if (set_method != null)
 					return MirrorParameters (set_method, 1);
 
-				return new Collection<ParameterDefinition> ();
+				return new List<ParameterDefinition> ();
 			}
 		}
 
-		static Collection<ParameterDefinition> MirrorParameters (MethodDefinition method, int bound)
+		static List<ParameterDefinition> MirrorParameters (MethodDefinition method, int bound)
 		{
-			var parameters = new Collection<ParameterDefinition> ();
+			var parameters = new List<ParameterDefinition> ();
 			if (!method.HasParameters)
 				return parameters;
 

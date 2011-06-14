@@ -40,9 +40,9 @@ namespace Mi.Assemblies
     public sealed class AssemblyDefinition : ICustomAttributeProvider, ISecurityDeclarationProvider
     {
         internal ModuleDefinition main_module;
-        Collection<ModuleDefinition> modules;
-        Collection<CustomAttribute> custom_attributes;
-        Collection<SecurityDeclaration> security_declarations;
+        List<ModuleDefinition> modules;
+        List<CustomAttribute> custom_attributes;
+        List<SecurityDeclaration> security_declarations;
 
         internal AssemblyDefinition()
         {
@@ -61,7 +61,7 @@ namespace Mi.Assemblies
             set { }
         }
 
-        public Collection<ModuleDefinition> Modules
+        public List<ModuleDefinition> Modules
         {
             get
             {
@@ -71,7 +71,7 @@ namespace Mi.Assemblies
                 if (main_module.HasImage)
                     return main_module.Read(ref modules, this, (_, reader) => reader.ReadModules());
 
-                return modules = new Collection<ModuleDefinition> { main_module };
+                return modules = new List<ModuleDefinition> { main_module };
             }
         }
 
@@ -97,7 +97,7 @@ namespace Mi.Assemblies
             }
         }
 
-        public Collection<CustomAttribute> CustomAttributes
+        public List<CustomAttribute> CustomAttributes
         {
             get { return custom_attributes ?? (this.GetCustomAttributes(ref custom_attributes, main_module)); }
         }
@@ -113,7 +113,7 @@ namespace Mi.Assemblies
             }
         }
 
-        public Collection<SecurityDeclaration> SecurityDeclarations
+        public List<SecurityDeclaration> SecurityDeclarations
         {
             get { return security_declarations ?? (this.GetSecurityDeclarations(ref security_declarations, main_module)); }
         }

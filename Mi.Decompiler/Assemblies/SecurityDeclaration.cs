@@ -1,3 +1,4 @@
+#region Copyright
 //
 // SecurityDeclaration.cs
 //
@@ -25,10 +26,12 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+#endregion
 
 using System;
-using System.Threading;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
 
 using Mi;
 
@@ -55,7 +58,7 @@ namespace Mi.Assemblies {
 	public interface ISecurityDeclarationProvider : IMetadataTokenProvider {
 
 		bool HasSecurityDeclarations { get; }
-		Collection<SecurityDeclaration> SecurityDeclarations { get; }
+		List<SecurityDeclaration> SecurityDeclarations { get; }
 	}
 
 	public sealed class SecurityAttribute : ICustomAttribute {
@@ -172,14 +175,14 @@ namespace Mi.Assemblies {
 				: false;
 		}
 
-		public static Collection<SecurityDeclaration> GetSecurityDeclarations (
+		public static List<SecurityDeclaration> GetSecurityDeclarations (
 			this ISecurityDeclarationProvider self,
-			ref Collection<SecurityDeclaration> variable,
+			ref List<SecurityDeclaration> variable,
 			ModuleDefinition module)
 		{
 			return module.HasImage ()
 				? module.Read (ref variable, self, (provider, reader) => reader.ReadSecurityDeclarations (provider))
-				: variable = new Collection<SecurityDeclaration>();
+				: variable = new List<SecurityDeclaration>();
 		}
 	}
 }

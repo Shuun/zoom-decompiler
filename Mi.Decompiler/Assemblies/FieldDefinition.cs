@@ -1,3 +1,4 @@
+#region Copyright
 //
 // FieldDefinition.cs
 //
@@ -25,16 +26,18 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+#endregion
 
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Mi;
 
 namespace Mi.Assemblies {
 
 	public sealed class FieldDefinition : FieldReference, IMemberDefinition, IConstantProvider, IMarshalInfoProvider {
 
 		ushort attributes;
-		Collection<CustomAttribute> custom_attributes;
+		List<CustomAttribute> custom_attributes;
 
 		int offset = Mixin.NotResolvedMarker;
 
@@ -146,7 +149,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<CustomAttribute> CustomAttributes {
+		public List<CustomAttribute> CustomAttributes {
 			get { return custom_attributes ?? (this.GetCustomAttributes (ref custom_attributes, Module)); }
 		}
 

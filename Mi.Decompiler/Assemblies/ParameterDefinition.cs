@@ -1,3 +1,4 @@
+#region Copyright
 //
 // ParameterDefinition.cs
 //
@@ -25,8 +26,10 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+#endregion
 
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace Mi.Assemblies {
 
@@ -37,7 +40,7 @@ namespace Mi.Assemblies {
 		internal IMethodSignature method;
 
 		object constant = Mixin.NotResolved;
-		Collection<CustomAttribute> custom_attributes;
+		List<CustomAttribute> custom_attributes;
 		MarshalInfo marshal_info;
 
 		public ParameterAttributes Attributes {
@@ -72,7 +75,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<CustomAttribute> CustomAttributes {
+		public List<CustomAttribute> CustomAttributes {
 			get { return custom_attributes ?? (this.GetCustomAttributes (ref custom_attributes, parameter_type.Module)); }
 		}
 

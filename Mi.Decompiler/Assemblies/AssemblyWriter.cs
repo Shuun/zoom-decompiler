@@ -1553,7 +1553,7 @@ namespace Mi.Assemblies {
 				AddConstant (property, property.PropertyType);
 		}
 
-		void AddOtherSemantic (IMetadataTokenProvider owner, Collection<MethodDefinition> others)
+		void AddOtherSemantic (IMetadataTokenProvider owner, List<MethodDefinition> others)
 		{
 			for (int i = 0; i < others.Count; i++)
 				AddSemantic (MethodSemanticsAttributes.Other, owner, others [i]);
@@ -1862,7 +1862,7 @@ namespace Mi.Assemblies {
 				calling_convention |= 0x20;
 
 			uint param_count = 0;
-			Collection<ParameterDefinition> parameters = null;
+			List<ParameterDefinition> parameters = null;
 
 			if (property.HasParameters) {
 				parameters = property.Parameters;

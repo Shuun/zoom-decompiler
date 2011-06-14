@@ -1,3 +1,4 @@
+#region Copyright
 //
 // GenericParameter.cs
 //
@@ -25,9 +26,10 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+#endregion
 
 using System;
-
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using Mi.Assemblies.Metadata;
@@ -39,8 +41,8 @@ namespace Mi.Assemblies {
 		readonly IGenericParameterProvider owner;
 
 		ushort attributes;
-		Collection<TypeReference> constraints;
-		Collection<CustomAttribute> custom_attributes;
+		List<TypeReference> constraints;
+		List<CustomAttribute> custom_attributes;
 
 		public GenericParameterAttributes Attributes {
 			get { return (GenericParameterAttributes) attributes; }
@@ -72,7 +74,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<TypeReference> Constraints {
+		public List<TypeReference> Constraints {
 			get {
 				if (constraints != null)
 					return constraints;
@@ -80,7 +82,7 @@ namespace Mi.Assemblies {
 				if (HasImage)
 					return Module.Read (ref constraints, this, (generic_parameter, reader) => reader.ReadGenericConstraints (generic_parameter));
 
-				return constraints = new Collection<TypeReference> ();
+				return constraints = new List<TypeReference> ();
 			}
 		}
 
@@ -93,7 +95,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<CustomAttribute> CustomAttributes {
+		public List<CustomAttribute> CustomAttributes {
 			get { return custom_attributes ?? (this.GetCustomAttributes (ref custom_attributes, Module)); }
 		}
 

@@ -1,3 +1,4 @@
+#region Copyright
 //
 // EventDefinition.cs
 //
@@ -25,10 +26,11 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+#endregion
 
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
-using Mi;
 
 namespace Mi.Assemblies {
 
@@ -36,12 +38,12 @@ namespace Mi.Assemblies {
 
 		ushort attributes;
 
-		Collection<CustomAttribute> custom_attributes;
+		List<CustomAttribute> custom_attributes;
 
 		internal MethodDefinition add_method;
 		internal MethodDefinition invoke_method;
 		internal MethodDefinition remove_method;
-		internal Collection<MethodDefinition> other_methods;
+		internal List<MethodDefinition> other_methods;
 
 		public EventAttributes Attributes {
 			get { return (EventAttributes) attributes; }
@@ -91,7 +93,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<MethodDefinition> OtherMethods {
+		public List<MethodDefinition> OtherMethods {
 			get {
 				if (other_methods != null)
 					return other_methods;
@@ -101,7 +103,7 @@ namespace Mi.Assemblies {
 				if (other_methods != null)
 					return other_methods;
 
-				return other_methods = new Collection<MethodDefinition> ();
+				return other_methods = new List<MethodDefinition> ();
 			}
 		}
 
@@ -114,7 +116,7 @@ namespace Mi.Assemblies {
 			}
 		}
 
-		public Collection<CustomAttribute> CustomAttributes {
+		public List<CustomAttribute> CustomAttributes {
 			get { return custom_attributes ?? (this.GetCustomAttributes (ref custom_attributes, Module)); }
 		}
 
