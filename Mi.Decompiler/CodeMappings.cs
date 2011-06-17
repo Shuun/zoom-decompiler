@@ -189,18 +189,19 @@ namespace Mi.Decompiler
 			
 			// create IL/CSharp code mappings - used in debugger
 			MemberMapping currentMemberMapping = null;
-			if (codeMappings.Item1 == member.DeclaringType.FullName) {
-				var mapping = codeMappings.Item2;
-				if (mapping.Find(map => (int)map.MetadataToken == member.MetadataToken.ToInt32()) == null) {
-					currentMemberMapping = new MemberMapping() {
-						MetadataToken = (uint)member.MetadataToken.ToInt32(),
-						MemberReference = member.DeclaringType.Resolve(),
-						MemberCodeMappings = new List<SourceCodeMapping>(),
-						CodeSize = member.Body.CodeSize
-					};
-					mapping.Add(currentMemberMapping);
-				}
-			}
+
+            if (codeMappings.Any(map => map.MetadataToken == member.MetadataToken.ToInt32()))
+            {
+                currentMemberMapping = new MemberMapping()
+                {
+                    MetadataToken = member.MetadataToken.ToInt32(),
+                    MemberCodeMappings = new List<SourceCodeMapping>(),
+                    MemberReference = actualMemberReference ?? member,
+                    CodeSize = member.Body.CodeSize
+                };
+
+                codeMappings.Add(currentMemberMapping);
+            }
 			
 			return currentMemberMapping;
 		}
@@ -221,19 +222,13 @@ namespace Mi.Decompiler
 			if (codeMappings == null)
 				throw new ArgumentException("CodeMappings storage must be valid!");
 			
-			if (codeMappings.Item1 != memberReferenceName) {
-				metadataToken = 0;
-				return null;
-			}
-			
 			if (lineNumber <= 0) {
 				metadataToken = 0;
 				return null;
 			}
 			
-			var methodMappings = codeMappings.Item2;
-			foreach (var maping in methodMappings) {
-				var map = maping.MemberCodeMappings.Find(m => m.SourceCodeLine == lineNumber);
+			foreach (var maping in codeMappings) {
+				var map = maping.MemberCodeMappings.FirstOrDefault(m => m.SourceCodeLine == lineNumber);
 				if (map != null) {
 					metadataToken = maping.MetadataToken;
 					return map;
@@ -263,12 +258,9 @@ namespace Mi.Decompiler
 			if (codeMappings == null)
 				throw new ArgumentNullException("CodeMappings storage must be valid!");
 			
-			var maping = codeMappings.Find(m => m.MetadataToken == token);
+			var maping = codeMappings.FirstOrDefault(m => m.MetadataToken == token);
 			
-			var methodMappings = codeMappings.Item2;
-			var maping = methodMappings.Find(m => m.MetadataToken == token);
-			
-			if (maping == null) {
+			if (maping == null)
 				return null;
 			
 			// try find an exact match
@@ -276,7 +268,7 @@ namespace Mi.Decompiler
 			
 			if (map == null) {
 				// get the immediate next one
-				map = maping.MemberCodeMappings.Find(m => m.ILInstructionOffset.From >= ilOffset);
+				map = maping.MemberCodeMappings.FirstOrDefault(m => m.ILInstructionOffset.From >= ilOffset);
 				isMatch = false;
 				if (map == null)
 					map = maping.MemberCodeMappings.LastOrDefault(); // get the last
@@ -309,29 +301,27 @@ namespace Mi.Decompiler
 			
 			if (codeMappings == null)
 				throw new ArgumentException("CodeMappings storage must be valid!");
-			
-			memberReferenceName = memberReferenceName.Replace("+", "/");
-			if (codeMappings.Item1 != memberReferenceName)
-				return false;
-			
-			var mapping = codeMappings.Item2.Find(m => m.MetadataToken == token);
-			if (mapping == null)
-				return false;
-			
-			var codeMapping = mapping.MemberCodeMappings.FirstOrDefault(
-				cm => cm.ILInstructionOffset.From <= ilOffset && ilOffset <= cm.ILInstructionOffset.To - 1);
-			if (codeMapping == null) {
-				codeMapping = mapping.MemberCodeMappings.FirstOrDefault(cm => (cm.ILInstructionOffset.From >= ilOffset));
-				if (codeMapping == null) {
-					codeMapping = mapping.MemberCodeMappings.LastOrDefault();
-					if (codeMapping == null)
-						return false;
-				}
-			}
-			
-			member = mapping.MemberReference;
-			line = codeMapping.SourceCodeLine;
-			return true;
-		}
+
+            var mapping = codeMappings.FirstOrDefault(m => m.MetadataToken == token);
+            if (mapping == null)
+                return false;
+
+            var codeMapping = mapping.MemberCodeMappings.FirstOrDefault(
+                cm => cm.ILInstructionOffset.From <= ilOffset && ilOffset <= cm.ILInstructionOffset.To - 1);
+            if (codeMapping == null)
+            {
+                codeMapping = mapping.MemberCodeMappings.FirstOrDefault(cm => cm.ILInstructionOffset.From > ilOffset);
+                if (codeMapping == null)
+                {
+                    codeMapping = mapping.MemberCodeMappings.LastOrDefault();
+                    if (codeMapping == null)
+                        return false;
+                }
+            }
+
+            member = mapping.MemberReference;
+            line = codeMapping.SourceCodeLine;
+            return true;
+        }
 	}
 }

@@ -24,6 +24,7 @@ namespace Mi.Zoom
         bool newLine = true;
 
         public int CurrentLine { get { return blocks.Count; } }
+        public int CurrentColumn { get { return 0; } }
 
         public void Indent() { indentCount++; }
         public void Unindent() { indentCount--; }

@@ -46,7 +46,7 @@ namespace Mi.Decompiler.Disassembler
 				throw new ArgumentNullException("output");
 			this.output = output;
 			this.verifyProgress = verifyProgress;
-			this.methodBodyDisassembler = new MethodBodyDisassembler(output, detectControlStructure, cancellationToken);
+			this.methodBodyDisassembler = new MethodBodyDisassembler(output, detectControlStructure, verifyProgress);
 			
 			this.CodeMappings = new Dictionary<int, List<MemberMapping>>();
 			this.DecompiledMemberReferences = new Dictionary<int, MemberReference>();

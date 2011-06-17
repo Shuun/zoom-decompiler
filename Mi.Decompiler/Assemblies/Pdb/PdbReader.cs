@@ -30,9 +30,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-using Microsoft.Cci.Pdb;
-
 using Mi.Assemblies.Cil;
+using Internal.Microsoft.Cci.Pdb;
 
 namespace Mi.Assemblies.Pdb {
 

@@ -43,12 +43,16 @@ namespace Mi.Decompiler.ILAst
 			    arrayLength > 0) {
 				ILExpression[] newArr;
 				int initArrayPos;
+
 				if (ForwardScanInitializeArrayRuntimeHelper(body, pos + 1, v, elementType, arrayLength, out newArr, out initArrayPos)) {
-					var arrayType = new ArrayType(elementType, 1);
-					arrayType.Dimensions[0] = new ArrayDimension(0, arrayLength);
+                    var arrayType = new ArrayType(
+                        elementType,
+                        new[] { new ArrayDimension(0, arrayLength) });
+
 					body[pos] = new ILExpression(ILCode.Stloc, v, new ILExpression(ILCode.InitArray, arrayType, newArr));
 					body.RemoveAt(initArrayPos);
 				}
+
 				// Put in a limit so that we don't consume too much memory if the code allocates a huge array
 				// and populates it extremely sparsly. However, 255 "null" elements in a row actually occur in the Mono C# compiler!
 				const int maxConsecutiveDefaultValueExpressions = 300;
@@ -73,8 +77,10 @@ namespace Mi.Decompiler.ILAst
 					}
 				}
 				if (operands.Count == arrayLength) {
-					var arrayType = new ArrayType(elementType, 1);
-					arrayType.Dimensions[0] = new ArrayDimension(0, arrayLength);
+                    var arrayType = new ArrayType(
+                        elementType,
+                        new[] { new ArrayDimension(0, arrayLength) });
+
 					expr.Arguments[0] = new ILExpression(ILCode.InitArray, arrayType, operands);
 					body.RemoveRange(pos + 1, numberOfInstructionsToRemove);
 
@@ -97,13 +103,17 @@ namespace Mi.Decompiler.ILAst
 				(arrayType = (ctor.DeclaringType as ArrayType)) != null &&
 				arrayType.Rank == ctorArgs.Count) {
 				// Clone the type, so we can muck about with the Dimensions
-				arrayType = new ArrayType(arrayType.ElementType, arrayType.Rank);
-				var arrayLengths = new int[arrayType.Rank];
+				
+                int[] arrayLengths = new int[arrayType.Rank];
 				for (int i = 0; i < arrayType.Rank; i++) {
 					if (!ctorArgs[i].Match(ILCode.Ldc_I4, out arrayLengths[i])) return false;
 					if (arrayLengths[i] <= 0) return false;
-					arrayType.Dimensions[i] = new ArrayDimension(0, arrayLengths[i]);
 				}
+
+                arrayType = new ArrayType(
+                    arrayType.ElementType,
+                    from l in arrayLengths
+                    select new ArrayDimension(0, arrayLengths[l]));
 
 				var totalElements = arrayLengths.Aggregate(1, (t, l) => t * l);
 				ILExpression[] newArr;

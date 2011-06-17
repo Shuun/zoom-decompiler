@@ -65,8 +65,8 @@ namespace Mi.Decompiler.AstServices
 				throw new ArgumentNullException("context");
 			this.context = context;
 			this.DecompileMethodBodies = true;
-			
-			this.LocalVariables = new ConcurrentDictionary<int, IEnumerable<ILVariable>>();
+
+            this.LocalVariables = new Dictionary<int, IEnumerable<ILVariable>>();
 		}
 		
 		public static bool MemberIsHidden(MemberReference member, DecompilerSettings settings)
