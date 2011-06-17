@@ -17,6 +17,7 @@ namespace Mi.Decompiler.Tests
         private sealed class DummyOutput : ITextOutput
         {
             public int CurrentLine { get { return 0; } }
+            public int CurrentColumn { get { return 0; } }
             public void Indent() { }
             public void MarkFoldEnd() { }
             public void MarkFoldStart(string collapsedText = "...", bool defaultCollapsed = false) { }

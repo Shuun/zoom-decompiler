@@ -345,7 +345,7 @@ namespace Mi.Decompiler.AstServices
 					#endregion
 					#region Arrays
 					case ILCode.Newarr: {
-						var ace = new Ast.ArrayCreateExpression();
+						var ace = new ArrayCreateExpression();
 						ace.Type = operandAsTypeRef;
 						ComposedType ct = operandAsTypeRef as ComposedType;
 						if (ct != null) {
@@ -361,7 +361,7 @@ namespace Mi.Decompiler.AstServices
 						return ace;
 					}
 					case ILCode.InitArray: {
-						var ace = new Ast.ArrayCreateExpression();
+						var ace = new ArrayCreateExpression();
 						ace.Type = operandAsTypeRef;
 						ComposedType ct = operandAsTypeRef as ComposedType;
 						var arrayType = (ArrayType) operand;
@@ -372,7 +372,7 @@ namespace Mi.Decompiler.AstServices
 							ace.Initializer = new ArrayInitializerExpression();
 							var first = ace.AdditionalArraySpecifiers.First();
 							first.Remove();
-							ace.Arguments.AddRange(Enumerable.Repeat(0, first.Dimensions).Select(i => new EmptyExpression()));
+							ace.Arguments.AddRange(Enumerable.Repeat(0, first.Dimensions).Select(i => (Expression)new EmptyExpression()));
 						}
 						var newArgs = new List<Expression>();
 						foreach (var arrayDimension in arrayType.Dimensions.Skip(1).Reverse())
