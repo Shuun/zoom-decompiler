@@ -92,6 +92,8 @@ namespace Mi.Decompiler.Tests.Helpers
 			var index = line.IndexOf("//");
 			if (index >= 0) {
 				return line.Substring(0, index);
+			} else if (line.StartsWith("#")) {
+				return string.Empty;
 			} else {
 				return line;
 			}

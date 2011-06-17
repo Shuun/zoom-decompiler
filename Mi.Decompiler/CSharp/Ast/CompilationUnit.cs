@@ -25,7 +25,6 @@
 // THE SOFTWARE.
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Mi.CSharp.Ast
 {

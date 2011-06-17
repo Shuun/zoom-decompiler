@@ -24,6 +24,7 @@ namespace Mi.Decompiler
 	public interface ITextOutput
 	{
 		int CurrentLine { get; }
+		int CurrentColumn { get; }
 		
 		void Indent();
 		void Unindent();

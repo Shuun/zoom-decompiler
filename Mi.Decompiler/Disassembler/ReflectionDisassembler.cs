@@ -32,12 +32,13 @@ namespace Mi.Decompiler.Disassembler
 	/// <summary>
 	/// Disassembles type and member definitions.
 	/// </summary>
-	public sealed class ReflectionDisassembler : ICodeMappings
+	public sealed class ReflectionDisassembler : BaseCodeMappings
 	{
 		ITextOutput output;
 		Action verifyProgress;
 		bool isInType; // whether we are currently disassembling a whole type (-> defaultCollapsed for foldings)
 		MethodBodyDisassembler methodBodyDisassembler;
+		MemberReference currentMember;
 		
 		public ReflectionDisassembler(ITextOutput output, bool detectControlStructure, Action verifyProgress)
 		{
@@ -45,7 +46,10 @@ namespace Mi.Decompiler.Disassembler
 				throw new ArgumentNullException("output");
 			this.output = output;
 			this.verifyProgress = verifyProgress;
-			this.methodBodyDisassembler = new MethodBodyDisassembler(output, detectControlStructure, verifyProgress);
+			this.methodBodyDisassembler = new MethodBodyDisassembler(output, detectControlStructure, cancellationToken);
+			
+			this.CodeMappings = new Dictionary<int, List<MemberMapping>>();
+			this.DecompiledMemberReferences = new Dictionary<int, MemberReference>();
 		}
 		
 		#region Disassemble Method
@@ -101,6 +105,9 @@ namespace Mi.Decompiler.Disassembler
 		
 		public void DisassembleMethod(MethodDefinition method)
 		{
+			// set current member
+			currentMember = method;
+			
 			// write method header
 			output.WriteDefinition(".method ", method);
 			DisassembleMethodInternal(method);
@@ -166,7 +173,6 @@ namespace Mi.Decompiler.Disassembler
 			//call convention
 			WriteEnum(method.CallingConvention & (MethodCallingConvention)0x1f, callingConvention);
 			
-			
 			//return type
 			method.ReturnType.WriteTo(output);
 			output.Write(' ');
@@ -216,7 +222,8 @@ namespace Mi.Decompiler.Disassembler
 			
 			if (method.HasBody) {
 				// create IL code mappings - used in debugger
-				MemberMapping methodMapping = method.CreateCodeMapping(this.CodeMappings);
+				CreateCodeMappings(method.MetadataToken.ToInt32(), currentMember);
+				MemberMapping methodMapping = method.CreateCodeMapping(this.CodeMappings[method.MetadataToken.ToInt32()], currentMember);
 				methodBodyDisassembler.Disassemble(method.Body, methodMapping);
 			}
 			
@@ -671,6 +678,9 @@ namespace Mi.Decompiler.Disassembler
 		
 		public void DisassembleField(FieldDefinition field)
 		{
+			// create mappings for decompiled fields only
+			this.DecompiledMemberReferences.Add(field.MetadataToken.ToInt32(), field);
+			
 			output.WriteDefinition(".field ", field);
 			WriteEnum(field.Attributes & FieldAttributes.FieldAccessMask, fieldVisibility);
 			const FieldAttributes hasXAttributes = FieldAttributes.HasDefault | FieldAttributes.HasFieldMarshal | FieldAttributes.HasFieldRVA;
@@ -706,6 +716,9 @@ namespace Mi.Decompiler.Disassembler
 		
 		public void DisassembleProperty(PropertyDefinition property)
 		{
+			// set current member
+			currentMember = property;
+			
 			output.WriteDefinition(".property ", property);
 			WriteFlags(property.Attributes, propertyAttributes);
 			if (property.HasThis)
@@ -727,6 +740,7 @@ namespace Mi.Decompiler.Disassembler
 			WriteAttributes(property.CustomAttributes);
 			WriteNestedMethod(".get", property.GetMethod);
 			WriteNestedMethod(".set", property.SetMethod);
+			
 			foreach (var method in property.OtherMethods) {
 				WriteNestedMethod(".other", method);
 			}
@@ -752,6 +766,9 @@ namespace Mi.Decompiler.Disassembler
 		
 		public void DisassembleEvent(EventDefinition ev)
 		{
+			// set current member
+			currentMember = ev;
+			
 			output.WriteDefinition(".event ", ev);
 			WriteFlags(ev.Attributes, eventAttributes);
 			ev.EventType.WriteTo(output, ILNameSyntax.TypeName);
@@ -805,10 +822,6 @@ namespace Mi.Decompiler.Disassembler
 		
 		public void DisassembleType(TypeDefinition type)
 		{
-			// create IL code mappings - used for debugger
-			if (this.CodeMappings == null)
-				this.CodeMappings = new Tuple<string, List<MemberMapping>>(type.FullName, new List<MemberMapping>());
-			
 			// start writing IL
 			output.WriteDefinition(".class ", type);
 			
@@ -1142,12 +1155,6 @@ namespace Mi.Decompiler.Disassembler
 				DisassembleType(td);
 				output.WriteLine();
 			}
-		}
-		
-		/// <inheritdoc/>
-		public Tuple<string, List<MemberMapping>> CodeMappings {
-			get;
-			private set;
 		}
 	}
 }
