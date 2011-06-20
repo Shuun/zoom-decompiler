@@ -478,7 +478,7 @@
     <Compile Include="ILAst\InitializerPeepholeTransforms.cs" />
     <Compile Include="ILAst\DefaultDictionary.cs" />
     <Compile Include="ILAst\GotoRemoval.cs" />
-    <Compile Include="ILAst\ILAstBuilder.cs" />
+    <Compile Include="ILAst\ILMethodAstBuilder.cs" />
     <Compile Include="ILAst\ILAstOptimizer.cs" />
     <Compile Include="ILAst\ILAstTypes.cs" />
     <Compile Include="ILAst\ILCodes.cs" />
