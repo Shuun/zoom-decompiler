@@ -20,13 +20,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 using Cecil = Mi.Assemblies;
-using System.Collections.ObjectModel;
 
 namespace Mi.Decompiler.ILAst
 {
@@ -225,42 +225,34 @@ namespace Mi.Decompiler.ILAst
             public List<ByteCode> Loads;
         }
 
-		MethodDefinition methodDef;
-		bool optimize;
+		readonly MethodDefinition methodDef;
+		readonly bool optimize;
 		
 		// Virtual instructions to load exception on stack
 		readonly Dictionary<ExceptionHandler, ByteCode> ldexceptions = new Dictionary<ExceptionHandler, ILAstBuilder.ByteCode>();
 
         readonly List<ILVariable> parameterList = new List<ILVariable>();
-        readonly ReadOnlyCollection<ILVariable> m_Parameters;
-
-        readonly ReadOnlyCollection<ILNode> m_Nodes;
 
         private ILAstBuilder(MethodDefinition methodDef, bool optimize)
         {
-            m_Parameters = new ReadOnlyCollection<ILVariable>(parameterList);
-
             this.methodDef = methodDef;
             this.optimize = optimize;
+        }
 
+		public static ILMethodAst Build(MethodDefinition methodDef, bool optimize)
+		{
             if (methodDef.Body.Instructions.Count == 0)
             {
-                m_Nodes = Empty.ReadOnlyCollection<ILNode>();
+                return ILMethodAst.Empty;
             }
             else
             {
-                List<ByteCode> body = StackAnalysis(methodDef);
-                List<ILNode> ast = ConvertToAst(body, new HashSet<ExceptionHandler>(methodDef.Body.ExceptionHandlers));
-                m_Nodes = new ReadOnlyCollection<ILNode>(ast);
+                var ilastBuilder = new ILAstBuilder(methodDef, optimize);
+                List<ByteCode> body = ilastBuilder.StackAnalysis(methodDef);
+                List<ILNode> ast = ilastBuilder.ConvertToAst(body, new HashSet<ExceptionHandler>(methodDef.Body.ExceptionHandlers));
+
+                return new ILMethodAst(ilastBuilder.parameterList, ast);
             }
-        }
-
-        public ReadOnlyCollection<ILVariable> Parameters { get { return m_Parameters; } }
-        public ReadOnlyCollection<ILNode> Nodes { get { return m_Nodes; } }
-
-		public static ILAstBuilder Build(MethodDefinition methodDef, bool optimize)
-		{
-            return new ILAstBuilder(methodDef, optimize);
         }
 		
 		List<ByteCode> StackAnalysis(MethodDefinition methodDef)
@@ -651,17 +643,17 @@ namespace Mi.Decompiler.ILAst
 					case ILCode.__Ldarg:
 						p = (ParameterDefinition)byteCode.Operand;
 						byteCode.Code = ILCode.Ldloc;
-						byteCode.Operand = p.Index < 0 ? thisParameter : this.Parameters[p.Index];
+						byteCode.Operand = p.Index < 0 ? thisParameter : this.parameterList[p.Index];
 						break;
 					case ILCode.__Starg:
 						p = (ParameterDefinition)byteCode.Operand;
 						byteCode.Code = ILCode.Stloc;
-						byteCode.Operand = p.Index < 0 ? thisParameter : this.Parameters[p.Index];
+                        byteCode.Operand = p.Index < 0 ? thisParameter : this.parameterList[p.Index];
 						break;
 					case ILCode.__Ldarga:
 						p = (ParameterDefinition)byteCode.Operand;
 						byteCode.Code = ILCode.Ldloca;
-						byteCode.Operand = p.Index < 0 ? thisParameter : this.Parameters[p.Index];
+                        byteCode.Operand = p.Index < 0 ? thisParameter : this.parameterList[p.Index];
 						break;
 				}
 			}
