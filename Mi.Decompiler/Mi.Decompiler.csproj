@@ -474,6 +474,7 @@
     <Compile Include="FlowAnalysis\SsaBlock.cs" />
     <Compile Include="FlowAnalysis\SsaInstruction.cs" />
     <Compile Include="FlowAnalysis\SsaVariable.cs" />
+    <Compile Include="ILAst\ILMethodAst.cs" />
     <Compile Include="ILAst\InitializerPeepholeTransforms.cs" />
     <Compile Include="ILAst\DefaultDictionary.cs" />
     <Compile Include="ILAst\GotoRemoval.cs" />
