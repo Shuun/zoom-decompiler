@@ -30,7 +30,7 @@ using Cecil = Mi.Assemblies;
 
 namespace Mi.Decompiler.ILAst
 {
-	public sealed class ILAstBuilder
+	public sealed class ILMethodAstBuilder
 	{
 		/// <summary> Immutable </summary>
 		private sealed class StackSlot
@@ -229,11 +229,11 @@ namespace Mi.Decompiler.ILAst
 		readonly bool optimize;
 		
 		// Virtual instructions to load exception on stack
-		readonly Dictionary<ExceptionHandler, ByteCode> ldexceptions = new Dictionary<ExceptionHandler, ILAstBuilder.ByteCode>();
+		readonly Dictionary<ExceptionHandler, ByteCode> ldexceptions = new Dictionary<ExceptionHandler, ILMethodAstBuilder.ByteCode>();
 
         readonly List<ILVariable> parameterList = new List<ILVariable>();
 
-        private ILAstBuilder(MethodDefinition methodDef, bool optimize)
+        private ILMethodAstBuilder(MethodDefinition methodDef, bool optimize)
         {
             this.methodDef = methodDef;
             this.optimize = optimize;
@@ -247,7 +247,7 @@ namespace Mi.Decompiler.ILAst
             }
             else
             {
-                var ilastBuilder = new ILAstBuilder(methodDef, optimize);
+                var ilastBuilder = new ILMethodAstBuilder(methodDef, optimize);
                 List<ByteCode> body = ilastBuilder.StackAnalysis(methodDef);
                 List<ILNode> ast = ilastBuilder.ConvertToAst(body, new HashSet<ExceptionHandler>(methodDef.Body.ExceptionHandlers));
 
