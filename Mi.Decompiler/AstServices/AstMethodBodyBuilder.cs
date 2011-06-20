@@ -377,7 +377,8 @@ namespace Mi.Decompiler.AstServices
 						var newArgs = new List<Expression>();
 						foreach (var arrayDimension in arrayType.Dimensions.Skip(1).Reverse())
 						{
-							int length = (int)arrayDimension.UpperBound - (int)arrayDimension.LowerBound;
+							int length = (int)arrayDimension.UpperBound - (arrayDimension.LowerBound ?? 0);
+
 							for (int j = 0; j < args.Count; j += length)
 							{
 								var child = new ArrayInitializerExpression();
