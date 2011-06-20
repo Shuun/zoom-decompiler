@@ -113,7 +113,7 @@ namespace Mi.Decompiler.ILAst
                 arrayType = new ArrayType(
                     arrayType.ElementType,
                     from l in arrayLengths
-                    select new ArrayDimension(0, arrayLengths[l]));
+                    select new ArrayDimension(0, l));
 
 				var totalElements = arrayLengths.Aggregate(1, (t, l) => t * l);
 				ILExpression[] newArr;
