@@ -223,8 +223,8 @@ namespace Mi.Decompiler.ILAst
 				throw new YieldAnalysisFailedException();
 			
 			ILBlock ilMethod = new ILBlock();
-			ILAstBuilder astBuilder = new ILAstBuilder();
-			ilMethod.Body = astBuilder.Build(method, true);
+            var astBuilder = ILAstBuilder.Build(method, true);
+			ilMethod.Body = astBuilder.Nodes.ToList();
 			ILAstOptimizer optimizer = new ILAstOptimizer();
 			optimizer.Optimize(context, ilMethod, ILAstOptimizationStep.YieldReturn);
 			return ilMethod;
