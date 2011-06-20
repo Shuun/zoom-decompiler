@@ -47,9 +47,6 @@ namespace Mi.Decompiler.Disassembler
 			this.output = output;
 			this.verifyProgress = verifyProgress;
 			this.methodBodyDisassembler = new MethodBodyDisassembler(output, detectControlStructure, verifyProgress);
-			
-			this.CodeMappings = new Dictionary<int, List<MemberMapping>>();
-			this.DecompiledMemberReferences = new Dictionary<int, MemberReference>();
 		}
 		
 		#region Disassemble Method
