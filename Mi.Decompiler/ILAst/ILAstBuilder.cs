@@ -26,6 +26,7 @@ using System.Text;
 using Mi.Assemblies;
 using Mi.Assemblies.Cil;
 using Cecil = Mi.Assemblies;
+using System.Collections.ObjectModel;
 
 namespace Mi.Decompiler.ILAst
 {
@@ -229,10 +230,15 @@ namespace Mi.Decompiler.ILAst
 		
 		// Virtual instructions to load exception on stack
 		readonly Dictionary<ExceptionHandler, ByteCode> ldexceptions = new Dictionary<ExceptionHandler, ILAstBuilder.ByteCode>();
+        readonly List<ILVariable> parameterList = new List<ILVariable>();
+        readonly ReadOnlyCollection<ILVariable> m_Parameters;
 
         public ILAstBuilder()
         {
+            m_Parameters = new ReadOnlyCollection<ILVariable>(parameterList);
         }
+
+        public ReadOnlyCollection<ILVariable> Parameters { get { return m_Parameters; } }
 
 		public List<ILNode> Build(MethodDefinition methodDef, bool optimize)
 		{
@@ -617,8 +623,6 @@ namespace Mi.Decompiler.ILAst
 			}
 		}
 		
-		public List<ILVariable> Parameters = new List<ILVariable>();
-		
 		void ConvertParameters(List<ByteCode> body)
 		{
 			ILVariable thisParameter = null;
@@ -630,7 +634,7 @@ namespace Mi.Decompiler.ILAst
 				thisParameter.OriginalParameter = methodDef.Body.ThisParameter;
 			}
 			foreach (ParameterDefinition p in methodDef.Parameters) {
-				this.Parameters.Add(new ILVariable { Type = p.ParameterType, Name = p.Name, OriginalParameter = p });
+				this.parameterList.Add(new ILVariable { Type = p.ParameterType, Name = p.Name, OriginalParameter = p });
 			}
 			foreach (ByteCode byteCode in body) {
 				ParameterDefinition p;
@@ -653,7 +657,7 @@ namespace Mi.Decompiler.ILAst
 				}
 			}
 			if (thisParameter != null)
-				this.Parameters.Add(thisParameter);
+				this.parameterList.Add(thisParameter);
 		}
 		
 		List<ILNode> ConvertToAst(List<ByteCode> body, HashSet<ExceptionHandler> ehs)
