@@ -1,4 +1,5 @@
-﻿// Copyright (c) 2011 AlphaSierraPapa for the SharpDevelop Team
+﻿#region Copyright
+// Copyright (c) 2011 AlphaSierraPapa for the SharpDevelop Team
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
@@ -15,6 +16,7 @@
 // FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -42,13 +44,13 @@ namespace Mi.Decompiler
 		/// Gets the code mappings.
 		/// <remarks>Key is the metadata token.</remarks>
 		/// </summary>
-		public Dictionary<int, List<MemberMapping>> CodeMappings { get; protected set; }
+        public readonly Dictionary<int, List<MemberMapping>> CodeMappings = new Dictionary<int, List<MemberMapping>>();
 		
 		/// <summary>
 		/// Gets the MembeReference that is decompiled (a MethodDefinition, PropertyDefinition etc.)
 		/// <remarks>Key is the metadata token.</remarks>
 		/// </summary>
-		public Dictionary<int, MemberReference> DecompiledMemberReferences { get; protected set; }
+        public readonly Dictionary<int, MemberReference> DecompiledMemberReferences = new Dictionary<int, MemberReference>();
 		
 		/// <summary>
 		/// Create data in the CodeMappings and DecompiledMemberReferences.
