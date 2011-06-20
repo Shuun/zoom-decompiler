@@ -86,8 +86,8 @@ namespace Mi.Decompiler.AstServices
 			
 			context.VerifyProgress();
 			ILBlock ilMethod = new ILBlock();
-			ILAstBuilder astBuilder = new ILAstBuilder();
-			ilMethod.Body = astBuilder.Build(methodDef, true);
+            var astBuilder = ILAstBuilder.Build(methodDef, true);
+			ilMethod.Body = astBuilder.Nodes.ToList();
 			
 			context.VerifyProgress();
 			ILAstOptimizer bodyGraph = new ILAstOptimizer();

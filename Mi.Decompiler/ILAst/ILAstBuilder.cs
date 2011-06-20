@@ -230,29 +230,38 @@ namespace Mi.Decompiler.ILAst
 		
 		// Virtual instructions to load exception on stack
 		readonly Dictionary<ExceptionHandler, ByteCode> ldexceptions = new Dictionary<ExceptionHandler, ILAstBuilder.ByteCode>();
+
         readonly List<ILVariable> parameterList = new List<ILVariable>();
         readonly ReadOnlyCollection<ILVariable> m_Parameters;
 
-        public ILAstBuilder()
+        readonly ReadOnlyCollection<ILNode> m_Nodes;
+
+        private ILAstBuilder(MethodDefinition methodDef, bool optimize)
         {
             m_Parameters = new ReadOnlyCollection<ILVariable>(parameterList);
+
+            this.methodDef = methodDef;
+            this.optimize = optimize;
+
+            if (methodDef.Body.Instructions.Count == 0)
+            {
+                m_Nodes = Empty.ReadOnlyCollection<ILNode>();
+            }
+            else
+            {
+                List<ByteCode> body = StackAnalysis(methodDef);
+                List<ILNode> ast = ConvertToAst(body, new HashSet<ExceptionHandler>(methodDef.Body.ExceptionHandlers));
+                m_Nodes = new ReadOnlyCollection<ILNode>(ast);
+            }
         }
 
         public ReadOnlyCollection<ILVariable> Parameters { get { return m_Parameters; } }
+        public ReadOnlyCollection<ILNode> Nodes { get { return m_Nodes; } }
 
-		public List<ILNode> Build(MethodDefinition methodDef, bool optimize)
+		public static ILAstBuilder Build(MethodDefinition methodDef, bool optimize)
 		{
-			this.methodDef = methodDef;
-			this.optimize = optimize;
-			
-			if (methodDef.Body.Instructions.Count == 0) return new List<ILNode>();
-			
-			List<ByteCode> body = StackAnalysis(methodDef);
-			
-			List<ILNode> ast = ConvertToAst(body, new HashSet<ExceptionHandler>(methodDef.Body.ExceptionHandlers));
-			
-			return ast;
-		}
+            return new ILAstBuilder(methodDef, optimize);
+        }
 		
 		List<ByteCode> StackAnalysis(MethodDefinition methodDef)
 		{
