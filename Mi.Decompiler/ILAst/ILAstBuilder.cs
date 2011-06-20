@@ -216,7 +216,14 @@ namespace Mi.Decompiler.ILAst
 				return sb.ToString();
 			}
 		}
-		
+
+        private sealed class VariableInfo
+        {
+            public ILVariable Variable;
+            public List<ByteCode> Stores;
+            public List<ByteCode> Loads;
+        }
+
 		MethodDefinition methodDef;
 		bool optimize;
 		
@@ -503,13 +510,6 @@ namespace Mi.Decompiler.ILAst
 			ConvertParameters(body);
 			
 			return body;
-		}
-		
-		private sealed class VariableInfo
-		{
-			public ILVariable Variable;
-			public List<ByteCode> Stores;
-			public List<ByteCode> Loads;
 		}
 		
 		/// <summary>
