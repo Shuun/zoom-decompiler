@@ -416,7 +416,7 @@ namespace Mi.Decompiler.ILAst
 						// Merge stacks - modify the target
 						for (int i = 0; i < newStack.Count; i++) {
 							ByteCode[] oldPushedBy = branchTarget.StackBefore[i].PushedBy;
-							ByteCode[] newPushedBy = oldPushedBy.Union(newStack[i].PushedBy);
+							ByteCode[] newPushedBy = Union(oldPushedBy, newStack[i].PushedBy);
 							if (newPushedBy.Length > oldPushedBy.Length) {
 								branchTarget.StackBefore[i] = new StackSlot(newPushedBy, null);
 								modified = true;
@@ -434,7 +434,7 @@ namespace Mi.Decompiler.ILAst
 									modified = true;
 								} else {
 									ByteCode[] oldStoredBy = oldSlot.StoredBy;
-									ByteCode[] newStoredBy = oldStoredBy.Union(newSlot.StoredBy);
+									ByteCode[] newStoredBy = Union(oldStoredBy, newSlot.StoredBy);
 									if (newStoredBy.Length > oldStoredBy.Length) {
 										branchTarget.VariablesBefore[i] = new VariableSlot(newStoredBy, false);
 										modified = true;
@@ -679,7 +679,7 @@ namespace Mi.Decompiler.ILAst
 				{
 					int tryStartIdx = 0;
 					while (tryStartIdx < body.Count && body[tryStartIdx].Offset < tryStart) tryStartIdx++;
-					ast.AddRange(ConvertToAst(body.CutRange(0, tryStartIdx)));
+                    ast.AddRange(ConvertToAst(CutRange(body, 0, tryStartIdx)));
 				}
 				
 				// Cut the try block
@@ -688,7 +688,7 @@ namespace Mi.Decompiler.ILAst
 					ehs.ExceptWith(nestedEHs);
 					int tryEndIdx = 0;
 					while (tryEndIdx < body.Count && body[tryEndIdx].Offset < tryEnd) tryEndIdx++;
-					tryCatchBlock.TryBlock = new ILBlock(ConvertToAst(body.CutRange(0, tryEndIdx), nestedEHs));
+                    tryCatchBlock.TryBlock = new ILBlock(ConvertToAst(CutRange(body, 0, tryEndIdx), nestedEHs));
 				}
 				
 				// Cut all handlers
@@ -701,7 +701,7 @@ namespace Mi.Decompiler.ILAst
 					while (endIdx < body.Count && body[endIdx].Offset < handlerEndOffset) endIdx++;
 					HashSet<ExceptionHandler> nestedEHs = new HashSet<ExceptionHandler>(ehs.Where(e => (eh.HandlerStart.Offset <= e.TryStart.Offset && e.TryEnd.Offset < handlerEndOffset) || (eh.HandlerStart.Offset < e.TryStart.Offset && e.TryEnd.Offset <= handlerEndOffset)));
 					ehs.ExceptWith(nestedEHs);
-					List<ILNode> handlerAst = ConvertToAst(body.CutRange(startIdx, endIdx - startIdx), nestedEHs);
+                    List<ILNode> handlerAst = ConvertToAst(CutRange(body, startIdx, endIdx - startIdx), nestedEHs);
 					if (eh.HandlerType == ExceptionHandlerType.Catch) {
 						ILTryCatchBlock.CatchBlock catchBlock = new ILTryCatchBlock.CatchBlock() {
 							ExceptionType = eh.CatchType,
@@ -803,29 +803,27 @@ namespace Mi.Decompiler.ILAst
 			
 			return ast;
 		}
-	}
-	
-	public static class ILAstBuilderExtensionMethods
-	{
-		public static List<T> CutRange<T>(this List<T> list, int start, int count)
-		{
-			List<T> ret = new List<T>(count);
-			for (int i = 0; i < count; i++) {
-				ret.Add(list[start + i]);
-			}
-			list.RemoveRange(start, count);
-			return ret;
-		}
-		
-		public static T[] Union<T>(this T[] a, T[] b)
-		{
-			if (a.Length == 0)
-				return b;
-			if (b.Length == 0)
-				return a;
-			if (a.Length == 1 && b.Length == 1 && a[0].Equals(b[0]))
-				return a;
-			return Enumerable.Union(a, b).ToArray();
-		}
-	}
+
+        static List<T> CutRange<T>(List<T> list, int start, int count)
+        {
+            List<T> ret = new List<T>(count);
+            for (int i = 0; i < count; i++)
+            {
+                ret.Add(list[start + i]);
+            }
+            list.RemoveRange(start, count);
+            return ret;
+        }
+    
+        public static T[] Union<T>(T[] a, T[] b)
+        {
+            if (a.Length == 0)
+                return b;
+            if (b.Length == 0)
+                return a;
+            if (a.Length == 1 && b.Length == 1 && a[0].Equals(b[0]))
+                return a;
+            return Enumerable.Union(a, b).ToArray();
+        }
+    }
 }
