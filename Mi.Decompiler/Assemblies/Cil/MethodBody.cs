@@ -31,6 +31,7 @@ using System;
 using System.Collections.ObjectModel;
 
 using Mi;
+using System.Collections.Generic;
 
 namespace Mi.Assemblies.Cil {
 
@@ -45,7 +46,7 @@ namespace Mi.Assemblies.Cil {
 		internal MetadataToken local_var_token;
 
 		internal Collection<Instruction> instructions;
-		internal Collection<ExceptionHandler> exceptions;
+		internal List<ExceptionHandler> exceptions;
 		internal Collection<VariableDefinition> variables;
 		Scope scope;
 
@@ -80,8 +81,8 @@ namespace Mi.Assemblies.Cil {
 			get { return !exceptions.IsNullOrEmpty (); }
 		}
 
-		public Collection<ExceptionHandler> ExceptionHandlers {
-			get { return exceptions ?? (exceptions = new Collection<ExceptionHandler> ()); }
+		public List<ExceptionHandler> ExceptionHandlers {
+			get { return exceptions ?? (exceptions = new List<ExceptionHandler> ()); }
 		}
 
 		public bool HasVariables {

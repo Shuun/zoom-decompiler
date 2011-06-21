@@ -499,7 +499,7 @@ namespace Mi.Assemblies.Cil {
 				WriteFatSection (handlers);
 		}
 
-		static bool RequiresFatSection (Collection<ExceptionHandler> handlers)
+		static bool RequiresFatSection (List<ExceptionHandler> handlers)
 		{
 			for (int i = 0; i < handlers.Count; i++) {
 				var handler = handlers [i];
@@ -526,7 +526,7 @@ namespace Mi.Assemblies.Cil {
 			return end.Offset - start.Offset > 255 || start.Offset > 65535;
 		}
 
-		void WriteSmallSection (Collection<ExceptionHandler> handlers)
+		void WriteSmallSection (List<ExceptionHandler> handlers)
 		{
 			const byte eh_table = 0x1;
 
@@ -540,7 +540,7 @@ namespace Mi.Assemblies.Cil {
 				i => WriteByte ((byte) i));
 		}
 
-		void WriteFatSection (Collection<ExceptionHandler> handlers)
+		void WriteFatSection (List<ExceptionHandler> handlers)
 		{
 			const byte eh_table = 0x1;
 			const byte fat_format = 0x40;
@@ -555,7 +555,7 @@ namespace Mi.Assemblies.Cil {
 			WriteExceptionHandlers (handlers, WriteInt32, WriteInt32);
 		}
 
-		void WriteExceptionHandlers (Collection<ExceptionHandler> handlers, Action<int> write_entry, Action<int> write_length)
+		void WriteExceptionHandlers (List<ExceptionHandler> handlers, Action<int> write_entry, Action<int> write_length)
 		{
 			for (int i = 0; i < handlers.Count; i++) {
 				var handler = handlers [i];
