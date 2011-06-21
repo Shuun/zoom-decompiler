@@ -260,8 +260,9 @@ namespace Mi.Decompiler.ILAst
 			Dictionary<Instruction, ByteCode> instrToByteCode = new Dictionary<Instruction, ByteCode>();
 			
 			// Create temporary structure for the stack analysis
-			List<ByteCode> body = new List<ByteCode>(methodDef.Body.Instructions.Count);
+			var result = new List<ByteCode>(methodDef.Body.Instructions.Count);
 			List<Instruction> prefixes = null;
+
 			foreach(Instruction inst in methodDef.Body.Instructions) {
 				if (inst.OpCode.OpCodeType == OpCodeType.Prefix) {
 					if (prefixes == null)
@@ -288,10 +289,10 @@ namespace Mi.Decompiler.ILAst
 				} else {
 					instrToByteCode[inst] = byteCode;
 				}
-				body.Add(byteCode);
+				result.Add(byteCode);
 			}
-			for (int i = 0; i < body.Count - 1; i++) {
-				body[i].Next = body[i + 1];
+			for (int i = 0; i < result.Count - 1; i++) {
+				result[i].Next = result[i + 1];
 			}
 			
 			Stack<ByteCode> agenda = new Stack<ByteCode>();
@@ -337,9 +338,9 @@ namespace Mi.Decompiler.ILAst
 				}
 			}
 			
-			body[0].StackBefore = new List<StackSlot>();
-			body[0].VariablesBefore = VariableSlot.MakeEmptyState(varCount);
-			agenda.Push(body[0]);
+			result[0].StackBefore = new List<StackSlot>();
+			result[0].VariablesBefore = VariableSlot.MakeEmptyState(varCount);
+			agenda.Push(result[0]);
 			
 			// Process agenda
 			while(agenda.Count > 0) {
@@ -452,10 +453,10 @@ namespace Mi.Decompiler.ILAst
 			
 			// Occasionally the compilers or obfuscators generate unreachable code (which migt be intentonally invalid)
 			// I belive it is safe to just remove it
-			body.RemoveAll(b => b.StackBefore == null);
+			result.RemoveAll(b => b.StackBefore == null);
 			
 			// Genertate temporary variables to replace stack
-			foreach(ByteCode byteCode in body) {
+			foreach(ByteCode byteCode in result) {
 				int argIdx = 0;
 				int popCount = byteCode.PopCount ?? byteCode.StackBefore.Count;
 				for (int i = byteCode.StackBefore.Count - popCount; i < byteCode.StackBefore.Count; i++) {
@@ -473,18 +474,18 @@ namespace Mi.Decompiler.ILAst
 			
 			// Try to use single temporary variable insted of several if possilbe (especially useful for dup)
 			// This has to be done after all temporary variables are assigned so we know about all loads
-			foreach(ByteCode byteCode in body) {
+			foreach(ByteCode byteCode in result) {
 				if (byteCode.StoreTo != null && byteCode.StoreTo.Count > 1) {
 					var locVars = byteCode.StoreTo;
 					// For each of the variables, find the location where it is loaded - there should be preciesly one
-					var loadedBy = locVars.Select(locVar => body.SelectMany(bc => bc.StackBefore).Single(s => s.LoadFrom == locVar)).ToList();
+					var loadedBy = locVars.Select(locVar => result.SelectMany(bc => bc.StackBefore).Single(s => s.LoadFrom == locVar)).ToList();
 					// We now know that all the variables have a single load,
 					// Let's make sure that they have also a single store - us
 					if (loadedBy.All(slot => slot.PushedBy.Length == 1 && slot.PushedBy[0] == byteCode)) {
 						// Great - we can reduce everything into single variable
 						ILVariable tmpVar = new ILVariable() { Name = string.Format("expr_{0:X2}", byteCode.Offset), IsGenerated = true };
 						byteCode.StoreTo = new List<ILVariable>() { tmpVar };
-						foreach(ByteCode bc in body) {
+						foreach(ByteCode bc in result) {
 							for (int i = 0; i < bc.StackBefore.Count; i++) {
 								// Is it one of the variable to be merged?
 								if (locVars.Contains(bc.StackBefore[i].LoadFrom)) {
@@ -498,10 +499,10 @@ namespace Mi.Decompiler.ILAst
 			}
 			
 			// Split and convert the normal local variables
-			ConvertLocalVariables(body);
+			ConvertLocalVariables(result);
 			
 			// Convert branch targets to labels
-			foreach(ByteCode byteCode in body) {
+			foreach(ByteCode byteCode in result) {
 				if (byteCode.Operand is Instruction[]) {
 					List<ILLabel> newOperand = new List<ILLabel>();
 					foreach(Instruction target in (Instruction[])byteCode.Operand) {
@@ -514,9 +515,9 @@ namespace Mi.Decompiler.ILAst
 			}
 			
 			// Convert parameters to ILVariables
-			ConvertParameters(body);
+			ConvertParameters(result);
 			
-			return body;
+			return result;
 		}
 		
 		/// <summary>
