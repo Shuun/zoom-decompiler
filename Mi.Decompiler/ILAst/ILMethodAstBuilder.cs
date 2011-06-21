@@ -108,19 +108,34 @@ namespace Mi.Decompiler.ILAst
 		
 		private sealed class ByteCode
 		{
-			public ILLabel  Label;      // Non-null only if needed
-			public int      Offset;
-			public int      EndOffset;
-			public ILCode   Code;
-			public object   Operand;
-			public int?     PopCount;   // Null means pop all
-			public int      PushCount;
-			public string   Name { get { return "IL_" + this.Offset.ToString("X2"); } }
+			public ILLabel Label;      // Non-null only if needed
+			
+            public int Offset;
+			
+            public int EndOffset;
+			
+            public ILCode Code;
+
+			public object Operand;
+
+            /// <summary> Null means pop all. </summary>
+			public int? PopCount;
+
+			public int PushCount;
+
 			public ByteCode Next;
-			public Instruction[]    Prefixes;        // Non-null only if needed
-			public List<StackSlot>  StackBefore;     // Unique per bytecode; not shared
-			public List<ILVariable> StoreTo;         // Store result of instruction to those AST variables
-			public VariableSlot[]   VariablesBefore; // Unique per bytecode; not shared
+
+            /// <summary> Non-null only if needed. </summary>
+			public Instruction[] Prefixes;
+
+            /// <summary> Unique per bytecode; not shared. </summary>
+			public List<StackSlot> StackBefore;
+
+            /// <summary> Store result of instruction to those AST variables. </summary>
+			public List<ILVariable> StoreTo;
+
+            /// <summary> Unique per bytecode; not shared. </summary>
+			public VariableSlot[] VariablesBefore;
 			
 			public VariableDefinition OperandAsVariable { get { return (VariableDefinition)this.Operand; } }
 			
@@ -129,7 +144,8 @@ namespace Mi.Decompiler.ILAst
 				StringBuilder sb = new StringBuilder();
 				
 				// Label
-				sb.Append(this.Name);
+                sb.Append("IL_");
+				sb.Append(this.Offset.ToString("X2"));
 				sb.Append(':');
 				if (this.Label != null)
 					sb.Append('*');
@@ -312,16 +328,18 @@ namespace Mi.Decompiler.ILAst
 			
 			int varCount = methodDef.Body.Variables.Count;
 			
-			var exceptionHandlerStarts = new HashSet<ByteCode>(
+			var exceptionHandlerStarts = new List<ByteCode>(
                 from eh in methodDef.Body.ExceptionHandlers
                 select instrToByteCode[eh.HandlerStart]);
 			
 			// Add known states
 			if(methodDef.Body.HasExceptionHandlers) {
-				foreach(ExceptionHandler ex in methodDef.Body.ExceptionHandlers) {
-					ByteCode handlerStart = instrToByteCode[ex.HandlerStart];
+				foreach(ExceptionHandler ex in methodDef.Body.ExceptionHandlers)
+                {					
+                    ByteCode handlerStart = instrToByteCode[ex.HandlerStart];
 					handlerStart.StackBefore = new List<StackSlot>();
 					handlerStart.VariablesBefore = VariableSlot.MakeFullState(varCount);
+
 					if (ex.HandlerType == ExceptionHandlerType.Catch || ex.HandlerType == ExceptionHandlerType.Filter) {
 						// Catch and Filter handlers start with the exeption on the stack
 						ByteCode ldexception = new ByteCode() {
@@ -341,12 +359,14 @@ namespace Mi.Decompiler.ILAst
 						ByteCode filterStart = instrToByteCode[ex.FilterStart];
 						filterStart.StackBefore = new List<StackSlot>();
 						filterStart.VariablesBefore = VariableSlot.MakeFullState(varCount);
-						ByteCode ldexception = new ByteCode() {
+						
+                        ByteCode ldexception = new ByteCode() {
 							Code = ILCode.Ldexception,
 							Operand = ex.CatchType,
 							PopCount = 0,
 							PushCount = 1
 						};
+
 						// TODO: ldexceptions[ex] = ldexception;
 						filterStart.StackBefore.Add(new StackSlot(ldexception));
 						agenda.Push(filterStart);
@@ -396,7 +416,10 @@ namespace Mi.Decompiler.ILAst
 						branchTargets.Add(target);
 						// The target of a branch must have label
 						if (target.Label == null) {
-							target.Label = new ILLabel() { Name = target.Name };
+							target.Label = new ILLabel()
+                            {
+                                Name = "IL_"+target.Offset.ToString("X2")
+                            };
 						}
 					}
 				} else if (byteCode.Operand is Instruction) {
@@ -404,7 +427,10 @@ namespace Mi.Decompiler.ILAst
 					branchTargets.Add(target);
 					// The target of a branch must have label
 					if (target.Label == null) {
-						target.Label = new ILLabel() { Name = target.Name };
+						target.Label = new ILLabel()
+                        {
+                            Name = "IL_" + target.Offset.ToString("X2")
+                        };
 					}
 				}
 				
@@ -422,7 +448,8 @@ namespace Mi.Decompiler.ILAst
 						agenda.Push(branchTarget);
 					} else {
 						if (branchTarget.StackBefore.Count != newStack.Count) {
-							throw new Exception("Inconsistent stack size at " + byteCode.Name);
+							throw new InvalidOperationException(
+                                "Inconsistent stack size at " + byteCode.Code+" offset "+byteCode.Offset.ToString("X2")+".");
 						}
 						
 						// Be careful not to change our new data - it might be reused for several branch targets.
