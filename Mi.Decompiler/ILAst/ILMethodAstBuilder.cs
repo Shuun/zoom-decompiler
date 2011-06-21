@@ -270,7 +270,10 @@ namespace Mi.Decompiler.ILAst
 					prefixes.Add(inst);
 					continue;
 				}
+
+                // take the normal IL opcode as an extended IL opcode 'invented' specially for the decompiler
 				ILCode code  = (ILCode)inst.OpCode.Code;
+
 				object operand = inst.Operand;
 				ILCodeUtil.ExpandMacro(ref code, ref operand, methodDef.Body);
 				ByteCode byteCode = new ByteCode() {
