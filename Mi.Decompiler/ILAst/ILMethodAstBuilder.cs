@@ -275,7 +275,10 @@ namespace Mi.Decompiler.ILAst
 				ILCode code  = (ILCode)inst.OpCode.Code;
 
 				object operand = inst.Operand;
-				ILCodeUtil.ExpandMacro(ref code, ref operand, methodDef.Body);
+                
+                // convert positional opcodes like ldarg.0 to explicitly-argumented like ldarg(parameter)
+                ILCodeUtil.ExpandMacro(ref code, ref operand, methodDef.Body);
+
 				ByteCode byteCode = new ByteCode() {
 					Offset      = inst.Offset,
 					EndOffset   = inst.Next != null ? inst.Next.Offset : methodDef.Body.CodeSize,
@@ -284,7 +287,10 @@ namespace Mi.Decompiler.ILAst
 					PopCount    = inst.GetPopDelta(),
 					PushCount   = inst.GetPushDelta()
 				};
+
+                // populate instrToByteCode
 				if (prefixes != null) {
+                    // instruction starts from its first prefix
 					instrToByteCode[prefixes[0]] = byteCode;
 					byteCode.Offset = prefixes[0].Offset;
 					byteCode.Prefixes = prefixes.ToArray();
@@ -292,8 +298,12 @@ namespace Mi.Decompiler.ILAst
 				} else {
 					instrToByteCode[inst] = byteCode;
 				}
+
+                // populate the result
 				result.Add(byteCode);
 			}
+
+            // roll through the results and assign 'Next'
 			for (int i = 0; i < result.Count - 1; i++) {
 				result[i].Next = result[i + 1];
 			}
@@ -302,7 +312,9 @@ namespace Mi.Decompiler.ILAst
 			
 			int varCount = methodDef.Body.Variables.Count;
 			
-			var exceptionHandlerStarts = new HashSet<ByteCode>(methodDef.Body.ExceptionHandlers.Select(eh => instrToByteCode[eh.HandlerStart]));
+			var exceptionHandlerStarts = new HashSet<ByteCode>(
+                from eh in methodDef.Body.ExceptionHandlers
+                select instrToByteCode[eh.HandlerStart]);
 			
 			// Add known states
 			if(methodDef.Body.HasExceptionHandlers) {
@@ -321,7 +333,8 @@ namespace Mi.Decompiler.ILAst
 						ldexceptions[ex] = ldexception;
 						handlerStart.StackBefore.Add(new StackSlot(ldexception));
 					}
-					agenda.Push(handlerStart);
+					
+                    agenda.Push(handlerStart);
 					
 					if (ex.HandlerType == ExceptionHandlerType.Filter)
 					{
