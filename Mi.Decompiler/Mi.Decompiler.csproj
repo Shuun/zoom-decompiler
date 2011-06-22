@@ -50,7 +50,7 @@
     <DefineConstants>TRACE;SILVERLIGHT;READ_ONLY;NET_3_5</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;NET_3_5</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;NET_3_5;READ_ONLY</DefineConstants>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
@@ -68,6 +68,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assemblies2\Assembly.cs" />
+    <Compile Include="Assemblies2\AssemblyReader.cs" />
+    <Compile Include="Assemblies2\AssemblyReference.cs" />
+    <Compile Include="Assemblies2\Instruction.cs" />
+    <Compile Include="Assemblies2\InstructionArgument.cs" />
+    <Compile Include="Assemblies2\Method.cs" />
+    <Compile Include="Assemblies2\SequencePoint.cs" />
+    <Compile Include="Assemblies2\TypeCode.cs" />
+    <Compile Include="Assemblies2\Local.cs" />
     <Compile Include="Assemblies\ArrayDimension.cs" />
     <Compile Include="Assemblies\Metadata\TableHeap.cs" />
     <Compile Include="Assemblies\Metadata\TableInformation.cs" />
@@ -471,9 +480,8 @@
     <Compile Include="FlowAnalysis\ControlFlowGraph.cs" />
     <Compile Include="FlowAnalysis\ControlFlowNode.cs" />
     <Compile Include="FlowAnalysis\OpCodeInfo.cs" />
-    <Compile Include="FlowAnalysis\SsaBlock.cs" />
-    <Compile Include="FlowAnalysis\SsaInstruction.cs" />
-    <Compile Include="FlowAnalysis\SsaVariable.cs" />
+    <Compile Include="ILAst\ILMethodAstBuilder.ConvertToAst.cs" />
+    <Compile Include="ILAst\ILMethodAstBuilder.StackAnalysis.cs" />
     <Compile Include="ILAst\ILMethodAst.cs" />
     <Compile Include="ILAst\InitializerPeepholeTransforms.cs" />
     <Compile Include="ILAst\DefaultDictionary.cs" />

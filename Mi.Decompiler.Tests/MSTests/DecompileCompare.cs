@@ -12,6 +12,18 @@ namespace MSTests
     public class DecompileCompare
     {
         [TestMethod]
+        public void DecompileMscorlib()
+        {
+            TestingLogic.Decompile(typeof(int).Assembly.Location);
+        }
+
+        [TestMethod]
+        public void DecompileSystemCore()
+        {
+            TestingLogic.Decompile(typeof(Enumerable).Assembly.Location);
+        }
+
+        [TestMethod]
         public void Test()
         {
             bool failedAny = false;

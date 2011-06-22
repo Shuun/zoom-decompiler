@@ -91,6 +91,8 @@ namespace Mi.Decompiler.Tests
 
         static void Main()
         {
+            //GenerateInstructionClasses();
+
             RunOnCore();
 
             var succeded = new List<string>();
@@ -142,6 +144,30 @@ namespace Mi.Decompiler.Tests
             Console.WriteLine("Created: " + (file.CreationTime > file.LastWriteTime ? file.CreationTime : file.LastWriteTime) + ".");
 
             Console.Write("Press any key to exit"); Console.ReadKey();
+        }
+
+        private static void GenerateInstructionClasses()
+        {
+            string instructionsPath = @"C:\Users\Mihailik\Documents\Dev\ILSPY\SL\Mi.Decompiler\Assemblies2\Instructions";
+            string template = File.ReadAllText(Path.Combine(instructionsPath, "InstructionX.cs"));
+            foreach (var opco in typeof(System.Reflection.Emit.OpCodes).GetFields(BindingFlags.Public | BindingFlags.Static))
+            {
+                string spec = template.Replace("X", opco.Name);
+                File.WriteAllText(Path.Combine(instructionsPath, opco.Name + ".cs"), spec);
+            }
+        }
+
+        public static void Decompile(string path)
+        {
+            var asm = AssemblyDefinition.ReadAssembly(path);
+            var settings = new DecompilerSettings();
+            settings.FullyQualifyAmbiguousTypeNames = false;
+            var ctx = new DecompilerContext(asm.MainModule) { Settings = settings };
+            var decompiler = new AstBuilder(ctx);
+            decompiler.AddAssembly(asm);
+            new Helpers.RemoveCompilerAttribute().Run(decompiler.CompilationUnit);
+            var output = new StringWriter();
+            decompiler.GenerateCode(new PlainTextOutput(output));
         }
 
         public static IEnumerable<KeyValuePair<string, Action>> GetTests(string path)
