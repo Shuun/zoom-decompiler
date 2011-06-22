@@ -41,6 +41,7 @@ namespace Mi.Assemblies {
 		Open,
 	}
 
+#if !READ_ONLY
 	class MetadataImporter {
 
 		readonly ModuleDefinition module;
@@ -550,4 +551,6 @@ namespace Mi.Assemblies {
 			return imported_instance;
 		}
 	}
+
+#endif
 }
