@@ -515,14 +515,20 @@ namespace Mi.Decompiler.ILAst
 				case ILCode.Rem_Un:
 					return InferArgumentsInBinaryOperator(expr, false, expectedType);
 				case ILCode.Shl:
-				case ILCode.Shr:
 					if (forceInferChildren)
 						InferTypeForExpression(expr.Arguments[1], typeSystem.Int32);
-					return InferTypeForExpression(expr.Arguments[0], typeSystem.Int32);
+					if (expectedType != null && (
+						expectedType.MetadataType == MetadataType.Int32 || expectedType.MetadataType == MetadataType.UInt32 ||
+						expectedType.MetadataType == MetadataType.Int64 || expectedType.MetadataType == MetadataType.UInt64)
+					   )
+						return NumericPromotion(InferTypeForExpression(expr.Arguments[0], expectedType));
+					else
+						return NumericPromotion(InferTypeForExpression(expr.Arguments[0], null));
+				case ILCode.Shr:
 				case ILCode.Shr_Un:
 					if (forceInferChildren)
 						InferTypeForExpression(expr.Arguments[1], typeSystem.Int32);
-					return InferTypeForExpression(expr.Arguments[0], typeSystem.UInt32);
+					return NumericPromotion(InferTypeForExpression(expr.Arguments[0], null));
 				case ILCode.CompoundAssignment:
 					{
 						TypeReference varType = InferTypeForExpression(expr.Arguments[0].Arguments[0], null);
@@ -543,9 +549,19 @@ namespace Mi.Decompiler.ILAst
 				case ILCode.Ldc_I4:
 					if (IsBoolean(expectedType) && ((int)expr.Operand == 0 || (int)expr.Operand == 1))
 						return typeSystem.Boolean;
-					return (IsIntegerOrEnum(expectedType) || expectedType is PointerType) ? expectedType : typeSystem.Int32;
+					if (expectedType is PointerType && (int)expr.Operand == 0)
+						return expectedType;
+					if (IsIntegerOrEnum(expectedType) && OperandFitsInType(expectedType, (int)expr.Operand))
+						return expectedType;
+					else
+						return typeSystem.Int32;
 				case ILCode.Ldc_I8:
-					return (IsIntegerOrEnum(expectedType) || expectedType is PointerType) ? expectedType : typeSystem.Int64;
+					if (expectedType is PointerType && (long)expr.Operand == 0)
+						return expectedType;
+					if (IsIntegerOrEnum(expectedType) && GetInformationAmount(expectedType) >= NativeInt)
+						return expectedType;
+					else
+						return typeSystem.Int64;
 				case ILCode.Ldc_R4:
 					return typeSystem.Single;
 				case ILCode.Ldc_R8:
@@ -750,6 +766,27 @@ namespace Mi.Decompiler.ILAst
 				default:
 					Debug.WriteLine("Type Inference: Can't handle " + expr.Code.GetName());
 					return null;
+			}
+		}
+		
+		/// <summary>
+		/// Promotes primitive types smaller than int32 to int32.
+		/// </summary>
+		/// <remarks>
+		/// Always promotes to signed int32.
+		/// </remarks>
+		TypeReference NumericPromotion(TypeReference type)
+		{
+			if (type == null)
+				return null;
+			switch (type.MetadataType) {
+				case MetadataType.SByte:
+				case MetadataType.Int16:
+				case MetadataType.Byte:
+				case MetadataType.UInt16:
+					return typeSystem.Int32;
+				default:
+					return type;
 			}
 		}
 		
@@ -1036,6 +1073,29 @@ namespace Mi.Decompiler.ILAst
 					return false;
 				default:
 					return null;
+			}
+		}
+		
+		static bool OperandFitsInType(TypeReference type, int num)
+		{
+			TypeDefinition typeDef = type.Resolve() as TypeDefinition;
+			if (typeDef != null && typeDef.IsEnum) {
+				type = typeDef.Fields.Single(f => f.IsRuntimeSpecialName && !f.IsStatic).FieldType;
+			}
+			switch (type.MetadataType) {
+				case MetadataType.SByte:
+					return sbyte.MinValue <= num && num <= sbyte.MaxValue;
+				case MetadataType.Int16:
+					return short.MinValue <= num && num <= short.MaxValue;
+				case MetadataType.Byte:
+					return byte.MinValue <= num && num <= byte.MaxValue;
+				case MetadataType.Char:
+					return char.MinValue <= num && num <= char.MaxValue;
+				case MetadataType.UInt16:
+					return ushort.MinValue <= num && num <= ushort.MaxValue;
+					break;
+				default:
+					return true;
 			}
 		}
 		
