@@ -9,3 +9,8 @@ obj/
 _ReSharper*/
 *.ReSharper
 *.patch
+*.sln.docstates
+TestResults
+.hg
+*.psess
+*.vsp
