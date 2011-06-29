@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CastCheckedUnchecked.cs" />
+    <Compile Include="TypeAnalysisTests.cs" />
     <Compile Include="MultidimensionalInitializerTests.cs" />
     <Compile Include="CustomAttributes\AppliedToEvent.cs" />
     <Compile Include="CustomAttributes\AppliedToField.cs" />
