@@ -91,7 +91,7 @@ namespace ICSharpCode.ILSpy.TreeNodes
 		public override void Decompile(Language language, ITextOutput output, DecompilationOptions options)
 		{
 			base.Decompile(language, output, options);
-			if (null == filteredEntries)
+			if (filteredEntries.Count == 0)
 				return;
 			ISmartTextOutput smartOutput = output as ISmartTextOutput;
 			if (null != smartOutput) {
