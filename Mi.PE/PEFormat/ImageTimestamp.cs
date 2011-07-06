@@ -18,12 +18,12 @@ namespace Mi.PE.PEFormat
 
         public ImageTimestamp(DateTime dateTime)
         {
-            this.SecondsSinceEpochUTC = checked((uint)Math.Round((dateTime - EpochUTC).TotalSeconds, MidpointRounding.AwayFromZero));
+            this.SecondsSinceEpochUTC = checked((uint)((dateTime - EpochUTC).Ticks / TimeSpan.TicksPerSecond));
         }
 
         public ImageTimestamp(DateTimeOffset dateTime)
         {
-            this.SecondsSinceEpochUTC = checked((uint)Math.Round((dateTime.ToUniversalTime().DateTime - EpochUTC).TotalSeconds, MidpointRounding.AwayFromZero));
+            this.SecondsSinceEpochUTC = checked((uint)((dateTime.ToUniversalTime() - EpochUTC).Ticks / TimeSpan.TicksPerSecond));
         }
 
         public DateTime ToDateTime()
