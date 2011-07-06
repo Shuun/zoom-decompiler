@@ -557,10 +557,14 @@ namespace Mi.Decompiler.ILAst
 		void RemoveEndFinally(ILBlock method)
 		{
 			// Go thought the list in reverse so that we do the nested blocks first
-			foreach(var tryCatch in method.GetSelfAndChildrenRecursive<ILTryCatchBlock>(tc => tc.FinallyBlock != null).Reverse()) {
+            var tryWithFinally =
+                from tc in method.GetSelfAndChildrenRecursive().OfType<ILTryCatchBlock>()
+                where tc.FinallyBlock != null
+                select tc;
+			foreach(var tryCatch in tryWithFinally.Reverse()) {
 				ILLabel label = new ILLabel() { Name = "EndFinally_" + nextLabelIndex++ };
 				tryCatch.FinallyBlock.Body.Add(label);
-				foreach(var block in tryCatch.FinallyBlock.GetSelfAndChildrenRecursive<ILBlock>()) {
+				foreach(var block in tryCatch.FinallyBlock.GetSelfAndChildrenRecursive().OfType<ILBlock>()) {
 					for (int i = 0; i < block.Body.Count; i++) {
 						if (block.Body[i].Match(ILCode.Endfinally)) {
 							block.Body[i] = new ILExpression(ILCode.Br, label).WithILRanges(((ILExpression)block.Body[i]).ILRanges);
