@@ -55,6 +55,7 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Internal\CompressedByteStream.cs" />
     <Compile Include="Internal\StreamExtensions.cs" />
     <Compile Include="PEFile.cs" />
     <Compile Include="PEFileReader.cs" />
