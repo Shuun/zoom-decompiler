@@ -237,7 +237,7 @@ namespace Mi.CSharp
 			WriteToken("[", AstNode.Roles.LBracket);
 			if (list.Any()) {
 				Space(spaceWithin);
-				WriteCommaSeparatedList(list.Cast<ParameterDeclaration, AstNode>());
+				WriteCommaSeparatedList(list.Cast<AstNode>());
 				Space(spaceWithin);
 			}
 			WriteToken ("]", AstNode.Roles.RBracket);
@@ -2311,7 +2311,7 @@ namespace Mi.CSharp
 		#endregion
 		
 		#region Pattern Nodes
-		public object VisitPatternPlaceholder(AstNode placeholder, PatternMatching.Pattern pattern, object data)
+		public object VisitPatternPlaceholder(AstNode placeholder, Pattern pattern, object data)
 		{
 			StartNode (placeholder);
 			pattern.AcceptVisitor (this, data);

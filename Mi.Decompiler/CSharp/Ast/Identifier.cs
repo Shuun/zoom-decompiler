@@ -132,7 +132,7 @@ namespace Mi.CSharp.Ast
 			return visitor.VisitIdentifier (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, Match match)
+		protected internal override bool DoMatch(AstNode other, Mi.NRefactory.PatternMatching.Match match)
 		{
 			Identifier o = other as Identifier;
 			return o != null && !o.IsNull && MatchString(this.Name, o.Name);

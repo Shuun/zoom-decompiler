@@ -46,7 +46,7 @@ namespace Mi.CSharp.Ast
 		
 		public SimpleType(string identifier, AstLocation location)
 		{
-			SetChildByRole (Roles.Identifier, CSharp.Identifier.Create (identifier, location));
+			SetChildByRole (Roles.Identifier, CSharp.Ast.Identifier.Create (identifier, location));
 		}
 		
 		public SimpleType (string identifier, IEnumerable<AstType> typeArguments)
@@ -66,7 +66,7 @@ namespace Mi.CSharp.Ast
 				return GetChildByRole (Roles.Identifier).Name;
 			}
 			set {
-				SetChildByRole (Roles.Identifier, CSharp.Identifier.Create (value, AstLocation.Empty));
+				SetChildByRole (Roles.Identifier, CSharp.Ast.Identifier.Create (value, AstLocation.Empty));
 			}
 		}
 		

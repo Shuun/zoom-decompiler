@@ -19,7 +19,7 @@ namespace Mi.CSharp.Ast.Expressions
 				return GetChildByRole (Roles.Identifier).Name;
 			}
 			set {
-				SetChildByRole(Roles.Identifier, CSharp.Identifier.Create (value, AstLocation.Empty));
+				SetChildByRole(Roles.Identifier, CSharp.Ast.Identifier.Create(value, AstLocation.Empty));
 			}
 		}
 		

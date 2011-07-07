@@ -45,7 +45,7 @@ namespace Mi.CSharp.Ast.Expressions
 		
 		public IdentifierExpression(string identifier, AstLocation location)
 		{
-			SetChildByRole(Roles.Identifier, CSharp.Identifier.Create (identifier, location));
+			SetChildByRole(Roles.Identifier, CSharp.Ast.Identifier.Create (identifier, location));
 		}
 		
 //		public Identifier IdentifierToken {
@@ -57,7 +57,7 @@ namespace Mi.CSharp.Ast.Expressions
 				return GetChildByRole (Roles.Identifier).Name;
 			}
 			set {
-				SetChildByRole(Roles.Identifier, CSharp.Identifier.Create (value, AstLocation.Empty));
+				SetChildByRole(Roles.Identifier, CSharp.Ast.Identifier.Create (value, AstLocation.Empty));
 			}
 		}
 		
