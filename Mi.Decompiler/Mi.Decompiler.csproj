@@ -629,6 +629,7 @@
     <Compile Include="NRefactory\PatternMatching\Pattern.cs" />
     <Compile Include="NRefactory\PatternMatching\Repeat.cs" />
     <Compile Include="NRefactory\TypeSystem\ClassType.cs" />
+    <Compile Include="NRefactory\TypeSystem\IAnnotatable.cs" />
     <Compile Include="NRefactory\TypeSystem\VarianceModifier.cs" />
     <Compile Include="NRefactory\Utils\CSharpPrimitiveCast.cs" />
     <Compile Include="NRefactory\Utils\TreeTraversal.cs" />
