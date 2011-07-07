@@ -39,7 +39,7 @@ namespace Mi.CSharp.Ast
 		Documentation
 	}
 	
-	public class Comment : AstNode, IRelocatable
+	public class Comment : AstNode
 	{
 		public override NodeType NodeType {
 			get {
@@ -89,15 +89,6 @@ namespace Mi.CSharp.Ast
 			this.endLocation = endLocation;
 		}
 		
-		#region IRelocationable implementation
-		void IRelocatable.SetStartLocation (AstLocation startLocation)
-		{
-			int lineDelta = startLocation.Line - this.startLocation.Line;
-			endLocation = new AstLocation (endLocation.Line + lineDelta, lineDelta != 0 ? endLocation.Column : endLocation.Column + startLocation.Column - this.startLocation.Column);
-			this.startLocation = startLocation;
-		}
-		#endregion
-
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
 			return visitor.VisitComment (this, data);

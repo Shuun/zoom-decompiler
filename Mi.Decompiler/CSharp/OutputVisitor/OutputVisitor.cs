@@ -72,7 +72,6 @@ namespace Mi.CSharp
 				handler (this, e);
 		}
 		
-		[Serializable]
 		public sealed class AstNodeEventArgs : EventArgs
 		{
 			public AstNode AstNode {

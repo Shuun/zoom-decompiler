@@ -35,7 +35,7 @@ namespace Mi.CSharp.Ast.Statements
     /// <summary>
 	/// ;
 	/// </summary>
-	public class EmptyStatement : Statement, IRelocatable
+	public class EmptyStatement : Statement
 	{
 		public AstLocation Location {
 			get;
@@ -53,13 +53,6 @@ namespace Mi.CSharp.Ast.Statements
 				return new AstLocation (Location.Line, Location.Column);
 			}
 		}
-		
-		#region IRelocationable implementation
-		void IRelocatable.SetStartLocation (AstLocation startLocation)
-		{
-			this.Location = startLocation;
-		}
-		#endregion
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{

@@ -30,7 +30,7 @@ using System.Linq;
 
 namespace Mi.CSharp.Ast
 {
-	public class CSharpTokenNode : AstNode, IRelocatable
+	public class CSharpTokenNode : AstNode
 	{
 		public static new readonly CSharpTokenNode Null = new NullCSharpTokenNode ();
 		class NullCSharpTokenNode : CSharpTokenNode
@@ -50,7 +50,7 @@ namespace Mi.CSharp.Ast
 				return default (S);
 			}
 			
-			protected internal override bool DoMatch(AstNode other, Match match)
+			protected internal override bool DoMatch(AstNode other, Mi.NRefactory.PatternMatching.Match match)
 			{
 				return other == null || other.IsNull;
 			}
@@ -83,19 +83,12 @@ namespace Mi.CSharp.Ast
 			this.tokenLength = tokenLength;
 		}
 		
-		#region IRelocationable implementation
-		void IRelocatable.SetStartLocation (AstLocation startLocation)
-		{
-			this.startLocation = startLocation;
-		}
-		#endregion
-		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
 			return visitor.VisitCSharpTokenNode (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, Match match)
+		protected internal override bool DoMatch(AstNode other, Mi.NRefactory.PatternMatching.Match match)
 		{
 			CSharpTokenNode o = other as CSharpTokenNode;
 			return o != null && !o.IsNull && !(o is CSharpModifierToken);

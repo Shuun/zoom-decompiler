@@ -1,4 +1,5 @@
-﻿// 
+﻿#region Copyright
+// 
 // FullTypeName.cs
 //
 // Author:
@@ -23,6 +24,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -30,7 +32,7 @@ using System.Linq;
 
 namespace Mi.CSharp.Ast
 {
-	public class PrimitiveType : AstType, IRelocatable
+	public class PrimitiveType : AstType
 	{
 		public string Keyword { get; set; }
 		public AstLocation Location { get; set; }
@@ -61,20 +63,12 @@ namespace Mi.CSharp.Ast
 			}
 		}
 		
-		
-		#region IRelocationable implementation
-		void IRelocatable.SetStartLocation (AstLocation startLocation)
-		{
-			this.Location = startLocation;
-		}
-		#endregion
-		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
 			return visitor.VisitPrimitiveType (this, data);
 		}
 		
-		protected internal override bool DoMatch(AstNode other, Match match)
+		protected internal override bool DoMatch(AstNode other, Mi.NRefactory.PatternMatching.Match match)
 		{
 			PrimitiveType o = other as PrimitiveType;
 			return o != null && MatchString(this.Keyword, o.Keyword);

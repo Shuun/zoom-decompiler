@@ -1,4 +1,5 @@
-﻿// 
+﻿#region Copyright
+// 
 // CompilationUnit.cs
 //  
 // Author:
@@ -23,6 +24,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +33,8 @@ using System.Linq;
 
 namespace Mi.CSharp.Ast
 {
+    using Mi.CSharp.Ast.Expressions;
+    using Mi.CSharp.Ast.Statements;
     using Mi.NRefactory.PatternMatching;
     
     public class CompilationUnit : AstNode 
@@ -40,12 +45,6 @@ namespace Mi.CSharp.Ast
 			get {
 				return NodeType.Unknown;
 			}
-		}
-		
-		List<Error> errors = new List<Error> ();
-		
-		public List<Error> Errors {
-			get { return errors; }
 		}
 		
 		/// <summary>
@@ -80,7 +79,7 @@ namespace Mi.CSharp.Ast
 			}
 		}
 		
-		protected internal override bool DoMatch(AstNode other, PatternMatching.Match match)
+		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			CompilationUnit o = other as CompilationUnit;
 			return o != null && GetChildrenByRole(MemberRole).DoMatch(o.GetChildrenByRole(MemberRole), match);

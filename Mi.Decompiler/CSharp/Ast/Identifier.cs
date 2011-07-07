@@ -1,4 +1,5 @@
-﻿// 
+﻿#region Copyright
+// 
 // Identifier.cs
 //  
 // Author:
@@ -23,6 +24,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -30,7 +32,7 @@ using System.Linq;
 
 namespace Mi.CSharp.Ast
 {
-	public class Identifier : AstNode, IRelocatable
+	public class Identifier : AstNode
 	{
 		public static readonly Identifier Null = new NullIdentifier ();
 		class NullIdentifier : Identifier
@@ -46,7 +48,7 @@ namespace Mi.CSharp.Ast
 				return default (S);
 			}
 			
-			protected internal override bool DoMatch(AstNode other, Match match)
+			protected internal override bool DoMatch(AstNode other, Mi.NRefactory.PatternMatching.Match match)
 			{
 				return other == null || other.IsNull;
 			}
@@ -81,13 +83,6 @@ namespace Mi.CSharp.Ast
 				return false;
 			}
 		}
-		
-		#region IRelocationable implementation
-		void IRelocatable.SetStartLocation (AstLocation startLocation)
-		{
-			this.startLocation = startLocation;
-		}
-		#endregion
 		
 		public override AstLocation EndLocation {
 			get {

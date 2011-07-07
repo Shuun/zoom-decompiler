@@ -79,21 +79,10 @@ namespace Mi.CSharp.Analysis
 		int analyzedRangeStart, analyzedRangeEnd;
 		
 		Queue<DefiniteAssignmentNode> nodesWithModifiedInput = new Queue<DefiniteAssignmentNode>();
-		
-		public DefiniteAssignmentAnalysis(Statement rootStatement, CancellationToken cancellationToken = default(CancellationToken))
-			: this(rootStatement, null, cancellationToken)
-		{
-		}
-		
-		public DefiniteAssignmentAnalysis(Statement rootStatement, ITypeResolveContext context, CancellationToken cancellationToken = default(CancellationToken))
-			: this(rootStatement, new ResolveVisitor(new CSharpResolver(context ?? MinimalResolveContext.Instance, cancellationToken),
-			                                         null, ConstantModeResolveVisitorNavigator.Skip))
-		{
-		}
-		
-		public DefiniteAssignmentAnalysis(Statement rootStatement, ResolveVisitor resolveVisitor)
-		{
-			if (rootStatement == null)
+
+        public DefiniteAssignmentAnalysis(Statement rootStatement, Action verifyProgress = default(Action))
+        {
+            if (rootStatement == null)
 				throw new ArgumentNullException("rootStatement");
             
 			this.verifyProgress = verifyProgress;
