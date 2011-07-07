@@ -55,11 +55,6 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Internal\Compression\CompressedByte1.cs" />
-    <Compile Include="Internal\Compression\CompressedByteChunk.cs" />
-    <Compile Include="Internal\Compression\CompressedByte2.cs" />
-    <Compile Include="Internal\Compression\CompressedByte3.cs" />
-    <Compile Include="Internal\Compression\CompressedByte4.cs" />
     <Compile Include="Internal\StreamExtensions.cs" />
     <Compile Include="PEFile.cs" />
     <Compile Include="PEFileReader.cs" />
