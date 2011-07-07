@@ -160,6 +160,15 @@ namespace Mi.CSharp.Ast.Statements
 			set { SetChildByRole (Roles.Expression, value); }
 		}
 		
+		public CaseLabel ()
+		{
+		}
+		
+		public CaseLabel (Expression expression)
+		{
+			this.Expression = expression;
+		}
+		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
 			return visitor.VisitCaseLabel (this, data);

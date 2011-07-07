@@ -80,7 +80,18 @@ namespace Mi.CSharp.Analysis
 		
 		Queue<DefiniteAssignmentNode> nodesWithModifiedInput = new Queue<DefiniteAssignmentNode>();
 		
-		public DefiniteAssignmentAnalysis(Statement rootStatement, Action verifyProgress = default(Action))
+		public DefiniteAssignmentAnalysis(Statement rootStatement, CancellationToken cancellationToken = default(CancellationToken))
+			: this(rootStatement, null, cancellationToken)
+		{
+		}
+		
+		public DefiniteAssignmentAnalysis(Statement rootStatement, ITypeResolveContext context, CancellationToken cancellationToken = default(CancellationToken))
+			: this(rootStatement, new ResolveVisitor(new CSharpResolver(context ?? MinimalResolveContext.Instance, cancellationToken),
+			                                         null, ConstantModeResolveVisitorNavigator.Skip))
+		{
+		}
+		
+		public DefiniteAssignmentAnalysis(Statement rootStatement, ResolveVisitor resolveVisitor)
 		{
 			if (rootStatement == null)
 				throw new ArgumentNullException("rootStatement");

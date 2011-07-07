@@ -1,4 +1,4 @@
-﻿// 
+// 
 // UsingAliasDeclaration.cs
 //  
 // Author:
@@ -55,7 +55,7 @@ namespace Mi.CSharp.Ast
 				return GetChildByRole (AliasRole).Name;
 			}
 			set {
-				SetChildByRole(AliasRole, new Identifier(value, AstLocation.Empty));
+				SetChildByRole(AliasRole, Identifier.Create (value, AstLocation.Empty));
 			}
 		}
 		
@@ -78,13 +78,13 @@ namespace Mi.CSharp.Ast
 		
 		public UsingAliasDeclaration (string alias, string nameSpace)
 		{
-			AddChild (new Identifier (alias, AstLocation.Empty), AliasRole);
+			AddChild (Identifier.Create (alias, AstLocation.Empty), AliasRole);
 			AddChild (new SimpleType (nameSpace), ImportRole);
 		}
 		
 		public UsingAliasDeclaration (string alias, AstType import)
 		{
-			AddChild (new Identifier (alias, AstLocation.Empty), AliasRole);
+			AddChild (Identifier.Create (alias, AstLocation.Empty), AliasRole);
 			AddChild (import, ImportRole);
 		}
 		

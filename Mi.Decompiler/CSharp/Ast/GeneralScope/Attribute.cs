@@ -52,7 +52,13 @@ namespace Mi.CSharp.Ast
 		public AstNodeCollection<Expression> Arguments {
 			get { return base.GetChildrenByRole (Roles.Argument); }
 		}
-
+		
+		// HasArgumentList == false: [Empty]
+		public bool HasArgumentList {
+			get;
+			set;
+		}
+		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
 			return visitor.VisitAttribute (this, data);
@@ -61,7 +67,7 @@ namespace Mi.CSharp.Ast
 		protected internal override bool DoMatch(AstNode other, Match match)
 		{
 			Attribute o = other as Attribute;
-			return o != null && this.Type.DoMatch(o.Type, match) && this.Arguments.DoMatch(o.Arguments, match);
+			return o != null && this.Type.DoMatch (o.Type, match) && this.Arguments.DoMatch (o.Arguments, match);
 		}
 	}
 }

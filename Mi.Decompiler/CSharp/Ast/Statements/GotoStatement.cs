@@ -1,4 +1,4 @@
-﻿// 
+// 
 // GotoStatement.cs
 //
 // Author:
@@ -59,7 +59,7 @@ namespace Mi.CSharp.Ast.Statements
 				if (string.IsNullOrEmpty(value))
 					SetChildByRole(Roles.Identifier, null);
 				else
-					SetChildByRole(Roles.Identifier, new Identifier(value, AstLocation.Empty));
+					SetChildByRole(Roles.Identifier, Identifier.Create (value, AstLocation.Empty));
 			}
 		}
 		

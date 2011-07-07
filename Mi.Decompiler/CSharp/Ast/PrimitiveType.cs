@@ -30,9 +30,7 @@ using System.Linq;
 
 namespace Mi.CSharp.Ast
 {
-    using Mi.NRefactory.PatternMatching;
-
-    public class PrimitiveType : AstType
+	public class PrimitiveType : AstType, IRelocatable
 	{
 		public string Keyword { get; set; }
 		public AstLocation Location { get; set; }
@@ -62,6 +60,14 @@ namespace Mi.CSharp.Ast
 				return new AstLocation (Location.Line, Location.Column + (Keyword != null ? Keyword.Length : 0));
 			}
 		}
+		
+		
+		#region IRelocationable implementation
+		void IRelocatable.SetStartLocation (AstLocation startLocation)
+		{
+			this.Location = startLocation;
+		}
+		#endregion
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{

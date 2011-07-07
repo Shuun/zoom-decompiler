@@ -60,9 +60,14 @@ namespace Mi.CSharp.Ast
 			}
 		}
 		
-		protected bool MatchAttributesAndModifiers(AttributedNode o, Match match)
+		protected bool MatchAttributesAndModifiers(AttributedNode o, PatternMatching.Match match)
 		{
-			return (this.Modifiers == Modifiers.Any || this.Modifiers == o.Modifiers) && this.Attributes.DoMatch(o.Attributes, match);
+			return (this.Modifiers == Modifiers.Any || this.Modifiers == o.Modifiers) && this.Attributes.DoMatch (o.Attributes, match);
+		}
+		
+		public bool HasModifier (Modifiers mod)
+		{
+			return (Modifiers & mod) == mod;
 		}
 	}
 }
