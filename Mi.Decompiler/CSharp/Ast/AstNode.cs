@@ -677,14 +677,14 @@ namespace Mi.CSharp.Ast
 			public static readonly Role<AstNode> Root = RootRole;
 			
 			// some pre defined constants for common roles
-			public static readonly Role<Identifier> Identifier = new Role<Identifier> ("Identifier", Identifier.NullObject);
+			public static readonly Role<Identifier> Identifier = new Role<Identifier> ("Identifier", Ast.Identifier.Null);
 			public static readonly Role<BlockStatement> Body = new Role<BlockStatement> ("Body", BlockStatement.Null);
 			public static readonly Role<ParameterDeclaration> Parameter = new Role<ParameterDeclaration> ("Parameter");
-			public static readonly Role<Expression> Argument = new Role<Expression> ("Argument", Expression.NullObject);
+			public static readonly Role<Expression> Argument = new Role<Expression> ("Argument", Ast.Expressions.Expression.Null);
 			public static readonly Role<AstType> Type = new Role<AstType> ("Type", AstType.Null);
-			public static readonly Role<Expression> Expression = new Role<Expression> ("Expression", Expression.NullObject);
-			public static readonly Role<Expression> TargetExpression = new Role<Expression> ("Target", Expression.NullObject);
-			public readonly static Role<Expression> Condition = new Role<Expression> ("Condition", Expression.NullObject);
+			public static readonly Role<Expression> Expression = new Role<Expression> ("Expression", Ast.Expressions.Expression.Null);
+			public static readonly Role<Expression> TargetExpression = new Role<Expression> ("Target", Ast.Expressions.Expression.Null);
+			public readonly static Role<Expression> Condition = new Role<Expression> ("Condition", Ast.Expressions.Expression.Null);
 			public static readonly Role<TypeParameterDeclaration> TypeParameter = new Role<TypeParameterDeclaration> ("TypeParameter");
 			public static readonly Role<AstType> TypeArgument = new Role<AstType> ("TypeArgument", AstType.Null);
 			public readonly static Role<Constraint> Constraint = new Role<Constraint> ("Constraint");
