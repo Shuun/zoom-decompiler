@@ -92,7 +92,7 @@ namespace Mi.CSharp.Ast.Expressions
 				return GetChildByRole (Roles.Identifier).Name;
 			}
 			set {
-				SetChildByRole(Roles.Identifier, new Identifier(value, AstLocation.Empty));
+				SetChildByRole(Roles.Identifier, CSharp.Identifier.Create (value, AstLocation.Empty));
 			}
 		}
 		
@@ -123,7 +123,7 @@ namespace Mi.CSharp.Ast.Expressions
 				return GetChildByRole (Roles.Identifier).Name;
 			}
 			set {
-				SetChildByRole(Roles.Identifier, new Identifier(value, AstLocation.Empty));
+				SetChildByRole(Roles.Identifier, CSharp.Identifier.Create (value, AstLocation.Empty));
 			}
 		}
 		
@@ -156,7 +156,7 @@ namespace Mi.CSharp.Ast.Expressions
 				return GetChildByRole(Roles.Identifier).Name;
 			}
 			set {
-				SetChildByRole(Roles.Identifier, new Identifier(value, AstLocation.Empty));
+				SetChildByRole(Roles.Identifier, CSharp.Identifier.Create (value, AstLocation.Empty));
 			}
 		}
 		
@@ -240,7 +240,7 @@ namespace Mi.CSharp.Ast.Expressions
 				return GetChildByRole(JoinIdentifierRole).Name;
 			}
 			set {
-				SetChildByRole(JoinIdentifierRole, new Identifier(value, AstLocation.Empty));
+				SetChildByRole(JoinIdentifierRole, Identifier.Create (value, AstLocation.Empty));
 			}
 		}
 		
@@ -280,7 +280,7 @@ namespace Mi.CSharp.Ast.Expressions
 				return GetChildByRole (IntoIdentifierRole).Name;
 			}
 			set {
-				SetChildByRole(IntoIdentifierRole, new Identifier(value, AstLocation.Empty));
+				SetChildByRole(IntoIdentifierRole, Identifier.Create (value, AstLocation.Empty));
 			}
 		}
 		

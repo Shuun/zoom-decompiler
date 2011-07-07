@@ -35,7 +35,7 @@ namespace Mi.CSharp.Ast.Expressions
     /// <summary>
 	/// Type&lt;[EMPTY]&gt;
 	/// </summary>
-	public class EmptyExpression : Expression
+	public class EmptyExpression : Expression, IRelocatable
 	{
 		AstLocation location;
 
@@ -44,7 +44,7 @@ namespace Mi.CSharp.Ast.Expressions
 				return location;
 			}
 		}
-
+		
 		public override AstLocation EndLocation {
 			get {
 				return location;
@@ -59,7 +59,14 @@ namespace Mi.CSharp.Ast.Expressions
 		{
 			this.location = location;
 		}
-
+		
+		#region IRelocationable implementation
+		void IRelocatable.SetStartLocation (AstLocation startLocation)
+		{
+			this.location = startLocation;
+		}
+		#endregion
+		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
 			return visitor.VisitEmptyExpression (this, data);

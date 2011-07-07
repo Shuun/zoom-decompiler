@@ -35,7 +35,7 @@ namespace Mi.CSharp.Ast.Expressions
     /// <summary>
 	/// Represents a literal value.
 	/// </summary>
-	public class PrimitiveExpression : Expression
+	public class PrimitiveExpression : Expression, IRelocatable
 	{
 		public static readonly object AnyValue = new object();
 		
@@ -46,16 +46,22 @@ namespace Mi.CSharp.Ast.Expressions
 			}
 		}
 		
-		int length;
+		string literalValue;
 		public override AstLocation EndLocation {
 			get {
-				return new AstLocation (StartLocation.Line, StartLocation.Column + length);
+				return new AstLocation (StartLocation.Line, StartLocation.Column + literalValue.Length);
 			}
 		}
 		
 		public object Value {
 			get;
-			private set;
+			set;
+		}
+		
+		public string LiteralValue {
+			get {
+				return literalValue;
+			}
 		}
 		
 		public PrimitiveExpression (object value)
@@ -63,12 +69,25 @@ namespace Mi.CSharp.Ast.Expressions
 			this.Value = value;
 		}
 		
-		public PrimitiveExpression (object value, AstLocation startLocation, int length)
+		public PrimitiveExpression (object value, string literalValue)
+		{
+			this.Value = value;
+			this.literalValue = literalValue ?? "";
+		}
+		
+		public PrimitiveExpression (object value, AstLocation startLocation, string literalValue)
 		{
 			this.Value = value;
 			this.startLocation = startLocation;
-			this.length = length;
+			this.literalValue = literalValue ?? "";
 		}
+		
+		#region IRelocationable implementation
+		void IRelocatable.SetStartLocation (AstLocation startLocation)
+		{
+			this.startLocation = startLocation;
+		}
+		#endregion
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{

@@ -45,6 +45,11 @@ namespace Mi.CSharp.Ast
 		/// </summary>
 		public string Name { get; set; }
 		
+		public Identifier IdentifierToken {
+			get { return GetChildByRole (Roles.Identifier); }
+			set { SetChildByRole (Roles.Identifier, value); }
+		}
+		
 		public CSharpTokenNode LParToken {
 			get { return GetChildByRole (Roles.LPar); }
 		}

@@ -778,7 +778,13 @@ namespace Mi.Decompiler.AstServices
 							}
 						}
 						ObjectCreateExpression oce = arg1 as ObjectCreateExpression;
+						DefaultValueExpression dve = arg1 as DefaultValueExpression;
 						if (oce != null) {
+							oce.Initializer = initializer;
+							return oce;
+						} else if (dve != null) {
+							oce = new ObjectCreateExpression(dve.Type.Detach());
+							oce.CopyAnnotationsFrom(dve);
 							oce.Initializer = initializer;
 							return oce;
 						} else {

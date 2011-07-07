@@ -145,7 +145,19 @@ namespace Mi.CSharp.Analysis
 		Dictionary<string, ControlFlowNode> labels;
 		List<ControlFlowNode> gotoStatements;
 		
-		public IList<ControlFlowNode> BuildControlFlowGraph(Statement statement, Action verifyProgress = default(Action))
+		public IList<ControlFlowNode> BuildControlFlowGraph(Statement statement, ITypeResolveContext context)
+		{
+			return BuildControlFlowGraph(statement, context, CancellationToken.None);
+		}
+		
+		public IList<ControlFlowNode> BuildControlFlowGraph(Statement statement, ITypeResolveContext context, CancellationToken cancellationToken)
+		{
+			return BuildControlFlowGraph(statement, new ResolveVisitor(
+				new CSharpResolver(context, cancellationToken),
+				null, ConstantModeResolveVisitorNavigator.Skip));
+		}
+		
+		public IList<ControlFlowNode> BuildControlFlowGraph(Statement statement, ResolveVisitor resolveVisitor)
 		{
 			if (statement == null)
 				throw new ArgumentNullException("statement");

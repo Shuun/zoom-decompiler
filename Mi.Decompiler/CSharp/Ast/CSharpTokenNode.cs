@@ -2,7 +2,7 @@
 // TokenNode.cs
 //  
 // Author:
-//       Mike Krüger <mkrueger@novell.com>
+//       Mike KrÃ¼ger <mkrueger@novell.com>
 // 
 // Copyright (c) 2010 Novell, Inc (http://www.novell.com)
 // 
@@ -30,9 +30,7 @@ using System.Linq;
 
 namespace Mi.CSharp.Ast
 {
-    using Mi.NRefactory.PatternMatching;
-    
-    public class CSharpTokenNode : AstNode
+	public class CSharpTokenNode : AstNode, IRelocatable
 	{
 		public static new readonly CSharpTokenNode Null = new NullCSharpTokenNode ();
 		class NullCSharpTokenNode : CSharpTokenNode
@@ -84,6 +82,13 @@ namespace Mi.CSharp.Ast
 			this.startLocation = location;
 			this.tokenLength = tokenLength;
 		}
+		
+		#region IRelocationable implementation
+		void IRelocatable.SetStartLocation (AstLocation startLocation)
+		{
+			this.startLocation = startLocation;
+		}
+		#endregion
 		
 		public override S AcceptVisitor<T, S> (IAstVisitor<T, S> visitor, T data)
 		{
