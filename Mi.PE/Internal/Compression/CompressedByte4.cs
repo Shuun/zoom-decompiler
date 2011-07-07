@@ -27,5 +27,10 @@ namespace Mi.PE.Internal.Compression
             buffer[offset - 1] = b3;
             buffer[offset] = b4;
         }
+
+        public override CompressedByteChunk CompressNext(byte b)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
