@@ -36,7 +36,7 @@ namespace Mi.CSharp.Ast
     using Mi.CSharp.Ast.Expressions;
     using Mi.CSharp.Ast.Statements;
     
-    public abstract class AstNode : INode
+    public abstract class AstNode : Mi.NRefactory.TypeSystem.AbstractAnnotatable, INode
 	{
 		#region Null
 		public static readonly AstNode Null = new NullAstNode ();
@@ -437,9 +437,8 @@ namespace Mi.CSharp.Ast
 			}
 			
 			// Finally, clone the annotation, if necessary
-			var copiedAnnotations = copy.annotations as AnnotationList; // read from copy (for thread-safety)
-			if (copiedAnnotations != null)
-				copy.annotations = copiedAnnotations.Clone();
+            var copiedAnnotations = copy.annotations;
+			copy.annotations = copiedAnnotations;
 			
 			return copy;
 		}
@@ -452,26 +451,26 @@ namespace Mi.CSharp.Ast
 			return string.IsNullOrEmpty (name1) || name1 == name2;
 		}
 		
-		protected internal abstract bool DoMatch (AstNode other, PatternMatching.Match match);
+		protected internal abstract bool DoMatch (AstNode other, Match match);
 		
-		bool PatternMatching.INode.DoMatch (PatternMatching.INode other, PatternMatching.Match match)
+		bool INode.DoMatch (INode other, Match match)
 		{
 			AstNode o = other as AstNode;
 			// try matching if other is null, or if other is an AstNode
 			return (other == null || o != null) && DoMatch (o, match);
 		}
 		
-		bool PatternMatching.INode.DoMatchCollection (Role role, PatternMatching.INode pos, PatternMatching.Match match, PatternMatching.BacktrackingInfo backtrackingInfo)
+		bool INode.DoMatchCollection (Role role, INode pos, Match match, BacktrackingInfo backtrackingInfo)
 		{
 			AstNode o = pos as AstNode;
 			return (pos == null || o != null) && DoMatch (o, match);
 		}
 		
-		PatternMatching.INode PatternMatching.INode.NextSibling {
+		INode INode.NextSibling {
 			get { return nextSibling; }
 		}
 		
-		PatternMatching.INode PatternMatching.INode.FirstChild {
+		INode INode.FirstChild {
 			get { return firstChild; }
 		}
 
@@ -678,19 +677,19 @@ namespace Mi.CSharp.Ast
 			public static readonly Role<AstNode> Root = RootRole;
 			
 			// some pre defined constants for common roles
-			public static readonly Role<Identifier> Identifier = new Role<Identifier> ("Identifier", CSharp.Identifier.Null);
-			public static readonly Role<BlockStatement> Body = new Role<BlockStatement> ("Body", CSharp.BlockStatement.Null);
+			public static readonly Role<Identifier> Identifier = new Role<Identifier> ("Identifier", Identifier.NullObject);
+			public static readonly Role<BlockStatement> Body = new Role<BlockStatement> ("Body", BlockStatement.Null);
 			public static readonly Role<ParameterDeclaration> Parameter = new Role<ParameterDeclaration> ("Parameter");
-			public static readonly Role<Expression> Argument = new Role<Expression> ("Argument", CSharp.Expression.Null);
-			public static readonly Role<AstType> Type = new Role<AstType> ("Type", CSharp.AstType.Null);
-			public static readonly Role<Expression> Expression = new Role<Expression> ("Expression", CSharp.Expression.Null);
-			public static readonly Role<Expression> TargetExpression = new Role<Expression> ("Target", CSharp.Expression.Null);
-			public readonly static Role<Expression> Condition = new Role<Expression> ("Condition", CSharp.Expression.Null);
+			public static readonly Role<Expression> Argument = new Role<Expression> ("Argument", Expression.NullObject);
+			public static readonly Role<AstType> Type = new Role<AstType> ("Type", AstType.Null);
+			public static readonly Role<Expression> Expression = new Role<Expression> ("Expression", Expression.NullObject);
+			public static readonly Role<Expression> TargetExpression = new Role<Expression> ("Target", Expression.NullObject);
+			public readonly static Role<Expression> Condition = new Role<Expression> ("Condition", Expression.NullObject);
 			public static readonly Role<TypeParameterDeclaration> TypeParameter = new Role<TypeParameterDeclaration> ("TypeParameter");
-			public static readonly Role<AstType> TypeArgument = new Role<AstType> ("TypeArgument", CSharp.AstType.Null);
+			public static readonly Role<AstType> TypeArgument = new Role<AstType> ("TypeArgument", AstType.Null);
 			public readonly static Role<Constraint> Constraint = new Role<Constraint> ("Constraint");
 			public static readonly Role<VariableInitializer> Variable = new Role<VariableInitializer> ("Variable");
-			public static readonly Role<Statement> EmbeddedStatement = new Role<Statement> ("EmbeddedStatement", CSharp.Statement.Null);
+			public static readonly Role<Statement> EmbeddedStatement = new Role<Statement> ("EmbeddedStatement", Statement.Null);
 			public static readonly Role<CSharpTokenNode> Keyword = new Role<CSharpTokenNode> ("Keyword", CSharpTokenNode.Null);
 			public static readonly Role<CSharpTokenNode> InKeyword = new Role<CSharpTokenNode> ("InKeyword", CSharpTokenNode.Null);
 			
@@ -709,8 +708,6 @@ namespace Mi.CSharp.Ast
 			public static readonly Role<CSharpTokenNode> Assign = new Role<CSharpTokenNode> ("Assign", CSharpTokenNode.Null);
 			public static readonly Role<CSharpTokenNode> Colon = new Role<CSharpTokenNode> ("Colon", CSharpTokenNode.Null);
 			public static readonly Role<Comment> Comment = new Role<Comment> ("Comment");
-			public static readonly Role<ErrorNode> Error = new Role<ErrorNode> ("Error");
-			
 		}
 	}
 }

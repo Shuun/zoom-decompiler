@@ -72,8 +72,8 @@ namespace Mi.NRefactory.TypeSystem
 		// Once it is pointed at an AnnotationList, it will never change (this allows thread-safety support by locking the list)
 		protected object annotations;
 		
-		sealed class AnnotationList : List<object>, ICloneable
-		{
+		sealed class AnnotationList : List<object>
+        {
 			// There are two uses for this custom list type:
 			// 1) it's private, and thus (unlike List<object>) cannot be confused with real annotations
 			// 2) It allows us to simplify the cloning logic by making the list behave the same as a clonable annotation.
@@ -87,8 +87,7 @@ namespace Mi.NRefactory.TypeSystem
 					AnnotationList copy = new AnnotationList (this.Count);
 					for (int i = 0; i < this.Count; i++) {
 						object obj = this [i];
-						ICloneable c = obj as ICloneable;
-						copy.Add (c != null ? c.Clone () : obj);
+						copy.Add (obj);
 					}
 					return copy;
 				}

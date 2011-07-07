@@ -282,7 +282,7 @@ namespace Mi.Decompiler.ILAst
 			int originalPos = pos;
 
 			// don't use object initializer syntax for closures
-			if (Ast.Transforms.DelegateConstruction.IsPotentialClosure(context, newObjType.ResolveWithinSameModule()))
+			if (Mi.Decompiler.AstServices.Transforms.DelegateConstruction.IsPotentialClosure(context, newObjType.ResolveWithinSameModule()))
 				return false;
 
 			ILExpression initializer = ParseObjectInitializer(body, ref pos, v, newObjExpr, IsCollectionType(newObjType), isValueType);
