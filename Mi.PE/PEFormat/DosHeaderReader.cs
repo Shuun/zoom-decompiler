@@ -9,48 +9,53 @@ namespace Mi.PE.PEFormat
 
     public static class DosHeaderReader
     {
-        public const int DosHeaderSize = 58;
+        public const int DosHeaderSize = 64;
 
         public static DosHeader Read(Stream stream)
         {
+            stream.CheckedExpect((ushort)PESignature.MZ, "reading MZ signature");
+
             byte[] headerBuf = new byte[DosHeaderSize];
             stream.CheckedReadBytes(headerBuf, "reading DOS header");
 
-            // shallow copy -- we just need a new array of the same byte-arrays
-            byte[][] matchingVariants = (byte[][])DosHeader.MostOftenDosHeaderData.Clone();
+            var result = new DosHeader();
 
-            int matchedVariantIndex = -1;
-            for (int iByte = 0; iByte < headerBuf.Length; iByte++)
-            {
-                matchedVariantIndex = -1;
-                for (int iMatch = 0; iMatch < matchingVariants.Length; iMatch++)
-                {
-                    if (matchingVariants[iMatch] == null)
-                        continue;
+            result.cblp = stream.CheckedReadUInt16("reading cblp field of DOS header");
+            result.cp = stream.CheckedReadUInt16("reading cp field of DOS header");
+            result.crlc = stream.CheckedReadUInt16("reading crlc field of DOS header");
+            result.cparhdr = stream.CheckedReadUInt16("reading cparhdr field of DOS header");
+            result.minalloc = stream.CheckedReadUInt16("reading minalloc field of DOS header");
+            result.maxalloc = stream.CheckedReadUInt16("reading maxalloc field of DOS header");
+            result.ss = stream.CheckedReadUInt16("reading ss field of DOS header");
+            result.sp = stream.CheckedReadUInt16("reading sp field of DOS header");
+            result.csum = stream.CheckedReadUInt16("reading csum field of DOS header");
+            result.ip = stream.CheckedReadUInt16("reading ip field of DOS header");
+            result.cs = stream.CheckedReadUInt16("reading cs field of DOS header");
+            result.lfarlc = stream.CheckedReadUInt16("reading lfarlc field of DOS header");
+            result.ovno = stream.CheckedReadUInt16("reading ovno field of DOS header");
 
-                    if (matchingVariants[iMatch][iByte] == headerBuf[iByte])
-                    {
-                        if(matchedVariantIndex<0)
-                            matchedVariantIndex = iMatch;
-                    }
-                    else
-                    {
-                        matchingVariants[iMatch] = null;
-                    }
-                }
+            result.res1 = stream.CheckedReadUInt64("reading res1 field of DOS header");
 
-                if (matchedVariantIndex < 0)
-                    break;
-            }
+            result.oemid = stream.CheckedReadUInt16("reading oemid field of DOS header");
+            result.oeminfo = stream.CheckedReadUInt16("reading oeminfo field of DOS header");
 
-            if (matchedVariantIndex >= 0)
-                return new DosHeader(matchedVariantIndex);
-            else
-            {
-                string constStr = "{ " + string.Join(", ", headerBuf) + "}";
+            var res2 = new DosHeader.Reserved10Bytes();
+            res2.Byte0 = stream.CheckedReadByte("reading res2 field of DOS header");
+            res2.Byte1 = stream.CheckedReadByte("reading res2 field of DOS header");
+            res2.Byte2 = stream.CheckedReadByte("reading res2 field of DOS header");
+            res2.Byte3 = stream.CheckedReadByte("reading res2 field of DOS header");
+            res2.Byte4 = stream.CheckedReadByte("reading res2 field of DOS header");
+            res2.Byte5 = stream.CheckedReadByte("reading res2 field of DOS header");
+            res2.Byte6 = stream.CheckedReadByte("reading res2 field of DOS header");
+            res2.Byte7 = stream.CheckedReadByte("reading res2 field of DOS header");
+            res2.Byte8 = stream.CheckedReadByte("reading res2 field of DOS header");
+            res2.Byte9 = stream.CheckedReadByte("reading res2 field of DOS header");
 
-                return new DosHeader { Bytes = headerBuf };
-            }
+            result.res2 = res2;
+
+            result.lfanew = stream.CheckedReadUInt32("reading res2 field of DOS header");
+
+            return result;
         }
     }
 }

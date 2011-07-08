@@ -21,6 +21,21 @@ namespace Mi.PE.Internal
                 return b.ToString("X") + "h";
         }
 
+        static string Diagnostic2ByteValue(ushort u)
+        {
+            byte b0 = unchecked((byte)(u & byte.MaxValue));
+            byte b1 = unchecked((byte)(u >> 8));
+            if (((b0 >= '0' && b0 <= '9')
+                || (b0 >= 'A' && b0 <= 'Z')
+                || (b0 >= 'a' && b0 <= 'z'))
+                && ((b1 >= '0' && b1 <= '9')
+                || (b1 >= 'A' && b1 <= 'Z')
+                || (b1 >= 'a' && b1 <= 'z')))
+                return "'" + (char)b0 + (char)b1 + "'";
+            else
+                return b0.ToString("X") + b1.ToString("X") + "h";
+        }
+
         public static void CheckedExpect(this Stream stream, byte value, string errorMessageState)
         {
             byte b = stream.CheckedReadByte(errorMessageState);
@@ -29,6 +44,16 @@ namespace Mi.PE.Internal
                     "Incorrect byte "+DiagnosticByteValue(b)+
                     " instead of expected "+DiagnosticByteValue(value)+
                     " when "+errorMessageState+".");
+        }
+
+        public static void CheckedExpect(this Stream stream, ushort value, string errorMessageState)
+        {
+            ushort u = stream.CheckedReadUInt16(errorMessageState);
+            if (u != value)
+                throw new BadImageFormatException(
+                    "Incorrect 2-byte value " + Diagnostic2ByteValue(u) +
+                    " instead of expected " + Diagnostic2ByteValue(value) +
+                    " when " + errorMessageState + ".");
         }
 
         public static void CheckedExpect(this Stream stream, byte byte1, byte byte2, string errorMessageState)
