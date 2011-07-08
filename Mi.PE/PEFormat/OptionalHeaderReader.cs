@@ -29,7 +29,7 @@ namespace Mi.PE.PEFormat
             optionalHeader.AddressOfEntryPoint = stream.CheckedReadInt32("reading RVA of entry point in optional PE header");
             optionalHeader.BaseOfCode = stream.CheckedReadInt32("reading base of code field in optional PE header");
 
-            if (optionalHeader.PEMagic == Magic.NT32)
+            if (optionalHeader.PEMagic == PEMagic.NT32)
             {
                 optionalHeader.BaseOfData = stream.CheckedReadInt32("reading base of data field in optional PE header");
                 optionalHeader.ImageBase = stream.CheckedReadUInt32("reading (32-bit) image base field in optional PE header");
@@ -54,7 +54,7 @@ namespace Mi.PE.PEFormat
             optionalHeader.Subsystem = (Subsystem)stream.CheckedReadUInt16("reading subsystem field in optional PE header");
             optionalHeader.DllCharacteristics = (DllCharacteristics)stream.CheckedReadUInt16("reading DLL characteristics field in optional PE header");
 
-            if (optionalHeader.PEMagic == Magic.NT32)
+            if (optionalHeader.PEMagic == PEMagic.NT32)
             {
                 optionalHeader.SizeOfStackReserve = stream.CheckedReadUInt32("reading size of stack reserve field in optional PE header");
                 optionalHeader.SizeOfStackCommit = stream.CheckedReadUInt32("reading size of stack commit field in optional PE header");
@@ -72,7 +72,7 @@ namespace Mi.PE.PEFormat
             optionalHeader.LoaderFlags = stream.CheckedReadUInt32("reading loader flags field in optional PE header");
             optionalHeader.NumberOfRvaAndSizes = stream.CheckedReadInt32("reading NumberOfRvaAndSizes field in optional PE header");
 
-            uint readHeaderSize = optionalHeader.PEMagic == Magic.NT32 ?
+            uint readHeaderSize = optionalHeader.PEMagic == PEMagic.NT32 ?
                 ReadHeaderSizes.OptionalHeader32 : 
                 ReadHeaderSizes.OptionalHeader64;
 
@@ -93,17 +93,17 @@ namespace Mi.PE.PEFormat
             return optionalHeader;
         }
 
-        static Magic ReadPEMagic(Stream stream)
+        static PEMagic ReadPEMagic(Stream stream)
         {
-            var peMagic = (Magic)stream.CheckedReadInt16("reading PE or PE+ magic");
+            var peMagic = (PEMagic)stream.CheckedReadInt16("reading PE or PE+ magic");
 
             switch (peMagic)
 	        {
-		        case Magic.NT32:
-                case Magic.NT64:
+		        case PEMagic.NT32:
+                case PEMagic.NT64:
                     return peMagic;
 
-                case Magic.ROM:
+                case PEMagic.ROM:
                     throw new BadImageFormatException("Unsupported PE magic value 'ROM' " + ((ushort)peMagic).ToString("X") + "h.");
 
                 default:

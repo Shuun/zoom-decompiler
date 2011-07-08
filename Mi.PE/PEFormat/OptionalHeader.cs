@@ -7,7 +7,7 @@ namespace Mi.PE.PEFormat
 {
     public sealed class OptionalHeader
     {
-        public Magic PEMagic { get; set; }
+        public PEMagic PEMagic { get; set; }
         public byte MajorLinkerVersion { get; set; }
         public byte MinorLinkerVersion { get; set; }
 

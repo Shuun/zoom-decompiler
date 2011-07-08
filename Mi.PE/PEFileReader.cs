@@ -13,20 +13,16 @@ namespace Mi.PE
     {
         public PEFile Read(Stream stream)
         {
-            stream.CheckedExpect((byte)'M', (byte)'Z', "reading the leading MZ singature of PE file");
-
             var dosHeader = DosHeaderReader.Read(stream);
 
-            uint peHeaderOffset = stream.CheckedReadUInt32("reading PE header offset");
-
-            stream.CheckedSkipBytes(
-                peHeaderOffset - (2 + DosHeaderReader.DosHeaderSize + 4),
-                "seeking to PE header");
+            uint fillingByteCount = dosHeader.lfanew - (2 + DosHeaderReader.DosHeaderSize + 4);
+            byte[] fillingBytes = fillingByteCount > 0 ? new byte[fillingByteCount] : null;
+            stream.CheckedReadBytes(fillingBytes, "seeking to PE header");
 
             stream.CheckedExpect(
                 (byte)'P', (byte)'E',
                 0, 0,
-                "reading the leading MZ singature of PE file");
+                "reading PE singature");
 
             var peHeader = PEHeaderReader.Read(stream);
 
