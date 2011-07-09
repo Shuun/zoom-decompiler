@@ -15,7 +15,7 @@ namespace Mi.PE
         {
             var dosHeader = DosHeaderReader.Read(stream);
 
-            uint fillingByteCount = dosHeader.lfanew - (2 + DosHeaderReader.DosHeaderSize + 4);
+            uint fillingByteCount = dosHeader.lfanew - DosHeaderReader.DosHeaderSize;
             byte[] fillingBytes = fillingByteCount > 0 ? new byte[fillingByteCount] : null;
             stream.CheckedReadBytes(fillingBytes, "seeking to PE header");
 

@@ -12,11 +12,15 @@ namespace DebugMiPE
         {
             var reader = new PEFileReader();
 
-            foreach (var peFile in Directory.EnumerateFiles(Environment.GetFolderPath(Environment.SpecialFolder.System)))
-            {
-                if (".exe.dll".IndexOf(Path.GetExtension(peFile), StringComparison.OrdinalIgnoreCase) < 0)
-                    continue;
+            var sources =
+                from file in Directory.EnumerateFiles(Environment.GetFolderPath(Environment.SpecialFolder.System))
+                where ".exe.dll".IndexOf(Path.GetExtension(file), StringComparison.OrdinalIgnoreCase) < 0
+                select file;
 
+            sources = new[] { typeof(Program).Assembly.Location };
+
+            foreach (var peFile in sources)
+            {
                 Stream stream;
 
                 try
