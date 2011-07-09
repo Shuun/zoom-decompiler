@@ -15,9 +15,6 @@ namespace Mi.PE.PEFormat
         {
             stream.CheckedExpect((ushort)PESignature.MZ, "reading MZ signature");
 
-            byte[] headerBuf = new byte[DosHeaderSize];
-            stream.CheckedReadBytes(headerBuf, "reading DOS header");
-
             var result = new DosHeader();
 
             result.cblp = stream.CheckedReadUInt16("reading cblp field of DOS header");
