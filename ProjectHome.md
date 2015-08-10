@@ -1,0 +1,1 @@
+Project source code is forked from ILSpy. However, this is a separate body of work not directly associated with nor particularly endorsed by the original creators of ILSpy.
